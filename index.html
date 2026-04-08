@@ -840,7 +840,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
           <div class="site-container">
             <h2 style="font-family:'Nunito',sans-serif;font-weight:900;color:var(--lilas);margin-bottom:16px">Contato</h2>
             <div class="site-card" style="max-width:400px">
-              <p style="margin-bottom:10px"><i class="fas fa-envelope" style="color:var(--lilas);margin-right:8px"></i> movom.zenyoga@gmail.com</p>
+              <p style="margin-bottom:10px"><i class="fas fa-envelope" style="color:var(--lilas);margin-right:8px"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7a17150c151754001f1403151d1b3a1d171b131654191517">[email&#160;protected]</a></p>
               <p><i class="fab fa-whatsapp" style="color:var(--ciano);margin-right:8px"></i> (21) 99968-1425</p>
             </div>
           </div>
@@ -1049,7 +1049,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 <!-- ══════════════════════════════
      SCRIPTS
 ══════════════════════════════ -->
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ═══════════════════════════
    CREDENCIAIS & LOGIN
 ═══════════════════════════ */
@@ -1249,14 +1249,22 @@ async function carregarColaboradores(){
   if(u.role==="colab"){
     // só vê o próprio nome
     btnN.style.display="none"; btnR.style.display="none";
-    const op=document.createElement("option"); op.value=u.nome; op.textContent=u.nome; sel.appendChild(op);
+    const nomeColab=u.nome;
+    // Verifica se o colaborador já existe no banco; se não, cria a entrada
+    const dadosColab=snap.val()||{};
+    if(!dadosColab[nomeColab]){
+      await set(ref(dbColab,"colaboradores/"+nomeColab),{});
+    }
+    const op=document.createElement("option"); op.value=nomeColab; op.textContent=nomeColab; sel.appendChild(op);
+    sel.value=nomeColab;
     sel.disabled=true;
+    colaboradorAtual=nomeColab;
   } else {
     btnN.style.display=""; btnR.style.display="";
     sel.disabled=false;
     Object.keys(snap.val()||{}).forEach(n=>{ const o=document.createElement("option"); o.value=o.textContent=n; sel.appendChild(o); });
+    colaboradorAtual=sel.value;
   }
-  colaboradorAtual=sel.value;
   sel.onchange=()=>{colaboradorAtual=sel.value;carregarDadosColab();calcularMedia();};
   carregarDadosColab(); calcularMedia();
 }
@@ -1688,15 +1696,4 @@ function yogaCarregar(){
 window.yogaDel=async function(id){await deleteDoc(doc(fsYoga,"movimentacoes",document.getElementById("yoga_mes").value,"itens",id));};
 
 // expor usuário para colaboradores
-window.__getUsuario=()=>usuarioAtual;
-</script>
-
-<!-- hack: expor usuário no módulo scope -->
-<script>
-window._usuario = null;
-// substituir carregarColaboradores após login para acessar usuário
-const _origIniciar = window.iniciarSessao;
-</script>
-
-</body>
-</html>
+window.__getUsuario=()=>usuarioAtua
