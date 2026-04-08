@@ -3,1439 +3,1476 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Sistema MOVOM</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-
-<!-- Firebase compat (usado por Financeiro e Colaboradores) -->
+<title>MOVOM – Sistema</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
-
 <style>
-/* ══════════════════════════════════════
-   RESET & VARIÁVEIS
-══════════════════════════════════════ */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ══════════════════════════════
+   VARIÁVEIS E RESET
+══════════════════════════════ */
+:root{
+  --lilas:#7b5cff;
+  --lilas-light:#ede9ff;
+  --lilas-mid:#c4b5fd;
+  --ciano:#3ec6c1;
+  --ciano-light:#e0faf9;
+  --ciano-mid:#7ee8e4;
+  --bg:#f4f2ff;
+  --white:#ffffff;
+  --surface:#fafafa;
+  --border:#e4e1f5;
+  --text:#1e1b4b;
+  --muted:#6b7280;
+  --sidebar:250px;
+  --shadow:0 4px 24px rgba(123,92,255,.10);
+  --shadow-sm:0 2px 8px rgba(123,92,255,.08);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+.hidden{display:none!important;}
 
-:root {
-  --bg:       #0e0f14;
-  --surface:  #16181f;
-  --surface2: #1e2029;
-  --border:   #2a2d3a;
-  --accent:   #e8c547;
-  --a2:       #5b8dee;
-  --a3:       #e85d75;
-  --a4:       #4ecba3;
-  --a5:       #a78bfa;
-  --text:     #f0f0f5;
-  --muted:    #7a7d8e;
-  --sidebar:  240px;
-  --lilas:    #7b6cf6;
-  --ciano:    #4fc3f7;
+/* ══════════════════════════════
+   TELA DE LOGIN
+══════════════════════════════ */
+#telaLogin{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#ede9ff 0%,#e0faf9 100%);
+  position:relative;overflow:hidden;
 }
+#telaLogin::before{
+  content:'';position:absolute;width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(123,92,255,.12),transparent 70%);
+  top:-100px;left:-100px;
+}
+#telaLogin::after{
+  content:'';position:absolute;width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(62,198,193,.12),transparent 70%);
+  bottom:-80px;right:-80px;
+}
+.login-card{
+  background:var(--white);border-radius:24px;padding:50px 44px;
+  box-shadow:0 20px 60px rgba(123,92,255,.18);
+  width:100%;max-width:420px;position:relative;z-index:1;
+  animation:slideUp .5s ease;
+}
+@keyframes slideUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+.login-logo{text-align:center;margin-bottom:32px;}
+.login-logo .mark{
+  font-family:'Nunito',sans-serif;font-weight:900;font-size:2rem;
+  background:linear-gradient(135deg,var(--lilas),var(--ciano));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.login-logo p{color:var(--muted);font-size:.85rem;margin-top:4px;}
+.login-card h2{font-size:1.3rem;font-weight:700;margin-bottom:6px;color:var(--text);}
+.login-card .sub{font-size:.82rem;color:var(--muted);margin-bottom:28px;}
 
-body {
-  font-family: 'DM Sans', Arial, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  display: flex;
-  min-height: 100vh;
+.tab-row{display:flex;gap:10px;margin-bottom:24px;}
+.tab-btn{
+  flex:1;padding:10px;border:2px solid var(--border);border-radius:12px;
+  font-family:'Poppins',sans-serif;font-size:.85rem;font-weight:600;
+  cursor:pointer;background:transparent;color:var(--muted);transition:all .2s;
 }
+.tab-btn.active{background:var(--lilas);color:#fff;border-color:var(--lilas);}
 
-/* ══════════════════════════════════════
-   SIDEBAR
-══════════════════════════════════════ */
-.sidebar {
-  width: var(--sidebar);
-  background: var(--surface);
-  border-right: 1px solid var(--border);
-  display: flex; flex-direction: column;
-  position: fixed; top:0; left:0; bottom:0;
-  z-index: 200;
+.field{margin-bottom:18px;}
+.field label{font-size:.78rem;font-weight:700;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;display:block;margin-bottom:6px;}
+.field input,.field select{
+  width:100%;padding:12px 16px;border:2px solid var(--border);border-radius:12px;
+  font-family:'Poppins',sans-serif;font-size:.9rem;color:var(--text);
+  background:var(--surface);outline:none;transition:border-color .2s;
 }
-.logo {
-  padding: 28px 24px 20px;
-  border-bottom: 1px solid var(--border);
+.field input:focus,.field select:focus{border-color:var(--lilas);}
+.field select option{background:#fff;}
+.btn-login{
+  width:100%;padding:14px;border:none;border-radius:14px;
+  font-family:'Poppins',sans-serif;font-size:1rem;font-weight:700;
+  cursor:pointer;background:linear-gradient(135deg,var(--lilas),var(--ciano));
+  color:#fff;transition:transform .2s,box-shadow .2s;
+  box-shadow:0 6px 20px rgba(123,92,255,.35);
 }
-.logo-mark {
-  font-family: 'Syne', sans-serif;
-  font-weight: 800; font-size: 1.4rem;
-  letter-spacing: -0.5px;
-  background: linear-gradient(135deg, var(--lilas), var(--ciano));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-}
-.logo-sub {
-  font-size: 0.65rem; color: var(--muted);
-  letter-spacing: 2px; text-transform: uppercase; margin-top: 3px;
-}
-nav { padding: 20px 14px; flex: 1; }
-.nav-label {
-  font-size: 0.62rem; letter-spacing: 2.5px;
-  text-transform: uppercase; color: var(--muted);
-  padding: 0 10px; margin: 18px 0 8px;
-}
-.nav-item {
-  display: flex; align-items: center; gap: 12px;
-  padding: 11px 14px; border-radius: 10px;
-  cursor: pointer; font-size: 0.88rem; font-weight: 500;
-  color: var(--muted); transition: all .2s; margin-bottom: 3px;
-  border: 1px solid transparent;
-}
-.nav-item:hover { background: var(--surface2); color: var(--text); }
-.nav-item.active { background: var(--surface2); color: var(--text); border-color: var(--border); }
-.nav-icon { font-size: 1.1rem; width: 22px; text-align: center; }
-.nav-dot { width: 5px; height: 5px; border-radius: 50%; margin-left: auto; opacity: 0; transition: opacity .2s; }
-.nav-item.active .nav-dot { opacity: 1; }
-[data-page="colaboradores"] .nav-dot { background: var(--a2); }
-[data-page="financeiro"]    .nav-dot { background: var(--a4); }
-[data-page="grade"]         .nav-dot { background: var(--accent); }
-[data-page="avaliacoes"]    .nav-dot { background: var(--a3); }
-[data-page="colaboradores"].active { border-color: #5b8dee33; }
-[data-page="financeiro"].active    { border-color: #4ecba333; }
-[data-page="grade"].active         { border-color: #e8c54733; }
-[data-page="avaliacoes"].active    { border-color: #e85d7533; }
+.btn-login:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(123,92,255,.45);}
+.login-err{background:#fee2e2;color:#b91c1c;border-radius:10px;padding:10px 14px;font-size:.83rem;margin-top:14px;display:none;}
 
-.sidebar-footer { padding: 16px 14px; border-top: 1px solid var(--border); }
-.user-chip {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 12px; border-radius: 10px; background: var(--surface2);
-}
-.avatar-chip {
-  width: 32px; height: 32px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--a2), var(--a3));
-  display: grid; place-items: center;
-  font-size: 0.75rem; font-weight: 700; color: #fff; flex-shrink: 0;
-}
-.user-name { font-size: 0.82rem; font-weight: 500; }
-.user-role { font-size: 0.7rem; color: var(--muted); }
+/* ══════════════════════════════
+   LAYOUT PRINCIPAL
+══════════════════════════════ */
+#app{display:flex;min-height:100vh;}
 
-/* ══════════════════════════════════════
-   MAIN / TOPBAR
-══════════════════════════════════════ */
-.main { margin-left: var(--sidebar); flex: 1; display: flex; flex-direction: column; }
+/* SIDEBAR */
+.sidebar{
+  width:var(--sidebar);background:var(--white);
+  border-right:2px solid var(--border);
+  display:flex;flex-direction:column;
+  position:fixed;top:0;left:0;bottom:0;z-index:100;
+  box-shadow:4px 0 20px rgba(123,92,255,.07);
+}
+.sb-logo{
+  padding:28px 22px 20px;
+  border-bottom:2px solid var(--border);
+}
+.sb-logo .mark{
+  font-family:'Nunito',sans-serif;font-weight:900;font-size:1.5rem;
+  background:linear-gradient(135deg,var(--lilas),var(--ciano));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.sb-logo .sub{font-size:.65rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:2px;}
+.sb-user{
+  padding:14px 22px;border-bottom:2px solid var(--border);
+  display:flex;align-items:center;gap:10px;
+}
+.sb-avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,var(--lilas),var(--ciano));
+  display:grid;place-items:center;font-size:.78rem;font-weight:800;color:#fff;
+  flex-shrink:0;
+}
+.sb-uname{font-size:.82rem;font-weight:700;color:var(--text);}
+.sb-urole{font-size:.68rem;color:var(--muted);}
 
-.topbar {
-  height: 64px; background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center;
-  padding: 0 32px; gap: 14px;
-  position: sticky; top: 0; z-index: 100;
+nav.sb-nav{padding:16px 14px;flex:1;overflow-y:auto;}
+.nav-section{font-size:.6rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase;padding:0 10px;margin:14px 0 6px;}
+.nav-item{
+  display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;
+  cursor:pointer;font-size:.85rem;font-weight:600;color:var(--muted);
+  transition:all .18s;margin-bottom:2px;border:2px solid transparent;
 }
-.page-title { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; }
-.top-badge {
-  padding: 3px 10px; border-radius: 20px;
-  font-size: 0.72rem; font-weight: 600;
+.nav-item:hover{background:var(--lilas-light);color:var(--lilas);}
+.nav-item.active{background:var(--lilas-light);color:var(--lilas);border-color:var(--lilas-mid);}
+.nav-icon{width:20px;text-align:center;font-size:1rem;}
+.sb-footer{padding:14px;border-top:2px solid var(--border);}
+.btn-logout{
+  width:100%;padding:10px;border:2px solid var(--border);border-radius:12px;
+  background:transparent;font-family:'Poppins',sans-serif;font-size:.82rem;
+  font-weight:700;color:var(--muted);cursor:pointer;transition:all .2s;
 }
-.badge-blue   { background: #5b8dee22; color: var(--a2); }
-.badge-green  { background: #4ecba322; color: var(--a4); }
-.badge-yellow { background: #e8c54722; color: var(--accent); }
-.badge-red    { background: #e85d7522; color: var(--a3); }
-.badge-purple { background: #a78bfa22; color: var(--a5); }
+.btn-logout:hover{border-color:var(--lilas);color:var(--lilas);background:var(--lilas-light);}
 
-.topbar-actions { margin-left: auto; display: flex; gap: 10px; }
-.btn {
-  padding: 8px 18px; border-radius: 8px;
-  font-size: 0.82rem; font-weight: 600;
-  cursor: pointer; border: none; font-family: inherit;
-  transition: all .18s;
+/* MAIN */
+.main{margin-left:var(--sidebar);flex:1;display:flex;flex-direction:column;}
+.topbar{
+  height:66px;background:var(--white);border-bottom:2px solid var(--border);
+  display:flex;align-items:center;padding:0 32px;gap:14px;
+  position:sticky;top:0;z-index:50;box-shadow:var(--shadow-sm);
 }
-.btn-primary { background: var(--accent); color: #111; }
-.btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
-.btn-ghost { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
-.btn-ghost:hover { border-color: var(--muted); }
+.page-title{font-family:'Nunito',sans-serif;font-size:1.2rem;font-weight:900;color:var(--text);}
+.top-badge{
+  padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.5px;
+}
+.badge-lilas{background:var(--lilas-light);color:var(--lilas);}
+.badge-ciano{background:var(--ciano-light);color:var(--ciano);}
+.badge-green{background:#dcfce7;color:#166534;}
+.badge-orange{background:#fff7ed;color:#c2410c;}
+.badge-red{background:#fee2e2;color:#b91c1c;}
+.topbar-actions{margin-left:auto;display:flex;gap:10px;align-items:center;}
+.btn{
+  padding:9px 20px;border-radius:12px;font-family:'Poppins',sans-serif;
+  font-size:.82rem;font-weight:700;cursor:pointer;border:none;transition:all .18s;
+}
+.btn-primary{background:linear-gradient(135deg,var(--lilas),var(--ciano));color:#fff;box-shadow:0 4px 14px rgba(123,92,255,.3);}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(123,92,255,.4);}
+.btn-ghost{background:var(--surface);color:var(--text);border:2px solid var(--border);}
+.btn-ghost:hover{border-color:var(--lilas);color:var(--lilas);}
 
-/* ══════════════════════════════════════
-   CONTENT / PAGES
-══════════════════════════════════════ */
-.content { flex: 1; overflow-y: auto; }
-.page { display: none; animation: fadeIn .3s ease; }
-.page.active { display: block; }
-@keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+/* CONTENT */
+.content{flex:1;overflow-y:auto;}
+.page{display:none;animation:fadeIn .3s ease;}
+.page.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.inner{padding:28px 32px;}
 
-/* iframe pages */
-.page-frame {
-  width: 100%; height: calc(100vh - 64px);
-  border: none; display: block;
+/* ══════════════════════════════
+   CARDS ESTATÍSTICAS
+══════════════════════════════ */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:26px;}
+.stat-card{
+  background:var(--white);border:2px solid var(--border);border-radius:16px;
+  padding:20px 22px;position:relative;overflow:hidden;
+  transition:transform .2s,box-shadow .2s;box-shadow:var(--shadow-sm);
 }
+.stat-card:hover{transform:translateY(-2px);box-shadow:var(--shadow);}
+.stat-card::after{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:4px 4px 0 0;}
+.stat-card.c1::after{background:linear-gradient(90deg,var(--lilas),var(--ciano));}
+.stat-card.c2::after{background:linear-gradient(90deg,var(--ciano),#38bdf8);}
+.stat-card.c3::after{background:linear-gradient(90deg,#a78bfa,var(--lilas));}
+.stat-card.c4::after{background:linear-gradient(90deg,#f0abfc,#a78bfa);}
+.stat-label{font-size:.7rem;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;}
+.stat-value{font-family:'Nunito',sans-serif;font-size:2.2rem;font-weight:900;color:var(--lilas);margin:6px 0 2px;}
+.stat-sub{font-size:.75rem;color:var(--muted);}
 
-/* ══════════════════════════════════════
-   INNER PAGES (Colaboradores – inline)
-══════════════════════════════════════ */
-.inner { padding: 28px 32px; }
+/* ══════════════════════════════
+   TABLE CARD
+══════════════════════════════ */
+.table-card{background:var(--white);border:2px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:22px;box-shadow:var(--shadow-sm);}
+.table-header{padding:16px 22px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:12px;}
+.table-title{font-family:'Nunito',sans-serif;font-size:1rem;font-weight:800;color:var(--text);}
+.search-bar{
+  margin-left:auto;background:var(--surface);border:2px solid var(--border);
+  border-radius:10px;padding:7px 14px;color:var(--text);font-size:.82rem;
+  font-family:'Poppins',sans-serif;outline:none;width:200px;transition:border-color .2s;
+}
+.search-bar:focus{border-color:var(--lilas);}
 
-/* ── Colaboradores – planilha realtime ── */
-.inner h1 { text-align:center; color: var(--a5); font-family:'Syne',sans-serif; margin-bottom:20px; }
+table.data-table{width:100%;border-collapse:collapse;}
+table.data-table thead th{
+  padding:11px 20px;text-align:left;font-size:.68rem;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);
+  background:var(--surface);
+}
+table.data-table tbody tr{border-bottom:1px solid var(--border);transition:background .15s;}
+table.data-table tbody tr:last-child{border-bottom:none;}
+table.data-table tbody tr:hover{background:var(--lilas-light);}
+table.data-table td{padding:13px 20px;font-size:.84rem;}
 
-.controls-row {
-  display: flex; flex-wrap: wrap; gap: 10px;
-  justify-content: center; margin-bottom: 18px;
-}
-.controls-row label { color: var(--muted); align-self: center; font-size:.85rem; }
+.badge-pill{padding:3px 10px;border-radius:20px;font-size:.7rem;font-weight:700;display:inline-block;}
+.p-lilas{background:var(--lilas-light);color:var(--lilas);}
+.p-ciano{background:var(--ciano-light);color:var(--ciano);}
+.p-green{background:#dcfce7;color:#166534;}
+.p-red{background:#fee2e2;color:#b91c1c;}
+.p-orange{background:#fff7ed;color:#c2410c;}
 
-.inner select, .inner input[type=month] {
-  background: var(--surface2); border: 1px solid var(--border);
-  color: var(--text); border-radius: 6px; padding: 6px 10px;
-  font-size: .85rem; font-family: inherit; outline: none;
+/* ══════════════════════════════
+   FORM CARDS
+══════════════════════════════ */
+.form-card{background:var(--white);border:2px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:var(--shadow-sm);}
+.form-card h3{font-family:'Nunito',sans-serif;font-size:1.05rem;font-weight:800;color:var(--text);margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--border);}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 20px;}
+.form-grid.g3{grid-template-columns:1fr 1fr 1fr;}
+.form-grid.g1{grid-template-columns:1fr;}
+.form-full{grid-column:1/-1;}
+.field-group label{font-size:.72rem;font-weight:700;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;display:block;margin-bottom:5px;}
+.field-group input,.field-group select,.field-group textarea{
+  width:100%;padding:10px 14px;border:2px solid var(--border);border-radius:10px;
+  font-family:'Poppins',sans-serif;font-size:.84rem;color:var(--text);
+  background:var(--surface);outline:none;transition:border-color .2s;
 }
-.inner select:focus, .inner input[type=month]:focus { border-color: var(--a5); }
+.field-group input:focus,.field-group select:focus,.field-group textarea:focus{border-color:var(--lilas);}
+.field-group textarea{min-height:70px;resize:vertical;}
+.field-group select option{background:#fff;}
 
-.inner .btn-icon {
-  padding: 6px 10px; background: var(--a4); color:#111;
-  border: none; border-radius: 6px; cursor: pointer; font-size:.9rem;
+.inline-opts{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:6px 0;}
+.inline-opts label{display:flex;align-items:center;gap:6px;font-size:.83rem;color:var(--text);cursor:pointer;}
+.inline-opts input[type=checkbox],.inline-opts input[type=radio]{width:auto;accent-color:var(--lilas);}
+.opts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;padding:6px 0;}
+.opts-grid label{display:flex;align-items:center;gap:6px;font-size:.82rem;cursor:pointer;}
+.opts-grid input[type=checkbox],.opts-grid input[type=radio]{width:auto;accent-color:var(--lilas);}
+.g2-equal{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.btn-save{
+  margin-top:14px;padding:11px 24px;border:none;border-radius:12px;
+  font-family:'Poppins',sans-serif;font-size:.88rem;font-weight:700;
+  cursor:pointer;background:linear-gradient(135deg,var(--lilas),var(--ciano));
+  color:#fff;transition:all .18s;box-shadow:0 4px 14px rgba(123,92,255,.3);
 }
-.inner .btn-icon.danger { background: var(--a3); color:#fff; }
+.btn-save:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(123,92,255,.4);}
+.btn-back{
+  padding:9px 18px;border:2px solid var(--border);border-radius:10px;
+  background:transparent;font-family:'Poppins',sans-serif;font-size:.82rem;font-weight:700;
+  color:var(--muted);cursor:pointer;margin-bottom:16px;transition:all .2s;
+}
+.btn-back:hover{border-color:var(--lilas);color:var(--lilas);}
+.btn-del{background:#fee2e2;color:#b91c1c;border:2px solid #fecaca;border-radius:10px;padding:9px 18px;font-family:'Poppins',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;}
 
-.wrapper { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
-.inner table { width:100%; border-collapse:collapse; background: var(--surface); }
-.inner thead th {
-  padding: 11px 14px; text-align:center;
-  background: var(--surface2);
-  color: var(--muted); font-size:.72rem; letter-spacing:1.2px; text-transform:uppercase;
-  border-bottom: 1px solid var(--border);
+/* ══════════════════════════════
+   COLABORADORES PLANILHA
+══════════════════════════════ */
+.colab-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:20px;background:var(--white);padding:16px 20px;border-radius:14px;border:2px solid var(--border);box-shadow:var(--shadow-sm);}
+.colab-controls label{font-size:.78rem;font-weight:700;color:var(--muted);}
+.colab-controls select,.colab-controls input[type=month]{
+  padding:8px 12px;background:var(--surface);border:2px solid var(--border);
+  color:var(--text);border-radius:10px;font-family:'Poppins',sans-serif;font-size:.84rem;outline:none;
 }
-.inner tbody tr { border-bottom: 1px solid var(--border); transition: background .15s; }
-.inner tbody tr:last-child { border-bottom: none; }
-.inner tbody tr:hover { background: var(--surface2); }
-.inner tbody td { padding: 8px 10px; text-align:center; font-size:.83rem; }
-.inner input[type=text], .inner input[type=number] {
-  background: transparent; border: 1px solid transparent;
-  color: var(--text); border-radius:4px; padding:3px 6px;
-  font-size:.82rem; width:100%; font-family:inherit; outline:none;
-  transition: border-color .15s;
+.colab-controls select:focus,.colab-controls input[type=month]:focus{border-color:var(--lilas);}
+.btn-icon-sm{
+  padding:8px 12px;border:none;border-radius:10px;cursor:pointer;
+  font-size:.85rem;font-weight:700;font-family:'Poppins',sans-serif;
 }
-.inner input[type=text]:focus, .inner input[type=number]:focus { border-color: var(--a5); background: var(--surface2); }
-.inner input[type=checkbox] { width:auto; cursor:pointer; accent-color: var(--a5); transform: scale(1.2); }
+.btn-icon-sm.add{background:var(--ciano-light);color:var(--ciano);}
+.btn-icon-sm.del{background:#fee2e2;color:#b91c1c;}
+.wrapper-scroll{overflow-x:auto;border-radius:14px;border:2px solid var(--border);box-shadow:var(--shadow-sm);}
+.colab-table{width:100%;border-collapse:collapse;background:var(--white);}
+.colab-table thead th{
+  padding:11px 12px;text-align:center;background:var(--lilas-light);
+  color:var(--lilas);font-size:.68rem;letter-spacing:1.2px;text-transform:uppercase;
+  border-bottom:2px solid var(--border);font-weight:800;
+}
+.colab-table tbody tr{border-bottom:1px solid var(--border);transition:background .15s;}
+.colab-table tbody tr:hover{background:var(--lilas-light);}
+.colab-table td{padding:7px 10px;text-align:center;font-size:.82rem;}
+.colab-table input[type=text],.colab-table input[type=number]{
+  background:transparent;border:2px solid transparent;color:var(--text);
+  border-radius:8px;padding:4px 8px;font-size:.82rem;width:100%;font-family:'Poppins',sans-serif;outline:none;
+}
+.colab-table input[type=text]:focus,.colab-table input[type=number]:focus{border-color:var(--lilas);background:var(--white);}
+.colab-table input[type=checkbox]{width:auto;cursor:pointer;accent-color:var(--lilas);transform:scale(1.2);}
+.colab-table select{background:transparent;border:none;color:var(--text);font-size:.82rem;padding:3px;}
+.total-cell{font-weight:800;color:var(--lilas);font-family:'Nunito',sans-serif;}
+.resumo-bar{
+  margin-top:14px;padding:16px 20px;
+  background:var(--white);border:2px solid var(--border);border-radius:14px;
+  display:flex;gap:30px;flex-wrap:wrap;box-shadow:var(--shadow-sm);
+}
+.resumo-bar p{font-size:.9rem;color:var(--text);}
+.resumo-bar strong{color:var(--lilas);}
+.btn-aluno{
+  margin-top:14px;margin-right:8px;padding:9px 18px;
+  border:none;border-radius:10px;cursor:pointer;font-family:'Poppins',sans-serif;
+  font-size:.82rem;font-weight:700;
+}
+.btn-aluno.add{background:linear-gradient(135deg,var(--lilas),var(--ciano));color:#fff;}
+.btn-aluno.clear{background:var(--surface);color:var(--muted);border:2px solid var(--border);}
 
-.inner select.tipo-select {
-  background: transparent; border: none; color: var(--text); font-size:.82rem; padding: 3px;
-}
+/* ══════════════════════════════
+   FINANCEIRO ENTRADAS
+══════════════════════════════ */
+.fin-form{display:grid;grid-template-columns:1fr 1fr;gap:14px 20px;}
+.fin-form .full{grid-column:1/-1;}
+.fin-total{font-family:'Nunito',sans-serif;font-size:1.2rem;font-weight:900;color:var(--lilas);margin:16px 0 10px;}
 
-.resumo-bar {
-  margin-top: 14px; padding: 14px 18px;
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 10px; display: flex; gap: 30px; flex-wrap: wrap;
+/* ══════════════════════════════
+   GRADE DE HORÁRIOS
+══════════════════════════════ */
+.grade-section{margin-bottom:24px;}
+.grade-section h3{
+  font-family:'Nunito',sans-serif;font-size:1rem;font-weight:800;
+  color:var(--lilas);padding:10px 0 8px;border-bottom:2px solid var(--border);margin-bottom:10px;
 }
-.resumo-bar p { font-size:.88rem; color: var(--text); }
-.resumo-bar strong { color: var(--a4); }
+.grade-tbl{width:100%;border-collapse:collapse;background:var(--white);border-radius:14px;overflow:hidden;border:2px solid var(--border);}
+.grade-tbl thead th{background:linear-gradient(90deg,var(--lilas),var(--ciano));color:#fff;padding:10px 14px;font-size:.78rem;letter-spacing:.5px;}
+.grade-tbl tbody tr{border-bottom:1px solid var(--border);transition:background .15s;}
+.grade-tbl tbody tr:hover{background:var(--lilas-light);}
+.grade-tbl td{padding:10px 12px;vertical-align:top;font-size:.82rem;}
+.horario-lbl{width:80px;text-align:center;font-weight:800;color:var(--lilas);font-family:'Nunito',sans-serif;}
+.instr-inp{
+  width:100%;padding:6px 10px;background:var(--surface);border:2px solid var(--border);
+  color:var(--text);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.8rem;outline:none;margin-bottom:5px;
+}
+.instr-inp:focus{border-color:var(--lilas);}
+.alunos-box{display:flex;flex-direction:column;gap:4px;margin-top:4px;}
+.aluno-row{display:flex;gap:5px;}
+.aluno-row input{
+  flex:1;padding:5px 8px;background:var(--surface);border:2px solid var(--border);
+  color:var(--text);border-radius:7px;font-family:'Poppins',sans-serif;font-size:.78rem;outline:none;
+}
+.aluno-row input:focus{border-color:var(--ciano);}
+.btn-add-a{background:var(--ciano-light);color:var(--ciano);border:none;border-radius:7px;padding:4px 8px;cursor:pointer;font-size:.75rem;font-weight:700;}
+.btn-rem-a{background:#fee2e2;color:#b91c1c;border:none;border-radius:7px;padding:4px 8px;cursor:pointer;font-size:.75rem;font-weight:700;}
 
-.btn-aluno {
-  margin-top: 12px; padding: 8px 16px;
-  background: var(--a2); color: #fff;
-  border: none; border-radius: 8px; cursor: pointer;
-  font-size:.82rem; font-family: inherit; margin-right: 8px;
-}
-.btn-limpar {
-  background: var(--surface2); color: var(--muted);
-  border: 1px solid var(--border);
-}
-.total-cell { font-weight: 700; color: var(--a4); }
+/* ══════════════════════════════
+   AGENDA
+══════════════════════════════ */
+.alerta-box{background:#fff7ed;border:2px solid #fed7aa;border-radius:12px;padding:14px 18px;margin-bottom:16px;display:none;}
+.alerta-box strong{color:#c2410c;}
+.filtros-row{display:flex;gap:8px;margin-bottom:14px;}
+.filtros-row button{padding:7px 16px;border:2px solid var(--border);border-radius:10px;background:transparent;font-family:'Poppins',sans-serif;font-size:.8rem;font-weight:700;color:var(--muted);cursor:pointer;transition:all .18s;}
+.filtros-row button.active-f{background:var(--lilas);color:#fff;border-color:var(--lilas);}
+.row-vencida{background:#fff7ed!important;}
+.btn-pendente{background:var(--lilas-light);color:var(--lilas);border:none;padding:5px 12px;border-radius:8px;cursor:pointer;font-size:.78rem;font-weight:700;}
+.btn-feito{background:#dcfce7;color:#166534;border:none;padding:5px 12px;border-radius:8px;cursor:pointer;font-size:.78rem;font-weight:700;}
+.btn-excluir-sm{background:#fee2e2;color:#b91c1c;border:none;padding:5px 10px;border-radius:8px;cursor:pointer;}
 
-/* ══════════════════════════════════════
-   GRADE DE HORÁRIOS (inline)
-══════════════════════════════════════ */
-.grade-wrap { padding: 28px 32px; }
-.grade-wrap h2 { font-family:'Syne',sans-serif; color: var(--accent); text-align:center; margin-bottom:16px; }
+/* ══════════════════════════════
+   INSUMOS
+══════════════════════════════ */
+.insumos-total{font-family:'Nunito',sans-serif;font-size:1.2rem;font-weight:900;color:var(--lilas);text-align:center;margin-top:14px;}
 
-.grade-controls {
-  display:flex; justify-content:center; gap:12px; margin-bottom:20px;
-}
-.grade-controls select {
-  background: var(--surface2); border: 1px solid var(--border);
-  color: var(--text); border-radius:8px; padding:8px 14px;
-  font-family:inherit; font-size:.85rem; outline:none;
-}
+/* ══════════════════════════════
+   YOGA FINANCEIRO
+══════════════════════════════ */
+.resumo-cards{display:flex;gap:12px;margin:16px 0;flex-wrap:wrap;}
+.resumo-card{flex:1;padding:16px;border-radius:14px;text-align:center;font-weight:700;font-family:'Nunito',sans-serif;font-size:1.1rem;border:2px solid transparent;}
+.resumo-card.entrada{background:#dcfce7;color:#166534;border-color:#bbf7d0;}
+.resumo-card.saida{background:#fee2e2;color:#b91c1c;border-color:#fecaca;}
+.resumo-card.saldo{background:var(--lilas-light);color:var(--lilas);border-color:var(--lilas-mid);}
+.resumo-card small{display:block;font-size:.72rem;font-weight:600;margin-bottom:4px;}
 
-.grade-section { margin-bottom: 28px; }
-.grade-section h3 {
-  font-family:'Syne',sans-serif; color: var(--a5);
-  margin-bottom: 10px; font-size:1rem; padding: 10px 0 8px;
-  border-bottom: 1px solid var(--border);
+/* ══════════════════════════════
+   SITE INSTITUCIONAL
+══════════════════════════════ */
+.site-header{
+  background:linear-gradient(135deg,var(--lilas),var(--ciano));
+  padding:50px 20px;text-align:center;color:#fff;
 }
+.site-header h1{font-family:'Nunito',sans-serif;font-size:2rem;font-weight:900;margin:0;}
+.site-header p{font-size:1rem;margin-top:8px;opacity:.9;}
+.site-nav{background:var(--white);display:flex;justify-content:center;gap:6px;padding:14px;flex-wrap:wrap;border-bottom:2px solid var(--border);}
+.site-nav button{
+  padding:8px 20px;border:2px solid var(--border);border-radius:20px;
+  background:transparent;font-family:'Poppins',sans-serif;font-size:.84rem;font-weight:600;
+  color:var(--muted);cursor:pointer;transition:all .2s;
+}
+.site-nav button.active-s,.site-nav button:hover{background:var(--lilas);color:#fff;border-color:var(--lilas);}
+.site-section{display:none;padding:40px 20px;background:var(--bg);}
+.site-section.active-s{display:block;}
+.site-container{max-width:1000px;margin:auto;}
+.site-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;margin-top:22px;}
+.site-card{background:var(--white);padding:20px;border-radius:14px;border:2px solid var(--border);box-shadow:var(--shadow-sm);}
+.site-card h3{color:var(--lilas);font-family:'Nunito',sans-serif;font-weight:800;margin-bottom:10px;}
+.site-btns{margin-top:20px;display:flex;flex-wrap:wrap;gap:10px;}
+.site-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:30px;text-decoration:none;font-weight:700;font-size:.88rem;color:#fff;transition:opacity .2s;}
+.site-btn:hover{opacity:.85;}
+.site-btn.ig{background:#E1306C;}
+.site-btn.wa{background:#25D366;}
+.site-btn.loc{background:var(--ciano);}
+.galeria-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:20px;}
+.galeria-foto{background:var(--white);border-radius:14px;overflow:hidden;border:2px solid var(--border);box-shadow:var(--shadow-sm);}
+.galeria-foto img{width:100%;height:220px;object-fit:cover;}
+.galeria-foto p{padding:12px;font-size:.82rem;color:var(--muted);}
+.site-footer{background:var(--text);color:#fff;text-align:center;padding:18px;font-size:.85rem;}
 
-.grade-table { width:100%; border-collapse:collapse; background: var(--surface); border-radius:12px; overflow:hidden; }
-.grade-table thead th {
-  background: linear-gradient(90deg, var(--lilas), var(--ciano));
-  color:#fff; padding:10px 14px; font-size:.8rem; letter-spacing:.5px;
+/* ══════════════════════════════
+   AVALIAÇÕES
+══════════════════════════════ */
+.lista-aval-item{
+  padding:14px 16px;border-radius:10px;border-bottom:2px solid var(--border);
+  cursor:pointer;transition:background .15s;display:flex;align-items:center;gap:10px;
 }
-.grade-table tbody tr { border-bottom: 1px solid var(--border); transition: background .15s; }
-.grade-table tbody tr:hover { background: var(--surface2); }
-.grade-table td { padding:10px 12px; vertical-align:top; font-size:.83rem; }
-.horario-cell { width:90px; text-align:center; font-weight:700; color: var(--accent); }
+.lista-aval-item:hover{background:var(--lilas-light);}
+.lista-aval-item .nome{font-weight:700;color:var(--text);}
+.lista-aval-item .tipo{font-size:.78rem;color:var(--muted);}
+.evo-item{border-left:4px solid var(--lilas);padding:8px 14px;margin:6px 0;background:var(--lilas-light);border-radius:0 10px 10px 0;}
+.evo-item strong{color:var(--lilas);font-size:.82rem;}
+.evo-item p{font-size:.82rem;margin-top:3px;}
 
-.alunos-box { display:flex; flex-direction:column; gap:5px; margin-top:5px; }
-.aluno-row { display:flex; gap:5px; }
-.aluno-row input {
-  flex:1; padding:5px 8px;
-  background: var(--surface2); border: 1px solid var(--border);
-  color: var(--text); border-radius:5px; font-family:inherit; font-size:.8rem; outline:none;
-}
-.aluno-row input:focus { border-color: var(--ciano); }
-.instr-input {
-  width:100%; padding:6px 8px;
-  background: var(--surface2); border: 1px solid var(--border);
-  color: var(--text); border-radius:5px; font-family:inherit; font-size:.83rem; outline:none;
-  margin-bottom:4px;
-}
-.instr-input:focus { border-color: var(--lilas); }
-
-.btn-add-g { background: var(--ciano); color:#111; border:none; border-radius:5px; padding:4px 8px; cursor:pointer; font-size:.75rem; font-family:inherit; }
-.btn-rem-g { background: var(--a3); color:#fff; border:none; border-radius:5px; padding:4px 8px; cursor:pointer; font-size:.75rem; font-family:inherit; }
-
-/* ══════════════════════════════════════
-   FINANCEIRO (Entradas MOVOM - inline)
-══════════════════════════════════════ */
-.fin-wrap { padding: 28px 32px; }
-.fin-wrap h2 { font-family:'Syne',sans-serif; color: var(--a4); margin-bottom: 20px; }
-
-.fin-form {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 14px; padding: 22px; margin-bottom: 22px;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px;
-}
-.fin-form .full { grid-column: 1 / -1; }
-.fin-form label { font-size:.78rem; color: var(--muted); font-weight:600; letter-spacing:.5px; text-transform:uppercase; display:block; margin-bottom:4px; }
-.fin-form input, .fin-form select {
-  width:100%; padding:9px 12px;
-  background: var(--surface2); border: 1px solid var(--border);
-  color: var(--text); border-radius:8px; font-family:inherit; font-size:.85rem; outline:none;
-}
-.fin-form input:focus, .fin-form select:focus { border-color: var(--a4); }
-.fin-form select option { background: var(--surface2); }
-
-.fin-total { font-family:'Syne',sans-serif; font-size:1.1rem; font-weight:700; color: var(--a4); margin: 0 0 16px; }
-
-.fin-table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: auto; }
-.fin-table { width:100%; border-collapse:collapse; }
-.fin-table thead th {
-  padding:12px 16px; font-size:.7rem; letter-spacing:1.2px; text-transform:uppercase;
-  color: var(--muted); border-bottom: 1px solid var(--border); text-align:left; background: var(--surface2);
-}
-.fin-table tbody tr { border-bottom: 1px solid var(--border); transition: background .15s; }
-.fin-table tbody tr:hover { background: var(--surface2); }
-.fin-table td { padding:11px 16px; font-size:.83rem; }
-.fin-nf-input {
-  width:80px; padding:4px 6px;
-  background: var(--surface2); border: 1px solid var(--border);
-  color: var(--text); border-radius:5px; font-family:inherit; font-size:.8rem; outline:none;
-}
-.fin-del-btn {
-  background: var(--a3); color:#fff; border:none;
-  padding:5px 10px; border-radius:6px; cursor:pointer; font-size:.8rem;
-}
-
-/* ══════════════════════════════════════
-   AVALIAÇÕES (inline)
-══════════════════════════════════════ */
-.aval-wrap { padding: 28px 32px; }
-.aval-wrap .card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 14px; padding: 22px; margin-bottom: 18px;
-}
-.aval-wrap h3 { font-family:'Syne',sans-serif; color: var(--a3); margin-bottom:14px; font-size:1rem; }
-.aval-wrap h4 { color: var(--a5); font-size:.85rem; margin: 16px 0 8px; text-transform:uppercase; letter-spacing:.5px; }
-.aval-wrap label { font-size:.78rem; color: var(--muted); font-weight:600; display:block; margin: 10px 0 4px; }
-.aval-wrap input[type=text],
-.aval-wrap input[type=date],
-.aval-wrap input[type=number],
-.aval-wrap input[type=email],
-.aval-wrap select,
-.aval-wrap textarea {
-  width:100%; padding:8px 12px; border-radius:8px;
-  background: var(--surface2); border: 1px solid var(--border);
-  color: var(--text); font-family:inherit; font-size:.85rem; outline:none;
-  margin-bottom: 4px;
-}
-.aval-wrap input:focus, .aval-wrap select:focus, .aval-wrap textarea:focus { border-color: var(--a3); }
-.aval-wrap select option { background: var(--surface2); }
-.aval-wrap textarea { min-height:70px; resize:vertical; }
-
-.aval-wrap input[type=checkbox],
-.aval-wrap input[type=radio] {
-  width:auto; margin:0; accent-color: var(--a3); transform: translateY(1px);
-}
-.inline-group, .opcoes {
-  display:flex; flex-wrap:wrap; gap:14px; align-items:center; margin-bottom:10px;
-}
-.inline-group label, .opcoes label {
-  display:flex; align-items:center; gap:6px;
-  font-size:.82rem; color: var(--text); margin:0; cursor:pointer;
-  font-weight:400; text-transform:none; letter-spacing:0;
-}
-.opcoes-grid {
-  display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
-  gap:8px; margin-bottom:12px;
-}
-.opcoes-grid label {
-  display:flex; align-items:center; gap:6px;
-  font-size:.82rem; color: var(--text); cursor:pointer;
-  font-weight:400; text-transform:none; letter-spacing:0;
-}
-.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.grid-2 .aval-wrap label { margin-top:0; }
-
-.aval-wrap button {
-  margin-top:12px; padding:10px 20px;
-  background: var(--a3); color:#fff; border:none; border-radius:8px;
-  font-family:inherit; font-size:.88rem; cursor:pointer; font-weight:600;
-  transition: filter .15s;
-}
-.aval-wrap button:hover { filter: brightness(1.1); }
-.aval-wrap button.btn-back {
-  background: var(--surface2); color: var(--text); border: 1px solid var(--border); margin-bottom:12px;
-}
-.aval-wrap button.btn-del { background: #dc3545; }
-
-.lista-item {
-  padding:12px 16px; border-radius:8px;
-  border-bottom: 1px solid var(--border); cursor:pointer;
-  transition: background .15s;
-}
-.lista-item:hover { background: var(--surface2); }
-.lista-item strong { color: var(--text); }
-.lista-item small { color: var(--muted); }
-
-.hidden { display:none !important; }
+/* ══════════════════════════════
+   ADMIN – GESTÃO DE ACESSOS
+══════════════════════════════ */
+.user-manage-card{background:var(--white);border:2px solid var(--border);border-radius:16px;padding:24px;margin-bottom:16px;box-shadow:var(--shadow-sm);}
+.user-manage-card h3{font-family:'Nunito',sans-serif;font-weight:800;color:var(--text);margin-bottom:16px;}
+.user-row{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--border);}
+.user-row:last-child{border-bottom:none;}
+.user-av{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--lilas),var(--ciano));display:grid;place-items:center;color:#fff;font-weight:800;font-size:.82rem;flex-shrink:0;}
+.user-info{flex:1;}
+.user-info .uname{font-weight:700;font-size:.88rem;}
+.user-info .urole{font-size:.72rem;color:var(--muted);}
 </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════
-     SIDEBAR
-══════════════════════════════════════ -->
-<aside class="sidebar">
-  <div class="logo">
-    <div class="logo-mark">⬡ MOVOM</div>
-    <div class="logo-sub">Sistema Interno</div>
-  </div>
-  <nav>
-    <div class="nav-label">Menu</div>
-    <div class="nav-item active" data-page="colaboradores" onclick="navigate(this)">
-      <span class="nav-icon">👥</span> Colaboradores <span class="nav-dot"></span>
+<!-- ══════════════════════════════
+     TELA DE LOGIN
+══════════════════════════════ -->
+<div id="telaLogin">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="mark">⬡ MOVOM</div>
+      <p>Espaço de Saúde e Bem Estar</p>
     </div>
-    <div class="nav-item" data-page="financeiro" onclick="navigate(this)">
-      <span class="nav-icon">💰</span> Financeiro <span class="nav-dot"></span>
+    <h2>Bem-vindo(a) 👋</h2>
+    <p class="sub">Faça login para acessar o sistema</p>
+
+    <div class="tab-row">
+      <button class="tab-btn active" id="tabColab" onclick="setTab('colab')">👤 Colaborador</button>
+      <button class="tab-btn" id="tabAdm" onclick="setTab('adm')">🔐 Administrador</button>
     </div>
-    <div class="nav-item" data-page="grade" onclick="navigate(this)">
-      <span class="nav-icon">📅</span> Grade de Horários <span class="nav-dot"></span>
-    </div>
-    <div class="nav-item" data-page="avaliacoes" onclick="navigate(this)">
-      <span class="nav-icon">📋</span> Avaliações <span class="nav-dot"></span>
-    </div>
-  </nav>
-  <div class="sidebar-footer">
-    <div class="user-chip">
-      <div class="avatar-chip">MV</div>
-      <div>
-        <div class="user-name">MOVOM</div>
-        <div class="user-role">Administrador</div>
-      </div>
-    </div>
-  </div>
-</aside>
 
-<!-- ══════════════════════════════════════
-     MAIN
-══════════════════════════════════════ -->
-<div class="main">
-
-  <!-- TOPBAR -->
-  <div class="topbar">
-    <div class="page-title" id="topTitle">Colaboradores</div>
-    <div class="top-badge badge-blue" id="topBadge">Planilha</div>
-    <div class="topbar-actions">
-      <button class="btn btn-primary" id="topBtn" onclick="topAction()">➕ Novo</button>
-    </div>
-  </div>
-
-  <!-- ══════════════ COLABORADORES ══════════════ -->
-  <div class="page active" id="page-colaboradores">
-    <div class="inner">
-      <h1>📋 Planilha de Colaboradores</h1>
-
-      <div class="controls-row">
-        <label>Colaborador:</label>
-        <select id="colaboradorSelect"></select>
-        <button class="btn-icon" onclick="novoColaborador()">➕</button>
-        <button class="btn-icon danger" onclick="removerColaborador()">🗑️</button>
-        <label>Mês:</label>
-        <input type="month" id="mesSelect">
-      </div>
-
-      <div class="wrapper">
-        <table>
-          <thead><tr id="cabecalho"></tr></thead>
-          <tbody id="corpoTabela"></tbody>
-        </table>
-      </div>
-
-      <div style="margin-top:12px">
-        <button class="btn-aluno" onclick="adicionarAluno()">➕ Aluno</button>
-        <button class="btn-aluno btn-limpar" onclick="limparDias()">🧹 Limpar dias</button>
-      </div>
-
-      <div class="resumo-bar">
-        <p id="total">💰 Total do mês: R$ 0,00</p>
-        <p id="media">📊 Média salarial: R$ 0,00</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════════════ FINANCEIRO ══════════════ -->
-  <div class="page" id="page-financeiro">
-    <div class="fin-wrap">
-      <h2>💰 Entradas MOVOM</h2>
-
-      <div class="fin-form">
-        <div>
-          <label>Mês</label>
-          <select id="fin_mesSelect"></select>
-        </div>
-        <div>
-          <label>Nome</label>
-          <input id="fin_nome" placeholder="Nome do aluno">
-        </div>
-        <div>
-          <label>Gmail do aluno</label>
-          <input id="fin_gmail" placeholder="gmail@exemplo.com">
-        </div>
-        <div>
-          <label>CPF / CNPJ</label>
-          <input id="fin_cpf" placeholder="000.000.000-00">
-        </div>
-        <div>
-          <label>Atividade</label>
-          <select id="fin_atividade">
-            <option>Pilates</option><option>Yoga</option>
-            <option>Pilates/Yoga</option><option>Fisioterapia</option><option>Outros</option>
-          </select>
-        </div>
-        <div>
-          <label>Forma de Pagamento</label>
-          <select id="fin_pagamento">
-            <option>Pix</option><option>Dinheiro</option>
-            <option>Débito</option><option>Crédito</option>
-          </select>
-        </div>
-        <div>
-          <label>Valor R$</label>
-          <input id="fin_valor" type="number" placeholder="0,00">
-        </div>
-        <div>
-          <label>Nº da NF (opcional)</label>
-          <input id="fin_nf" placeholder="NF-0000">
-        </div>
-        <div class="full">
-          <button class="btn btn-primary" onclick="addEntrada()" style="width:auto">Adicionar Entrada</button>
-        </div>
-      </div>
-
-      <p class="fin-total" id="fin_totalMes">Total do mês: R$ 0,00</p>
-
-      <div class="fin-table-wrap">
-        <table class="fin-table">
-          <thead>
-            <tr>
-              <th>Nome</th><th>Gmail</th><th>CPF/CNPJ</th><th>Atividade</th>
-              <th>Pagamento</th><th>Valor</th><th>Data/Hora</th><th>NF</th><th>Excluir</th>
-            </tr>
-          </thead>
-          <tbody id="fin_tabela"></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════════════ GRADE DE HORÁRIOS ══════════════ -->
-  <div class="page" id="page-grade">
-    <div class="grade-wrap">
-      <h2>📅 Grade de Horários MOVOM</h2>
-      <div class="grade-controls">
-        <select id="filtroDia">
-          <option value="Todos">Todos os dias</option>
-          <option>Segunda-feira</option><option>Terça-feira</option>
-          <option>Quarta-feira</option><option>Quinta-feira</option>
-          <option>Sexta-feira</option><option>Sábado</option>
+    <div id="loginColab">
+      <div class="field">
+        <label>Colaborador</label>
+        <select id="selectColab">
+          <option value="">Selecione seu nome...</option>
+          <option value="Andriely">Andriely</option>
+          <option value="Ana Aline">Ana Aline</option>
+          <option value="Jefferson">Jefferson</option>
+          <option value="Sthefanny">Sthefanny</option>
+          <option value="Vanessa">Vanessa</option>
         </select>
       </div>
-      <div id="grade_container"></div>
+      <div class="field">
+        <label>Senha</label>
+        <input type="password" id="senhaColab" placeholder="••••••••" onkeydown="if(event.key==='Enter')fazerLogin()">
+      </div>
     </div>
+
+    <div id="loginAdm" class="hidden">
+      <div class="field">
+        <label>Senha de Administrador</label>
+        <input type="password" id="senhaAdm" placeholder="••••••••" onkeydown="if(event.key==='Enter')fazerLogin()">
+      </div>
+    </div>
+
+    <button class="btn-login" onclick="fazerLogin()">Entrar</button>
+    <div class="login-err" id="loginErr">Usuário ou senha incorretos.</div>
   </div>
+</div>
 
-  <!-- ══════════════ AVALIAÇÕES ══════════════ -->
-  <div class="page" id="page-avaliacoes">
-    <div class="aval-wrap">
+<!-- ══════════════════════════════
+     APP PRINCIPAL
+══════════════════════════════ -->
+<div id="app" class="hidden">
 
-      <!-- TELA INICIAL -->
-      <div id="telaInicial">
-        <div class="card">
-          <h3>Nova Avaliação</h3>
-          <label>Nome do paciente</label>
-          <input type="text" id="nome" placeholder="Nome completo">
-          <label>Tipo</label>
-          <select id="tipo">
-            <option value="">Selecione o tipo</option>
-            <option>Fisioterapia</option><option>Pilates</option>
-            <option>Pélvica</option><option>Recovery</option><option>Condicionamento</option>
-          </select>
-          <label>Data</label>
-          <input type="date" id="data">
-          <button onclick="abrirTelaPorTipo()">Continuar →</button>
-        </div>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-logo">
+      <div class="mark">⬡ MOVOM</div>
+      <div class="sub">Sistema Interno</div>
+    </div>
+    <div class="sb-user">
+      <div class="sb-avatar" id="sbAvatar">--</div>
+      <div>
+        <div class="sb-uname" id="sbNome">--</div>
+        <div class="sb-urole" id="sbRole">--</div>
+      </div>
+    </div>
+    <nav class="sb-nav" id="sbNav">
+      <!-- injetado via JS -->
+    </nav>
+    <div class="sb-footer">
+      <button class="btn-logout" onclick="logout()">⬅ Sair</button>
+    </div>
+  </aside>
 
-        <div class="card">
-          <h3>Avaliações Salvas</h3>
-          <label>Filtrar por tipo</label>
-          <select id="filtroTipo" onchange="carregarAvaliacoes()">
-            <option value="">Todas</option>
-            <option>Fisioterapia</option><option>Pilates</option>
-            <option>Pélvica</option><option>Recovery</option><option>Condicionamento</option>
-          </select>
-          <div id="listaAvaliacoes" style="margin-top:12px">Carregando...</div>
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="page-title" id="topTitle">–</div>
+      <div class="top-badge badge-lilas" id="topBadge">–</div>
+      <div class="topbar-actions">
+        <button class="btn btn-primary" id="topBtn" onclick="topAction()">+ Novo</button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ════ COLABORADORES ════ -->
+      <div class="page" id="page-colaboradores">
+        <div class="inner">
+          <div class="colab-controls">
+            <label>Colaborador:</label>
+            <select id="colaboradorSelect"></select>
+            <button class="btn-icon-sm add" id="btnNovoColab" onclick="novoColaborador()">➕</button>
+            <button class="btn-icon-sm del" id="btnRemColab" onclick="removerColaborador()">🗑️</button>
+            <label>Mês:</label>
+            <input type="month" id="mesSelect">
+          </div>
+          <div class="wrapper-scroll">
+            <table class="colab-table">
+              <thead><tr id="cabecalho"></tr></thead>
+              <tbody id="corpoTabela"></tbody>
+            </table>
+          </div>
+          <div>
+            <button class="btn-aluno add" id="btnAddAluno" onclick="adicionarAluno()">➕ Aluno</button>
+            <button class="btn-aluno clear" onclick="limparDias()">🧹 Limpar dias</button>
+          </div>
+          <div class="resumo-bar">
+            <p id="total">💰 Total do mês: R$ 0,00</p>
+            <p id="media" id="mediaColab">📊 Média salarial: R$ 0,00</p>
+          </div>
         </div>
       </div>
 
-      <!-- TELA FISIOTERAPIA -->
-      <div id="telaFisioterapia" class="hidden">
-        <div class="card">
-          <button class="btn-back" onclick="voltar()">⬅ Voltar</button>
-          <h3>Ficha de Anamnese – Fisioterapia</h3>
-          <div class="inline-group">
-            <label><input type="checkbox" id="fisio_sessao"> Sessão</label>
-            <label><input type="checkbox" id="fisio_pacote"> Pacote</label>
-            <input type="text" id="fisio_qtdSessoes" placeholder="Quantidade de sessões" style="max-width:200px">
+      <!-- ════ FINANCEIRO – ENTRADAS MOVOM ════ -->
+      <div class="page" id="page-financeiro">
+        <div class="inner">
+          <div class="form-card">
+            <h3>💰 Nova Entrada</h3>
+            <div class="form-grid">
+              <div class="field-group">
+                <label>Mês</label>
+                <select id="fin_mesSelect"></select>
+              </div>
+              <div class="field-group">
+                <label>Nome do aluno</label>
+                <input id="fin_nome" placeholder="Nome completo">
+              </div>
+              <div class="field-group">
+                <label>Gmail</label>
+                <input id="fin_gmail" placeholder="email@exemplo.com">
+              </div>
+              <div class="field-group">
+                <label>CPF / CNPJ</label>
+                <input id="fin_cpf" placeholder="000.000.000-00">
+              </div>
+              <div class="field-group">
+                <label>Atividade</label>
+                <select id="fin_atividade">
+                  <option>Pilates</option><option>Yoga</option>
+                  <option>Pilates/Yoga</option><option>Fisioterapia</option><option>Outros</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label>Pagamento</label>
+                <select id="fin_pagamento">
+                  <option>Pix</option><option>Dinheiro</option><option>Débito</option><option>Crédito</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label>Valor R$</label>
+                <input id="fin_valor" type="number" placeholder="0,00">
+              </div>
+              <div class="field-group">
+                <label>Nº NF (opcional)</label>
+                <input id="fin_nf" placeholder="NF-0000">
+              </div>
+              <div class="form-full">
+                <button class="btn-save" onclick="addEntrada()">Adicionar Entrada</button>
+              </div>
+            </div>
           </div>
-          <h4>Forma de Pagamento</h4>
-          <div class="inline-group">
-            <label><input type="checkbox" id="fisio_pix"> Pix</label>
-            <label><input type="checkbox" id="fisio_parcelado"> Parcelado</label>
-            <input type="text" id="fisio_parcelas" placeholder="Parcelado em quantas vezes" style="max-width:200px">
+          <p class="fin-total" id="fin_totalMes">Total do mês: R$ 0,00</p>
+          <div class="table-card">
+            <table class="data-table">
+              <thead><tr><th>Nome</th><th>Gmail</th><th>CPF/CNPJ</th><th>Atividade</th><th>Pagamento</th><th>Valor</th><th>Data</th><th>NF</th><th></th></tr></thead>
+              <tbody id="fin_tabela"></tbody>
+            </table>
           </div>
-          <label>Parceria</label><input type="text" id="fisio_parceria">
-          <h4>📌 Identificação</h4>
-          <div class="grid-2">
-            <div><label>Nome completo</label><input type="text" id="fisio_nomeCompleto"></div>
-            <div><label>Data de nascimento</label><input type="date" id="fisio_dataNascimento"></div>
-            <div><label>CPF</label><input type="text" id="fisio_cpf"></div>
-            <div><label>Data da Avaliação</label><input type="date" id="fisio_dataAvaliacao"></div>
-          </div>
-          <div class="inline-group">
-            <label><input type="checkbox" id="fisio_masculino"> Masculino</label>
-            <label><input type="checkbox" id="fisio_feminino"> Feminino</label>
-          </div>
-          <div class="grid-2">
-            <div><label>Responsável (se menor)</label><input type="text" id="fisio_responsavel"></div>
-            <div><label>Grau de parentesco</label><input type="text" id="fisio_parentesco"></div>
-            <div><label>CPF Responsável</label><input type="text" id="fisio_cpfResponsavel"></div>
-            <div><label>Profissão/Ocupação</label><input type="text" id="fisio_profissao"></div>
-            <div><label>Telefone</label><input type="text" id="fisio_telefone"></div>
-            <div><label>E-mail</label><input type="email" id="fisio_email"></div>
-          </div>
-          <label>Endereço</label><input type="text" id="fisio_endereco">
-          <label>Diagnóstico Clínico</label><textarea id="fisio_diagClinico"></textarea>
-          <label>Diagnóstico Fisioterapêutico</label><textarea id="fisio_diagFisio"></textarea>
-          <input type="text" id="fisio_cbdf" placeholder="CBDF">
-          <h4>⚕️ História Clínica</h4>
-          <label>Queixa Principal</label><textarea id="fisio_queixaPrincipal"></textarea>
-          <label>HDA</label><textarea id="fisio_hpp"></textarea>
-          <label>HPP</label><textarea id="fisio_antecedentesPessoais"></textarea>
-          <label>Antecedentes Familiares</label><textarea id="fisio_antecedentesFamiliares"></textarea>
-          <label>Tratamentos Realizados</label><textarea id="fisio_tratamentos"></textarea>
-          <label>Hábitos de vida</label><textarea id="fisio_habitos"></textarea>
-          <div class="inline-group">
-            <label><input type="checkbox" id="fisio_acompanhamentoSim"> Acompanhamento – Sim</label>
-            <label><input type="checkbox" id="fisio_acompanhamentoNao"> Não</label>
-            <input type="text" id="fisio_especialidade" placeholder="Qual especialidade?" style="max-width:200px">
-          </div>
-          <h4>⚕️ Exames Complementares</h4>
-          <div class="inline-group">
-            <label><input type="checkbox" id="fisio_examesSim"> Sim</label>
-            <label><input type="checkbox" id="fisio_examesNao"> Não</label>
-          </div>
-          <textarea id="fisio_examesQuais" placeholder="Se sim, quais?"></textarea>
-          <h4>⚕️ Usa Medicamentos</h4>
-          <div class="inline-group">
-            <label><input type="checkbox" id="fisio_medicamentoSim"> Sim</label>
-            <label><input type="checkbox" id="fisio_medicamentoNao"> Não</label>
-          </div>
-          <textarea id="fisio_medicamentosQuais" placeholder="Se sim, quais?"></textarea>
-          <h4>⚕️ Apresentação do Paciente</h4>
-          <div class="opcoes-grid">
-            <label><input type="checkbox" id="fisio_orientado"> Deambulando e orientado</label>
-            <label><input type="checkbox" id="fisio_apoio"> Deambulando com apoio</label>
-            <label><input type="checkbox" id="fisio_confuso"> Confuso</label>
-            <label><input type="checkbox" id="fisio_desorientado"> Desorientado</label>
-          </div>
-          <h4>⚕️ Realizou Cirurgia</h4>
-          <div class="inline-group">
-            <label><input type="checkbox" id="fisio_cirurgiaSim"> Sim</label>
-            <label><input type="checkbox" id="fisio_cirurgiaNao"> Não</label>
-          </div>
-          <textarea id="fisio_cirurgias" placeholder="Se sim, quais?"></textarea>
-          <h4>⚕️ Inspeção/Palpação</h4>
-          <div class="opcoes-grid">
-            <label><input type="checkbox" id="fisio_normal"> Normal</label>
-            <label><input type="checkbox" id="fisio_edema"> Edema</label>
-            <label><input type="checkbox" id="fisio_cicatriz"> Cicatrização incompleta</label>
-            <label><input type="checkbox" id="fisio_eritema"> Eritemas</label>
-            <label><input type="checkbox" id="fisio_outros"> Outros</label>
-          </div>
-          <textarea id="fisio_inspecaoDetalhes" placeholder="Detalhes adicionais da inspeção/palpação"></textarea>
-          <h4>⚕️ Avaliação Física</h4>
-          <div class="grid-2">
-            <div><label>Peso</label><input type="number" id="fisio_peso"></div>
-            <div><label>Altura</label><input type="number" id="fisio_altura"></div>
-          </div>
-          <h4>📌 Testes Fisioterapêuticos</h4>
-          <div class="inline-group">
-            <span style="color:var(--muted);font-size:.82rem">Joelhos (Y Teste):</span>
-            <label><input type="checkbox" id="fisio_joelhoY_sim"> Sim</label>
-            <label><input type="checkbox" id="fisio_joelhoY_nao"> Não</label>
-          </div>
-          <div class="inline-group">
-            <span style="color:var(--muted);font-size:.82rem">Romberg:</span>
-            <label><input type="checkbox" id="fisio_romberg_pos"> Positivo</label>
-            <label><input type="checkbox" id="fisio_romberg_neg"> Negativo</label>
-          </div>
-          <div class="inline-group">
-            <span style="color:var(--muted);font-size:.82rem">TUG:</span>
-            <label><input type="checkbox" id="fisio_tug_normal"> Normal</label>
-            <label><input type="checkbox" id="fisio_tug_baixo"> Baixo risco</label>
-            <label><input type="checkbox" id="fisio_tug_medio"> Médio risco</label>
-            <label><input type="checkbox" id="fisio_tug_alto"> Alto risco</label>
-          </div>
-          <div class="inline-group">
-            <span style="color:var(--muted);font-size:.82rem">Lasegue:</span>
-            <label><input type="checkbox" id="fisio_lasegue_pos"> Positivo</label>
-            <label><input type="checkbox" id="fisio_lasegue_neg"> Negativo</label>
-          </div>
-          <h4>⚕️ Escala de Força Muscular</h4>
-          <div class="inline-group">
-            <label><input type="checkbox" id="fisio_g0"> Grau 0</label>
-            <label><input type="checkbox" id="fisio_g1"> Grau 1</label>
-            <label><input type="checkbox" id="fisio_g2"> Grau 2</label>
-            <label><input type="checkbox" id="fisio_g3"> Grau 3</label>
-            <label><input type="checkbox" id="fisio_g4"> Grau 4</label>
-            <label><input type="checkbox" id="fisio_g5"> Grau 5</label>
-          </div>
-          <h4>📌 Plano Terapêutico</h4>
-          <label>Objetivos</label><textarea id="fisio_objetivos"></textarea>
-          <label>Recursos Terapêuticos</label><textarea id="fisio_recursos"></textarea>
-          <label>Plano do Tratamento</label><textarea id="fisio_planoTratamento"></textarea>
-          <label>Profissional / Registro</label><input type="text" id="fisio_profissional">
-          <button onclick="salvarFisioterapia()">💾 Salvar Avaliação</button>
         </div>
       </div>
 
-      <!-- TELA PILATES -->
-      <div id="telaPilates" class="hidden">
-        <div class="card">
-          <button class="btn-back" onclick="voltar()">⬅ Voltar</button>
-          <h3>Avaliação Pilates</h3>
-          <h4>📌 Identificação</h4>
-          <div class="opcoes-grid">
-            <label><input type="checkbox" id="pilates_totalpass"> Totalpass</label>
-            <label><input type="checkbox" id="pilates_gympass"> Gympass</label>
-            <label><input type="checkbox" id="pilates_gurupass"> Gurupass</label>
-            <label><input type="checkbox" id="pilates_mensalidade"> Mensalidade</label>
+      <!-- ════ GRADE DE HORÁRIOS ════ -->
+      <div class="page" id="page-grade">
+        <div class="inner">
+          <div class="colab-controls">
+            <label>Filtrar dia:</label>
+            <select id="filtroDia">
+              <option value="Todos">Todos os dias</option>
+              <option>Segunda-feira</option><option>Terça-feira</option>
+              <option>Quarta-feira</option><option>Quinta-feira</option>
+              <option>Sexta-feira</option><option>Sábado</option>
+            </select>
           </div>
-          <label>Parceria</label><input type="text" id="pilates_parceria">
-          <label>Nome completo</label><input type="text" id="pilates_nomeCompleto">
-          <div class="grid-2">
-            <div><label>Data de nascimento</label><input type="date" id="pilates_dataNascimento"></div>
-            <div><label>CPF</label><input type="text" id="pilates_cpf"></div>
-            <div><label>Telefone</label><input type="text" id="pilates_telefone"></div>
-            <div><label>E-mail</label><input type="email" id="pilates_email"></div>
-            <div><label>Data da Avaliação</label><input type="date" id="pilates_dataAvaliacao"></div>
-          </div>
-          <div class="inline-group">
-            <label><input type="checkbox" id="pilates_masculino"> Masculino</label>
-            <label><input type="checkbox" id="pilates_feminino"> Feminino</label>
-          </div>
-          <label>Diagnóstico Clínico</label><textarea id="pilates_diagClinico"></textarea>
-          <label>Diagnóstico Fisioterapêutico</label><textarea id="pilates_diagFisio"></textarea>
-          <label>CBDF</label><input type="text" id="pilates_cbdf">
-          <h4>⚕️ História Clínica</h4>
-          <label>Queixa Principal</label><textarea id="pilates_queixaPrincipal"></textarea>
-          <label>HPP</label><textarea id="pilates_hpp"></textarea>
-          <label>Antecedentes Pessoais</label><textarea id="pilates_antecedentesPessoais"></textarea>
-          <label>Antecedentes Familiares</label><textarea id="pilates_antecedentesFamiliares"></textarea>
-          <label>Tratamentos Realizados</label><textarea id="pilates_tratamentos"></textarea>
-          <label>Hábitos de vida</label><textarea id="pilates_habitos"></textarea>
-          <h4>⚕️ Apresentação do Paciente</h4>
-          <div class="opcoes-grid">
-            <label><input type="checkbox" id="pilates_orientado"> Deambulando e orientado</label>
-            <label><input type="checkbox" id="pilates_apoio"> Com apoio</label>
-            <label><input type="checkbox" id="pilates_confuso"> Confuso</label>
-            <label><input type="checkbox" id="pilates_desorientado"> Desorientado</label>
-          </div>
-          <label>Se apoio, qual?</label><input type="text" id="pilates_tipoApoio">
-          <h4>⚕️ Exames / Medicamentos / Cirurgia</h4>
-          <div class="inline-group">
-            <span style="color:var(--muted);font-size:.82rem">Exames:</span>
-            <label><input type="radio" name="pilates_exames" id="pilates_examesSim"> Sim</label>
-            <label><input type="radio" name="pilates_exames" id="pilates_examesNao"> Não</label>
-            <input type="text" id="pilates_quaisExames" placeholder="Quais?" style="max-width:200px">
-          </div>
-          <div class="inline-group">
-            <span style="color:var(--muted);font-size:.82rem">Medicamentos:</span>
-            <label><input type="radio" name="pilates_medicamentos" id="pilates_medicamentoSim"> Sim</label>
-            <label><input type="radio" name="pilates_medicamentos" id="pilates_medicamentoNao"> Não</label>
-            <input type="text" id="pilates_quaisMedicamentos" placeholder="Quais?" style="max-width:200px">
-          </div>
-          <div class="inline-group">
-            <span style="color:var(--muted);font-size:.82rem">Cirurgia:</span>
-            <label><input type="radio" name="pilates_cirurgia" id="pilates_cirurgiaSim"> Sim</label>
-            <label><input type="radio" name="pilates_cirurgia" id="pilates_cirurgiaNao"> Não</label>
-          </div>
-          <textarea id="pilates_cirurgias" placeholder="Se sim, quais?"></textarea>
-          <h4>⚕️ Inspeção/Palpação</h4>
-          <div class="opcoes-grid">
-            <label><input type="checkbox" id="pilates_normal"> Normal</label>
-            <label><input type="checkbox" id="pilates_edema"> Edema</label>
-            <label><input type="checkbox" id="pilates_cicatriz"> Cicatrização incompleta</label>
-            <label><input type="checkbox" id="pilates_eritema"> Eritemas</label>
-            <label><input type="checkbox" id="pilates_outros"> Outros</label>
-          </div>
-          <textarea id="pilates_inspecaoDetalhes" placeholder="Detalhes adicionais"></textarea>
-          <h4>⚕️ Avaliação Física</h4>
-          <div class="grid-2">
-            <div><label>Peso</label><input type="number" id="pilates_peso"></div>
-            <div><label>Altura</label><input type="number" id="pilates_altura"></div>
-            <div><label>Pressão Arterial</label><input type="text" id="pilates_pressao"></div>
-            <div><label>Escala de Borg</label><input type="text" id="pilates_escalaBorg"></div>
-          </div>
-          <h4>📌 Plano Terapêutico</h4>
-          <label>Objetivos</label><textarea id="pilates_objetivos"></textarea>
-          <label>Recursos</label><textarea id="pilates_recursos"></textarea>
-          <label>Plano do Tratamento</label><textarea id="pilates_planoTratamento"></textarea>
-          <label>Profissional / Registro</label><input type="text" id="pilates_profissional">
-          <button onclick="salvarPilates()">💾 Salvar Avaliação</button>
+          <div id="grade_container"></div>
         </div>
       </div>
 
-      <!-- TELA RECOVERY -->
-      <div id="telaRecovery" class="hidden">
-        <div class="card">
-          <button class="btn-back" onclick="voltar()">⬅ Voltar</button>
-          <h3>Avaliação Recovery</h3>
-          <h4>📌 Dados Pessoais</h4>
-          <label>Nome</label><input type="text" id="mov_nome">
-          <div class="grid-2">
-            <div><label>Data de Nascimento</label><input type="date" id="mov_nascimento"></div>
-            <div><label>Telefone</label><input type="text" id="mov_telefone"></div>
+      <!-- ════ AVALIAÇÕES ════ -->
+      <div class="page" id="page-avaliacoes">
+        <div class="inner">
+          <!-- tela inicial -->
+          <div id="telaInicial">
+            <div class="form-card">
+              <h3>📋 Nova Avaliação</h3>
+              <div class="form-grid">
+                <div class="field-group"><label>Nome do paciente</label><input type="text" id="nome" placeholder="Nome completo"></div>
+                <div class="field-group"><label>Data</label><input type="date" id="data"></div>
+                <div class="field-group form-full"><label>Tipo</label>
+                  <select id="tipo">
+                    <option value="">Selecione...</option>
+                    <option>Fisioterapia</option><option>Pilates</option>
+                    <option>Pélvica</option><option>Recovery</option><option>Condicionamento</option>
+                  </select>
+                </div>
+              </div>
+              <button class="btn-save" onclick="abrirTelaPorTipo()">Continuar →</button>
+            </div>
+            <div class="table-card">
+              <div class="table-header">
+                <span class="table-title">Avaliações Salvas</span>
+                <select id="filtroTipo" onchange="carregarAvaliacoes()" style="margin-left:auto;padding:6px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none;">
+                  <option value="">Todas</option>
+                  <option>Fisioterapia</option><option>Pilates</option>
+                  <option>Pélvica</option><option>Recovery</option><option>Condicionamento</option>
+                </select>
+              </div>
+              <div id="listaAvaliacoes" style="padding:12px 20px">Carregando...</div>
+            </div>
           </div>
-          <div class="inline-group">
-            <label><input type="radio" name="mov_sexo" id="mov_sexo_fem"> Feminino</label>
-            <label><input type="radio" name="mov_sexo" id="mov_sexo_masc"> Masculino</label>
+          <!-- fichas – injetadas abaixo -->
+          <div id="fichasAval"></div>
+          <!-- detalhe -->
+          <div id="telaDetalhe" class="hidden">
+            <div class="form-card">
+              <button class="btn-back" onclick="voltar()">⬅ Voltar</button>
+              <h3 id="tituloDetalhe"></h3>
+              <div id="dadosAvaliacao" style="margin-bottom:16px;font-size:.84rem;line-height:1.8"></div>
+              <div style="display:flex;gap:10px;flex-wrap:wrap">
+                <button class="btn-save" onclick="editarAvaliacaoAtual()">✏️ Editar</button>
+                <button class="btn-del" onclick="apagarAvaliacaoAtual()">🗑️ Apagar</button>
+              </div>
+              <div id="evolucoes" style="margin-top:20px"></div>
+              <div class="field-group" style="margin-top:14px">
+                <label>Nova Evolução</label>
+                <textarea id="textoEvolucao" placeholder="Descreva a evolução..."></textarea>
+              </div>
+              <button class="btn-save" onclick="salvarEvolucao()">Salvar Evolução</button>
+            </div>
           </div>
-          <label>Endereço</label><input type="text" id="mov_endereco">
-          <label>Fisioterapeuta</label><input type="text" id="mov_fisioterapeuta">
-          <h4>🏃 Perfil Esportivo</h4>
-          <div class="inline-group">
-            <label><input type="radio" name="mov_atleta" id="mov_atleta_amador"> Amador</label>
-            <label><input type="radio" name="mov_atleta" id="mov_atleta_profissional"> Profissional</label>
-          </div>
-          <label>Esporte / Há quanto tempo</label><input type="text" id="mov_esporte">
-          <div class="inline-group">
-            <span style="color:var(--muted);font-size:.82rem">Pratica atividade física?</span>
-            <label><input type="radio" name="mov_pratica" id="mov_pratica_sim"> Sim</label>
-            <label><input type="radio" name="mov_pratica" id="mov_pratica_nao"> Não</label>
-          </div>
-          <label>Frequência semanal</label><input type="text" id="mov_frequencia">
-          <label>Objetivos</label><textarea id="mov_objetivos"></textarea>
-          <h4>⚕️ Histórico de Saúde</h4>
-          <div class="grid-2">
-            <div class="inline-group"><span style="color:var(--muted);font-size:.82rem">Tabagismo:</span><label><input type="radio" name="mov_tabagismo" id="mov_tabagismo_sim"> Sim</label><label><input type="radio" name="mov_tabagismo" id="mov_tabagismo_nao"> Não</label></div>
-            <div class="inline-group"><span style="color:var(--muted);font-size:.82rem">Cardíaco:</span><label><input type="radio" name="mov_cardiaco" id="mov_cardiaco_sim"> Sim</label><label><input type="radio" name="mov_cardiaco" id="mov_cardiaco_nao"> Não</label></div>
-            <div class="inline-group"><span style="color:var(--muted);font-size:.82rem">Diabetes:</span><label><input type="radio" name="mov_diabetes" id="mov_diabetes_sim"> Sim</label><label><input type="radio" name="mov_diabetes" id="mov_diabetes_nao"> Não</label></div>
-            <div class="inline-group"><span style="color:var(--muted);font-size:.82rem">Hipertensão:</span><label><input type="radio" name="mov_hipertensao" id="mov_hipertensao_sim"> Sim</label><label><input type="radio" name="mov_hipertensao" id="mov_hipertensao_nao"> Não</label></div>
-          </div>
-          <div class="inline-group">
-            <span style="color:var(--muted);font-size:.82rem">Medicamentos:</span>
-            <label><input type="radio" name="mov_medicamento" id="mov_medicamento_sim"> Sim</label>
-            <label><input type="radio" name="mov_medicamento" id="mov_medicamento_nao"> Não</label>
-          </div>
-          <textarea id="mov_medicamento_desc" placeholder="Se sim, quais?"></textarea>
-          <div class="inline-group">
-            <span style="color:var(--muted);font-size:.82rem">Lesão:</span>
-            <label><input type="radio" name="mov_lesao" id="mov_lesao_sim"> Sim</label>
-            <label><input type="radio" name="mov_lesao" id="mov_lesao_nao"> Não</label>
-          </div>
-          <textarea id="mov_lesao_desc" placeholder="Se sim, qual?"></textarea>
-          <div class="inline-group">
-            <span style="color:var(--muted);font-size:.82rem">Cirurgia:</span>
-            <label><input type="radio" name="mov_cirurgia" id="mov_cirurgia_sim"> Sim</label>
-            <label><input type="radio" name="mov_cirurgia" id="mov_cirurgia_nao"> Não</label>
-          </div>
-          <textarea id="mov_cirurgia_desc" placeholder="Se sim, qual?"></textarea>
-          <div class="inline-group">
-            <span style="color:var(--muted);font-size:.82rem">Alergia:</span>
-            <label><input type="radio" name="mov_alergia" id="mov_alergia_sim"> Sim</label>
-            <label><input type="radio" name="mov_alergia" id="mov_alergia_nao"> Não</label>
-          </div>
-          <textarea id="mov_alergia_desc" placeholder="Se sim, qual?"></textarea>
-          <label>Profissão</label><input type="text" id="mov_profissao">
-          <h4>📌 Programa MOV Recovery</h4>
-          <div class="grid-2">
-            <div><label>Esporte</label><input type="text" id="mov_prog_esporte"></div>
-            <div><label>Início</label><input type="text" id="mov_prog_inicio"></div>
-          </div>
-          <label>Queixa principal</label><textarea id="mov_prog_queixaPrincipal"></textarea>
-          <label>Diagnóstico Cinético Funcional</label><textarea id="mov_prog_diagnosticoCinetico"></textarea>
-          <label>Objetivos</label><textarea id="mov_prog_objetivos"></textarea>
-          <label>Conduta Fisioterapêutica</label><textarea id="mov_prog_conduta"></textarea>
-          <label>Fisioterapeuta</label><input type="text" id="mov_prog_fisioterapeuta">
-          <button onclick="salvarRecovery()">💾 Salvar</button>
         </div>
       </div>
 
-      <!-- TELA CONDICIONAMENTO -->
-      <div id="telaCondicionamento" class="hidden">
-        <div class="card">
-          <button class="btn-back" onclick="voltar()">⬅ Voltar</button>
-          <h3>Avaliação Condicionamento Funcional</h3>
-          <div class="opcoes-grid">
-            <label><input type="checkbox" id="cond_totalpass"> Totalpass</label>
-            <label><input type="checkbox" id="cond_gympass"> Gympass</label>
-            <label><input type="checkbox" id="cond_mensalidade"> Mensalidade</label>
+      <!-- ════ AGENDA ════ -->
+      <div class="page" id="page-agenda">
+        <div class="inner">
+          <div class="alerta-box" id="agAlerta">
+            <strong>⚠️ Reavaliações vencidas:</strong>
+            <ul id="agListaVencidas" style="margin-top:6px;padding-left:18px;font-size:.82rem"></ul>
           </div>
-          <h4>📌 Identificação</h4>
-          <label>Nome completo</label><input type="text" id="cond_nomeCompleto">
-          <div class="grid-2">
-            <div><label>Data de nascimento</label><input type="date" id="cond_dataNascimento"></div>
-            <div><label>CPF</label><input type="text" id="cond_cpf"></div>
-            <div><label>Telefone</label><input type="text" id="cond_telefone"></div>
-            <div><label>E-mail</label><input type="email" id="cond_email"></div>
-            <div><label>Data da Avaliação</label><input type="date" id="cond_dataAvaliacao"></div>
-            <div><label>Peso (kg)</label><input type="number" id="cond_peso"></div>
-            <div><label>Altura (cm)</label><input type="number" id="cond_altura"></div>
+          <div class="filtros-row">
+            <button class="active-f" onclick="setFiltroAg('todos',this)">Todos</button>
+            <button onclick="setFiltroAg('pendente',this)">Pendentes</button>
+            <button onclick="setFiltroAg('feito',this)">Feitos</button>
           </div>
-          <div class="inline-group">
-            <label><input type="radio" name="cond_sexo" id="cond_sexo_masculino"> Masculino</label>
-            <label><input type="radio" name="cond_sexo" id="cond_sexo_feminino"> Feminino</label>
+          <div class="table-card">
+            <div class="table-header">
+              <span class="table-title">📅 Agenda MOVOM</span>
+              <button class="btn btn-primary" onclick="agAdicionar()" style="margin-left:auto">➕ Aluno</button>
+            </div>
+            <div style="overflow-x:auto">
+              <table class="data-table">
+                <thead><tr><th>Nome</th><th>Tipo</th><th>Data</th><th>Horário</th><th>Reavaliação</th><th>Plano</th><th>Status</th><th></th></tr></thead>
+                <tbody id="agTabela"></tbody>
+              </table>
+            </div>
           </div>
-          <label>Diagnóstico Clínico</label><input type="text" id="cond_diagnosticoClinico">
-          <label>Diagnóstico Fisioterapêutico</label><input type="text" id="cond_diagnosticoFisio">
-          <h4>⚕️ História Clínica</h4>
-          <label>Queixa Principal</label><textarea id="cond_queixaPrincipal"></textarea>
-          <label>HDA</label><textarea id="cond_hda"></textarea>
-          <label>Histórico de Lesões</label><textarea id="cond_historicoLesoes"></textarea>
-          <div class="inline-group">
-            <span style="color:var(--muted);font-size:.82rem">Acompanhamento médico:</span>
-            <label><input type="radio" name="cond_acompanhamento" id="cond_acompanhamento_sim"> Sim</label>
-            <label><input type="radio" name="cond_acompanhamento" id="cond_acompanhamento_nao"> Não</label>
-            <input type="text" id="cond_acompanhamento_quais" placeholder="Quais?" style="max-width:200px">
-          </div>
-          <div class="inline-group">
-            <span style="color:var(--muted);font-size:.82rem">Medicamentos:</span>
-            <label><input type="radio" name="cond_medicamentos" id="cond_medicamentos_sim"> Sim</label>
-            <label><input type="radio" name="cond_medicamentos" id="cond_medicamentos_nao"> Não</label>
-            <input type="text" id="cond_medicamentos_quais" placeholder="Quais?" style="max-width:200px">
-          </div>
-          <label>Hábitos de Vida</label><textarea id="cond_habitosVida"></textarea>
-          <label>Metas Pessoais</label><textarea id="cond_metasPessoais"></textarea>
-          <label>EVA / Região</label><input type="text" id="cond_evaRegiao">
-          <h4>🏃 Condicionamento Físico</h4>
-          <div class="inline-group">
-            <label><input type="checkbox" id="cond_ativo"> Ativo</label>
-            <label><input type="checkbox" id="cond_moderadamente_ativo"> Moderadamente Ativo</label>
-            <label><input type="checkbox" id="cond_sedentario"> Sedentário</label>
-          </div>
-          <div class="inline-group">
-            <span style="color:var(--muted);font-size:.82rem">Atividade física regular:</span>
-            <label><input type="radio" name="cond_atividade" id="cond_atividade_sim"> Sim</label>
-            <label><input type="radio" name="cond_atividade" id="cond_atividade_nao"> Não</label>
-            <input type="text" id="cond_atividade_quais" placeholder="Quais?" style="max-width:200px">
-          </div>
-          <label>Escala de Borg</label><input type="number" min="0" max="10" id="cond_borg">
-          <h4>⚕️ Avaliação Física</h4>
-          <div class="inline-group">
-            <span style="color:var(--muted);font-size:.82rem">Desvios posturais:</span>
-            <label><input type="radio" name="cond_desvios" id="cond_desvios_sim"> Sim</label>
-            <label><input type="radio" name="cond_desvios" id="cond_desvios_nao"> Não</label>
-            <input type="text" id="cond_desvios_quais" placeholder="Quais?" style="max-width:200px">
-          </div>
-          <div class="inline-group">
-            <span style="color:var(--muted);font-size:.82rem">Movimentos articulares:</span>
-            <label><input type="radio" name="cond_movimentos" id="cond_movimentos_com_dor"> Com Dor</label>
-            <label><input type="radio" name="cond_movimentos" id="cond_movimentos_sem_dor"> Sem Dor</label>
-            <input type="text" id="cond_movimentos_quais" placeholder="Quais?" style="max-width:200px">
-          </div>
-          <label>Movimentos Funcionais</label><textarea id="cond_movimentos_funcionais"></textarea>
-          <label>Mobilidade</label><textarea id="cond_mobilidade"></textarea>
-          <label>Flexibilidade</label><input type="text" id="cond_flexibilidade">
-          <label>Resistência Muscular/Cardiovascular</label>
-          <select id="cond_resistencia"><option value="">Selecione</option><option>Baixa</option><option>Média</option><option>Alta</option></select>
-          <h4>📌 Plano Terapêutico</h4>
-          <textarea id="cond_planoTerapeutico"></textarea>
-          <label>Profissional / Registro</label><input type="text" id="cond_profissional">
-          <button onclick="salvarCondicionamento()">💾 Salvar Avaliação</button>
         </div>
       </div>
 
-      <!-- TELA PÉLVICA -->
-      <div id="telaPelvica" class="hidden">
-        <div class="card">
-          <button class="btn-back" onclick="voltar()">⬅ Voltar</button>
-          <h3>Avaliação Pélvica Feminina</h3>
-          <div class="grid-2">
-            <div><label>Nome</label><input type="text" id="pelvic_nome"></div>
-            <div><label>Idade</label><input type="number" id="pelvic_idade"></div>
-            <div><label>Data de Nascimento</label><input type="date" id="pelvic_nascimento"></div>
-            <div><label>Telefone</label><input type="text" id="pelvic_telefone"></div>
+      <!-- ════ INSUMOS ════ -->
+      <div class="page" id="page-insumos">
+        <div class="inner">
+          <div class="form-card">
+            <h3>🗂 Filtro</h3>
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+              <div class="field-group" style="flex:1"><label>Mês</label><select id="ins_mes"></select></div>
+              <div class="field-group" style="flex:1"><label>Ano</label><select id="ins_ano"></select></div>
+            </div>
           </div>
-          <h4>⚕️ Queixa Principal</h4>
-          <div class="opcoes-grid">
-            <label><input type="checkbox"> Assintomática</label>
-            <label><input type="checkbox"> Perda de urina</label>
-            <label><input type="checkbox"> Dor pélvica</label>
-            <label><input type="checkbox"> Dor durante relação sexual</label>
-            <label><input type="checkbox"> Urgência urinária</label>
-            <label><input type="checkbox"> Dificuldade para urinar</label>
+          <div class="table-card">
+            <div class="table-header">
+              <span class="table-title">📦 Planilha de Insumos</span>
+              <button class="btn btn-primary" onclick="insAdicionar()" style="margin-left:auto">➕ Insumo</button>
+            </div>
+            <div style="overflow-x:auto">
+              <table class="data-table">
+                <thead><tr><th>Insumo</th><th>Custo</th><th>Qtd</th><th>Data</th><th>Local</th><th>Pagamento</th><th>Total</th><th></th></tr></thead>
+                <tbody id="ins_tabela"></tbody>
+              </table>
+            </div>
           </div>
-          <h4>⚕️ HPP</h4>
-          <div class="opcoes-grid">
-            <label><input type="checkbox"> Ansiedade</label>
-            <label><input type="checkbox"> Hipertensão</label>
-            <label><input type="checkbox"> Diabetes</label>
-            <label><input type="checkbox"> Epilepsia</label>
-            <label><input type="checkbox"> Cardiopatia</label>
-            <label><input type="checkbox"> Doença Renal</label>
-          </div>
-          <div class="inline-group">
-            <span style="color:var(--muted);font-size:.82rem">Cirurgias:</span>
-            <label><input type="radio" name="pelvic_cirurgia" id="pelvic_cirurgia_sim"> Sim</label>
-            <label><input type="radio" name="pelvic_cirurgia" id="pelvic_cirurgia_nao"> Não</label>
-          </div>
-          <input type="text" id="pelvic_cirurgias_quais" placeholder="Se sim, quais?">
-          <h4>🩺 História Ginecológica</h4>
-          <div class="grid-2">
-            <div><label>Gestações</label><input type="number"></div>
-            <div><label>Partos</label><input type="number"></div>
-          </div>
-          <div class="inline-group">
-            <label><input type="checkbox"> Parto Normal</label>
-            <label><input type="checkbox"> Cesárea</label>
-            <label><input type="checkbox"> Fórceps</label>
-          </div>
-          <h4>📋 Diagnóstico Fisioterapêutico</h4>
-          <textarea rows="3"></textarea>
-          <h4>🎯 Objetivos do Tratamento</h4>
-          <textarea rows="3"></textarea>
-          <h4>📝 Conduta / Tratamento Proposto</h4>
-          <textarea rows="4"></textarea>
-          <label>Nome do Fisioterapeuta</label><input type="text">
-          <label>CREFITO</label><input type="text">
-          <button onclick="salvarPelvica()">💾 Salvar Avaliação</button>
+          <div class="insumos-total" id="ins_total">Total do Mês: R$ 0,00</div>
         </div>
       </div>
 
-      <!-- TELA DETALHE -->
-      <div id="telaDetalhe" class="hidden">
-        <div class="card">
-          <button class="btn-back" onclick="voltar()">⬅ Voltar</button>
-          <h3 id="tituloDetalhe"></h3>
-          <div id="dadosAvaliacao" style="margin-bottom:16px"></div>
-          <div class="inline-group">
-            <button onclick="editarAvaliacaoAtual()">✏️ Editar</button>
-            <button class="btn-del" onclick="apagarAvaliacaoAtual()">🗑️ Apagar</button>
+      <!-- ════ YOGA FINANCEIRO ════ -->
+      <div class="page" id="page-yoga">
+        <div class="inner">
+          <div class="form-card">
+            <h3>🧘 Nova Movimentação – Yoga</h3>
+            <div class="form-grid">
+              <div class="field-group"><label>Mês</label><select id="yoga_mes"></select></div>
+              <div class="field-group"><label>Tipo</label>
+                <select id="yoga_tipo" onchange="yogaLabel()">
+                  <option value="yoga">Yoga (Entrada)</option>
+                  <option value="lojinha">Lojinha (Entrada)</option>
+                  <option value="prof">Pagamento Professores (Saída)</option>
+                </select>
+              </div>
+              <div class="field-group"><label id="yoga_labelNome">Nome do aluno</label><input id="yoga_nome" placeholder="Nome"></div>
+              <div class="field-group"><label>Pagamento</label>
+                <select id="yoga_pag"><option>Pix</option><option>Dinheiro</option></select>
+              </div>
+              <div class="field-group"><label>Descrição</label><input id="yoga_desc" placeholder="Descrição"></div>
+              <div class="field-group"><label>Valor R$</label><input id="yoga_valor" type="number" placeholder="0,00"></div>
+              <div class="form-full"><button class="btn-save" onclick="yogaAdd()">Adicionar</button></div>
+            </div>
           </div>
-          <div id="evolucoes" style="margin-top:18px"></div>
-          <h4 style="margin-top:16px">Nova Evolução</h4>
-          <textarea id="textoEvolucao" placeholder="Descreva a evolução..."></textarea>
-          <button onclick="salvarEvolucao()">Salvar Evolução</button>
+          <div class="resumo-cards">
+            <div class="resumo-card entrada"><small>Entradas</small>R$ <span id="yoga_ent">0,00</span></div>
+            <div class="resumo-card saida"><small>Saídas</small>R$ <span id="yoga_sai">0,00</span></div>
+            <div class="resumo-card saldo"><small>Saldo</small>R$ <span id="yoga_sal">0,00</span></div>
+          </div>
+          <div class="table-card">
+            <table class="data-table">
+              <thead><tr><th>Tipo</th><th>Nome</th><th>Pagamento</th><th>Descrição</th><th>Valor</th><th>Data</th><th></th></tr></thead>
+              <tbody id="yoga_tabela"></tbody>
+            </table>
+          </div>
         </div>
       </div>
 
-    </div><!-- /aval-wrap -->
-  </div><!-- /page-avaliacoes -->
+      <!-- ════ SITE INSTITUCIONAL ════ -->
+      <div class="page" id="page-site">
+        <div class="site-header">
+          <h1>Mov om Espaço De Saúde e Bem Estar</h1>
+          <p>Fisioterapia • Pilates • Yoga</p>
+        </div>
+        <div class="site-nav">
+          <button class="active-s" onclick="siteNav('s-home',this)">Início</button>
+          <button onclick="siteNav('s-pilates',this)">Pilates</button>
+          <button onclick="siteNav('s-yoga',this)">Yoga</button>
+          <button onclick="siteNav('s-contato',this)">Contato</button>
+        </div>
+        <!-- HOME -->
+        <div class="site-section active-s" id="s-home">
+          <div class="site-container">
+            <h2 style="font-family:'Nunito',sans-serif;font-weight:900;color:var(--lilas);margin-bottom:10px">Bem-vindo(a)</h2>
+            <p style="color:var(--muted);margin-bottom:20px">A Mov om Espaço De Saúde e Bem Estar é um ambiente dedicado ao cuidado integral do corpo e da mente, oferecendo fisioterapia, pilates e yoga com acompanhamento profissional.</p>
+            <div class="site-btns">
+              <a class="site-btn ig" href="https://www.instagram.com/movomzenyogaepilates/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+              <a class="site-btn wa" href="https://wa.me/5521999681425" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+              <a class="site-btn loc" href="https://www.google.com/maps/search/?api=1&query=Rua+Marechal+Deodoro%2C+577%2C+salas+605%2C+805+e+808+-+25+de+Agosto%2C+Duque+de+Caxias+-+RJ" target="_blank"><i class="fas fa-map-marker-alt"></i> Localização</a>
+            </div>
+            <h2 style="font-family:'Nunito',sans-serif;font-weight:900;color:var(--lilas);margin:36px 0 12px">Nossas Atividades</h2>
+            <div class="site-cards">
+              <div class="site-card"><h3>Serviços</h3><p style="color:var(--muted);font-size:.84rem">Fisioterapia, Pilates, Método Suspensus, Método Elastic Training, treino cardiorrespiratório, treino funcional, yoga/aéreo yoga e meditação, massagens relaxantes e terapêuticas, drenagem linfática.</p></div>
+              <div class="site-card"><h3>Programas</h3><p style="color:var(--muted);font-size:.84rem"><strong>Mov Zen:</strong> aulas de yoga e meditação para pacientes oncológicos.<br><br><strong>Mov Recovery:</strong> treinos específicos e recuperação muscular para atletas.</p></div>
+            </div>
+          </div>
+        </div>
+        <!-- PILATES -->
+        <div class="site-section" id="s-pilates">
+          <div class="site-container">
+            <h2 style="font-family:'Nunito',sans-serif;font-weight:900;color:var(--lilas);margin-bottom:16px">Horários de Pilates</h2>
+            <div class="site-cards">
+              <div class="site-card"><h3>Segunda a Sexta</h3><p style="color:var(--muted)">07:00 às 19:00<br><small>Intervalo: 12:00 às 13:00</small></p></div>
+              <div class="site-card"><h3>Sábado</h3><p style="color:var(--muted)">07:00 às 12:00</p></div>
+              <div class="site-card"><h3>Domingo</h3><p style="color:var(--muted)">Fechado</p></div>
+            </div>
+          </div>
+        </div>
+        <!-- YOGA -->
+        <div class="site-section" id="s-yoga">
+          <div class="site-container">
+            <h2 style="font-family:'Nunito',sans-serif;font-weight:900;color:var(--lilas);margin-bottom:16px">Horários – Yoga</h2>
+            <div class="site-cards">
+              <div class="site-card"><h3>Segunda</h3><p style="color:var(--muted);font-size:.84rem">09:30 Integrativa<br>10:30 Meditação<br>17:20 Integrativa<br>18:30 Integrativa</p></div>
+              <div class="site-card"><h3>Terça</h3><p style="color:var(--muted);font-size:.84rem">07:00 Integrativa<br>09:30 Sutil<br>17:00 Teens<br>18:10 Kids</p></div>
+              <div class="site-card"><h3>Quarta</h3><p style="color:var(--muted);font-size:.84rem">08:00 Aéreo<br>09:30 Integrativa<br>17:20 Integrativa<br>18:30 Integrativa</p></div>
+              <div class="site-card"><h3>Quinta</h3><p style="color:var(--muted);font-size:.84rem">07:00 Integrativa<br>09:30 Sutil<br>17:20 Integrativa<br>18:30 Integrativa</p></div>
+              <div class="site-card"><h3>Sexta</h3><p style="color:var(--muted);font-size:.84rem">07:00 Aéreo<br>08:15 Hatha<br>09:30 Chair<br>10:40 Restaurativa<br>17:20 / 18:30 Yin</p></div>
+              <div class="site-card"><h3>Sábado</h3><p style="color:var(--muted);font-size:.84rem">08:00 Acroyoga<br>09:15 Hatha<br>10:30 Aéreo<br>11:45 Restaurativa</p></div>
+            </div>
+          </div>
+        </div>
+        <!-- CONTATO -->
+        <div class="site-section" id="s-contato">
+          <div class="site-container">
+            <h2 style="font-family:'Nunito',sans-serif;font-weight:900;color:var(--lilas);margin-bottom:16px">Contato</h2>
+            <div class="site-card" style="max-width:400px">
+              <p style="margin-bottom:10px"><i class="fas fa-envelope" style="color:var(--lilas);margin-right:8px"></i> movom.zenyoga@gmail.com</p>
+              <p><i class="fab fa-whatsapp" style="color:var(--ciano);margin-right:8px"></i> (21) 99968-1425</p>
+            </div>
+          </div>
+        </div>
+        <div class="site-footer">© 2019 Mov om Espaço De Saúde e Bem Estar</div>
+      </div>
 
-</div><!-- /main -->
+      <!-- ════ GESTÃO DE USUÁRIOS (ADM) ════ -->
+      <div class="page" id="page-usuarios">
+        <div class="inner">
+          <div class="user-manage-card">
+            <h3>👥 Colaboradores Cadastrados</h3>
+            <div class="user-row"><div class="user-av">AN</div><div class="user-info"><div class="uname">Andriely</div><div class="urole">Colaboradora • Acesso: Avaliações, Financeiro, Grade, Colaboradores (próprio)</div></div></div>
+            <div class="user-row"><div class="user-av">AA</div><div class="user-info"><div class="uname">Ana Aline</div><div class="urole">Colaboradora • Acesso: Avaliações, Financeiro, Grade, Colaboradores (próprio)</div></div></div>
+            <div class="user-row"><div class="user-av">JE</div><div class="user-info"><div class="uname">Jefferson</div><div class="urole">Colaborador • Acesso: Avaliações, Financeiro, Grade, Colaboradores (próprio)</div></div></div>
+            <div class="user-row"><div class="user-av">ST</div><div class="user-info"><div class="uname">Sthefanny</div><div class="urole">Colaboradora • Acesso: Avaliações, Financeiro, Grade, Colaboradores (próprio)</div></div></div>
+            <div class="user-row"><div class="user-av">VA</div><div class="user-info"><div class="uname">Vanessa</div><div class="urole">Colaboradora • Acesso: Avaliações, Financeiro, Grade, Colaboradores (próprio)</div></div></div>
+            <div class="user-row" style="background:var(--lilas-light);border-radius:10px;padding:12px"><div class="user-av" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">AD</div><div class="user-info"><div class="uname">Administrador</div><div class="urole">Acesso total ao sistema</div></div></div>
+          </div>
+          <div class="user-manage-card">
+            <h3>🔑 Senhas do Sistema</h3>
+            <table class="data-table" style="margin-top:0">
+              <thead><tr><th>Colaborador</th><th>Senha</th><th>Nível</th></tr></thead>
+              <tbody>
+                <tr><td>Andriely</td><td><span class="badge-pill p-lilas">flamengo123</span></td><td>Colaborador</td></tr>
+                <tr><td>Ana Aline</td><td><span class="badge-pill p-lilas">café123</span></td><td>Colaborador</td></tr>
+                <tr><td>Jefferson</td><td><span class="badge-pill p-lilas">personal123</span></td><td>Colaborador</td></tr>
+                <tr><td>Sthefanny</td><td><span class="badge-pill p-lilas">bts123</span></td><td>Colaborador</td></tr>
+                <tr><td>Vanessa</td><td><span class="badge-pill p-lilas">academia123</span></td><td>Colaborador</td></tr>
+                <tr><td>adm</td><td><span class="badge-pill p-ciano">movom1973</span></td><td>Administrador</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
 
-<!-- ══════════════════════════════════════
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- ══════════════════════════════
+     FICHAS DE AVALIAÇÃO (HTML)
+══════════════════════════════ -->
+<template id="tpl-fichas">
+
+<div id="telaFisioterapia" class="hidden">
+  <div class="form-card">
+    <button class="btn-back" onclick="voltar()">⬅ Voltar</button>
+    <h3>Ficha – Fisioterapia</h3>
+    <div class="inline-opts"><label><input type="checkbox" id="fisio_sessao"> Sessão</label><label><input type="checkbox" id="fisio_pacote"> Pacote</label><input style="max-width:180px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none" id="fisio_qtdSessoes" placeholder="Qtd sessões"></div>
+    <div class="inline-opts"><label><input type="checkbox" id="fisio_pix"> Pix</label><label><input type="checkbox" id="fisio_parcelado"> Parcelado</label><input style="max-width:180px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none" id="fisio_parcelas" placeholder="Parcelas"></div>
+    <div class="form-grid">
+      <div class="field-group"><label>Nome completo</label><input type="text" id="fisio_nomeCompleto"></div>
+      <div class="field-group"><label>Data de nascimento</label><input type="date" id="fisio_dataNascimento"></div>
+      <div class="field-group"><label>CPF</label><input type="text" id="fisio_cpf"></div>
+      <div class="field-group"><label>Telefone</label><input type="text" id="fisio_telefone"></div>
+      <div class="field-group"><label>E-mail</label><input type="email" id="fisio_email"></div>
+      <div class="field-group"><label>Data da Avaliação</label><input type="date" id="fisio_dataAvaliacao"></div>
+      <div class="field-group form-full"><label>Endereço</label><input type="text" id="fisio_endereco"></div>
+      <div class="field-group form-full"><label>Diagnóstico Clínico</label><textarea id="fisio_diagClinico"></textarea></div>
+      <div class="field-group form-full"><label>Diagnóstico Fisioterapêutico</label><textarea id="fisio_diagFisio"></textarea></div>
+    </div>
+    <h4 style="color:var(--lilas);margin:16px 0 8px">⚕️ História Clínica</h4>
+    <div class="field-group"><label>Queixa Principal</label><textarea id="fisio_queixaPrincipal"></textarea></div>
+    <div class="field-group"><label>HDA</label><textarea id="fisio_hpp"></textarea></div>
+    <div class="field-group"><label>Antecedentes Familiares</label><textarea id="fisio_antecedentesFamiliares"></textarea></div>
+    <div class="field-group"><label>Hábitos de vida</label><textarea id="fisio_habitos"></textarea></div>
+    <div class="opts-grid" style="margin:10px 0">
+      <label><input type="checkbox" id="fisio_examesSim"> Exames – Sim</label>
+      <label><input type="checkbox" id="fisio_medicamentoSim"> Medicamentos – Sim</label>
+      <label><input type="checkbox" id="fisio_cirurgiaSim"> Cirurgia – Sim</label>
+    </div>
+    <div class="opts-grid" style="margin:10px 0">
+      <label><input type="checkbox" id="fisio_masculino"> Masculino</label>
+      <label><input type="checkbox" id="fisio_feminino"> Feminino</label>
+      <label><input type="checkbox" id="fisio_orientado"> Orientado</label>
+      <label><input type="checkbox" id="fisio_apoio"> Com apoio</label>
+    </div>
+    <div class="opts-grid" style="margin:10px 0">
+      <label><input type="checkbox" id="fisio_normal"> Inspeção Normal</label>
+      <label><input type="checkbox" id="fisio_edema"> Edema</label>
+      <label><input type="checkbox" id="fisio_romberg_pos"> Romberg +</label>
+      <label><input type="checkbox" id="fisio_tug_normal"> TUG Normal</label>
+      <label><input type="checkbox" id="fisio_lasegue_pos"> Lasegue +</label>
+    </div>
+    <div class="form-grid">
+      <div class="field-group"><label>Peso</label><input type="number" id="fisio_peso"></div>
+      <div class="field-group"><label>Altura</label><input type="number" id="fisio_altura"></div>
+      <div class="field-group form-full"><label>Objetivos do Tratamento</label><textarea id="fisio_objetivos"></textarea></div>
+      <div class="field-group form-full"><label>Plano do Tratamento</label><textarea id="fisio_planoTratamento"></textarea></div>
+      <div class="field-group form-full"><label>Profissional / Registro</label><input type="text" id="fisio_profissional"></div>
+    </div>
+    <button class="btn-save" onclick="salvarFisioterapia()">💾 Salvar</button>
+  </div>
+</div>
+
+<div id="telaPilates" class="hidden">
+  <div class="form-card">
+    <button class="btn-back" onclick="voltar()">⬅ Voltar</button>
+    <h3>Ficha – Pilates</h3>
+    <div class="opts-grid" style="margin-bottom:12px">
+      <label><input type="checkbox" id="pilates_totalpass"> Totalpass</label>
+      <label><input type="checkbox" id="pilates_gympass"> Gympass</label>
+      <label><input type="checkbox" id="pilates_gurupass"> Gurupass</label>
+      <label><input type="checkbox" id="pilates_mensalidade"> Mensalidade</label>
+    </div>
+    <div class="form-grid">
+      <div class="field-group"><label>Nome completo</label><input type="text" id="pilates_nomeCompleto"></div>
+      <div class="field-group"><label>Data de nascimento</label><input type="date" id="pilates_dataNascimento"></div>
+      <div class="field-group"><label>CPF</label><input type="text" id="pilates_cpf"></div>
+      <div class="field-group"><label>Telefone</label><input type="text" id="pilates_telefone"></div>
+      <div class="field-group"><label>E-mail</label><input type="email" id="pilates_email"></div>
+      <div class="field-group"><label>Data da Avaliação</label><input type="date" id="pilates_dataAvaliacao"></div>
+      <div class="field-group form-full"><label>Queixa Principal</label><textarea id="pilates_queixaPrincipal"></textarea></div>
+      <div class="field-group form-full"><label>Objetivos</label><textarea id="pilates_objetivos"></textarea></div>
+      <div class="field-group"><label>Peso</label><input type="number" id="pilates_peso"></div>
+      <div class="field-group"><label>Altura</label><input type="number" id="pilates_altura"></div>
+      <div class="field-group"><label>Pressão Arterial</label><input type="text" id="pilates_pressao"></div>
+      <div class="field-group"><label>Escala de Borg</label><input type="text" id="pilates_escalaBorg"></div>
+      <div class="field-group form-full"><label>Plano do Tratamento</label><textarea id="pilates_planoTratamento"></textarea></div>
+      <div class="field-group form-full"><label>Profissional / Registro</label><input type="text" id="pilates_profissional"></div>
+    </div>
+    <button class="btn-save" onclick="salvarPilates()">💾 Salvar</button>
+  </div>
+</div>
+
+<div id="telaRecovery" class="hidden">
+  <div class="form-card">
+    <button class="btn-back" onclick="voltar()">⬅ Voltar</button>
+    <h3>Ficha – Recovery</h3>
+    <div class="form-grid">
+      <div class="field-group"><label>Nome</label><input type="text" id="mov_nome"></div>
+      <div class="field-group"><label>Data de Nascimento</label><input type="date" id="mov_nascimento"></div>
+      <div class="field-group"><label>Telefone</label><input type="text" id="mov_telefone"></div>
+      <div class="field-group"><label>Fisioterapeuta</label><input type="text" id="mov_fisioterapeuta"></div>
+      <div class="field-group"><label>Esporte / Há quanto tempo</label><input type="text" id="mov_esporte"></div>
+      <div class="field-group"><label>Frequência semanal</label><input type="text" id="mov_frequencia"></div>
+      <div class="field-group form-full"><label>Objetivos</label><textarea id="mov_objetivos"></textarea></div>
+      <div class="field-group form-full"><label>Queixa principal</label><textarea id="mov_prog_queixaPrincipal"></textarea></div>
+      <div class="field-group form-full"><label>Diagnóstico Cinético Funcional</label><textarea id="mov_prog_diagnosticoCinetico"></textarea></div>
+      <div class="field-group form-full"><label>Conduta Fisioterapêutica</label><textarea id="mov_prog_conduta"></textarea></div>
+      <div class="field-group form-full"><label>Fisioterapeuta responsável</label><input type="text" id="mov_prog_fisioterapeuta"></div>
+    </div>
+    <button class="btn-save" onclick="salvarRecovery()">💾 Salvar</button>
+  </div>
+</div>
+
+<div id="telaCondicionamento" class="hidden">
+  <div class="form-card">
+    <button class="btn-back" onclick="voltar()">⬅ Voltar</button>
+    <h3>Ficha – Condicionamento Funcional</h3>
+    <div class="opts-grid" style="margin-bottom:12px">
+      <label><input type="checkbox" id="cond_totalpass"> Totalpass</label>
+      <label><input type="checkbox" id="cond_gympass"> Gympass</label>
+      <label><input type="checkbox" id="cond_mensalidade"> Mensalidade</label>
+    </div>
+    <div class="form-grid">
+      <div class="field-group"><label>Nome completo</label><input type="text" id="cond_nomeCompleto"></div>
+      <div class="field-group"><label>Data de nascimento</label><input type="date" id="cond_dataNascimento"></div>
+      <div class="field-group"><label>CPF</label><input type="text" id="cond_cpf"></div>
+      <div class="field-group"><label>Telefone</label><input type="text" id="cond_telefone"></div>
+      <div class="field-group"><label>E-mail</label><input type="email" id="cond_email"></div>
+      <div class="field-group"><label>Data da Avaliação</label><input type="date" id="cond_dataAvaliacao"></div>
+      <div class="field-group"><label>Peso (kg)</label><input type="number" id="cond_peso"></div>
+      <div class="field-group"><label>Altura (cm)</label><input type="number" id="cond_altura"></div>
+      <div class="field-group form-full"><label>Queixa Principal</label><textarea id="cond_queixaPrincipal"></textarea></div>
+      <div class="field-group form-full"><label>Metas Pessoais</label><textarea id="cond_metasPessoais"></textarea></div>
+      <div class="field-group form-full"><label>Plano Terapêutico</label><textarea id="cond_planoTerapeutico"></textarea></div>
+      <div class="field-group form-full"><label>Profissional / Registro</label><input type="text" id="cond_profissional"></div>
+    </div>
+    <button class="btn-save" onclick="salvarCondicionamento()">💾 Salvar</button>
+  </div>
+</div>
+
+<div id="telaPelvica" class="hidden">
+  <div class="form-card">
+    <button class="btn-back" onclick="voltar()">⬅ Voltar</button>
+    <h3>Ficha – Pélvica Feminina</h3>
+    <div class="form-grid">
+      <div class="field-group"><label>Nome</label><input type="text" id="pelvic_nome"></div>
+      <div class="field-group"><label>Idade</label><input type="number" id="pelvic_idade"></div>
+      <div class="field-group"><label>Data de Nascimento</label><input type="date" id="pelvic_nascimento"></div>
+      <div class="field-group"><label>Telefone</label><input type="text" id="pelvic_telefone"></div>
+    </div>
+    <div class="opts-grid" style="margin:10px 0">
+      <label><input type="checkbox"> Perda de urina</label>
+      <label><input type="checkbox"> Dor pélvica</label>
+      <label><input type="checkbox"> Urgência urinária</label>
+      <label><input type="checkbox"> Assintomática</label>
+    </div>
+    <div class="inline-opts">
+      <span style="font-size:.82rem;color:var(--muted)">Cirurgias:</span>
+      <label><input type="radio" name="pelvic_cirurgia" id="pelvic_cirurgia_sim"> Sim</label>
+      <label><input type="radio" name="pelvic_cirurgia" id="pelvic_cirurgia_nao"> Não</label>
+      <input type="text" id="pelvic_cirurgias_quais" placeholder="Quais?" style="max-width:200px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none">
+    </div>
+    <div class="field-group" style="margin-top:12px"><label>Diagnóstico Fisioterapêutico</label><textarea></textarea></div>
+    <div class="field-group"><label>Objetivos do Tratamento</label><textarea></textarea></div>
+    <div class="field-group"><label>Nome do Fisioterapeuta / CREFITO</label><input type="text"></div>
+    <button class="btn-save" onclick="salvarPelvica()">💾 Salvar</button>
+  </div>
+</div>
+
+</template>
+
+<!-- ══════════════════════════════
      SCRIPTS
-══════════════════════════════════════ -->
-
-<!-- ── NAVEGAÇÃO ── -->
+══════════════════════════════ -->
 <script>
-const topMeta = {
-  colaboradores: { title:'Colaboradores',     badge:'Planilha',  cls:'badge-blue',   btn:'➕ Novo Colaborador' },
-  financeiro:    { title:'Financeiro',         badge:'Entradas',  cls:'badge-green',  btn:'➕ Entrada' },
-  grade:         { title:'Grade de Horários',  badge:'Agenda',    cls:'badge-yellow', btn:'📅 Ver Grade' },
-  avaliacoes:    { title:'Avaliações',         badge:'Fichas',    cls:'badge-red',    btn:'➕ Nova Avaliação' },
+/* ═══════════════════════════
+   CREDENCIAIS & LOGIN
+═══════════════════════════ */
+const CREDENCIAIS = {
+  "Andriely":  "flamengo123",
+  "Ana Aline": "café123",
+  "Jefferson": "personal123",
+  "Sthefanny": "bts123",
+  "Vanessa":   "academia123"
 };
-function navigate(el){
-  const pg = el.dataset.page;
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  el.classList.add('active');
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+pg).classList.add('active');
-  const m = topMeta[pg];
-  document.getElementById('topTitle').textContent = m.title;
-  const b = document.getElementById('topBadge');
-  b.textContent = m.badge;
-  b.className = 'top-badge ' + m.cls;
-  document.getElementById('topBtn').textContent = m.btn;
+const ADM_PASS = "movom1973";
+
+let tipoLogin = "colab"; // 'colab' | 'adm'
+let usuarioAtual = null; // { nome, role }
+
+function setTab(t){
+  tipoLogin = t;
+  document.getElementById("tabColab").className = "tab-btn" + (t==="colab"?" active":"");
+  document.getElementById("tabAdm").className   = "tab-btn" + (t==="adm"?" active":"");
+  document.getElementById("loginColab").classList.toggle("hidden", t!=="colab");
+  document.getElementById("loginAdm").classList.toggle("hidden", t!=="adm");
 }
-function topAction(){
-  const active = document.querySelector('.nav-item.active')?.dataset.page;
-  if(active==='avaliacoes'){
-    document.querySelectorAll('#telaFisioterapia,#telaPilates,#telaRecovery,#telaCondicionamento,#telaPelvica,#telaDetalhe').forEach(t=>t.classList.add('hidden'));
-    document.getElementById('telaInicial').classList.remove('hidden');
+
+function fazerLogin(){
+  const err = document.getElementById("loginErr");
+  err.style.display="none";
+
+  if(tipoLogin==="adm"){
+    const s = document.getElementById("senhaAdm").value;
+    if(s===ADM_PASS){ iniciarSessao({nome:"Administrador",role:"adm"}); }
+    else { err.style.display="block"; }
+  } else {
+    const nome = document.getElementById("selectColab").value;
+    const senha = document.getElementById("senhaColab").value;
+    if(!nome){ err.textContent="Selecione seu nome."; err.style.display="block"; return; }
+    if(CREDENCIAIS[nome]===senha){ iniciarSessao({nome, role:"colab"}); }
+    else { err.textContent="Senha incorreta."; err.style.display="block"; }
   }
-  if(active==='colaboradores') adicionarAluno();
-  if(active==='financeiro') document.getElementById('fin_nome').focus();
-}
-</script>
-
-<!-- ── COLABORADORES (Firebase: colaboradores-5a2a2) ── -->
-<script>
-(function(){
-firebase.initializeApp({
-  apiKey: "AIzaSyD9Er27RZlKcFVVwrnWfo2xvWkPUla9JRs",
-  databaseURL: "https://colaboradores-5a2a2-default-rtdb.firebaseio.com"
-}, "colaboradores");
-
-const db = firebase.app("colaboradores").database();
-let colaboradorAtual = null;
-let mesAtual = new Date().toISOString().slice(0,7);
-let debounce = null;
-
-const mesSelect      = document.getElementById("mesSelect");
-const colaboradorSelect = document.getElementById("colaboradorSelect");
-const cabecalho      = document.getElementById("cabecalho");
-const corpoTabela    = document.getElementById("corpoTabela");
-const total          = document.getElementById("total");
-const media          = document.getElementById("media");
-
-mesSelect.value = mesAtual;
-
-function diasNoMes(ano,mes){ return new Date(ano,mes,0).getDate(); }
-
-function montarCabecalho(){
-  const [ano,mes] = mesAtual.split("-");
-  const dias = diasNoMes(ano,mes);
-  cabecalho.innerHTML = `<th>Aluno</th><th>Tipo</th><th>Base</th><th>Extra</th>
-    ${Array.from({length:dias},(_,i)=>`<th>${i+1}</th>`).join("")}
-    <th>Total</th><th></th>`;
 }
 
-function carregarColaboradores(){
-  db.ref("colaboradores").once("value").then(snap=>{
-    colaboradorSelect.innerHTML="";
-    Object.keys(snap.val()||{}).forEach(n=>{
-      let o=document.createElement("option");
-      o.value=o.textContent=n;
-      colaboradorSelect.appendChild(o);
-    });
-    colaboradorAtual = colaboradorSelect.value;
-    carregarDados(); calcularMedia();
+function iniciarSessao(u){
+  usuarioAtual = u;
+  document.getElementById("telaLogin").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+
+  // Avatar
+  const initials = u.nome.split(" ").map(w=>w[0]).join("").substring(0,2).toUpperCase();
+  document.getElementById("sbAvatar").textContent = initials;
+  document.getElementById("sbNome").textContent = u.nome;
+  document.getElementById("sbRole").textContent = u.role==="adm" ? "Administrador" : "Colaborador";
+
+  montarMenu();
+  // Injetar fichas de avaliação no DOM
+  const tpl = document.getElementById("tpl-fichas").content.cloneNode(true);
+  document.getElementById("fichasAval").appendChild(tpl);
+
+  inicializarFirebases();
+  navigate(document.querySelector(".nav-item"));
+}
+
+function logout(){
+  usuarioAtual=null;
+  location.reload();
+}
+
+/* ═══════════════════════════
+   MENU DINÂMICO
+═══════════════════════════ */
+const MENUS = {
+  adm: [
+    {id:"colaboradores", icon:"👥", label:"Colaboradores"},
+    {id:"financeiro",    icon:"💰", label:"Financeiro"},
+    {id:"grade",         icon:"📅", label:"Grade de Horários"},
+    {id:"avaliacoes",    icon:"📋", label:"Avaliações"},
+    {id:"agenda",        icon:"🗓", label:"Agenda"},
+    {id:"insumos",       icon:"📦", label:"Insumos"},
+    {id:"yoga",          icon:"🧘", label:"Financeiro Yoga"},
+    {id:"site",          icon:"🌐", label:"Site MOVOM"},
+    {id:"usuarios",      icon:"🔑", label:"Usuários"},
+  ],
+  colab: [
+    {id:"colaboradores", icon:"👥", label:"Minha Planilha"},
+    {id:"financeiro",    icon:"💰", label:"Financeiro"},
+    {id:"grade",         icon:"📅", label:"Grade de Horários"},
+    {id:"avaliacoes",    icon:"📋", label:"Avaliações"},
+  ]
+};
+
+const TOP_META = {
+  colaboradores:{title:"Colaboradores",     badge:"Planilha",   cls:"badge-lilas"},
+  financeiro:   {title:"Financeiro",         badge:"Entradas",   cls:"badge-ciano"},
+  grade:        {title:"Grade de Horários",  badge:"Agenda",     cls:"badge-orange"},
+  avaliacoes:   {title:"Avaliações",         badge:"Fichas",     cls:"badge-red"},
+  agenda:       {title:"Agenda MOVOM",       badge:"Agendamento",cls:"badge-green"},
+  insumos:      {title:"Insumos",            badge:"Planilha",   cls:"badge-lilas"},
+  yoga:         {title:"Financeiro – Yoga",  badge:"Yoga",       cls:"badge-ciano"},
+  site:         {title:"Site Institucional", badge:"MOVOM",      cls:"badge-lilas"},
+  usuarios:     {title:"Usuários",           badge:"Admin",      cls:"badge-orange"},
+};
+
+function montarMenu(){
+  const list = usuarioAtual.role==="adm" ? MENUS.adm : MENUS.colab;
+  const nav = document.getElementById("sbNav");
+  nav.innerHTML="<div class='nav-section'>Páginas</div>";
+  list.forEach((item,i)=>{
+    const el = document.createElement("div");
+    el.className = "nav-item" + (i===0?" active":"");
+    el.dataset.page = item.id;
+    el.innerHTML = `<span class="nav-icon">${item.icon}</span>${item.label}`;
+    el.onclick = ()=>navigate(el);
+    nav.appendChild(el);
   });
 }
 
-colaboradorSelect.onchange = ()=>{ colaboradorAtual=colaboradorSelect.value; carregarDados(); calcularMedia(); };
-mesSelect.onchange = ()=>{ mesAtual=mesSelect.value; carregarDados(); };
+function navigate(el){
+  if(!el) return;
+  const pg = el.dataset.page;
+  document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));
+  el.classList.add("active");
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById("page-"+pg).classList.add("active");
+  const m = TOP_META[pg]||{title:pg,badge:"",cls:"badge-lilas"};
+  document.getElementById("topTitle").textContent = m.title;
+  const b = document.getElementById("topBadge");
+  b.textContent = m.badge; b.className = "top-badge "+m.cls;
+  // mostrar/ocultar botão top
+  document.getElementById("topBtn").style.display = ["agenda","site","usuarios"].includes(pg)?"none":"";
+}
 
-function carregarDados(){
-  corpoTabela.innerHTML="";
+function topAction(){
+  const active = document.querySelector(".nav-item.active")?.dataset.page;
+  if(active==="avaliacoes") voltar();
+  if(active==="colaboradores") adicionarAluno();
+  if(active==="insumos") insAdicionar();
+}
+
+/* ══════════════════════════════
+   SITE INSTITUCIONAL NAV
+══════════════════════════════ */
+function siteNav(id, btn){
+  document.querySelectorAll(".site-section").forEach(s=>s.classList.remove("active-s"));
+  document.getElementById(id).classList.add("active-s");
+  document.querySelectorAll(".site-nav button").forEach(b=>b.classList.remove("active-s"));
+  btn.classList.add("active-s");
+}
+</script>
+
+<!-- FIREBASE INIT + MÓDULOS -->
+<script type="module">
+import { initializeApp }   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, set, get, push, onValue, remove, update }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+/* ══════════════════════
+   FIREBASE APPS
+══════════════════════ */
+const fbColab = initializeApp({apiKey:"AIzaSyD9Er27RZlKcFVVwrnWfo2xvWkPUla9JRs",databaseURL:"https://colaboradores-5a2a2-default-rtdb.firebaseio.com"},"colab");
+const fbFin   = initializeApp({apiKey:"AIzaSyAiaiPHw98hV9yPt1M8mN-2ZC62TVUG6Lk",authDomain:"movomentradas.firebaseapp.com",databaseURL:"https://movomentradas-default-rtdb.firebaseio.com/",projectId:"movomentradas"},"fin");
+const fbGrade = initializeApp({apiKey:"AIzaSyASKbZ204Yls9IU3HenHTsHwqgbpotUga0",databaseURL:"https://horariomovom-default-rtdb.firebaseio.com",projectId:"horariomovom"},"grade");
+const fbAval  = initializeApp({apiKey:"AIzaSyAFNuEzaEvvpBKBGNG7NUf3zt74Q3r1fdo",databaseURL:"https://sistemaavaliacoes-26513-default-rtdb.firebaseio.com",projectId:"sistemaavaliacoes-26513"},"aval");
+const fbAgenda= initializeApp({apiKey:"AIzaSyDQvA6XiiwiyMrh0xjdy5s4QNjXwIgQoh4",authDomain:"agendamovom.firebaseapp.com",databaseURL:"https://agendamovom-default-rtdb.firebaseio.com",projectId:"agendamovom"},"agenda");
+const fbIns   = initializeApp({apiKey:"AIzaSyByv8SN7FXTKG9kc2jJCeYGMa86R0ZVf9g",databaseURL:"https://insumos-41ece-default-rtdb.firebaseio.com",projectId:"insumos-41ece"},"ins");
+const fbYoga  = initializeApp({apiKey:"AIzaSyDyD1PIfduFrLl-vXlBVisZFirQ3iKi2vI",authDomain:"yoga-4abef.firebaseapp.com",projectId:"yoga-4abef",storageBucket:"yoga-4abef.firebasestorage.app",messagingSenderId:"217283131263",appId:"1:217283131263:web:0431c954294ce56d7ecc4a"},"yoga");
+
+const dbColab = getDatabase(fbColab);
+const dbFin   = getDatabase(fbFin);
+const dbGrade = getDatabase(fbGrade);
+const dbAval  = getDatabase(fbAval);
+const dbAgenda= getDatabase(fbAgenda);
+const dbIns   = getDatabase(fbIns);
+const fsYoga  = getFirestore(fbYoga);
+
+window.inicializarFirebases = function(){ initColab(); initFin(); initGrade(); initAgenda(); initInsumos(); initYoga(); };
+
+/* ══════════════════════
+   COLABORADORES
+══════════════════════ */
+let colaboradorAtual=null, mesAtual=new Date().toISOString().slice(0,7), colabDebounce=null;
+
+function initColab(){
+  const ms=document.getElementById("mesSelect");
+  ms.value=mesAtual;
+  ms.onchange=()=>{mesAtual=ms.value;carregarDadosColab();};
+  carregarColaboradores();
+}
+
+async function carregarColaboradores(){
+  const sel=document.getElementById("colaboradorSelect");
+  const btnN=document.getElementById("btnNovoColab");
+  const btnR=document.getElementById("btnRemColab");
+  const u=window._usuario||usuarioAtual;
+  const snap=await get(ref(dbColab,"colaboradores"));
+  sel.innerHTML="";
+
+  if(u.role==="colab"){
+    // só vê o próprio nome
+    btnN.style.display="none"; btnR.style.display="none";
+    const op=document.createElement("option"); op.value=u.nome; op.textContent=u.nome; sel.appendChild(op);
+    sel.disabled=true;
+  } else {
+    btnN.style.display=""; btnR.style.display="";
+    sel.disabled=false;
+    Object.keys(snap.val()||{}).forEach(n=>{ const o=document.createElement("option"); o.value=o.textContent=n; sel.appendChild(o); });
+  }
+  colaboradorAtual=sel.value;
+  sel.onchange=()=>{colaboradorAtual=sel.value;carregarDadosColab();calcularMedia();};
+  carregarDadosColab(); calcularMedia();
+}
+
+function carregarDadosColab(){
+  const corpo=document.getElementById("corpoTabela");
+  corpo.innerHTML="";
   if(!colaboradorAtual) return;
   montarCabecalho();
-  const refAtual  = db.ref(`colaboradores/${colaboradorAtual}/ciclos/${mesAtual}/alunos`);
-  const refModelo = db.ref(`colaboradores/${colaboradorAtual}/ciclos/2026-01/alunos`);
-  refAtual.once("value").then(snap=>{
-    if(snap.exists()){
-      Object.values(snap.val()).forEach(a=>adicionarAluno(a,true));
-      calcularTotal();
-    } else {
-      refModelo.once("value").then(ms=>{
+  const rAtual=ref(dbColab,`colaboradores/${colaboradorAtual}/ciclos/${mesAtual}/alunos`);
+  const rModelo=ref(dbColab,`colaboradores/${colaboradorAtual}/ciclos/2026-01/alunos`);
+  get(rAtual).then(snap=>{
+    if(snap.exists()){ Object.values(snap.val()).forEach(a=>adicionarAluno(a,true)); calcularTotal(); }
+    else {
+      get(rModelo).then(ms=>{
         if(!ms.exists()) return;
-        const base = Object.values(ms.val()).map(a=>({ nome:a.nome||"", tipo:a.tipo||"Mensal", valorBase:a.valorBase||"", valorExtra:"", dias:[] }));
-        refAtual.set(base).then(()=>{ base.forEach(a=>adicionarAluno(a,true)); calcularTotal(); });
+        const base=Object.values(ms.val()).map(a=>({nome:a.nome||"",tipo:a.tipo||"Mensal",valorBase:a.valorBase||"",valorExtra:"",dias:[]}));
+        set(rAtual,base).then(()=>{base.forEach(a=>adicionarAluno(a,true));calcularTotal();});
       });
     }
   });
 }
 
-window.adicionarAluno = function(data={}, remoto=false){
+function montarCabecalho(){
   const [ano,mes]=mesAtual.split("-");
-  const dias=diasNoMes(ano,mes);
-  let tr=document.createElement("tr");
-  tr.innerHTML=`
-    <td><input type="text" class="nome" style="min-width:100px"></td>
-    <td><select class="tipo tipo-select"><option>Mensal</option><option>Gympass</option><option>TotalPass</option></select></td>
-    <td><input type="number" class="base" style="width:70px"></td>
-    <td><input type="number" class="extra" style="width:70px"></td>
+  const dias=new Date(ano,mes,0).getDate();
+  document.getElementById("cabecalho").innerHTML=
+    `<th>Aluno</th><th>Tipo</th><th>Base</th><th>Extra</th>${Array.from({length:dias},(_,i)=>`<th>${i+1}</th>`).join("")}<th>Total</th><th></th>`;
+}
+
+window.adicionarAluno=function(data={},remoto=false){
+  const [ano,mes]=mesAtual.split("-");
+  const dias=new Date(ano,mes,0).getDate();
+  const tr=document.createElement("tr");
+  tr.innerHTML=`<td><input type="text" class="nome" style="min-width:90px"></td>
+    <td><select class="tipo" style="background:transparent;border:none;color:var(--text);font-size:.82rem;padding:3px;font-family:'Poppins',sans-serif"><option>Mensal</option><option>Gympass</option><option>TotalPass</option></select></td>
+    <td><input type="number" class="base" style="width:65px"></td>
+    <td><input type="number" class="extra" style="width:65px"></td>
     ${"<td><input type='checkbox'></td>".repeat(dias)}
     <td class="total-cell">0</td>
-    <td><button onclick="this.closest('tr').remove();salvarColab()" style="background:var(--a3);border:none;color:#fff;border-radius:5px;padding:3px 8px;cursor:pointer">❌</button></td>`;
-  corpoTabela.appendChild(tr);
-  tr.querySelector(".nome").value = data.nome||"";
-  tr.querySelector(".tipo").value = data.tipo||"Mensal";
-  tr.querySelector(".base").value = data.valorBase||"";
-  tr.querySelector(".extra").value = data.valorExtra||"";
-  (data.dias||[]).forEach((d,i)=>{ const c=tr.querySelectorAll("input[type=checkbox]")[i]; if(c) c.checked=d; });
-  tr.querySelectorAll("input,select").forEach(i=>{ i.onchange=()=>{ salvarColab(); calcularTotal(); }; });
+    <td><button onclick="this.closest('tr').remove();salvarColab()" style="background:#fee2e2;color:#b91c1c;border:none;border-radius:7px;padding:3px 8px;cursor:pointer">❌</button></td>`;
+  document.getElementById("corpoTabela").appendChild(tr);
+  tr.querySelector(".nome").value=data.nome||"";
+  tr.querySelector(".tipo").value=data.tipo||"Mensal";
+  tr.querySelector(".base").value=data.valorBase||"";
+  tr.querySelector(".extra").value=data.valorExtra||"";
+  (data.dias||[]).forEach((d,i)=>{const c=tr.querySelectorAll("input[type=checkbox]")[i];if(c)c.checked=d;});
+  tr.querySelectorAll("input,select").forEach(i=>i.onchange=()=>{salvarColab();calcularTotal();});
   if(!remoto) salvarColab();
 };
 
-window.limparDias = function(){
-  corpoTabela.querySelectorAll("input[type=checkbox]").forEach(c=>c.checked=false);
+window.limparDias=function(){
+  document.getElementById("corpoTabela").querySelectorAll("input[type=checkbox]").forEach(c=>c.checked=false);
   salvarColab(); calcularTotal();
 };
 
 function salvarColab(){
-  clearTimeout(debounce);
-  debounce=setTimeout(()=>{
-    let alunos=[];
-    corpoTabela.querySelectorAll("tr").forEach(tr=>{
-      alunos.push({
-        nome: tr.querySelector(".nome").value,
-        tipo: tr.querySelector(".tipo").value,
-        valorBase: tr.querySelector(".base").value,
-        valorExtra: tr.querySelector(".extra").value,
-        dias: [...tr.querySelectorAll("input[type=checkbox]")].map(c=>c.checked)
-      });
+  clearTimeout(colabDebounce);
+  colabDebounce=setTimeout(()=>{
+    const alunos=[];
+    document.getElementById("corpoTabela").querySelectorAll("tr").forEach(tr=>{
+      alunos.push({nome:tr.querySelector(".nome").value,tipo:tr.querySelector(".tipo").value,valorBase:tr.querySelector(".base").value,valorExtra:tr.querySelector(".extra").value,dias:[...tr.querySelectorAll("input[type=checkbox]")].map(c=>c.checked)});
     });
-    db.ref(`colaboradores/${colaboradorAtual}/ciclos/${mesAtual}/alunos`).set(alunos);
+    set(ref(dbColab,`colaboradores/${colaboradorAtual}/ciclos/${mesAtual}/alunos`),alunos);
   },500);
 }
 
 function calcularTotal(){
-  let totalMes=0;
-  corpoTabela.querySelectorAll("tr").forEach(tr=>{
-    let b=+tr.querySelector(".base").value||0;
-    let e=+tr.querySelector(".extra").value||0;
-    let d=tr.querySelectorAll("input[type=checkbox]:checked").length;
-    let t=(b*d)+e;
+  let tot=0;
+  document.getElementById("corpoTabela").querySelectorAll("tr").forEach(tr=>{
+    const b=+tr.querySelector(".base").value||0,e=+tr.querySelector(".extra").value||0;
+    const d=tr.querySelectorAll("input[type=checkbox]:checked").length;
+    const t=(b*d)+e;
     tr.querySelector(".total-cell").innerText=t.toFixed(2);
-    totalMes+=t;
+    tot+=t;
   });
-  total.innerText="💰 Total do mês: R$ "+totalMes.toFixed(2);
+  document.getElementById("total").innerText="💰 Total do mês: R$ "+tot.toFixed(2);
 }
 
 function calcularMedia(){
   if(!colaboradorAtual) return;
-  db.ref(`colaboradores/${colaboradorAtual}/ciclos`).once("value").then(snap=>{
+  get(ref(dbColab,`colaboradores/${colaboradorAtual}/ciclos`)).then(snap=>{
     let soma=0,cont=0;
-    snap.forEach(m=>{
-      Object.values(m.val().alunos||{}).forEach(a=>{
-        let d=(a.dias||[]).filter(Boolean).length;
-        soma+=(+a.valorBase||0)*d+(+a.valorExtra||0);
-      });
-      cont++;
-    });
-    media.innerText="📊 Média salarial: R$ "+(cont?soma/cont:0).toFixed(2);
+    snap.forEach(m=>{Object.values(m.val().alunos||{}).forEach(a=>{const d=(a.dias||[]).filter(Boolean).length;soma+=(+a.valorBase||0)*d+(+a.valorExtra||0);});cont++;});
+    document.getElementById("media").innerText="📊 Média salarial: R$ "+(cont?soma/cont:0).toFixed(2);
   });
 }
 
-window.novoColaborador=function(){
-  let n=prompt("Nome do colaborador:");
-  if(n){ db.ref("colaboradores/"+n).set({}); carregarColaboradores(); }
-};
-window.removerColaborador=function(){
-  if(confirm("Remover colaborador?")){ db.ref("colaboradores/"+colaboradorAtual).remove(); carregarColaboradores(); }
-};
+window.novoColaborador=function(){ const n=prompt("Nome:");if(n){set(ref(dbColab,"colaboradores/"+n),{});carregarColaboradores();} };
+window.removerColaborador=function(){ if(confirm("Remover?")){ remove(ref(dbColab,"colaboradores/"+colaboradorAtual));carregarColaboradores(); } };
 
-window.onload=carregarColaboradores;
-})();
-</script>
+/* ══════════════════════
+   FINANCEIRO – ENTRADAS
+══════════════════════ */
+let finCurrentRef=null;
+function initFin(){
+  const meses=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+  const sel=document.getElementById("fin_mesSelect");
+  meses.forEach(m=>{const o=document.createElement("option");o.value=o.textContent=m;sel.appendChild(o);});
+  sel.value=meses[new Date().getMonth()];
+  sel.addEventListener("change",carregarFinanceiro);
+  carregarFinanceiro();
+}
 
-<!-- ── FINANCEIRO (Firebase: movomentradas) ── -->
-<script>
-(function(){
-firebase.initializeApp({
-  apiKey: "AIzaSyAiaiPHw98hV9yPt1M8mN-2ZC62TVUG6Lk",
-  authDomain: "movomentradas.firebaseapp.com",
-  databaseURL: "https://movomentradas-default-rtdb.firebaseio.com/",
-  projectId: "movomentradas"
-}, "financeiro");
-
-const db = firebase.app("financeiro").database();
-let currentRef = null;
-
-const meses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
-const fin_mes = document.getElementById("fin_mesSelect");
-meses.forEach(m=>{ const o=document.createElement("option"); o.value=o.textContent=m; fin_mes.appendChild(o); });
-fin_mes.value = meses[new Date().getMonth()];
-fin_mes.addEventListener("change", carregarFinanceiro);
-
-window.addEntrada = function(){
-  const mes = fin_mes.value;
-  const dados = {
-    nome: document.getElementById("fin_nome").value,
-    gmail: document.getElementById("fin_gmail").value,
-    cpf: document.getElementById("fin_cpf").value,
-    atividade: document.getElementById("fin_atividade").value,
-    pagamento: document.getElementById("fin_pagamento").value,
-    valor: Number(document.getElementById("fin_valor").value||0),
-    nf: document.getElementById("fin_nf").value,
-    data: new Date().toLocaleString("pt-BR")
-  };
-  db.ref("entradas/"+mes).push(dados);
+window.addEntrada=function(){
+  const mes=document.getElementById("fin_mesSelect").value;
+  const dados={nome:document.getElementById("fin_nome").value,gmail:document.getElementById("fin_gmail").value,cpf:document.getElementById("fin_cpf").value,atividade:document.getElementById("fin_atividade").value,pagamento:document.getElementById("fin_pagamento").value,valor:Number(document.getElementById("fin_valor").value||0),nf:document.getElementById("fin_nf").value,data:new Date().toLocaleString("pt-BR")};
+  push(ref(dbFin,"entradas/"+mes),dados);
   ["fin_nome","fin_gmail","fin_cpf","fin_valor","fin_nf"].forEach(id=>document.getElementById(id).value="");
 };
 
 function carregarFinanceiro(){
-  const mes = fin_mes.value;
-  const tabela = document.getElementById("fin_tabela");
-  const totalEl = document.getElementById("fin_totalMes");
+  const mes=document.getElementById("fin_mesSelect").value;
+  const tabela=document.getElementById("fin_tabela");
+  const totalEl=document.getElementById("fin_totalMes");
   tabela.innerHTML=""; totalEl.innerText="Total do mês: R$ 0,00";
-  if(currentRef) currentRef.off();
-  currentRef = db.ref("entradas/"+mes);
-  currentRef.on("value", snap=>{
-    tabela.innerHTML=""; let total=0;
+  if(finCurrentRef) finCurrentRef.off?.();
+  finCurrentRef=ref(dbFin,"entradas/"+mes);
+  onValue(finCurrentRef,snap=>{
+    tabela.innerHTML="";let tot=0;
     snap.forEach(item=>{
-      const e=item.val(); total+=Number(e.valor||0);
+      const e=item.val();tot+=Number(e.valor||0);
       const tr=document.createElement("tr");
-      tr.innerHTML=`<td>${e.nome}</td><td>${e.gmail||""}</td><td>${e.cpf}</td><td>${e.atividade}</td><td>${e.pagamento}</td>
-        <td>R$ ${Number(e.valor).toFixed(2)}</td><td>${e.data}</td>
-        <td><input class="fin-nf-input" value="${e.nf||""}" onchange="updateNF('${mes}','${item.key}',this.value)"></td>
-        <td><button class="fin-del-btn" onclick="delEntrada('${mes}','${item.key}')">X</button></td>`;
+      tr.innerHTML=`<td>${e.nome}</td><td>${e.gmail||""}</td><td>${e.cpf}</td><td>${e.atividade}</td><td>${e.pagamento}</td><td>R$ ${Number(e.valor).toFixed(2)}</td><td>${e.data}</td>
+        <td><input style="width:80px;padding:4px 6px;border:2px solid var(--border);border-radius:7px;font-family:'Poppins',sans-serif;font-size:.78rem;outline:none" value="${e.nf||""}" onchange="updateNF('${mes}','${item.key}',this.value)"></td>
+        <td><button class="btn-excluir-sm" onclick="delEntrada('${mes}','${item.key}')">🗑</button></td>`;
       tabela.appendChild(tr);
     });
-    totalEl.innerText=`Total do mês: R$ ${total.toFixed(2)}`;
+    totalEl.innerText=`Total do mês: R$ ${tot.toFixed(2)}`;
   });
 }
+window.updateNF=(mes,id,v)=>update(ref(dbFin,`entradas/${mes}/${id}`),{nf:v});
+window.delEntrada=(mes,id)=>remove(ref(dbFin,`entradas/${mes}/${id}`));
 
-window.updateNF=(mes,id,val)=>db.ref(`entradas/${mes}/${id}`).update({nf:val});
-window.delEntrada=(mes,id)=>db.ref(`entradas/${mes}/${id}`).remove();
+/* ══════════════════════
+   GRADE DE HORÁRIOS
+══════════════════════ */
+let gradeTyping=false;
+const semana=[{dia:"Segunda-feira",h:[7,19]},{dia:"Terça-feira",h:[7,19]},{dia:"Quarta-feira",h:[7,19]},{dia:"Quinta-feira",h:[7,19]},{dia:"Sexta-feira",h:[7,18]},{dia:"Sábado",h:[7,10]}];
 
-document.addEventListener("DOMContentLoaded", carregarFinanceiro);
-})();
-</script>
+function initGrade(){
+  const gradeRef=ref(dbGrade,"gradeHorarios");
+  document.getElementById("filtroDia").onchange=filtrarGrade;
+  onValue(gradeRef,s=>renderGrade(s.val()));
+}
 
-<!-- ── GRADE DE HORÁRIOS (Firebase: horariomovom) ── -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
-const app = initializeApp({
-  apiKey: "AIzaSyASKbZ204Yls9IU3HenHTsHwqgbpotUga0",
-  authDomain: "horariomovom.firebaseapp.com",
-  databaseURL: "https://horariomovom-default-rtdb.firebaseio.com",
-  projectId: "horariomovom"
-}, "grade");
-
-const db = getDatabase(app);
-const gradeRef = ref(db,"gradeHorarios");
-const MAX_ALUNOS = 5;
-const container = document.getElementById("grade_container");
-const filtroDia  = document.getElementById("filtroDia");
-let isTyping = false;
-
-function gerarHorarios(a,b){ const r=[]; for(let h=a;h<=b;h++) r.push(String(h).padStart(2,"0")+":00"); return r; }
-
-const semana=[
-  {dia:"Segunda-feira",horarios:gerarHorarios(7,19)},
-  {dia:"Terça-feira",horarios:gerarHorarios(7,19)},
-  {dia:"Quarta-feira",horarios:gerarHorarios(7,19)},
-  {dia:"Quinta-feira",horarios:gerarHorarios(7,19)},
-  {dia:"Sexta-feira",horarios:gerarHorarios(7,18)},
-  {dia:"Sábado",horarios:gerarHorarios(7,10)}
-];
+function gerarHs(a,b){const r=[];for(let h=a;h<=b;h++)r.push(String(h).padStart(2,"0")+":00");return r;}
 
 function salvarGrade(){
   const data={};
-  document.querySelectorAll("table[data-dia]").forEach(t=>{
-    const dia=t.dataset.dia; data[dia]=[];
+  document.querySelectorAll("table.grade-tbl[data-dia]").forEach(t=>{
+    const dia=t.dataset.dia;data[dia]=[];
     t.querySelectorAll("tbody tr").forEach(tr=>{
-      data[dia].push({
-        horario:tr.querySelector(".horario-cell").textContent,
-        instr1:tr.querySelector(".i1").value,
-        instr2:tr.querySelector(".i2").value,
-        alunos1:[...tr.querySelectorAll(".a1 input")].map(i=>i.value),
-        alunos2:[...tr.querySelectorAll(".a2 input")].map(i=>i.value)
-      });
+      data[dia].push({horario:tr.querySelector(".horario-lbl").textContent,instr1:tr.querySelector(".i1").value,instr2:tr.querySelector(".i2").value,alunos1:[...tr.querySelectorAll(".a1 input")].map(i=>i.value),alunos2:[...tr.querySelectorAll(".a2 input")].map(i=>i.value)});
     });
   });
-  set(gradeRef,data);
+  set(ref(dbGrade,"gradeHorarios"),data);
 }
 
-function criarAluno(nome){
-  const d=document.createElement("div"); d.className="aluno-row";
-  const i=document.createElement("input"); i.value=nome||"";
-  i.onfocus=()=>isTyping=true;
-  i.onblur=()=>{isTyping=false;salvarGrade();};
-  const b=document.createElement("button"); b.textContent="X"; b.className="btn-rem-g";
+function criarAlunoEl(nome){
+  const d=document.createElement("div");d.className="aluno-row";
+  const i=document.createElement("input");i.value=nome||"";
+  i.onfocus=()=>gradeTyping=true;i.onblur=()=>{gradeTyping=false;salvarGrade();};
+  const b=document.createElement("button");b.textContent="X";b.className="btn-rem-a";
   b.onclick=()=>{d.remove();salvarGrade();};
-  d.append(i,b); return d;
+  d.append(i,b);return d;
 }
 
-function criarLinha(l){
+function criarLinhaGrade(l){
   const tr=document.createElement("tr");
-  tr.innerHTML=`<td class="horario-cell">${l.horario}</td>
-    <td><input class="instr-input i1" placeholder="Instrutor 1">
-        <div class="alunos-box a1"></div>
-        <button class="btn-add-g">+ Aluno</button></td>
-    <td><input class="instr-input i2" placeholder="Instrutor 2">
-        <div class="alunos-box a2"></div>
-        <button class="btn-add-g">+ Aluno</button></td>`;
-  tr.querySelector(".i1").value=l.instr1||"";
-  tr.querySelector(".i2").value=l.instr2||"";
-  tr.querySelectorAll("input.instr-input").forEach(i=>{ i.onfocus=()=>isTyping=true; i.onblur=()=>{isTyping=false;salvarGrade();}; });
-  l.alunos1?.forEach(a=>tr.querySelector(".a1").appendChild(criarAluno(a)));
-  l.alunos2?.forEach(a=>tr.querySelector(".a2").appendChild(criarAluno(a)));
-  tr.querySelectorAll(".btn-add-g")[0].onclick=()=>{ if(tr.querySelector(".a1").children.length<MAX_ALUNOS){tr.querySelector(".a1").appendChild(criarAluno(""));salvarGrade();} };
-  tr.querySelectorAll(".btn-add-g")[1].onclick=()=>{ if(tr.querySelector(".a2").children.length<MAX_ALUNOS){tr.querySelector(".a2").appendChild(criarAluno(""));salvarGrade();} };
+  tr.innerHTML=`<td class="horario-lbl">${l.horario}</td>
+    <td><input class="instr-inp i1" placeholder="Instrutor 1"><div class="alunos-box a1"></div><button class="btn-add-a">+ Aluno</button></td>
+    <td><input class="instr-inp i2" placeholder="Instrutor 2"><div class="alunos-box a2"></div><button class="btn-add-a">+ Aluno</button></td>`;
+  tr.querySelector(".i1").value=l.instr1||"";tr.querySelector(".i2").value=l.instr2||"";
+  tr.querySelectorAll(".instr-inp").forEach(i=>{i.onfocus=()=>gradeTyping=true;i.onblur=()=>{gradeTyping=false;salvarGrade();};});
+  l.alunos1?.forEach(a=>tr.querySelector(".a1").appendChild(criarAlunoEl(a)));
+  l.alunos2?.forEach(a=>tr.querySelector(".a2").appendChild(criarAlunoEl(a)));
+  const btns=tr.querySelectorAll(".btn-add-a");
+  btns[0].onclick=()=>{if(tr.querySelector(".a1").children.length<5){tr.querySelector(".a1").appendChild(criarAlunoEl(""));salvarGrade();}};
+  btns[1].onclick=()=>{if(tr.querySelector(".a2").children.length<5){tr.querySelector(".a2").appendChild(criarAlunoEl(""));salvarGrade();}};
   return tr;
 }
 
-function render(data){
-  if(isTyping) return;
-  container.innerHTML="";
+function renderGrade(data){
+  if(gradeTyping) return;
+  const c=document.getElementById("grade_container");c.innerHTML="";
   semana.forEach(d=>{
-    const section=document.createElement("div"); section.className="grade-section";
-    const h3=document.createElement("h3"); h3.textContent=d.dia; h3.dataset.dia=d.dia;
-    const table=document.createElement("table"); table.className="grade-table"; table.dataset.dia=d.dia;
-    table.innerHTML="<thead><tr><th>Horário</th><th>Instrutor 1</th><th>Instrutor 2</th></tr></thead>";
+    const sec=document.createElement("div");sec.className="grade-section";
+    const h3=document.createElement("h3");h3.textContent=d.dia;h3.dataset.dia=d.dia;
+    const tbl=document.createElement("table");tbl.className="grade-tbl";tbl.dataset.dia=d.dia;
+    tbl.innerHTML="<thead><tr><th>Horário</th><th>Instrutor 1</th><th>Instrutor 2</th></tr></thead>";
     const tb=document.createElement("tbody");
     const salvos=data?.[d.dia]||[];
-    d.horarios.forEach(h=>{ const e=salvos.find(l=>l.horario===h); tb.appendChild(criarLinha(e||{horario:h,alunos1:[],alunos2:[]})); });
-    table.appendChild(tb); section.append(h3,table); container.appendChild(section);
+    gerarHs(d.h[0],d.h[1]).forEach(h=>{const e=salvos.find(l=>l.horario===h);tb.appendChild(criarLinhaGrade(e||{horario:h,alunos1:[],alunos2:[]}));});
+    tbl.appendChild(tb);sec.append(h3,tbl);c.appendChild(sec);
   });
-  filtrarDia();
+  filtrarGrade();
 }
 
-function filtrarDia(){
-  const v=filtroDia.value;
-  document.querySelectorAll(".grade-section").forEach(sec=>{
-    const dia=sec.querySelector("h3")?.dataset.dia;
-    sec.style.display=(v==="Todos"||dia===v)?"":"none";
+function filtrarGrade(){
+  const v=document.getElementById("filtroDia").value;
+  document.querySelectorAll("#grade_container .grade-section").forEach(sec=>{
+    sec.style.display=(v==="Todos"||sec.querySelector("h3").dataset.dia===v)?"":"none";
   });
 }
 
-filtroDia.onchange=filtrarDia;
-onValue(gradeRef,s=>render(s.val()));
-</script>
-
-<!-- ── AVALIAÇÕES (Firebase: sistemaavaliacoes) ── -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, push, set, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-
-const app2 = initializeApp({
-  apiKey: "AIzaSyAFNuEzaEvvpBKBGNG7NUf3zt74Q3r1fdo",
-  authDomain: "sistemaavaliacoes-26513.firebaseapp.com",
-  databaseURL: "https://sistemaavaliacoes-26513-default-rtdb.firebaseio.com",
-  projectId: "sistemaavaliacoes-26513"
-}, "avaliacoes");
-
-const db = getDatabase(app2);
-
-let tempNome, tempTipo, tempData;
-let avaliacaoAtualId=null, avaliacaoEmEdicaoId=null, dadosAvaliacaoAtual=null;
-
-const cv=id=>{ const e=document.getElementById(id); return e?e.value:""; };
-const cm=id=>{ const e=document.getElementById(id); return e?e.checked:false; };
-
-function fmtData(v){ if(!v) return "-"; if(/^\d{4}-\d{2}-\d{2}$/.test(v)){ const[a,m,d]=v.split("-"); return `${d}/${m}/${a}`; } return v; }
-function fmtExib(k,v){ if(v===true) return "Sim"; if(v===false) return "Não"; if(typeof v==="string"&&k.toLowerCase().includes("data")) return fmtData(v); return v??"-"; }
-function rotulo(k){
-  const mp={nomeCompleto:"Nome completo",dataNascimento:"Data de nascimento",cpf:"CPF",dataAvaliacao:"Data da avaliação",diagnosticoClinico:"Diagnóstico clínico",queixaPrincipal:"Queixa principal",planoTratamento:"Plano de tratamento",profissional:"Profissional",criadoEm:"Criado em"};
-  return mp[k]||k.replace(/([A-Z])/g," $1").replace(/_/g," ").replace(/^./,c=>c.toUpperCase());
-}
+/* ══════════════════════
+   AVALIAÇÕES
+══════════════════════ */
+let tempNome,tempTipo,tempData,avalAtualId=null,avalEditId=null,avalAtualDados=null;
+const cv=id=>{const e=document.getElementById(id);return e?e.value:"";};
+const cm=id=>{const e=document.getElementById(id);return e?e.checked:false;};
+const fmtD=v=>{if(!v)return"-";if(/^\d{4}-\d{2}-\d{2}$/.test(v)){const[a,m,d]=v.split("-");return`${d}/${m}/${a}`;}return v;};
 
 window.abrirTelaPorTipo=function(){
-  tempNome=cv("nome"); tempTipo=cv("tipo"); tempData=cv("data");
+  tempNome=cv("nome");tempTipo=cv("tipo");tempData=cv("data");
   if(!tempNome||!tempTipo||!tempData){alert("Preencha todos os campos.");return;}
   document.getElementById("telaInicial").classList.add("hidden");
   const id="tela"+tempTipo.replace("ç","c").replace("é","e");
@@ -1443,96 +1480,222 @@ window.abrirTelaPorTipo=function(){
 };
 
 function salvarBase(extras){
-  if(!tempNome||!tempTipo||!tempData){alert("Preencha nome, tipo e data.");return;}
-  const dest=avaliacaoEmEdicaoId?ref(db,`avaliacoes/${avaliacaoEmEdicaoId}`):push(ref(db,"avaliacoes"));
+  if(!tempNome||!tempTipo||!tempData){alert("Volte e preencha nome/tipo/data.");return;}
+  const dest=avalEditId?ref(dbAval,`avaliacoes/${avalEditId}`):push(ref(dbAval,"avaliacoes"));
   set(dest,{nome:tempNome,tipo:tempTipo,data:tempData,...extras,criadoEm:new Date().toLocaleString("pt-BR")});
-  alert(avaliacaoEmEdicaoId?"Atualizada!":"Salva!");
-  avaliacaoEmEdicaoId=null; voltar();
+  alert(avalEditId?"Atualizada!":"Salva com sucesso!");avalEditId=null;voltar();
 }
 
-window.salvarFisioterapia=()=>salvarBase({sessao:cm("fisio_sessao"),pacote:cm("fisio_pacote"),qtdSessoes:cv("fisio_qtdSessoes"),pix:cm("fisio_pix"),parcelado:cm("fisio_parcelado"),parcelas:cv("fisio_parcelas"),parceria:cv("fisio_parceria"),nomeCompleto:cv("fisio_nomeCompleto"),dataNascimento:cv("fisio_dataNascimento"),cpf:cv("fisio_cpf"),masculino:cm("fisio_masculino"),feminino:cm("fisio_feminino"),responsavel:cv("fisio_responsavel"),parentesco:cv("fisio_parentesco"),cpfResponsavel:cv("fisio_cpfResponsavel"),profissao:cv("fisio_profissao"),endereco:cv("fisio_endereco"),telefone:cv("fisio_telefone"),email:cv("fisio_email"),dataAvaliacao:cv("fisio_dataAvaliacao"),diagnosticoClinico:cv("fisio_diagClinico"),diagnosticoFisio:cv("fisio_diagFisio"),cbdf:cv("fisio_cbdf"),queixaPrincipal:cv("fisio_queixaPrincipal"),hpp:cv("fisio_hpp"),antecedentesPessoais:cv("fisio_antecedentesPessoais"),antecedentesFamiliares:cv("fisio_antecedentesFamiliares"),tratamentos:cv("fisio_tratamentos"),habitos:cv("fisio_habitos"),acompanhamentoSim:cm("fisio_acompanhamentoSim"),especialidade:cv("fisio_especialidade"),examesSim:cm("fisio_examesSim"),examesQuais:cv("fisio_examesQuais"),medicamentoSim:cm("fisio_medicamentoSim"),medicamentosQuais:cv("fisio_medicamentosQuais"),cirurgiaSim:cm("fisio_cirurgiaSim"),cirurgias:cv("fisio_cirurgias"),normal:cm("fisio_normal"),edema:cm("fisio_edema"),inspecaoDetalhes:cv("fisio_inspecaoDetalhes"),peso:cv("fisio_peso"),altura:cv("fisio_altura"),joelhoYSim:cm("fisio_joelhoY_sim"),rombergPos:cm("fisio_romberg_pos"),tugNormal:cm("fisio_tug_normal"),tugBaixo:cm("fisio_tug_baixo"),tugMedio:cm("fisio_tug_medio"),tugAlto:cm("fisio_tug_alto"),laseguePos:cm("fisio_lasegue_pos"),g0:cm("fisio_g0"),g1:cm("fisio_g1"),g2:cm("fisio_g2"),g3:cm("fisio_g3"),g4:cm("fisio_g4"),g5:cm("fisio_g5"),objetivos:cv("fisio_objetivos"),recursos:cv("fisio_recursos"),planoTratamento:cv("fisio_planoTratamento"),profissional:cv("fisio_profissional")});
+window.salvarFisioterapia=()=>salvarBase({sessao:cm("fisio_sessao"),pacote:cm("fisio_pacote"),qtdSessoes:cv("fisio_qtdSessoes"),pix:cm("fisio_pix"),parcelado:cm("fisio_parcelado"),parcelas:cv("fisio_parcelas"),nomeCompleto:cv("fisio_nomeCompleto"),dataNascimento:cv("fisio_dataNascimento"),cpf:cv("fisio_cpf"),telefone:cv("fisio_telefone"),email:cv("fisio_email"),dataAvaliacao:cv("fisio_dataAvaliacao"),endereco:cv("fisio_endereco"),diagClinico:cv("fisio_diagClinico"),diagFisio:cv("fisio_diagFisio"),queixaPrincipal:cv("fisio_queixaPrincipal"),hpp:cv("fisio_hpp"),antecedentesFamiliares:cv("fisio_antecedentesFamiliares"),habitos:cv("fisio_habitos"),examesSim:cm("fisio_examesSim"),medicamentoSim:cm("fisio_medicamentoSim"),cirurgiaSim:cm("fisio_cirurgiaSim"),masculino:cm("fisio_masculino"),feminino:cm("fisio_feminino"),orientado:cm("fisio_orientado"),apoio:cm("fisio_apoio"),normal:cm("fisio_normal"),edema:cm("fisio_edema"),rombergPos:cm("fisio_romberg_pos"),tugNormal:cm("fisio_tug_normal"),laseguePos:cm("fisio_lasegue_pos"),peso:cv("fisio_peso"),altura:cv("fisio_altura"),objetivos:cv("fisio_objetivos"),planoTratamento:cv("fisio_planoTratamento"),profissional:cv("fisio_profissional")});
 
-window.salvarPilates=()=>salvarBase({totalpass:cm("pilates_totalpass"),gympass:cm("pilates_gympass"),gurupass:cm("pilates_gurupass"),mensalidade:cm("pilates_mensalidade"),parceria:cv("pilates_parceria"),nomeCompleto:cv("pilates_nomeCompleto"),dataNascimento:cv("pilates_dataNascimento"),cpf:cv("pilates_cpf"),telefone:cv("pilates_telefone"),email:cv("pilates_email"),dataAvaliacao:cv("pilates_dataAvaliacao"),diagnosticoClinico:cv("pilates_diagClinico"),diagnosticoFisio:cv("pilates_diagFisio"),cbdf:cv("pilates_cbdf"),queixaPrincipal:cv("pilates_queixaPrincipal"),hpp:cv("pilates_hpp"),antecedentesPessoais:cv("pilates_antecedentesPessoais"),antecedentesFamiliares:cv("pilates_antecedentesFamiliares"),tratamentos:cv("pilates_tratamentos"),habitos:cv("pilates_habitos"),acompanhamentoSim:cm("pilates_acompanhamentoSim"),especialidade:cv("pilates_especialidade"),orientado:cm("pilates_orientado"),apoio:cm("pilates_apoio"),tipoApoio:cv("pilates_tipoApoio"),examesSim:cm("pilates_examesSim"),quaisExames:cv("pilates_quaisExames"),medicamentoSim:cm("pilates_medicamentoSim"),quaisMedicamentos:cv("pilates_quaisMedicamentos"),cirurgiaSim:cm("pilates_cirurgiaSim"),cirurgias:cv("pilates_cirurgias"),normal:cm("pilates_normal"),edema:cm("pilates_edema"),inspecaoDetalhes:cv("pilates_inspecaoDetalhes"),semiologia:cv("pilates_semiologia"),pressao:cv("pilates_pressao"),peso:cv("pilates_peso"),altura:cv("pilates_altura"),escalaBorg:cv("pilates_escalaBorg"),objetivos:cv("pilates_objetivos"),recursos:cv("pilates_recursos"),planoTratamento:cv("pilates_planoTratamento"),profissional:cv("pilates_profissional")});
+window.salvarPilates=()=>salvarBase({totalpass:cm("pilates_totalpass"),gympass:cm("pilates_gympass"),gurupass:cm("pilates_gurupass"),mensalidade:cm("pilates_mensalidade"),nomeCompleto:cv("pilates_nomeCompleto"),dataNascimento:cv("pilates_dataNascimento"),cpf:cv("pilates_cpf"),telefone:cv("pilates_telefone"),email:cv("pilates_email"),dataAvaliacao:cv("pilates_dataAvaliacao"),queixaPrincipal:cv("pilates_queixaPrincipal"),objetivos:cv("pilates_objetivos"),peso:cv("pilates_peso"),altura:cv("pilates_altura"),pressao:cv("pilates_pressao"),escalaBorg:cv("pilates_escalaBorg"),planoTratamento:cv("pilates_planoTratamento"),profissional:cv("pilates_profissional")});
 
-window.salvarRecovery=()=>salvarBase({mov_nome:cv("mov_nome"),mov_nascimento:cv("mov_nascimento"),mov_telefone:cv("mov_telefone"),mov_sexo_fem:cm("mov_sexo_fem"),mov_sexo_masc:cm("mov_sexo_masc"),mov_endereco:cv("mov_endereco"),mov_fisioterapeuta:cv("mov_fisioterapeuta"),mov_atleta_amador:cm("mov_atleta_amador"),mov_atleta_profissional:cm("mov_atleta_profissional"),mov_esporte:cv("mov_esporte"),mov_pratica_sim:cm("mov_pratica_sim"),mov_pratica_nao:cm("mov_pratica_nao"),mov_frequencia:cv("mov_frequencia"),mov_objetivos:cv("mov_objetivos"),mov_tabagismo_sim:cm("mov_tabagismo_sim"),mov_cardiaco_sim:cm("mov_cardiaco_sim"),mov_diabetes_sim:cm("mov_diabetes_sim"),mov_hipertensao_sim:cm("mov_hipertensao_sim"),mov_medicamento_sim:cm("mov_medicamento_sim"),mov_medicamento_desc:cv("mov_medicamento_desc"),mov_lesao_sim:cm("mov_lesao_sim"),mov_lesao_desc:cv("mov_lesao_desc"),mov_cirurgia_sim:cm("mov_cirurgia_sim"),mov_cirurgia_desc:cv("mov_cirurgia_desc"),mov_alergia_sim:cm("mov_alergia_sim"),mov_alergia_desc:cv("mov_alergia_desc"),mov_profissao:cv("mov_profissao"),mov_prog_esporte:cv("mov_prog_esporte"),mov_prog_inicio:cv("mov_prog_inicio"),mov_prog_queixaPrincipal:cv("mov_prog_queixaPrincipal"),mov_prog_diagnosticoCinetico:cv("mov_prog_diagnosticoCinetico"),mov_prog_objetivos:cv("mov_prog_objetivos"),mov_prog_conduta:cv("mov_prog_conduta"),mov_prog_fisioterapeuta:cv("mov_prog_fisioterapeuta")});
+window.salvarRecovery=()=>salvarBase({mov_nome:cv("mov_nome"),mov_nascimento:cv("mov_nascimento"),mov_telefone:cv("mov_telefone"),mov_fisioterapeuta:cv("mov_fisioterapeuta"),mov_esporte:cv("mov_esporte"),mov_frequencia:cv("mov_frequencia"),mov_objetivos:cv("mov_objetivos"),mov_queixa:cv("mov_prog_queixaPrincipal"),mov_diagnostico:cv("mov_prog_diagnosticoCinetico"),mov_conduta:cv("mov_prog_conduta"),mov_profissional:cv("mov_prog_fisioterapeuta")});
 
-window.salvarCondicionamento=()=>salvarBase({totalpass:cm("cond_totalpass"),gympass:cm("cond_gympass"),mensalidade:cm("cond_mensalidade"),nomeCompleto:cv("cond_nomeCompleto"),dataNascimento:cv("cond_dataNascimento"),cpf:cv("cond_cpf"),sexoMasculino:cm("cond_sexo_masculino"),sexoFeminino:cm("cond_sexo_feminino"),responsavelNome:cv("cond_responsavel_nome"),responsavelParentesco:cv("cond_responsavel_parentesco"),profissaoOcupacao:cv("cond_profissao_ocupacao"),enderecoResidencial:cv("cond_endereco_residencial"),telefone:cv("cond_telefone"),email:cv("cond_email"),dataAvaliacao:cv("cond_dataAvaliacao"),diagnosticoClinico:cv("cond_diagnosticoClinico"),diagnosticoFisio:cv("cond_diagnosticoFisio"),cbdf:cv("cond_cbdf"),queixaPrincipal:cv("cond_queixaPrincipal"),hda:cv("cond_hda"),historicoLesoes:cv("cond_historicoLesoes"),acompanhamentoSim:cm("cond_acompanhamento_sim"),acompanhamentoQuais:cv("cond_acompanhamento_quais"),medicamentosSim:cm("cond_medicamentos_sim"),medicamentosQuais:cv("cond_medicamentos_quais"),peso:cv("cond_peso"),altura:cv("cond_altura"),habitosVida:cv("cond_habitosVida"),metasPessoais:cv("cond_metasPessoais"),evaRegiao:cv("cond_evaRegiao"),ativo:cm("cond_ativo"),moderadamenteAtivo:cm("cond_moderadamente_ativo"),sedentario:cm("cond_sedentario"),atividadeSim:cm("cond_atividade_sim"),atividadeQuais:cv("cond_atividade_quais"),borg:cv("cond_borg"),desviosSim:cm("cond_desvios_sim"),desviosQuais:cv("cond_desvios_quais"),movimentosComDor:cm("cond_movimentos_com_dor"),movimentosSemDor:cm("cond_movimentos_sem_dor"),movimentosQuais:cv("cond_movimentos_quais"),movimentosFuncionais:cv("cond_movimentos_funcionais"),mobilidade:cv("cond_mobilidade"),flexibilidade:cv("cond_flexibilidade"),resistenciaMuscularCardio:cv("cond_resistencia"),planoTerapeutico:cv("cond_planoTerapeutico"),profissional:cv("cond_profissional")});
+window.salvarCondicionamento=()=>salvarBase({totalpass:cm("cond_totalpass"),gympass:cm("cond_gympass"),mensalidade:cm("cond_mensalidade"),nomeCompleto:cv("cond_nomeCompleto"),dataNascimento:cv("cond_dataNascimento"),cpf:cv("cond_cpf"),telefone:cv("cond_telefone"),email:cv("cond_email"),dataAvaliacao:cv("cond_dataAvaliacao"),peso:cv("cond_peso"),altura:cv("cond_altura"),queixaPrincipal:cv("cond_queixaPrincipal"),metasPessoais:cv("cond_metasPessoais"),planoTerapeutico:cv("cond_planoTerapeutico"),profissional:cv("cond_profissional")});
 
-window.salvarPelvica=()=>salvarBase({pelvic_nome:cv("pelvic_nome"),pelvic_idade:cv("pelvic_idade"),pelvic_nascimento:cv("pelvic_nascimento"),pelvic_telefone:cv("pelvic_telefone"),pelvic_cirurgia_sim:cm("pelvic_cirurgia_sim"),pelvic_cirurgia_nao:cm("pelvic_cirurgia_nao"),pelvic_cirurgias_quais:cv("pelvic_cirurgias_quais")});
+window.salvarPelvica=()=>salvarBase({pelvic_nome:cv("pelvic_nome"),pelvic_idade:cv("pelvic_idade"),pelvic_nascimento:cv("pelvic_nascimento"),pelvic_telefone:cv("pelvic_telefone"),pelvic_cirurgia_sim:cm("pelvic_cirurgia_sim"),pelvic_cirurgias_quais:cv("pelvic_cirurgias_quais")});
 
 window.carregarAvaliacoes=function(){
   const filtro=document.getElementById("filtroTipo").value;
-  onValue(ref(db,"avaliacoes"),snapshot=>{
-    const lista=document.getElementById("listaAvaliacoes");
+  const lista=document.getElementById("listaAvaliacoes");
+  lista.innerHTML="";
+  onValue(ref(dbAval,"avaliacoes"),snap=>{
     lista.innerHTML="";
-    if(!snapshot.exists()){lista.innerHTML="<p style='color:var(--muted)'>Nenhuma avaliação.</p>";return;}
-    snapshot.forEach(child=>{
-      const d=child.val();
-      if(filtro&&d.tipo!==filtro) return;
-      const div=document.createElement("div"); div.className="lista-item";
-      div.innerHTML=`<strong>${d.nome}</strong> — ${d.tipo} <small>(${fmtData(d.data)})</small>`;
-      div.onclick=()=>abrirDetalhe(child.key,d);
-      lista.appendChild(div);
+    if(!snap.exists()){lista.innerHTML="<p style='color:var(--muted);padding:12px'>Nenhuma avaliação.</p>";return;}
+    snap.forEach(child=>{
+      const d=child.val();if(filtro&&d.tipo!==filtro)return;
+      const div=document.createElement("div");div.className="lista-aval-item";
+      div.innerHTML=`<div><div class="nome">${d.nome}</div><div class="tipo">${d.tipo} • ${fmtD(d.data)}</div></div>`;
+      div.onclick=()=>abrirDetalhe(child.key,d);lista.appendChild(div);
     });
   });
 };
 
 window.abrirDetalhe=function(id,dados){
-  avaliacaoAtualId=id; dadosAvaliacaoAtual=dados;
+  avalAtualId=id;avalAtualDados=dados;
   document.getElementById("telaInicial").classList.add("hidden");
   document.getElementById("telaDetalhe").classList.remove("hidden");
   document.getElementById("tituloDetalhe").innerText=`${dados.nome} — ${dados.tipo}`;
-  let html=`<p style="margin-bottom:8px"><strong>Data:</strong> ${fmtData(dados.data)}</p>`;
-  for(const key in dados){ if(!["nome","tipo","data","criadoEm"].includes(key)) html+=`<p style="font-size:.82rem;margin:3px 0"><strong>${rotulo(key)}:</strong> ${fmtExib(key,dados[key])}</p>`; }
-  document.getElementById("dadosAvaliacao").innerHTML=html;
+  let html="";
+  for(const k in dados){if(!["nome","tipo","data","criadoEm"].includes(k)){const v=dados[k];if(v===true||v===false||v)html+=`<p><strong>${k.replace(/([A-Z])/g," $1").replace(/_/g," ")}:</strong> ${v===true?"Sim":v===false?"Não":v}</p>`;}}
+  document.getElementById("dadosAvaliacao").innerHTML=html||"<p>Sem dados adicionais.</p>";
   carregarEvolucoes();
 };
 
 window.editarAvaliacaoAtual=function(){
-  if(!avaliacaoAtualId||!dadosAvaliacaoAtual) return;
-  avaliacaoEmEdicaoId=avaliacaoAtualId;
-  tempNome=dadosAvaliacaoAtual.nome||""; tempTipo=dadosAvaliacaoAtual.tipo||""; tempData=dadosAvaliacaoAtual.data||"";
-  document.getElementById("nome").value=tempNome;
-  document.getElementById("tipo").value=tempTipo;
-  document.getElementById("data").value=tempData;
+  if(!avalAtualId||!avalAtualDados)return;
+  avalEditId=avalAtualId;
+  tempNome=avalAtualDados.nome||"";tempTipo=avalAtualDados.tipo||"";tempData=avalAtualDados.data||"";
+  document.getElementById("nome").value=tempNome;document.getElementById("tipo").value=tempTipo;document.getElementById("data").value=tempData;
   document.getElementById("telaDetalhe").classList.add("hidden");
-  const id="tela"+tempTipo.replace("ç","c").replace("é","e");
-  document.getElementById(id)?.classList.remove("hidden");
+  document.getElementById("tela"+tempTipo.replace("ç","c").replace("é","e"))?.classList.remove("hidden");
 };
 
 window.apagarAvaliacaoAtual=async function(){
-  if(!avaliacaoAtualId) return;
-  if(!confirm("Apagar esta avaliação?")) return;
-  await remove(ref(db,`avaliacoes/${avaliacaoAtualId}`));
-  alert("Apagada."); voltar();
+  if(!avalAtualId)return;if(!confirm("Apagar?"))return;
+  await remove(ref(dbAval,`avaliacoes/${avalAtualId}`));alert("Apagada.");voltar();
 };
 
 function carregarEvolucoes(){
-  const evo=document.getElementById("evolucoes");
-  evo.innerHTML="<h4>Evoluções</h4>";
-  onValue(ref(db,`avaliacoes/${avaliacaoAtualId}/evolucoes`),snap=>{
-    if(!snap.exists()){evo.innerHTML+="<p style='color:var(--muted);font-size:.82rem'>Nenhuma evolução.</p>";return;}
-    snap.forEach(c=>{
-      const e=c.val();
-      evo.innerHTML+=`<div style="border-left:3px solid var(--a3);padding:8px 12px;margin:6px 0;background:var(--surface2);border-radius:0 8px 8px 0"><strong style="color:var(--a3)">${e.data}</strong><p style="font-size:.83rem;margin-top:4px">${e.texto}</p></div>`;
-    });
+  const evo=document.getElementById("evolucoes");evo.innerHTML="<strong style='color:var(--lilas)'>Evoluções</strong>";
+  onValue(ref(dbAval,`avaliacoes/${avalAtualId}/evolucoes`),snap=>{
+    if(!snap.exists()){evo.innerHTML+="<p style='color:var(--muted);font-size:.82rem;margin-top:6px'>Nenhuma evolução.</p>";return;}
+    snap.forEach(c=>{const e=c.val();evo.innerHTML+=`<div class="evo-item"><strong>${e.data}</strong><p>${e.texto}</p></div>`;});
   });
 }
 
 window.salvarEvolucao=function(){
-  const t=document.getElementById("textoEvolucao");
-  if(!t.value) return;
-  set(push(ref(db,`avaliacoes/${avaliacaoAtualId}/evolucoes`)),{texto:t.value,data:new Date().toLocaleDateString("pt-BR")});
-  t.value="";
+  const t=document.getElementById("textoEvolucao");if(!t.value)return;
+  set(push(ref(dbAval,`avaliacoes/${avalAtualId}/evolucoes`)),{texto:t.value,data:new Date().toLocaleDateString("pt-BR")});t.value="";
 };
 
 window.voltar=function(){
-  ["telaFisioterapia","telaPilates","telaRecovery","telaCondicionamento","telaPelvica","telaDetalhe"].forEach(id=>document.getElementById(id).classList.add("hidden"));
+  ["telaFisioterapia","telaPilates","telaRecovery","telaCondicionamento","telaPelvica","telaDetalhe"].forEach(id=>document.getElementById(id)?.classList.add("hidden"));
   document.getElementById("telaInicial").classList.remove("hidden");
-  dadosAvaliacaoAtual=null; avaliacaoEmEdicaoId=null;
+  avalAtualDados=null;avalEditId=null;
 };
 
-window.carregarAvaliacoes();
+/* ══════════════════════
+   AGENDA
+══════════════════════ */
+const agRef=ref(dbAgenda,"alunos");
+let agCache={},agFiltro="todos";
+function hojeISO(){return new Date().toISOString().split("T")[0];}
+function calcReav(d){const x=new Date(d);x.setMonth(x.getMonth()+3);return x.toISOString().split("T")[0];}
+function br(d){if(!d)return"";const[y,m,dd]=d.split("-");return`${dd}/${m}/${y}`;}
+
+function initAgenda(){onValue(agRef,snap=>{agCache=snap.val()||{};renderAgenda();});}
+
+window.agAdicionar=function(){
+  const n=push(agRef);set(n,{nome:"",tipo:"Avaliação",dataAvaliacao:hojeISO(),horario:"",dataReavaliacao:calcReav(hojeISO()),plano:"Mensal",realizada:false});
+};
+
+window.agSalvar=function(id,campo,valor){
+  const d={};d[campo]=valor;if(campo==="dataAvaliacao")d.dataReavaliacao=calcReav(valor);
+  update(ref(dbAgenda,"alunos/"+id),d);
+};
+window.agStatus=function(id,estado){update(ref(dbAgenda,"alunos/"+id),{realizada:!estado});};
+window.agExcluir=function(id){if(confirm("Excluir?"))remove(ref(dbAgenda,"alunos/"+id));};
+window.setFiltroAg=function(f,btn){agFiltro=f;document.querySelectorAll(".filtros-row button").forEach(b=>b.classList.remove("active-f"));btn.classList.add("active-f");renderAgenda();};
+
+function renderAgenda(){
+  const tabela=document.getElementById("agTabela");
+  const alerta=document.getElementById("agAlerta");
+  const listV=document.getElementById("agListaVencidas");
+  tabela.innerHTML="";listV.innerHTML="";alerta.style.display="none";
+  const hoje=hojeISO();
+  Object.entries(agCache).forEach(([id,d])=>{
+    const pendente=!d.realizada;
+    const vencida=d.dataReavaliacao<hoje&&pendente;
+    if(vencida){alerta.style.display="block";const li=document.createElement("li");li.textContent=`${d.nome||"Sem nome"} – ${br(d.dataReavaliacao)}`;listV.appendChild(li);}
+    if(agFiltro==="pendente"&&!pendente)return;if(agFiltro==="feito"&&pendente)return;
+    const tr=document.createElement("tr");if(vencida)tr.classList.add("row-vencida");
+    tr.innerHTML=`
+      <td><input value="${d.nome||""}" onchange="agSalvar('${id}','nome',this.value)" style="border:2px solid var(--border);border-radius:8px;padding:5px 8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none;width:100%"></td>
+      <td><select onchange="agSalvar('${id}','tipo',this.value)" style="padding:5px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none"><option ${d.tipo==="Avaliação"?"selected":""}>Avaliação</option><option ${d.tipo==="Aula"?"selected":""}>Aula</option></select></td>
+      <td><input type="date" value="${d.dataAvaliacao}" onchange="agSalvar('${id}','dataAvaliacao',this.value)" style="border:2px solid var(--border);border-radius:8px;padding:5px 8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none"></td>
+      <td><input type="time" value="${d.horario}" onchange="agSalvar('${id}','horario',this.value)" style="border:2px solid var(--border);border-radius:8px;padding:5px 8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none"></td>
+      <td>${br(d.dataReavaliacao)}</td>
+      <td><select onchange="agSalvar('${id}','plano',this.value)" style="padding:5px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none"><option ${d.plano==="Mensal"?"selected":""}>Mensal</option><option ${d.plano==="Gympass"?"selected":""}>Gympass</option><option ${d.plano==="Totalpass"?"selected":""}>Totalpass</option></select></td>
+      <td><button class="${pendente?"btn-pendente":"btn-feito"}" onclick="agStatus('${id}',${d.realizada})">${pendente?"Pendente":"Feito"}</button></td>
+      <td><button class="btn-excluir-sm" onclick="agExcluir('${id}')">🗑</button></td>`;
+    tabela.appendChild(tr);
+  });
+}
+
+/* ══════════════════════
+   INSUMOS
+══════════════════════ */
+let insMeses=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+function initInsumos(){
+  const ms=document.getElementById("ins_mes");
+  const an=document.getElementById("ins_ano");
+  insMeses.forEach((m,i)=>{const o=document.createElement("option");o.value=i;o.textContent=m;ms.appendChild(o);});
+  for(let a=2024;a<=2035;a++){const o=document.createElement("option");o.value=a;o.textContent=a;an.appendChild(o);}
+  ms.value=new Date().getMonth();an.value=new Date().getFullYear();
+  ms.onchange=carregarInsumos;an.onchange=carregarInsumos;
+  carregarInsumos();
+}
+function insCaminho(){return`insumos/${document.getElementById("ins_ano").value}/${document.getElementById("ins_mes").value}`;}
+function insCalc(){
+  let soma=0;
+  document.getElementById("ins_tabela").querySelectorAll("tr").forEach(tr=>{
+    const c=Number(tr.children[1].querySelector("input").value)||0;
+    const q=Number(tr.children[2].querySelector("input").value)||0;
+    const t=c*q;tr.querySelector(".ins-line-tot").textContent=t.toFixed(2);soma+=t;
+  });
+  document.getElementById("ins_total").textContent=`Total do Mês: R$ ${soma.toFixed(2)}`;
+}
+function insSalvar(){
+  const dados=[];
+  document.getElementById("ins_tabela").querySelectorAll("tr").forEach(tr=>{
+    const i=tr.querySelectorAll("input");
+    dados.push({insumo:i[0].value,custo:i[1].value,quantidade:i[2].value,data:i[3].value,local:i[4].value,pagamento:i[5].value});
+  });
+  set(ref(dbIns,insCaminho()),dados);
+}
+function insCriarLinha(item={}){
+  const tr=document.createElement("tr");
+  const iStyle="border:2px solid var(--border);border-radius:8px;padding:5px 8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none;width:100%";
+  tr.innerHTML=`<td><input value="${item.insumo||""}" style="${iStyle}"></td><td><input type="number" step="0.01" value="${item.custo||""}" style="${iStyle}"></td><td><input type="number" value="${item.quantidade||""}" style="${iStyle}"></td><td><input type="date" value="${item.data||""}" style="${iStyle}"></td><td><input value="${item.local||""}" style="${iStyle}"></td><td><input value="${item.pagamento||""}" style="${iStyle}"></td><td class="ins-line-tot">0,00</td><td><button class="btn-excluir-sm" onclick="this.closest('tr').remove();insCalc();insSalvar()">🗑</button></td>`;
+  tr.querySelectorAll("input").forEach(i=>i.addEventListener("input",()=>{insCalc();insSalvar();}));
+  document.getElementById("ins_tabela").appendChild(tr);
+}
+window.insAdicionar=function(){insCriarLinha();insSalvar();};
+async function carregarInsumos(){
+  document.getElementById("ins_tabela").innerHTML="";
+  const snap=await get(ref(dbIns,insCaminho()));
+  if(!snap.exists())return;
+  snap.val().forEach(item=>insCriarLinha(item));insCalc();
+}
+
+/* ══════════════════════
+   FINANCEIRO YOGA
+══════════════════════ */
+let yogaUnsub=null;
+function initYoga(){
+  const meses=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+  const sel=document.getElementById("yoga_mes");
+  meses.forEach(m=>{const o=document.createElement("option");o.value=o.textContent=m;sel.appendChild(o);});
+  sel.value=meses[new Date().getMonth()];
+  sel.onchange=yogaCarregar;yogaCarregar();
+}
+window.yogaLabel=function(){
+  const t=document.getElementById("yoga_tipo").value;
+  document.getElementById("yoga_labelNome").textContent=t==="prof"?"Nome do professor:":"Nome do aluno:";
+};
+window.yogaAdd=async function(){
+  const tipo=document.getElementById("yoga_tipo").value;
+  await addDoc(collection(fsYoga,"movimentacoes",document.getElementById("yoga_mes").value,"itens"),{tipo,movimento:tipo==="prof"?"saida":"entrada",nome:document.getElementById("yoga_nome").value,pagamento:document.getElementById("yoga_pag").value,descricao:document.getElementById("yoga_desc").value,valor:Number(document.getElementById("yoga_valor").value),data:new Date().toLocaleString("pt-BR")});
+  ["yoga_nome","yoga_desc","yoga_valor"].forEach(id=>document.getElementById(id).value="");
+};
+function yogaCarregar(){
+  if(yogaUnsub)yogaUnsub();
+  const mes=document.getElementById("yoga_mes").value;
+  const tabela=document.getElementById("yoga_tabela");
+  yogaUnsub=onSnapshot(collection(fsYoga,"movimentacoes",mes,"itens"),snap=>{
+    tabela.innerHTML="";let ent=0,sai=0;
+    snap.forEach(d=>{
+      const e=d.data();e.movimento==="entrada"?ent+=e.valor:sai+=e.valor;
+      tabela.innerHTML+=`<tr><td>${e.movimento==="entrada"?"Entrada":"Saída"}</td><td>${e.nome}</td><td>${e.pagamento}</td><td>${e.descricao}</td><td>R$ ${e.valor.toFixed(2)}</td><td>${e.data}</td><td><button class="btn-excluir-sm" onclick="yogaDel('${d.id}')">🗑</button></td></tr>`;
+    });
+    document.getElementById("yoga_ent").textContent=ent.toFixed(2);
+    document.getElementById("yoga_sai").textContent=sai.toFixed(2);
+    document.getElementById("yoga_sal").textContent=(ent-sai).toFixed(2);
+  });
+}
+window.yogaDel=async function(id){await deleteDoc(doc(fsYoga,"movimentacoes",document.getElementById("yoga_mes").value,"itens",id));};
+
+// expor usuário para colaboradores
+window.__getUsuario=()=>usuarioAtual;
+</script>
+
+<!-- hack: expor usuário no módulo scope -->
+<script>
+window._usuario = null;
+// substituir carregarColaboradores após login para acessar usuário
+const _origIniciar = window.iniciarSessao;
 </script>
 
 </body>
