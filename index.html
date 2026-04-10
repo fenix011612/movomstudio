@@ -674,7 +674,18 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
           <div id="telaDetalhe" class="hidden">
             <div class="form-card">
               <button class="btn-back" onclick="voltar()">⬅ Voltar</button>
-              <h3 id="tituloDetalhe"></h3>
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap">
+                <h3 id="tituloDetalhe" style="margin:0"></h3>
+                <button class="btn-ghost btn" style="padding:5px 12px;font-size:.75rem" onclick="habilitarEdicaoNome()" id="btnEditNome" title="Editar nome">✏️ Editar nome</button>
+              </div>
+              <div id="editNomeArea" style="display:none;margin-bottom:14px">
+                <div class="field-group">
+                  <label>Nome do paciente</label>
+                  <input type="text" id="inputNomeEdit" style="max-width:360px">
+                </div>
+                <button class="btn-save" style="padding:7px 16px;font-size:.8rem" onclick="salvarNomeEditado()">Salvar nome</button>
+                <button class="btn-ghost btn" style="padding:7px 14px;font-size:.8rem;margin-left:6px" onclick="cancelarEdicaoNome()">Cancelar</button>
+              </div>
               <div id="dadosAvaliacao" style="margin-bottom:16px;font-size:.84rem;line-height:1.8"></div>
               <div style="display:flex;gap:10px;flex-wrap:wrap">
                 <button class="btn-save" onclick="editarAvaliacaoAtual()">✏️ Editar</button>
@@ -683,7 +694,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
               <div id="evolucoes" style="margin-top:20px"></div>
               <div class="field-group" style="margin-top:14px">
                 <label>Nova Evolução</label>
-                <textarea id="textoEvolucao" placeholder="Descreva a evolução..."></textarea>
+                <textarea id="textoEvolucao" style="min-height:160px;font-family:'Poppins',sans-serif;font-size:.84rem" placeholder="DATA:&#10;PROCEDIMENTOS:&#10;INTERCORRÊNCIA:&#10;EVOLUÇÃO DO ESTADO DE SAÚDE:&#10;PROFISSIONAL/REGISTRO CONSELHO:"></textarea>
               </div>
               <button class="btn-save" onclick="salvarEvolucao()">Salvar Evolução</button>
             </div>
@@ -840,7 +851,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
           <div class="site-container">
             <h2 style="font-family:'Nunito',sans-serif;font-weight:900;color:var(--lilas);margin-bottom:16px">Contato</h2>
             <div class="site-card" style="max-width:400px">
-              <p style="margin-bottom:10px"><i class="fas fa-envelope" style="color:var(--lilas);margin-right:8px"></i> movom.zenyoga@gmail.com</p>
+              <p style="margin-bottom:10px"><i class="fas fa-envelope" style="color:var(--lilas);margin-right:8px"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="731e1c051c1e5d09161d0a1c141233141e121a1f5d101c1e">[email&#160;protected]</a></p>
               <p><i class="fab fa-whatsapp" style="color:var(--ciano);margin-right:8px"></i> (21) 99968-1425</p>
             </div>
           </div>
@@ -1049,7 +1060,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 <!-- ══════════════════════════════
      SCRIPTS
 ══════════════════════════════ -->
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ═══════════════════════════
    CREDENCIAIS & LOGIN
 ═══════════════════════════ */
@@ -1177,6 +1188,16 @@ function navigate(el){
   b.textContent = m.badge; b.className = "top-badge "+m.cls;
   // mostrar/ocultar botão top
   document.getElementById("topBtn").style.display = ["agenda","site","usuarios"].includes(pg)?"none":"";
+  // Lazy load do módulo Firebase correspondente
+  const moduloMap={colaboradores:"colab",financeiro:"fin",grade:"grade",agenda:"agenda",insumos:"insumos",yoga:"yoga"};
+  if(moduloMap[pg] && window._iniciarModuloSeNecessario) window._iniciarModuloSeNecessario(moduloMap[pg]);
+  if(pg==="avaliacoes"){
+    // Carregar avaliações na primeira vez que a página é visitada
+    if(!window._fbModulosIniciados?.["avaliacoes"] && window.carregarAvaliacoes){
+      window._fbModulosIniciados["avaliacoes"]=true;
+      window.carregarAvaliacoes();
+    }
+  }
 }
 
 function topAction(){
@@ -1224,7 +1245,26 @@ const dbAgenda= getDatabase(fbAgenda);
 const dbIns   = getDatabase(fbIns);
 const fsYoga  = getFirestore(fbYoga);
 
-window.inicializarFirebases = function(){ initColab(); initFin(); initGrade(); initAgenda(); initInsumos(); initYoga(); };
+// Expor utilitários do Firebase para scripts não-module
+window._dbAval = dbAval;
+window._fbRef  = ref;
+window._fbUpdate = update;
+
+window.inicializarFirebases = function(){
+  // Módulos carregados lazily na primeira navegação para cada página
+  window._fbModulosIniciados = {};
+};
+
+window._iniciarModuloSeNecessario = function(modulo){
+  if(window._fbModulosIniciados[modulo]) return;
+  window._fbModulosIniciados[modulo] = true;
+  if(modulo==="colab") initColab();
+  else if(modulo==="fin") initFin();
+  else if(modulo==="grade") initGrade();
+  else if(modulo==="agenda") initAgenda();
+  else if(modulo==="insumos") initInsumos();
+  else if(modulo==="yoga") initYoga();
+};
 
 /* ══════════════════════
    COLABORADORES
@@ -1243,7 +1283,6 @@ async function carregarColaboradores(){
   const btnN=document.getElementById("btnNovoColab");
   const btnR=document.getElementById("btnRemColab");
   const u=window._usuario||usuarioAtual;
-  const snap=await get(ref(dbColab,"colaboradores"));
   sel.innerHTML="";
 
   if(u.role==="colab"){
@@ -1251,10 +1290,26 @@ async function carregarColaboradores(){
     btnN.style.display="none"; btnR.style.display="none";
     const op=document.createElement("option"); op.value=u.nome; op.textContent=u.nome; sel.appendChild(op);
     sel.disabled=true;
+    colaboradorAtual=u.nome;
+    // Garantir que o nó do colaborador existe no Firebase
+    const snapExiste=await get(ref(dbColab,"colaboradores/"+u.nome));
+    if(!snapExiste.exists()){
+      await set(ref(dbColab,"colaboradores/"+u.nome),{criadoEm:new Date().toLocaleDateString("pt-BR")});
+    }
   } else {
     btnN.style.display=""; btnR.style.display="";
     sel.disabled=false;
-    Object.keys(snap.val()||{}).forEach(n=>{ const o=document.createElement("option"); o.value=o.textContent=n; sel.appendChild(o); });
+    const snap=await get(ref(dbColab,"colaboradores"));
+    const lista=Object.keys(snap.val()||{});
+    // Garantir que todos os colaboradores registrados no sistema tenham nó
+    const todosColab=["Andriely","Ana Aline","Jefferson","Sthefanny","Vanessa"];
+    for(const nome of todosColab){
+      if(!lista.includes(nome)){
+        await set(ref(dbColab,"colaboradores/"+nome),{criadoEm:new Date().toLocaleDateString("pt-BR")});
+        lista.push(nome);
+      }
+    }
+    lista.sort().forEach(n=>{ const o=document.createElement("option"); o.value=o.textContent=n; sel.appendChild(o); });
   }
   colaboradorAtual=sel.value;
   sel.onchange=()=>{colaboradorAtual=sel.value;carregarDadosColab();calcularMedia();};
@@ -1512,15 +1567,76 @@ window.carregarAvaliacoes=function(){
   });
 };
 
+/* ORDEM DE CAMPOS POR TIPO – ficha segue a mesma ordem da avaliação */
+const ORDEM_CAMPOS = {
+  Fisioterapia: ["sessao","pacote","qtdSessoes","pix","parcelado","parcelas","nomeCompleto","dataNascimento","cpf","telefone","email","dataAvaliacao","endereco","masculino","feminino","diagClinico","diagFisio","queixaPrincipal","hpp","antecedentesFamiliares","habitos","examesSim","medicamentoSim","cirurgiaSim","orientado","apoio","normal","edema","rombergPos","tugNormal","laseguePos","peso","altura","objetivos","planoTratamento","profissional"],
+  Pilates: ["totalpass","gympass","gurupass","mensalidade","nomeCompleto","dataNascimento","cpf","telefone","email","dataAvaliacao","masculino","feminino","diagClinico","diagFisio","queixaPrincipal","objetivos","peso","altura","pressao","escalaBorg","planoTratamento","profissional"],
+  Recovery: ["mov_nome","mov_nascimento","mov_telefone","mov_fisioterapeuta","mov_esporte","mov_frequencia","mov_objetivos","mov_queixa","mov_diagnostico","mov_conduta","mov_profissional"],
+  Condicionamento: ["totalpass","gympass","mensalidade","nomeCompleto","dataNascimento","cpf","telefone","email","dataAvaliacao","peso","altura","queixaPrincipal","metasPessoais","planoTerapeutico","profissional"],
+  Pélvica: ["pelvic_nome","pelvic_idade","pelvic_nascimento","pelvic_telefone","pelvic_cirurgia_sim","pelvic_cirurgias_quais"]
+};
+
+const LABEL_CAMPOS = {
+  nomeCompleto:"Nome Completo", dataNascimento:"Data de Nascimento", cpf:"CPF", telefone:"Telefone", email:"E-mail",
+  dataAvaliacao:"Data da Avaliação", endereco:"Endereço", diagClinico:"Diagnóstico Clínico", diagFisio:"Diagnóstico Fisioterapêutico",
+  queixaPrincipal:"Queixa Principal", hpp:"HPP", antecedentesFamiliares:"Antecedentes Familiares", habitos:"Hábitos",
+  examesSim:"Exames: Sim", medicamentoSim:"Medicamento: Sim", cirurgiaSim:"Cirurgia: Sim",
+  sessao:"Sessão", pacote:"Pacote", qtdSessoes:"Qtd Sessões", pix:"Pix", parcelado:"Parcelado", parcelas:"Parcelas",
+  masculino:"Masculino", feminino:"Feminino", orientado:"Orientado", apoio:"Apoio", normal:"Normal", edema:"Edema",
+  rombergPos:"Romberg Positivo", tugNormal:"TUG Normal", laseguePos:"Lasègue Positivo",
+  peso:"Peso (kg)", altura:"Altura (cm)", objetivos:"Objetivos", planoTratamento:"Plano de Tratamento", profissional:"Profissional / Registro",
+  totalpass:"Totalpass", gympass:"Gympass", gurupass:"Gurupass", mensalidade:"Mensalidade",
+  pressao:"Pressão Arterial", escalaBorg:"Escala de Borg",
+  mov_nome:"Nome", mov_nascimento:"Nascimento", mov_telefone:"Telefone", mov_fisioterapeuta:"Fisioterapeuta",
+  mov_esporte:"Esporte", mov_frequencia:"Frequência", mov_objetivos:"Objetivos", mov_queixa:"Queixa Principal",
+  mov_diagnostico:"Diagnóstico Cinético", mov_conduta:"Conduta", mov_profissional:"Profissional",
+  metasPessoais:"Metas Pessoais", planoTerapeutico:"Plano Terapêutico",
+  pelvic_nome:"Nome", pelvic_idade:"Idade", pelvic_nascimento:"Nascimento", pelvic_telefone:"Telefone",
+  pelvic_cirurgia_sim:"Cirurgia: Sim", pelvic_cirurgias_quais:"Quais Cirurgias"
+};
+
 window.abrirDetalhe=function(id,dados){
   avalAtualId=id;avalAtualDados=dados;
   document.getElementById("telaInicial").classList.add("hidden");
   document.getElementById("telaDetalhe").classList.remove("hidden");
   document.getElementById("tituloDetalhe").innerText=`${dados.nome} — ${dados.tipo}`;
+  document.getElementById("editNomeArea").style.display="none";
+  document.getElementById("inputNomeEdit").value=dados.nome||"";
   let html="";
-  for(const k in dados){if(!["nome","tipo","data","criadoEm"].includes(k)){const v=dados[k];if(v===true||v===false||v)html+=`<p><strong>${k.replace(/([A-Z])/g," $1").replace(/_/g," ")}:</strong> ${v===true?"Sim":v===false?"Não":v}</p>`;}}
+  const ordem = ORDEM_CAMPOS[dados.tipo] || Object.keys(dados).filter(k=>!["nome","tipo","data","criadoEm"].includes(k));
+  const camposVistos = new Set(ordem);
+  // Primeiro campos na ordem definida
+  ordem.forEach(k=>{
+    const v=dados[k];
+    if(v===undefined||v===null||v==="")return;
+    const label=LABEL_CAMPOS[k]||k.replace(/([A-Z])/g," $1").replace(/_/g," ");
+    html+=`<p><strong>${label}:</strong> ${v===true?"✅ Sim":v===false?"❌ Não":v}</p>`;
+  });
+  // Campos extras não na ordem (ex: criadoEm)
+  for(const k in dados){
+    if(camposVistos.has(k)||["nome","tipo","data"].includes(k))continue;
+    const v=dados[k];if(!v&&v!==false)continue;
+    if(k==="criadoEm"){html+=`<p style="color:var(--muted);font-size:.78rem;margin-top:8px"><em>Criado em: ${v}</em></p>`;}
+  }
   document.getElementById("dadosAvaliacao").innerHTML=html||"<p>Sem dados adicionais.</p>";
   carregarEvolucoes();
+};
+
+window.habilitarEdicaoNome=function(){
+  document.getElementById("editNomeArea").style.display="block";
+  document.getElementById("inputNomeEdit").focus();
+};
+window.cancelarEdicaoNome=function(){
+  document.getElementById("editNomeArea").style.display="none";
+};
+window.salvarNomeEditado=async function(){
+  const novoNome=document.getElementById("inputNomeEdit").value.trim();
+  if(!novoNome||!avalAtualId)return;
+  await window._fbUpdate(window._fbRef(window._dbAval,`avaliacoes/${avalAtualId}`),{nome:novoNome});
+  avalAtualDados={...avalAtualDados,nome:novoNome};
+  document.getElementById("tituloDetalhe").innerText=`${novoNome} — ${avalAtualDados.tipo}`;
+  document.getElementById("editNomeArea").style.display="none";
+  alert("Nome atualizado!");
 };
 
 window.editarAvaliacaoAtual=function(){
@@ -1568,7 +1684,7 @@ function br(d){if(!d)return"";const[y,m,dd]=d.split("-");return`${dd}/${m}/${y}`
 function initAgenda(){onValue(agRef,snap=>{agCache=snap.val()||{};renderAgenda();});}
 
 window.agAdicionar=function(){
-  const n=push(agRef);set(n,{nome:"",tipo:"Avaliação",dataAvaliacao:hojeISO(),horario:"",dataReavaliacao:calcReav(hojeISO()),plano:"Mensal",realizada:false});
+  const n=push(agRef);set(n,{nome:"",tipo:"Avaliação",dataAvaliacao:hojeISO(),horario:"",dataReavaliacao:calcReav(hojeISO()),plano:"Mensal",realizada:false,criadoEm:Date.now()});
 };
 
 window.agSalvar=function(id,campo,valor){
@@ -1585,7 +1701,12 @@ function renderAgenda(){
   const listV=document.getElementById("agListaVencidas");
   tabela.innerHTML="";listV.innerHTML="";alerta.style.display="none";
   const hoje=hojeISO();
-  Object.entries(agCache).forEach(([id,d])=>{
+  // Ordenar: mais recentes primeiro (por criadoEm desc, ou chave desc)
+  const entradas=Object.entries(agCache).sort((a,b)=>{
+    const ta=a[1].criadoEm||0,tb=b[1].criadoEm||0;
+    return tb-ta;
+  });
+  entradas.forEach(([id,d])=>{
     const pendente=!d.realizada;
     const vencida=d.dataReavaliacao<hoje&&pendente;
     if(vencida){alerta.style.display="block";const li=document.createElement("li");li.textContent=`${d.nome||"Sem nome"} – ${br(d.dataReavaliacao)}`;listV.appendChild(li);}
@@ -1688,15 +1809,4 @@ function yogaCarregar(){
 window.yogaDel=async function(id){await deleteDoc(doc(fsYoga,"movimentacoes",document.getElementById("yoga_mes").value,"itens",id));};
 
 // expor usuário para colaboradores
-window.__getUsuario=()=>usuarioAtual;
-</script>
-
-<!-- hack: expor usuário no módulo scope -->
-<script>
-window._usuario = null;
-// substituir carregarColaboradores após login para acessar usuário
-const _origIniciar = window.iniciarSessao;
-</script>
-
-</body>
-</html>
+window.__getUsuario=()=>usuarioAtua
