@@ -840,7 +840,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
           <div class="site-container">
             <h2 style="font-family:'Nunito',sans-serif;font-weight:900;color:var(--lilas);margin-bottom:16px">Contato</h2>
             <div class="site-card" style="max-width:400px">
-              <p style="margin-bottom:10px"><i class="fas fa-envelope" style="color:var(--lilas);margin-right:8px"></i> movom.zenyoga@gmail.com</p>
+              <p style="margin-bottom:10px"><i class="fas fa-envelope" style="color:var(--lilas);margin-right:8px"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d6bbb9a0b9bbf8acb3b8afb9b1b796b1bbb7bfbaf8b5b9bb">[email&#160;protected]</a></p>
               <p><i class="fab fa-whatsapp" style="color:var(--ciano);margin-right:8px"></i> (21) 99968-1425</p>
             </div>
           </div>
@@ -886,135 +886,493 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 ══════════════════════════════ -->
 <template id="tpl-fichas">
 
+<!-- ════ FISIOTERAPIA COMPLETA ════ -->
 <div id="telaFisioterapia" class="hidden">
   <div class="form-card">
     <button class="btn-back" onclick="voltar()">⬅ Voltar</button>
-    <h3>Ficha – Fisioterapia</h3>
-    <div class="inline-opts"><label><input type="checkbox" id="fisio_sessao"> Sessão</label><label><input type="checkbox" id="fisio_pacote"> Pacote</label><input style="max-width:180px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none" id="fisio_qtdSessoes" placeholder="Qtd sessões"></div>
-    <div class="inline-opts"><label><input type="checkbox" id="fisio_pix"> Pix</label><label><input type="checkbox" id="fisio_parcelado"> Parcelado</label><input style="max-width:180px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none" id="fisio_parcelas" placeholder="Parcelas"></div>
+    <h3>FICHA DE ANAMNESE E (RE)AVALIAÇÃO – FISIOTERAPIA</h3>
+    <h4 style="color:var(--lilas);margin:12px 0 8px">Tipo de Atendimento</h4>
+    <div class="inline-opts">
+      <label><input type="checkbox" id="fisio_sessao"> Sessão</label>
+      <label><input type="checkbox" id="fisio_pacote"> Pacote</label>
+      <input style="max-width:200px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none" id="fisio_qtdSessoes" placeholder="Quantidade de sessões">
+    </div>
+    <h4 style="color:var(--lilas);margin:12px 0 8px">Forma de Pagamento</h4>
+    <div class="inline-opts">
+      <label><input type="checkbox" id="fisio_pix"> Pix</label>
+      <label><input type="checkbox" id="fisio_parcelado"> Parcelado</label>
+      <input style="max-width:200px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none" id="fisio_parcelas" placeholder="Parcelado em quantas vezes">
+    </div>
+    <div class="field-group"><label>Parceria? Se sim qual?</label><input type="text" id="fisio_parceria"></div>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">📌 IDENTIFICAÇÃO</h4>
     <div class="form-grid">
       <div class="field-group"><label>Nome completo</label><input type="text" id="fisio_nomeCompleto"></div>
       <div class="field-group"><label>Data de nascimento</label><input type="date" id="fisio_dataNascimento"></div>
       <div class="field-group"><label>CPF</label><input type="text" id="fisio_cpf"></div>
-      <div class="field-group"><label>Telefone</label><input type="text" id="fisio_telefone"></div>
-      <div class="field-group"><label>E-mail</label><input type="email" id="fisio_email"></div>
       <div class="field-group"><label>Data da Avaliação</label><input type="date" id="fisio_dataAvaliacao"></div>
-      <div class="field-group form-full"><label>Endereço</label><input type="text" id="fisio_endereco"></div>
-      <div class="field-group form-full"><label>Diagnóstico Clínico</label><textarea id="fisio_diagClinico"></textarea></div>
-      <div class="field-group form-full"><label>Diagnóstico Fisioterapêutico</label><textarea id="fisio_diagFisio"></textarea></div>
     </div>
-    <h4 style="color:var(--lilas);margin:16px 0 8px">⚕️ História Clínica</h4>
-    <div class="field-group"><label>Queixa Principal</label><textarea id="fisio_queixaPrincipal"></textarea></div>
-    <div class="field-group"><label>HDA</label><textarea id="fisio_hpp"></textarea></div>
-    <div class="field-group"><label>Antecedentes Familiares</label><textarea id="fisio_antecedentesFamiliares"></textarea></div>
-    <div class="field-group"><label>Hábitos de vida</label><textarea id="fisio_habitos"></textarea></div>
-    <div class="opts-grid" style="margin:10px 0">
-      <label><input type="checkbox" id="fisio_examesSim"> Exames – Sim</label>
-      <label><input type="checkbox" id="fisio_medicamentoSim"> Medicamentos – Sim</label>
-      <label><input type="checkbox" id="fisio_cirurgiaSim"> Cirurgia – Sim</label>
-    </div>
-    <div class="opts-grid" style="margin:10px 0">
+    <div class="inline-opts">
       <label><input type="checkbox" id="fisio_masculino"> Masculino</label>
       <label><input type="checkbox" id="fisio_feminino"> Feminino</label>
-      <label><input type="checkbox" id="fisio_orientado"> Orientado</label>
-      <label><input type="checkbox" id="fisio_apoio"> Com apoio</label>
     </div>
-    <div class="opts-grid" style="margin:10px 0">
-      <label><input type="checkbox" id="fisio_normal"> Inspeção Normal</label>
+    <div class="form-grid">
+      <div class="field-group"><label>Responsável (se menor)</label><input type="text" id="fisio_responsavel"></div>
+      <div class="field-group"><label>Grau de parentesco</label><input type="text" id="fisio_parentesco"></div>
+      <div class="field-group"><label>CPF Responsável</label><input type="text" id="fisio_cpfResponsavel"></div>
+      <div class="field-group"><label>Profissão/Ocupação</label><input type="text" id="fisio_profissao"></div>
+      <div class="field-group form-full"><label>Endereço Residencial</label><input type="text" id="fisio_endereco"></div>
+      <div class="field-group"><label>Telefone</label><input type="text" id="fisio_telefone"></div>
+      <div class="field-group"><label>E-mail</label><input type="email" id="fisio_email"></div>
+      <div class="field-group form-full"><label>Diagnóstico Clínico</label><textarea id="fisio_diagClinico"></textarea></div>
+      <div class="field-group form-full"><label>Diagnóstico Fisioterapêutico</label><textarea id="fisio_diagFisio"></textarea></div>
+      <div class="field-group"><label>CBDF</label><input type="text" id="fisio_cbdf"></div>
+    </div>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ HISTÓRIA CLÍNICA</h4>
+    <div class="field-group"><label>Queixa Principal</label><textarea id="fisio_queixaPrincipal"></textarea></div>
+    <div class="field-group"><label>HDA</label><textarea id="fisio_hpp"></textarea></div>
+    <div class="field-group"><label>HPP</label><textarea id="fisio_antecedentesPessoais"></textarea></div>
+    <div class="field-group"><label>Antecedentes Familiares</label><textarea id="fisio_antecedentesFamiliares"></textarea></div>
+    <div class="field-group"><label>Tratamentos Realizados</label><textarea id="fisio_tratamentos"></textarea></div>
+    <div class="field-group"><label>Hábitos de vida</label><textarea id="fisio_habitos"></textarea></div>
+    <div style="margin-bottom:10px">
+      <span style="font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Acompanhamento médico/fisioterapêutico?</span>
+      <div class="inline-opts" style="margin-top:6px">
+        <label><input type="checkbox" id="fisio_acompanhamentoSim"> Sim</label>
+        <label><input type="checkbox" id="fisio_acompanhamentoNao"> Não</label>
+        <input style="max-width:200px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none" id="fisio_especialidade" placeholder="Qual especialidade?">
+      </div>
+    </div>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ EXAMES COMPLEMENTARES</h4>
+    <div class="inline-opts">
+      <label><input type="checkbox" id="fisio_examesSim"> Sim</label>
+      <label><input type="checkbox" id="fisio_examesNao"> Não</label>
+    </div>
+    <div class="field-group"><textarea id="fisio_examesQuais" placeholder="Se sim, quais?"></textarea></div>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ USA MEDICAMENTOS</h4>
+    <div class="inline-opts">
+      <label><input type="checkbox" id="fisio_medicamentoSim"> Sim</label>
+      <label><input type="checkbox" id="fisio_medicamentoNao"> Não</label>
+    </div>
+    <div class="field-group"><textarea id="fisio_medicamentosQuais" placeholder="Se sim, quais?"></textarea></div>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ APRESENTAÇÃO DO PACIENTE</h4>
+    <div class="opts-grid">
+      <label><input type="checkbox" id="fisio_orientado"> Deambulando e orientado</label>
+      <label><input type="checkbox" id="fisio_apoio"> Deambulando com apoio</label>
+      <label><input type="checkbox" id="fisio_confuso"> Confuso</label>
+      <label><input type="checkbox" id="fisio_desorientado"> Desorientado</label>
+    </div>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ REALIZOU CIRURGIA</h4>
+    <div class="inline-opts">
+      <label><input type="checkbox" id="fisio_cirurgiaSim"> Sim</label>
+      <label><input type="checkbox" id="fisio_cirurgiaNao"> Não</label>
+    </div>
+    <div class="field-group"><textarea id="fisio_cirurgias" placeholder="Se sim, quais?"></textarea></div>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ INSPEÇÃO / PALPAÇÃO</h4>
+    <div class="opts-grid">
+      <label><input type="checkbox" id="fisio_normal"> Normal</label>
       <label><input type="checkbox" id="fisio_edema"> Edema</label>
-      <label><input type="checkbox" id="fisio_romberg_pos"> Romberg +</label>
-      <label><input type="checkbox" id="fisio_tug_normal"> TUG Normal</label>
-      <label><input type="checkbox" id="fisio_lasegue_pos"> Lasegue +</label>
+      <label><input type="checkbox" id="fisio_cicatriz"> Cicatrização incompleta</label>
+      <label><input type="checkbox" id="fisio_eritema"> Eritemas</label>
+      <label><input type="checkbox" id="fisio_outros"> Outros</label>
     </div>
+    <div class="field-group"><label>Detalhes adicionais da inspeção/palpação</label><textarea id="fisio_inspecaoDetalhes"></textarea></div>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ AVALIAÇÃO FÍSICA</h4>
     <div class="form-grid">
       <div class="field-group"><label>Peso</label><input type="number" id="fisio_peso"></div>
       <div class="field-group"><label>Altura</label><input type="number" id="fisio_altura"></div>
-      <div class="field-group form-full"><label>Objetivos do Tratamento</label><textarea id="fisio_objetivos"></textarea></div>
-      <div class="field-group form-full"><label>Plano do Tratamento</label><textarea id="fisio_planoTratamento"></textarea></div>
-      <div class="field-group form-full"><label>Profissional / Registro</label><input type="text" id="fisio_profissional"></div>
     </div>
-    <button class="btn-save" onclick="salvarFisioterapia()">💾 Salvar</button>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">📌 TESTES FISIOTERAPÊUTICOS</h4>
+    <div style="margin-bottom:10px">
+      <span style="font-size:.82rem;font-weight:700;color:var(--muted)">Teste de Joelhos (Y Teste):</span>
+      <div class="inline-opts" style="margin-top:4px">
+        <label><input type="checkbox" id="fisio_joelhoY_sim"> Sim</label>
+        <label><input type="checkbox" id="fisio_joelhoY_nao"> Não</label>
+      </div>
+    </div>
+    <div style="margin-bottom:10px">
+      <span style="font-size:.82rem;font-weight:700;color:var(--muted)">Romberg:</span>
+      <div class="inline-opts" style="margin-top:4px">
+        <label><input type="checkbox" id="fisio_romberg_pos"> Positivo</label>
+        <label><input type="checkbox" id="fisio_romberg_neg"> Negativo</label>
+      </div>
+    </div>
+    <div style="margin-bottom:10px">
+      <span style="font-size:.82rem;font-weight:700;color:var(--muted)">TUG:</span>
+      <div class="inline-opts" style="margin-top:4px">
+        <label><input type="checkbox" id="fisio_tug_normal"> Normal</label>
+        <label><input type="checkbox" id="fisio_tug_baixo"> Baixo risco</label>
+        <label><input type="checkbox" id="fisio_tug_medio"> Médio risco</label>
+        <label><input type="checkbox" id="fisio_tug_alto"> Alto risco</label>
+      </div>
+    </div>
+    <div style="margin-bottom:10px">
+      <span style="font-size:.82rem;font-weight:700;color:var(--muted)">Lasegue:</span>
+      <div class="inline-opts" style="margin-top:4px">
+        <label><input type="checkbox" id="fisio_lasegue_pos"> Positivo</label>
+        <label><input type="checkbox" id="fisio_lasegue_neg"> Negativo</label>
+      </div>
+    </div>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ ESCALA DE FORÇA MUSCULAR</h4>
+    <div class="opts-grid">
+      <label><input type="checkbox" id="fisio_g0"> Grau 0</label>
+      <label><input type="checkbox" id="fisio_g1"> Grau 1</label>
+      <label><input type="checkbox" id="fisio_g2"> Grau 2</label>
+      <label><input type="checkbox" id="fisio_g3"> Grau 3</label>
+      <label><input type="checkbox" id="fisio_g4"> Grau 4</label>
+      <label><input type="checkbox" id="fisio_g5"> Grau 5</label>
+    </div>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">📌 PLANO TERAPÊUTICO</h4>
+    <div class="field-group"><label>Objetivos do Tratamento</label><textarea id="fisio_objetivos"></textarea></div>
+    <div class="field-group"><label>Recursos Terapêuticos</label><textarea id="fisio_recursos"></textarea></div>
+    <div class="field-group"><label>Plano do Tratamento</label><textarea id="fisio_planoTratamento"></textarea></div>
+    <div class="field-group"><label>Profissional / Registro Conselho</label><input type="text" id="fisio_profissional"></div>
+    <button class="btn-save" onclick="salvarFisioterapia()">💾 Salvar Avaliação</button>
   </div>
 </div>
 
+<!-- ════ PILATES COMPLETO ════ -->
 <div id="telaPilates" class="hidden">
   <div class="form-card">
     <button class="btn-back" onclick="voltar()">⬅ Voltar</button>
-    <h3>Ficha – Pilates</h3>
+    <h3>Avaliação Pilates</h3>
+    <h4 style="color:var(--lilas);margin:12px 0 8px">📌 IDENTIFICAÇÃO</h4>
     <div class="opts-grid" style="margin-bottom:12px">
       <label><input type="checkbox" id="pilates_totalpass"> Totalpass</label>
       <label><input type="checkbox" id="pilates_gympass"> Gympass</label>
       <label><input type="checkbox" id="pilates_gurupass"> Gurupass</label>
       <label><input type="checkbox" id="pilates_mensalidade"> Mensalidade</label>
     </div>
+    <div class="field-group"><label>Parceria? Se sim qual?</label><input type="text" id="pilates_parceria"></div>
     <div class="form-grid">
       <div class="field-group"><label>Nome completo</label><input type="text" id="pilates_nomeCompleto"></div>
       <div class="field-group"><label>Data de nascimento</label><input type="date" id="pilates_dataNascimento"></div>
       <div class="field-group"><label>CPF</label><input type="text" id="pilates_cpf"></div>
+      <div class="field-group"><label>Data da Avaliação</label><input type="date" id="pilates_dataAvaliacao"></div>
+    </div>
+    <div class="inline-opts">
+      <label><input type="radio" name="pilates_sexo" id="pilates_masculino"> Masculino</label>
+      <label><input type="radio" name="pilates_sexo" id="pilates_feminino"> Feminino</label>
+    </div>
+    <div class="form-grid">
+      <div class="field-group"><label>Responsável (se menor)</label><input type="text" id="pilates_responsavel"></div>
+      <div class="field-group"><label>Grau de parentesco</label><input type="text" id="pilates_parentesco"></div>
+      <div class="field-group"><label>CPF Responsável</label><input type="text" id="pilates_cpfResponsavel"></div>
+      <div class="field-group"><label>Profissão/Ocupação</label><input type="text" id="pilates_profissao"></div>
+      <div class="field-group form-full"><label>Endereço Residencial</label><input type="text" id="pilates_endereco"></div>
       <div class="field-group"><label>Telefone</label><input type="text" id="pilates_telefone"></div>
       <div class="field-group"><label>E-mail</label><input type="email" id="pilates_email"></div>
-      <div class="field-group"><label>Data da Avaliação</label><input type="date" id="pilates_dataAvaliacao"></div>
-      <div class="field-group form-full"><label>Queixa Principal</label><textarea id="pilates_queixaPrincipal"></textarea></div>
-      <div class="field-group form-full"><label>Objetivos</label><textarea id="pilates_objetivos"></textarea></div>
+      <div class="field-group form-full"><label>Diagnóstico Clínico</label><textarea id="pilates_diagClinico"></textarea></div>
+      <div class="field-group form-full"><label>Diagnóstico Fisioterapêutico</label><textarea id="pilates_diagFisio"></textarea></div>
+      <div class="field-group"><label>CBDF</label><input type="text" id="pilates_cbdf"></div>
+    </div>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ HISTÓRIA CLÍNICA</h4>
+    <div class="field-group"><label>Queixa Principal</label><textarea id="pilates_queixaPrincipal"></textarea></div>
+    <div class="field-group"><label>História Patológica Pregressa (HPP)</label><textarea id="pilates_hpp"></textarea></div>
+    <div class="field-group"><label>Antecedentes Pessoais</label><textarea id="pilates_antecedentesPessoais"></textarea></div>
+    <div class="field-group"><label>Antecedentes Familiares</label><textarea id="pilates_antecedentesFamiliares"></textarea></div>
+    <div class="field-group"><label>Tratamentos Realizados</label><textarea id="pilates_tratamentos"></textarea></div>
+    <div class="field-group"><label>Hábitos de vida</label><textarea id="pilates_habitos"></textarea></div>
+    <div style="margin-bottom:10px">
+      <span style="font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Acompanhamento médico/fisioterapêutico?</span>
+      <div class="inline-opts" style="margin-top:6px">
+        <label><input type="radio" name="pilates_acompanhamento" id="pilates_acompanhamentoSim"> Sim</label>
+        <label><input type="radio" name="pilates_acompanhamento" id="pilates_acompanhamentoNao"> Não</label>
+        <input style="max-width:200px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none" id="pilates_especialidade" placeholder="Qual especialidade?">
+      </div>
+    </div>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ APRESENTAÇÃO DO PACIENTE</h4>
+    <div class="opts-grid">
+      <label><input type="checkbox" id="pilates_orientado"> Deambulando e orientado</label>
+      <label><input type="checkbox" id="pilates_apoio"> Deambulando com apoio</label>
+      <label><input type="checkbox" id="pilates_confuso"> Confuso</label>
+      <label><input type="checkbox" id="pilates_desorientado"> Desorientado</label>
+    </div>
+    <div class="field-group"><label>Se apoio, qual?</label><input type="text" id="pilates_tipoApoio"></div>
+    <div style="margin-bottom:10px">
+      <span style="font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Exames complementares?</span>
+      <div class="inline-opts" style="margin-top:6px">
+        <label><input type="radio" name="pilates_exames" id="pilates_examesSim"> Sim</label>
+        <label><input type="radio" name="pilates_exames" id="pilates_examesNao"> Não</label>
+        <input style="max-width:200px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none" id="pilates_quaisExames" placeholder="Se sim, quais?">
+      </div>
+    </div>
+    <div style="margin-bottom:10px">
+      <span style="font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Usa medicamentos?</span>
+      <div class="inline-opts" style="margin-top:6px">
+        <label><input type="radio" name="pilates_medicamentos" id="pilates_medicamentoSim"> Sim</label>
+        <label><input type="radio" name="pilates_medicamentos" id="pilates_medicamentoNao"> Não</label>
+        <input style="max-width:200px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none" id="pilates_quaisMedicamentos" placeholder="Se sim, quais?">
+      </div>
+    </div>
+    <div style="margin-bottom:10px">
+      <span style="font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Realizou cirurgia?</span>
+      <div class="inline-opts" style="margin-top:6px">
+        <label><input type="radio" name="pilates_cirurgia" id="pilates_cirurgiaSim"> Sim</label>
+        <label><input type="radio" name="pilates_cirurgia" id="pilates_cirurgiaNao"> Não</label>
+      </div>
+      <div class="field-group" style="margin-top:6px"><textarea id="pilates_cirurgias" placeholder="Se sim, quais?"></textarea></div>
+    </div>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ INSPEÇÃO / PALPAÇÃO</h4>
+    <div class="opts-grid">
+      <label><input type="checkbox" id="pilates_normal"> Normal</label>
+      <label><input type="checkbox" id="pilates_edema"> Edema</label>
+      <label><input type="checkbox" id="pilates_cicatriz"> Cicatrização incompleta</label>
+      <label><input type="checkbox" id="pilates_eritema"> Eritemas</label>
+      <label><input type="checkbox" id="pilates_outros"> Outros</label>
+    </div>
+    <div class="field-group"><label>Detalhes adicionais da inspeção/palpação</label><textarea id="pilates_inspecaoDetalhes"></textarea></div>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ SEMIOLOGIA</h4>
+    <div class="field-group"><textarea id="pilates_semiologia"></textarea></div>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ PRESSÃO ARTERIAL</h4>
+    <div class="field-group"><input type="text" id="pilates_pressao"></div>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">🏃 AVALIAÇÃO FÍSICA</h4>
+    <div class="form-grid">
       <div class="field-group"><label>Peso</label><input type="number" id="pilates_peso"></div>
       <div class="field-group"><label>Altura</label><input type="number" id="pilates_altura"></div>
-      <div class="field-group"><label>Pressão Arterial</label><input type="text" id="pilates_pressao"></div>
-      <div class="field-group"><label>Escala de Borg</label><input type="text" id="pilates_escalaBorg"></div>
-      <div class="field-group form-full"><label>Plano do Tratamento</label><textarea id="pilates_planoTratamento"></textarea></div>
-      <div class="field-group form-full"><label>Profissional / Registro</label><input type="text" id="pilates_profissional"></div>
     </div>
-    <button class="btn-save" onclick="salvarPilates()">💾 Salvar</button>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">Composição Corporal por Adipômetro</h4>
+    <div class="form-grid">
+      <div class="field-group"><label>Peitoral/Torácica</label><input type="text" id="pilates_adipometro_peitoral_toracica"></div>
+      <div class="field-group"><label>Subescapular</label><input type="text" id="pilates_adipometro_subescapular"></div>
+      <div class="field-group"><label>Suprailiaca</label><input type="text" id="pilates_adipometro_suprailiaca"></div>
+      <div class="field-group"><label>Axilar média</label><input type="text" id="pilates_adipometro_axilar_media"></div>
+      <div class="field-group"><label>Tríceps</label><input type="text" id="pilates_adipometro_triceps"></div>
+      <div class="field-group"><label>Bíceps</label><input type="text" id="pilates_adipometro_biceps"></div>
+      <div class="field-group"><label>Abdominal</label><input type="text" id="pilates_adipometro_abdominal"></div>
+      <div class="field-group"><label>Coxa</label><input type="text" id="pilates_adipometro_coxa"></div>
+    </div>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">📌 TESTES FISIOTERAPÊUTICOS</h4>
+    <div style="margin-bottom:8px"><strong style="font-size:.82rem;color:var(--muted)">Y BALANCE TESTE</strong>
+      <div class="inline-opts" style="margin-top:4px">
+        <label><input type="radio" name="pilates_ybalance" id="pilates_y_risco"> Assimetria - Sim com risco</label>
+        <label><input type="radio" name="pilates_ybalance" id="pilates_y_nao"> Não</label>
+      </div>
+    </div>
+    <div style="margin-bottom:8px"><strong style="font-size:.82rem;color:var(--muted)">ROMBERG</strong>
+      <div class="inline-opts" style="margin-top:4px">
+        <label><input type="radio" name="pilates_romberg" id="pilates_romberg_pos"> Positivo</label>
+        <label><input type="radio" name="pilates_romberg" id="pilates_romberg_neg"> Negativo</label>
+      </div>
+    </div>
+    <div style="margin-bottom:8px"><strong style="font-size:.82rem;color:var(--muted)">APOIO UNIPODAL – TAU</strong>
+      <div class="inline-opts" style="margin-top:4px">
+        <label><input type="radio" name="pilates_tau" id="pilates_tau_menor"> Menor risco de queda</label>
+        <label><input type="radio" name="pilates_tau" id="pilates_tau_maior"> Maior risco de queda</label>
+      </div>
+    </div>
+    <div style="margin-bottom:8px"><strong style="font-size:.82rem;color:var(--muted)">TUG</strong>
+      <div class="inline-opts" style="margin-top:4px">
+        <label><input type="radio" name="pilates_tug" id="pilates_tug_normal"> Normal</label>
+        <label><input type="radio" name="pilates_tug" id="pilates_tug_baixo"> Baixo risco</label>
+        <label><input type="radio" name="pilates_tug" id="pilates_tug_medio"> Médio risco</label>
+        <label><input type="radio" name="pilates_tug" id="pilates_tug_alto"> Alto risco</label>
+      </div>
+    </div>
+    <div style="margin-bottom:8px"><strong style="font-size:.82rem;color:var(--muted)">MARCHA EM TANDEM</strong>
+      <div class="inline-opts" style="margin-top:4px">
+        <label><input type="radio" name="pilates_tandem" id="pilates_tandem_normal"> Normal</label>
+        <label><input type="radio" name="pilates_tandem_leve"> Leve comprometimento</label>
+        <label><input type="radio" name="pilates_tandem_moderado"> Moderado</label>
+        <label><input type="radio" name="pilates_tandem_grave"> Grave</label>
+      </div>
+    </div>
+    <div style="margin-bottom:8px"><strong style="font-size:.82rem;color:var(--muted)">LASEGUE</strong>
+      <div class="inline-opts" style="margin-top:4px">
+        <label><input type="radio" name="pilates_lasegue" id="pilates_lasegue_pos"> Positivo</label>
+        <label><input type="radio" name="pilates_lasegue" id="pilates_lasegue_neg"> Negativo</label>
+      </div>
+    </div>
+    <div style="margin-bottom:8px"><strong style="font-size:.82rem;color:var(--muted)">LASEGUE INVERTIDO</strong>
+      <div class="inline-opts" style="margin-top:4px">
+        <label><input type="radio" name="pilates_lasegue_inv" id="pilates_lasegue_inv_pos"> Positivo</label>
+        <label><input type="radio" name="pilates_lasegue_inv" id="pilates_lasegue_inv_neg"> Negativo</label>
+      </div>
+    </div>
+    <div style="margin-bottom:8px"><strong style="font-size:.82rem;color:var(--muted)">SPURLING</strong>
+      <div class="inline-opts" style="margin-top:4px">
+        <label><input type="radio" name="pilates_spurling" id="pilates_spurling_pos"> Positivo</label>
+        <label><input type="radio" name="pilates_spurling" id="pilates_spurling_neg"> Negativo</label>
+      </div>
+    </div>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ ESCALA DE FORÇA MUSCULAR</h4>
+    <div class="opts-grid">
+      <label><input type="radio" name="pilates_forca" id="pilates_g0"> Grau 0</label>
+      <label><input type="radio" name="pilates_forca" id="pilates_g1"> Grau 1</label>
+      <label><input type="radio" name="pilates_forca" id="pilates_g2"> Grau 2</label>
+      <label><input type="radio" name="pilates_forca" id="pilates_g3"> Grau 3</label>
+      <label><input type="radio" name="pilates_forca" id="pilates_g4"> Grau 4</label>
+      <label><input type="radio" name="pilates_forca" id="pilates_g5"> Grau 5</label>
+    </div>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ ESCALA DE BORG</h4>
+    <div class="field-group"><input type="text" id="pilates_escalaBorg" placeholder="Observações / Pontuação"></div>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">📌 PLANO TERAPÊUTICO</h4>
+    <div class="field-group"><label>Objetivos do Tratamento</label><textarea id="pilates_objetivos"></textarea></div>
+    <div class="field-group"><label>Recursos Terapêuticos</label><textarea id="pilates_recursos"></textarea></div>
+    <div class="field-group"><label>Plano do Tratamento</label><textarea id="pilates_planoTratamento"></textarea></div>
+    <div class="field-group"><label>Profissional / Registro Conselho</label><input type="text" id="pilates_profissional"></div>
+    <button class="btn-save" onclick="salvarPilates()">💾 Salvar Avaliação</button>
   </div>
 </div>
 
+<!-- ════ RECOVERY COMPLETO ════ -->
 <div id="telaRecovery" class="hidden">
   <div class="form-card">
     <button class="btn-back" onclick="voltar()">⬅ Voltar</button>
-    <h3>Ficha – Recovery</h3>
+    <h3>Avaliação Recovery</h3>
+    <h4 style="color:var(--lilas);margin:12px 0 8px">📌 DADOS PESSOAIS</h4>
     <div class="form-grid">
       <div class="field-group"><label>Nome</label><input type="text" id="mov_nome"></div>
       <div class="field-group"><label>Data de Nascimento</label><input type="date" id="mov_nascimento"></div>
       <div class="field-group"><label>Telefone</label><input type="text" id="mov_telefone"></div>
       <div class="field-group"><label>Fisioterapeuta</label><input type="text" id="mov_fisioterapeuta"></div>
+      <div class="field-group form-full"><label>Endereço</label><input type="text" id="mov_endereco"></div>
+    </div>
+    <div class="inline-opts">
+      <label><input type="radio" name="mov_sexo" id="mov_sexo_fem"> Feminino</label>
+      <label><input type="radio" name="mov_sexo" id="mov_sexo_masc"> Masculino</label>
+    </div>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">🏃 PERFIL ESPORTIVO</h4>
+    <div class="inline-opts">
+      <label><input type="radio" name="mov_atleta" id="mov_atleta_amador"> Amador</label>
+      <label><input type="radio" name="mov_atleta" id="mov_atleta_profissional"> Profissional</label>
+    </div>
+    <div class="form-grid">
       <div class="field-group"><label>Esporte / Há quanto tempo</label><input type="text" id="mov_esporte"></div>
       <div class="field-group"><label>Frequência semanal</label><input type="text" id="mov_frequencia"></div>
-      <div class="field-group form-full"><label>Objetivos</label><textarea id="mov_objetivos"></textarea></div>
+      <div class="field-group"><label>Profissão</label><input type="text" id="mov_profissao"></div>
+    </div>
+    <div class="inline-opts">
+      <span style="font-size:.82rem;color:var(--muted)">Pratica atividade física?</span>
+      <label><input type="radio" name="mov_pratica" id="mov_pratica_sim"> Sim</label>
+      <label><input type="radio" name="mov_pratica" id="mov_pratica_nao"> Não</label>
+    </div>
+    <div class="field-group"><label>Objetivos no programa</label><textarea id="mov_objetivos"></textarea></div>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ HISTÓRICO DE SAÚDE</h4>
+    <div class="inline-opts"><span style="font-size:.82rem;color:var(--muted)">Tabagismo?</span><label><input type="radio" name="mov_tabagismo" id="mov_tabagismo_sim"> Sim</label><label><input type="radio" name="mov_tabagismo" id="mov_tabagismo_nao"> Não</label></div>
+    <div class="inline-opts"><span style="font-size:.82rem;color:var(--muted)">Alterações cardíacas?</span><label><input type="radio" name="mov_cardiaco" id="mov_cardiaco_sim"> Sim</label><label><input type="radio" name="mov_cardiaco" id="mov_cardiaco_nao"> Não</label></div>
+    <div class="inline-opts"><span style="font-size:.82rem;color:var(--muted)">Diabetes?</span><label><input type="radio" name="mov_diabetes" id="mov_diabetes_sim"> Sim</label><label><input type="radio" name="mov_diabetes" id="mov_diabetes_nao"> Não</label></div>
+    <div class="inline-opts"><span style="font-size:.82rem;color:var(--muted)">Hipertensão?</span><label><input type="radio" name="mov_hipertensao" id="mov_hipertensao_sim"> Sim</label><label><input type="radio" name="mov_hipertensao" id="mov_hipertensao_nao"> Não</label></div>
+    <div class="inline-opts"><span style="font-size:.82rem;color:var(--muted)">Medicamentos?</span><label><input type="radio" name="mov_medicamento" id="mov_medicamento_sim"> Sim</label><label><input type="radio" name="mov_medicamento" id="mov_medicamento_nao"> Não</label></div>
+    <div class="field-group"><textarea id="mov_medicamento_desc" placeholder="Se sim, quais?"></textarea></div>
+    <div class="inline-opts"><span style="font-size:.82rem;color:var(--muted)">Lesão/acidente?</span><label><input type="radio" name="mov_lesao" id="mov_lesao_sim"> Sim</label><label><input type="radio" name="mov_lesao" id="mov_lesao_nao"> Não</label></div>
+    <div class="field-group"><textarea id="mov_lesao_desc" placeholder="Se sim, qual?"></textarea></div>
+    <div class="inline-opts"><span style="font-size:.82rem;color:var(--muted)">Cirurgia?</span><label><input type="radio" name="mov_cirurgia" id="mov_cirurgia_sim"> Sim</label><label><input type="radio" name="mov_cirurgia" id="mov_cirurgia_nao"> Não</label></div>
+    <div class="field-group"><textarea id="mov_cirurgia_desc" placeholder="Se sim, qual?"></textarea></div>
+    <div class="inline-opts"><span style="font-size:.82rem;color:var(--muted)">Alergia?</span><label><input type="radio" name="mov_alergia" id="mov_alergia_sim"> Sim</label><label><input type="radio" name="mov_alergia" id="mov_alergia_nao"> Não</label></div>
+    <div class="field-group"><textarea id="mov_alergia_desc" placeholder="Se sim, qual?"></textarea></div>
+    <div class="inline-opts"><span style="font-size:.82rem;color:var(--muted)">Tontura/desmaio?</span><label><input type="radio" name="mov_tontura" id="mov_tontura_sim"> Sim</label><label><input type="radio" name="mov_tontura" id="mov_tontura_nao"> Não</label></div>
+    <div class="inline-opts"><span style="font-size:.82rem;color:var(--muted)">Dieta perder/ganhar peso?</span><label><input type="radio" name="mov_dieta" id="mov_dieta_sim"> Sim</label><label><input type="radio" name="mov_dieta" id="mov_dieta_nao"> Não</label></div>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">📌 PROGRAMA MOV RECOVERY – AVALIAÇÃO FISIOTERAPÊUTICA</h4>
+    <div class="form-grid">
+      <div class="field-group"><label>Esporte</label><input type="text" id="mov_prog_esporte"></div>
+      <div class="field-group"><label>Início</label><input type="text" id="mov_prog_inicio"></div>
       <div class="field-group form-full"><label>Queixa principal</label><textarea id="mov_prog_queixaPrincipal"></textarea></div>
       <div class="field-group form-full"><label>Diagnóstico Cinético Funcional</label><textarea id="mov_prog_diagnosticoCinetico"></textarea></div>
+      <div class="field-group form-full"><label>Objetivos</label><textarea id="mov_prog_objetivos"></textarea></div>
       <div class="field-group form-full"><label>Conduta Fisioterapêutica</label><textarea id="mov_prog_conduta"></textarea></div>
-      <div class="field-group form-full"><label>Fisioterapeuta responsável</label><input type="text" id="mov_prog_fisioterapeuta"></div>
+      <div class="field-group form-full"><label>Fisioterapeuta</label><input type="text" id="mov_prog_fisioterapeuta"></div>
     </div>
     <button class="btn-save" onclick="salvarRecovery()">💾 Salvar</button>
   </div>
 </div>
 
+<!-- ════ CONDICIONAMENTO COMPLETO ════ -->
 <div id="telaCondicionamento" class="hidden">
   <div class="form-card">
     <button class="btn-back" onclick="voltar()">⬅ Voltar</button>
-    <h3>Ficha – Condicionamento Funcional</h3>
+    <h3>Avaliação Condicionamento Funcional – Aula em Grupo</h3>
     <div class="opts-grid" style="margin-bottom:12px">
       <label><input type="checkbox" id="cond_totalpass"> Totalpass</label>
       <label><input type="checkbox" id="cond_gympass"> Gympass</label>
       <label><input type="checkbox" id="cond_mensalidade"> Mensalidade</label>
     </div>
+    <h4 style="color:var(--lilas);margin:12px 0 8px">📌 IDENTIFICAÇÃO</h4>
     <div class="form-grid">
       <div class="field-group"><label>Nome completo</label><input type="text" id="cond_nomeCompleto"></div>
       <div class="field-group"><label>Data de nascimento</label><input type="date" id="cond_dataNascimento"></div>
       <div class="field-group"><label>CPF</label><input type="text" id="cond_cpf"></div>
+      <div class="field-group"><label>Data da Avaliação</label><input type="date" id="cond_dataAvaliacao"></div>
+    </div>
+    <div class="inline-opts">
+      <label><input type="radio" name="cond_sexo" id="cond_sexo_masculino"> Masculino</label>
+      <label><input type="radio" name="cond_sexo" id="cond_sexo_feminino"> Feminino</label>
+    </div>
+    <div class="form-grid">
+      <div class="field-group"><label>Responsável (se menor)</label><input type="text" id="cond_responsavel_nome"></div>
+      <div class="field-group"><label>Grau de parentesco</label><input type="text" id="cond_responsavel_parentesco"></div>
+      <div class="field-group"><label>CPF Responsável</label><input type="text" id="cond_responsavel_cpf"></div>
+      <div class="field-group"><label>Profissão/Ocupação</label><input type="text" id="cond_profissao_ocupacao"></div>
+      <div class="field-group form-full"><label>Endereço Residencial</label><input type="text" id="cond_endereco_residencial"></div>
       <div class="field-group"><label>Telefone</label><input type="text" id="cond_telefone"></div>
       <div class="field-group"><label>E-mail</label><input type="email" id="cond_email"></div>
-      <div class="field-group"><label>Data da Avaliação</label><input type="date" id="cond_dataAvaliacao"></div>
+      <div class="field-group"><label>Diagnóstico Clínico</label><input type="text" id="cond_diagnosticoClinico"></div>
+      <div class="field-group"><label>Diagnóstico Fisioterapêutico</label><input type="text" id="cond_diagnosticoFisio"></div>
+      <div class="field-group"><label>CBDF</label><input type="text" id="cond_cbdf"></div>
+    </div>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ HISTÓRIA CLÍNICA</h4>
+    <div class="field-group"><label>Queixa Principal</label><textarea id="cond_queixaPrincipal"></textarea></div>
+    <div class="field-group"><label>História da Doença Atual (HDA)</label><textarea id="cond_hda"></textarea></div>
+    <div class="field-group"><label>Histórico de Lesões</label><textarea id="cond_historicoLesoes"></textarea></div>
+    <div class="inline-opts">
+      <span style="font-size:.82rem;color:var(--muted)">Acompanhamento médico?</span>
+      <label><input type="radio" name="cond_acompanhamento" id="cond_acompanhamento_sim"> Sim</label>
+      <label><input type="radio" name="cond_acompanhamento" id="cond_acompanhamento_nao"> Não</label>
+      <input style="max-width:180px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none" id="cond_acompanhamento_quais" placeholder="Quais?">
+    </div>
+    <div class="inline-opts">
+      <span style="font-size:.82rem;color:var(--muted)">Usa medicamentos?</span>
+      <label><input type="radio" name="cond_medicamentos" id="cond_medicamentos_sim"> Sim</label>
+      <label><input type="radio" name="cond_medicamentos" id="cond_medicamentos_nao"> Não</label>
+      <input style="max-width:180px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none" id="cond_medicamentos_quais" placeholder="Quais?">
+    </div>
+    <div class="form-grid">
       <div class="field-group"><label>Peso (kg)</label><input type="number" id="cond_peso"></div>
       <div class="field-group"><label>Altura (cm)</label><input type="number" id="cond_altura"></div>
-      <div class="field-group form-full"><label>Queixa Principal</label><textarea id="cond_queixaPrincipal"></textarea></div>
+      <div class="field-group form-full"><label>Hábitos de Vida</label><textarea id="cond_habitosVida"></textarea></div>
       <div class="field-group form-full"><label>Metas Pessoais</label><textarea id="cond_metasPessoais"></textarea></div>
-      <div class="field-group form-full"><label>Plano Terapêutico</label><textarea id="cond_planoTerapeutico"></textarea></div>
-      <div class="field-group form-full"><label>Profissional / Registro</label><input type="text" id="cond_profissional"></div>
     </div>
-    <button class="btn-save" onclick="salvarCondicionamento()">💾 Salvar</button>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ AVALIAÇÃO DA DOR – EVA</h4>
+    <div class="field-group"><label>EVA / Região</label><input type="text" id="cond_evaRegiao"></div>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">🏃 NÍVEL DE CONDICIONAMENTO FÍSICO</h4>
+    <div class="opts-grid">
+      <label><input type="checkbox" id="cond_ativo"> Ativo</label>
+      <label><input type="checkbox" id="cond_moderadamente_ativo"> Moderadamente Ativo</label>
+      <label><input type="checkbox" id="cond_sedentario"> Sedentário</label>
+    </div>
+    <div class="inline-opts">
+      <span style="font-size:.82rem;color:var(--muted)">Atividade Física Regular?</span>
+      <label><input type="radio" name="cond_atividade" id="cond_atividade_sim"> Sim</label>
+      <label><input type="radio" name="cond_atividade" id="cond_atividade_nao"> Não</label>
+      <input style="max-width:180px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none" id="cond_atividade_quais" placeholder="Quais?">
+    </div>
+    <div class="field-group"><label>Classificação de Esforço – Escala de BORG</label><input type="number" min="0" max="10" id="cond_borg"></div>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ AVALIAÇÃO FÍSICA</h4>
+    <div class="inline-opts">
+      <span style="font-size:.82rem;color:var(--muted)">Desvios Posturais?</span>
+      <label><input type="radio" name="cond_desvios" id="cond_desvios_sim"> Sim</label>
+      <label><input type="radio" name="cond_desvios" id="cond_desvios_nao"> Não</label>
+      <input style="max-width:180px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none" id="cond_desvios_quais" placeholder="Quais?">
+    </div>
+    <div class="inline-opts">
+      <span style="font-size:.82rem;color:var(--muted)">Movimentos Articulares:</span>
+      <label><input type="radio" name="cond_movimentos" id="cond_movimentos_com_dor"> Com Dor</label>
+      <label><input type="radio" name="cond_movimentos" id="cond_movimentos_sem_dor"> Sem Dor</label>
+      <input style="max-width:180px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none" id="cond_movimentos_quais" placeholder="Quais?">
+    </div>
+    <div class="field-group"><label>Movimentos Funcionais</label><textarea id="cond_movimentos_funcionais"></textarea></div>
+    <div class="field-group"><label>Mobilidade</label><textarea id="cond_mobilidade"></textarea></div>
+    <div class="field-group"><label>Flexibilidade</label><input type="text" id="cond_flexibilidade"></div>
+    <div class="field-group"><label>Resistência Muscular/Cardiovascular</label>
+      <select id="cond_resistencia"><option value="">Selecione</option><option>Baixa</option><option>Média</option><option>Alta</option></select>
+    </div>
+    <h4 style="color:var(--lilas);margin:14px 0 8px">📌 PLANO TERAPÊUTICO</h4>
+    <div class="field-group"><textarea id="cond_planoTerapeutico"></textarea></div>
+    <div class="field-group"><label>Profissional / Registro Conselho</label><input type="text" id="cond_profissional"></div>
+    <button class="btn-save" onclick="salvarCondicionamento()">💾 Salvar Avaliação</button>
   </div>
 </div>
 
+<!-- ════ PÉLVICA COMPLETA ════ -->
 <div id="telaPelvica" class="hidden">
   <div class="form-card">
     <button class="btn-back" onclick="voltar()">⬅ Voltar</button>
@@ -1049,7 +1407,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 <!-- ══════════════════════════════
      SCRIPTS
 ══════════════════════════════ -->
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ═══════════════════════════
    CREDENCIAIS & LOGIN
 ═══════════════════════════ */
@@ -1234,29 +1592,55 @@ let colaboradorAtual=null, mesAtual=new Date().toISOString().slice(0,7), colabDe
 function initColab(){
   const ms=document.getElementById("mesSelect");
   ms.value=mesAtual;
-  ms.onchange=()=>{mesAtual=ms.value;carregarDadosColab();};
+  ms.onchange=()=>{
+    mesAtual=ms.value;
+    if(colabOnValueUnsub){ colabOnValueUnsub(); colabOnValueUnsub=null; }
+    carregarDadosColab();
+  };
   carregarColaboradores();
 }
+
+// Listener em tempo real para dados do colaborador atual
+let colabOnValueUnsub = null;
 
 async function carregarColaboradores(){
   const sel=document.getElementById("colaboradorSelect");
   const btnN=document.getElementById("btnNovoColab");
   const btnR=document.getElementById("btnRemColab");
-  const u=window._usuario||usuarioAtual;
-  const snap=await get(ref(dbColab,"colaboradores"));
+  const u=usuarioAtual;
   sel.innerHTML="";
 
+  // Carrega todos os nomes do Firebase primeiro
+  const snapTodos = await get(ref(dbColab,"colaboradores"));
+  const nomesFirebase = Object.keys(snapTodos.val()||{});
+
   if(u.role==="colab"){
-    // só vê o próprio nome
     btnN.style.display="none"; btnR.style.display="none";
-    const op=document.createElement("option"); op.value=u.nome; op.textContent=u.nome; sel.appendChild(op);
     sel.disabled=true;
+
+    // Encontra o nome no Firebase que melhor corresponde ao nome do login
+    // (ignora diferenças de maiúsculas/espaços extras)
+    const nomeLogin = u.nome.trim().toLowerCase();
+    let nomeReal = nomesFirebase.find(n => n.trim().toLowerCase() === nomeLogin);
+
+    // Se não encontrou, cria a entrada com o nome exato do login
+    if(!nomeReal){
+      nomeReal = u.nome;
+      await set(ref(dbColab,"colaboradores/"+nomeReal), {});
+    }
+
+    colaboradorAtual = nomeReal;
+    const op=document.createElement("option");
+    op.value=nomeReal; op.textContent=nomeReal;
+    sel.appendChild(op);
+
   } else {
     btnN.style.display=""; btnR.style.display="";
     sel.disabled=false;
-    Object.keys(snap.val()||{}).forEach(n=>{ const o=document.createElement("option"); o.value=o.textContent=n; sel.appendChild(o); });
+    nomesFirebase.forEach(n=>{ const o=document.createElement("option"); o.value=o.textContent=n; sel.appendChild(o); });
+    colaboradorAtual=sel.value;
   }
-  colaboradorAtual=sel.value;
+
   sel.onchange=()=>{colaboradorAtual=sel.value;carregarDadosColab();calcularMedia();};
   carregarDadosColab(); calcularMedia();
 }
@@ -1266,15 +1650,31 @@ function carregarDadosColab(){
   corpo.innerHTML="";
   if(!colaboradorAtual) return;
   montarCabecalho();
-  const rAtual=ref(dbColab,`colaboradores/${colaboradorAtual}/ciclos/${mesAtual}/alunos`);
-  const rModelo=ref(dbColab,`colaboradores/${colaboradorAtual}/ciclos/2026-01/alunos`);
-  get(rAtual).then(snap=>{
-    if(snap.exists()){ Object.values(snap.val()).forEach(a=>adicionarAluno(a,true)); calcularTotal(); }
-    else {
+
+  // Cancela listener anterior se existir
+  if(colabOnValueUnsub){ colabOnValueUnsub(); colabOnValueUnsub=null; }
+
+  const rAtual  = ref(dbColab,`colaboradores/${colaboradorAtual}/ciclos/${mesAtual}/alunos`);
+  const rModelo = ref(dbColab,`colaboradores/${colaboradorAtual}/ciclos/2026-01/alunos`);
+
+  // Usa onValue para dados em tempo real (igual ao admin)
+  colabOnValueUnsub = onValue(rAtual, snap=>{
+    corpo.innerHTML="";
+    if(snap.exists()){
+      Object.values(snap.val()).forEach(a=>adicionarAluno(a,true));
+      calcularTotal();
+    } else {
+      // Mês vazio: tenta copiar do modelo janeiro
       get(rModelo).then(ms=>{
-        if(!ms.exists()) return;
-        const base=Object.values(ms.val()).map(a=>({nome:a.nome||"",tipo:a.tipo||"Mensal",valorBase:a.valorBase||"",valorExtra:"",dias:[]}));
-        set(rAtual,base).then(()=>{base.forEach(a=>adicionarAluno(a,true));calcularTotal();});
+        if(!ms.exists()){
+          // Nenhum dado ainda — tabela vazia mas funcional
+          calcularTotal();
+          return;
+        }
+        const base=Object.values(ms.val()).map(a=>({
+          nome:a.nome||"",tipo:a.tipo||"Mensal",valorBase:a.valorBase||"",valorExtra:"",dias:[]
+        }));
+        set(rAtual,base); // o onValue acima vai reagir e renderizar
       });
     }
   });
@@ -1471,6 +1871,120 @@ const cv=id=>{const e=document.getElementById(id);return e?e.value:"";};
 const cm=id=>{const e=document.getElementById(id);return e?e.checked:false;};
 const fmtD=v=>{if(!v)return"-";if(/^\d{4}-\d{2}-\d{2}$/.test(v)){const[a,m,d]=v.split("-");return`${d}/${m}/${a}`;}return v;};
 
+// MAPA DE RÓTULOS – mesma ordem do formulário original
+const ROTULOS_FISIO=[
+  ["sessao","Sessão"],["pacote","Pacote"],["qtdSessoes","Quantidade de sessões"],
+  ["pix","Pix"],["parcelado","Parcelado"],["parcelas","Parcelas"],["parceria","Parceria"],
+  ["nomeCompleto","Nome completo"],["dataNascimento","Data de nascimento"],["cpf","CPF"],
+  ["masculino","Masculino"],["feminino","Feminino"],["responsavel","Responsável"],
+  ["parentesco","Grau de parentesco"],["cpfResponsavel","CPF Responsável"],
+  ["profissao","Profissão/Ocupação"],["endereco","Endereço"],["telefone","Telefone"],["email","E-mail"],
+  ["dataAvaliacao","Data da Avaliação"],["diagClinico","Diagnóstico Clínico"],
+  ["diagFisio","Diagnóstico Fisioterapêutico"],["cbdf","CBDF"],
+  ["queixaPrincipal","Queixa Principal"],["hpp","HDA"],["antecedentesPessoais","HPP"],
+  ["antecedentesFamiliares","Antecedentes Familiares"],["tratamentos","Tratamentos Realizados"],
+  ["habitos","Hábitos de vida"],["acompanhamentoSim","Acompanhamento – Sim"],
+  ["acompanhamentoNao","Acompanhamento – Não"],["especialidade","Especialidade"],
+  ["examesSim","Exames – Sim"],["examesNao","Exames – Não"],["examesQuais","Exames – Quais"],
+  ["medicamentoSim","Medicamentos – Sim"],["medicamentoNao","Medicamentos – Não"],
+  ["medicamentosQuais","Medicamentos – Quais"],
+  ["orientado","Deambulando e orientado"],["apoio","Deambulando com apoio"],
+  ["confuso","Confuso"],["desorientado","Desorientado"],
+  ["cirurgiaSim","Cirurgia – Sim"],["cirurgiaNao","Cirurgia – Não"],["cirurgias","Cirurgias – Quais"],
+  ["normal","Inspeção Normal"],["edema","Edema"],["cicatriz","Cicatrização incompleta"],
+  ["eritema","Eritemas"],["outros","Outros"],["inspecaoDetalhes","Detalhes Inspeção/Palpação"],
+  ["peso","Peso"],["altura","Altura"],
+  ["joelhoYSim","Y Teste – Sim"],["joelhoYNao","Y Teste – Não"],
+  ["rombergPos","Romberg – Positivo"],["rombergNeg","Romberg – Negativo"],
+  ["tugNormal","TUG – Normal"],["tugBaixo","TUG – Baixo risco"],
+  ["tugMedio","TUG – Médio risco"],["tugAlto","TUG – Alto risco"],
+  ["laseguePos","Lasegue – Positivo"],["lasegueNeg","Lasegue – Negativo"],
+  ["g0","Grau 0"],["g1","Grau 1"],["g2","Grau 2"],["g3","Grau 3"],["g4","Grau 4"],["g5","Grau 5"],
+  ["objetivos","Objetivos do Tratamento"],["recursos","Recursos Terapêuticos"],
+  ["planoTratamento","Plano do Tratamento"],["profissional","Profissional / Registro Conselho"]
+];
+const ROTULOS_PILATES=[
+  ["totalpass","Totalpass"],["gympass","Gympass"],["gurupass","Gurupass"],["mensalidade","Mensalidade"],
+  ["parceria","Parceria"],["nomeCompleto","Nome completo"],["dataNascimento","Data de nascimento"],
+  ["cpf","CPF"],["masculino","Masculino"],["feminino","Feminino"],
+  ["responsavel","Responsável"],["parentesco","Grau de parentesco"],["cpfResponsavel","CPF Responsável"],
+  ["profissao","Profissão/Ocupação"],["endereco","Endereço"],["telefone","Telefone"],["email","E-mail"],
+  ["dataAvaliacao","Data da Avaliação"],["diagClinico","Diagnóstico Clínico"],
+  ["diagFisio","Diagnóstico Fisioterapêutico"],["cbdf","CBDF"],
+  ["queixaPrincipal","Queixa Principal"],["hpp","HPP"],["antecedentesPessoais","Antecedentes Pessoais"],
+  ["antecedentesFamiliares","Antecedentes Familiares"],["tratamentos","Tratamentos Realizados"],
+  ["habitos","Hábitos de vida"],["acompanhamentoSim","Acompanhamento – Sim"],
+  ["especialidade","Especialidade"],["tipoApoio","Se apoio, qual"],
+  ["examesSim","Exames – Sim"],["quaisExames","Exames – Quais"],
+  ["medicamentoSim","Medicamentos – Sim"],["quaisMedicamentos","Medicamentos – Quais"],
+  ["cirurgiaSim","Cirurgia – Sim"],["cirurgias","Cirurgias – Quais"],
+  ["normal","Inspeção Normal"],["edema","Edema"],["cicatriz","Cicatrização incompleta"],
+  ["eritema","Eritemas"],["outros","Outros"],["inspecaoDetalhes","Detalhes Inspeção/Palpação"],
+  ["semiologia","Semiologia"],["pressao","Pressão Arterial"],["peso","Peso"],["altura","Altura"],
+  ["adipometroPeitoralToracica","Adipômetro – Peitoral/Torácica"],
+  ["adipometroSubescapular","Adipômetro – Subescapular"],["adipometroSuprailiaca","Adipômetro – Suprailiaca"],
+  ["adipometroAxilarMedia","Adipômetro – Axilar média"],["adipometroTriceps","Adipômetro – Tríceps"],
+  ["adipometroBiceps","Adipômetro – Bíceps"],["adipometroAbdominal","Adipômetro – Abdominal"],
+  ["adipometroCoxa","Adipômetro – Coxa"],["escalaBorg","Escala de Borg"],
+  ["objetivos","Objetivos do Tratamento"],["recursos","Recursos Terapêuticos"],
+  ["planoTratamento","Plano do Tratamento"],["profissional","Profissional / Registro Conselho"]
+];
+const ROTULOS_RECOVERY=[
+  ["mov_nome","Nome"],["mov_nascimento","Data de Nascimento"],["mov_telefone","Telefone"],
+  ["mov_sexo_fem","Sexo Feminino"],["mov_sexo_masc","Sexo Masculino"],
+  ["mov_endereco","Endereço"],["mov_fisioterapeuta","Fisioterapeuta"],
+  ["mov_atleta_amador","Atleta – Amador"],["mov_atleta_profissional","Atleta – Profissional"],
+  ["mov_esporte","Esporte / Há quanto tempo"],["mov_pratica_sim","Pratica atividade – Sim"],
+  ["mov_frequencia","Frequência semanal"],["mov_objetivos","Objetivos no programa"],
+  ["mov_tabagismo_sim","Tabagismo – Sim"],["mov_cardiaco_sim","Alterações cardíacas – Sim"],
+  ["mov_diabetes_sim","Diabetes – Sim"],["mov_hipertensao_sim","Hipertensão – Sim"],
+  ["mov_medicamento_sim","Medicamentos – Sim"],["mov_medicamento_desc","Medicamentos – Quais"],
+  ["mov_lesao_sim","Lesão – Sim"],["mov_lesao_desc","Lesão – Qual"],
+  ["mov_cirurgia_sim","Cirurgia – Sim"],["mov_cirurgia_desc","Cirurgia – Qual"],
+  ["mov_alergia_sim","Alergia – Sim"],["mov_alergia_desc","Alergia – Qual"],
+  ["mov_tontura_sim","Tontura – Sim"],["mov_dieta_sim","Dieta – Sim"],
+  ["mov_profissao","Profissão"],
+  ["mov_prog_esporte","Esporte (Programa)"],["mov_prog_inicio","Início"],
+  ["mov_prog_queixaPrincipal","Queixa principal"],["mov_prog_diagnosticoCinetico","Diagnóstico Cinético Funcional"],
+  ["mov_prog_objetivos","Objetivos"],["mov_prog_conduta","Conduta Fisioterapêutica"],
+  ["mov_prog_fisioterapeuta","Fisioterapeuta responsável"]
+];
+const ROTULOS_COND=[
+  ["totalpass","Totalpass"],["gympass","Gympass"],["mensalidade","Mensalidade"],
+  ["nomeCompleto","Nome completo"],["dataNascimento","Data de nascimento"],["cpf","CPF"],
+  ["sexoMasculino","Sexo Masculino"],["sexoFeminino","Sexo Feminino"],
+  ["responsavelNome","Responsável – Nome"],["responsavelParentesco","Responsável – Parentesco"],
+  ["responsavelCpf","Responsável – CPF"],["profissaoOcupacao","Profissão/Ocupação"],
+  ["enderecoResidencial","Endereço"],["telefone","Telefone"],["email","E-mail"],
+  ["dataAvaliacao","Data da Avaliação"],["diagnosticoClinico","Diagnóstico Clínico"],
+  ["diagnosticoFisio","Diagnóstico Fisioterapêutico"],["cbdf","CBDF"],
+  ["queixaPrincipal","Queixa Principal"],["hda","HDA"],["historicoLesoes","Histórico de Lesões"],
+  ["acompanhamentoSim","Acompanhamento – Sim"],["acompanhamentoQuais","Acompanhamento – Quais"],
+  ["medicamentosSim","Medicamentos – Sim"],["medicamentosQuais","Medicamentos – Quais"],
+  ["peso","Peso (kg)"],["altura","Altura (cm)"],["habitosVida","Hábitos de Vida"],
+  ["metasPessoais","Metas Pessoais"],["evaRegiao","EVA / Região"],
+  ["ativo","Ativo"],["moderadamenteAtivo","Moderadamente Ativo"],["sedentario","Sedentário"],
+  ["atividadeSim","Atividade Física – Sim"],["atividadeQuais","Atividade Física – Quais"],
+  ["borg","Escala de Borg"],["desviosSim","Desvios Posturais – Sim"],["desviosQuais","Desvios – Quais"],
+  ["movimentosComDor","Movimentos Com Dor"],["movimentosSemDor","Movimentos Sem Dor"],
+  ["movimentosQuais","Movimentos – Quais"],["movimentosFuncionais","Movimentos Funcionais"],
+  ["mobilidade","Mobilidade"],["flexibilidade","Flexibilidade"],
+  ["resistenciaMuscularCardio","Resistência Muscular/Cardiovascular"],
+  ["planoTerapeutico","Plano Terapêutico"],["profissional","Profissional / Registro Conselho"]
+];
+
+function renderDetalhe(dados,rotulos){
+  let html=`<p style="margin-bottom:6px"><strong>Data:</strong> ${fmtD(dados.data)}</p>`;
+  for(const [k,label] of rotulos){
+    const v=dados[k];
+    if(v===undefined||v===null||v==="")continue;
+    if(v===false)continue; // não mostra "Não" para economia de espaço
+    const display=v===true?"✔ Sim":(typeof v==="string"&&(k.toLowerCase().includes("data")||k.toLowerCase().includes("nascimento"))?fmtD(v):v);
+    html+=`<p style="margin:4px 0;font-size:.84rem;line-height:1.6"><strong style="color:var(--lilas)">${label}:</strong> ${display}</p>`;
+  }
+  return html||"<p>Sem dados adicionais.</p>";
+}
+
 window.abrirTelaPorTipo=function(){
   tempNome=cv("nome");tempTipo=cv("tipo");tempData=cv("data");
   if(!tempNome||!tempTipo||!tempData){alert("Preencha todos os campos.");return;}
@@ -1486,21 +2000,111 @@ function salvarBase(extras){
   alert(avalEditId?"Atualizada!":"Salva com sucesso!");avalEditId=null;voltar();
 }
 
-window.salvarFisioterapia=()=>salvarBase({sessao:cm("fisio_sessao"),pacote:cm("fisio_pacote"),qtdSessoes:cv("fisio_qtdSessoes"),pix:cm("fisio_pix"),parcelado:cm("fisio_parcelado"),parcelas:cv("fisio_parcelas"),nomeCompleto:cv("fisio_nomeCompleto"),dataNascimento:cv("fisio_dataNascimento"),cpf:cv("fisio_cpf"),telefone:cv("fisio_telefone"),email:cv("fisio_email"),dataAvaliacao:cv("fisio_dataAvaliacao"),endereco:cv("fisio_endereco"),diagClinico:cv("fisio_diagClinico"),diagFisio:cv("fisio_diagFisio"),queixaPrincipal:cv("fisio_queixaPrincipal"),hpp:cv("fisio_hpp"),antecedentesFamiliares:cv("fisio_antecedentesFamiliares"),habitos:cv("fisio_habitos"),examesSim:cm("fisio_examesSim"),medicamentoSim:cm("fisio_medicamentoSim"),cirurgiaSim:cm("fisio_cirurgiaSim"),masculino:cm("fisio_masculino"),feminino:cm("fisio_feminino"),orientado:cm("fisio_orientado"),apoio:cm("fisio_apoio"),normal:cm("fisio_normal"),edema:cm("fisio_edema"),rombergPos:cm("fisio_romberg_pos"),tugNormal:cm("fisio_tug_normal"),laseguePos:cm("fisio_lasegue_pos"),peso:cv("fisio_peso"),altura:cv("fisio_altura"),objetivos:cv("fisio_objetivos"),planoTratamento:cv("fisio_planoTratamento"),profissional:cv("fisio_profissional")});
+window.salvarFisioterapia=()=>salvarBase({
+  sessao:cm("fisio_sessao"),pacote:cm("fisio_pacote"),qtdSessoes:cv("fisio_qtdSessoes"),
+  pix:cm("fisio_pix"),parcelado:cm("fisio_parcelado"),parcelas:cv("fisio_parcelas"),parceria:cv("fisio_parceria"),
+  nomeCompleto:cv("fisio_nomeCompleto"),dataNascimento:cv("fisio_dataNascimento"),cpf:cv("fisio_cpf"),
+  masculino:cm("fisio_masculino"),feminino:cm("fisio_feminino"),
+  responsavel:cv("fisio_responsavel"),parentesco:cv("fisio_parentesco"),cpfResponsavel:cv("fisio_cpfResponsavel"),
+  profissao:cv("fisio_profissao"),endereco:cv("fisio_endereco"),telefone:cv("fisio_telefone"),email:cv("fisio_email"),
+  dataAvaliacao:cv("fisio_dataAvaliacao"),diagClinico:cv("fisio_diagClinico"),diagFisio:cv("fisio_diagFisio"),cbdf:cv("fisio_cbdf"),
+  queixaPrincipal:cv("fisio_queixaPrincipal"),hpp:cv("fisio_hpp"),antecedentesPessoais:cv("fisio_antecedentesPessoais"),
+  antecedentesFamiliares:cv("fisio_antecedentesFamiliares"),tratamentos:cv("fisio_tratamentos"),habitos:cv("fisio_habitos"),
+  acompanhamentoSim:cm("fisio_acompanhamentoSim"),acompanhamentoNao:cm("fisio_acompanhamentoNao"),especialidade:cv("fisio_especialidade"),
+  examesSim:cm("fisio_examesSim"),examesNao:cm("fisio_examesNao"),examesQuais:cv("fisio_examesQuais"),
+  medicamentoSim:cm("fisio_medicamentoSim"),medicamentoNao:cm("fisio_medicamentoNao"),medicamentosQuais:cv("fisio_medicamentosQuais"),
+  orientado:cm("fisio_orientado"),apoio:cm("fisio_apoio"),confuso:cm("fisio_confuso"),desorientado:cm("fisio_desorientado"),
+  cirurgiaSim:cm("fisio_cirurgiaSim"),cirurgiaNao:cm("fisio_cirurgiaNao"),cirurgias:cv("fisio_cirurgias"),
+  normal:cm("fisio_normal"),edema:cm("fisio_edema"),cicatriz:cm("fisio_cicatriz"),eritema:cm("fisio_eritema"),outros:cm("fisio_outros"),
+  inspecaoDetalhes:cv("fisio_inspecaoDetalhes"),peso:cv("fisio_peso"),altura:cv("fisio_altura"),
+  joelhoYSim:cm("fisio_joelhoY_sim"),joelhoYNao:cm("fisio_joelhoY_nao"),
+  rombergPos:cm("fisio_romberg_pos"),rombergNeg:cm("fisio_romberg_neg"),
+  tugNormal:cm("fisio_tug_normal"),tugBaixo:cm("fisio_tug_baixo"),tugMedio:cm("fisio_tug_medio"),tugAlto:cm("fisio_tug_alto"),
+  laseguePos:cm("fisio_lasegue_pos"),lasegueNeg:cm("fisio_lasegue_neg"),
+  g0:cm("fisio_g0"),g1:cm("fisio_g1"),g2:cm("fisio_g2"),g3:cm("fisio_g3"),g4:cm("fisio_g4"),g5:cm("fisio_g5"),
+  objetivos:cv("fisio_objetivos"),recursos:cv("fisio_recursos"),planoTratamento:cv("fisio_planoTratamento"),profissional:cv("fisio_profissional")
+});
 
-window.salvarPilates=()=>salvarBase({totalpass:cm("pilates_totalpass"),gympass:cm("pilates_gympass"),gurupass:cm("pilates_gurupass"),mensalidade:cm("pilates_mensalidade"),nomeCompleto:cv("pilates_nomeCompleto"),dataNascimento:cv("pilates_dataNascimento"),cpf:cv("pilates_cpf"),telefone:cv("pilates_telefone"),email:cv("pilates_email"),dataAvaliacao:cv("pilates_dataAvaliacao"),queixaPrincipal:cv("pilates_queixaPrincipal"),objetivos:cv("pilates_objetivos"),peso:cv("pilates_peso"),altura:cv("pilates_altura"),pressao:cv("pilates_pressao"),escalaBorg:cv("pilates_escalaBorg"),planoTratamento:cv("pilates_planoTratamento"),profissional:cv("pilates_profissional")});
+window.salvarPilates=()=>salvarBase({
+  totalpass:cm("pilates_totalpass"),gympass:cm("pilates_gympass"),gurupass:cm("pilates_gurupass"),mensalidade:cm("pilates_mensalidade"),
+  parceria:cv("pilates_parceria"),nomeCompleto:cv("pilates_nomeCompleto"),dataNascimento:cv("pilates_dataNascimento"),cpf:cv("pilates_cpf"),
+  masculino:cm("pilates_masculino"),feminino:cm("pilates_feminino"),
+  responsavel:cv("pilates_responsavel"),parentesco:cv("pilates_parentesco"),cpfResponsavel:cv("pilates_cpfResponsavel"),
+  profissao:cv("pilates_profissao"),endereco:cv("pilates_endereco"),telefone:cv("pilates_telefone"),email:cv("pilates_email"),
+  dataAvaliacao:cv("pilates_dataAvaliacao"),diagClinico:cv("pilates_diagClinico"),diagFisio:cv("pilates_diagFisio"),cbdf:cv("pilates_cbdf"),
+  queixaPrincipal:cv("pilates_queixaPrincipal"),hpp:cv("pilates_hpp"),antecedentesPessoais:cv("pilates_antecedentesPessoais"),
+  antecedentesFamiliares:cv("pilates_antecedentesFamiliares"),tratamentos:cv("pilates_tratamentos"),habitos:cv("pilates_habitos"),
+  acompanhamentoSim:cm("pilates_acompanhamentoSim"),acompanhamentoNao:cm("pilates_acompanhamentoNao"),especialidade:cv("pilates_especialidade"),
+  orientado:cm("pilates_orientado"),apoio:cm("pilates_apoio"),tipoApoio:cv("pilates_tipoApoio"),confuso:cm("pilates_confuso"),desorientado:cm("pilates_desorientado"),
+  examesSim:cm("pilates_examesSim"),examesNao:cm("pilates_examesNao"),quaisExames:cv("pilates_quaisExames"),
+  medicamentoSim:cm("pilates_medicamentoSim"),medicamentoNao:cm("pilates_medicamentoNao"),quaisMedicamentos:cv("pilates_quaisMedicamentos"),
+  cirurgiaSim:cm("pilates_cirurgiaSim"),cirurgiaNao:cm("pilates_cirurgiaNao"),cirurgias:cv("pilates_cirurgias"),
+  normal:cm("pilates_normal"),edema:cm("pilates_edema"),cicatriz:cm("pilates_cicatriz"),eritema:cm("pilates_eritema"),outros:cm("pilates_outros"),
+  inspecaoDetalhes:cv("pilates_inspecaoDetalhes"),semiologia:cv("pilates_semiologia"),pressao:cv("pilates_pressao"),
+  peso:cv("pilates_peso"),altura:cv("pilates_altura"),
+  adipometroPeitoralToracica:cv("pilates_adipometro_peitoral_toracica"),adipometroSubescapular:cv("pilates_adipometro_subescapular"),
+  adipometroSuprailiaca:cv("pilates_adipometro_suprailiaca"),adipometroAxilarMedia:cv("pilates_adipometro_axilar_media"),
+  adipometroTriceps:cv("pilates_adipometro_triceps"),adipometroBiceps:cv("pilates_adipometro_biceps"),
+  adipometroAbdominal:cv("pilates_adipometro_abdominal"),adipometroCoxa:cv("pilates_adipometro_coxa"),
+  escalaBorg:cv("pilates_escalaBorg"),objetivos:cv("pilates_objetivos"),recursos:cv("pilates_recursos"),
+  planoTratamento:cv("pilates_planoTratamento"),profissional:cv("pilates_profissional")
+});
 
-window.salvarRecovery=()=>salvarBase({mov_nome:cv("mov_nome"),mov_nascimento:cv("mov_nascimento"),mov_telefone:cv("mov_telefone"),mov_fisioterapeuta:cv("mov_fisioterapeuta"),mov_esporte:cv("mov_esporte"),mov_frequencia:cv("mov_frequencia"),mov_objetivos:cv("mov_objetivos"),mov_queixa:cv("mov_prog_queixaPrincipal"),mov_diagnostico:cv("mov_prog_diagnosticoCinetico"),mov_conduta:cv("mov_prog_conduta"),mov_profissional:cv("mov_prog_fisioterapeuta")});
+window.salvarRecovery=()=>salvarBase({
+  mov_nome:cv("mov_nome"),mov_nascimento:cv("mov_nascimento"),mov_telefone:cv("mov_telefone"),
+  mov_sexo_fem:cm("mov_sexo_fem"),mov_sexo_masc:cm("mov_sexo_masc"),
+  mov_endereco:cv("mov_endereco"),mov_fisioterapeuta:cv("mov_fisioterapeuta"),
+  mov_atleta_amador:cm("mov_atleta_amador"),mov_atleta_profissional:cm("mov_atleta_profissional"),
+  mov_esporte:cv("mov_esporte"),mov_pratica_sim:cm("mov_pratica_sim"),mov_pratica_nao:cm("mov_pratica_nao"),
+  mov_frequencia:cv("mov_frequencia"),mov_objetivos:cv("mov_objetivos"),
+  mov_tabagismo_sim:cm("mov_tabagismo_sim"),mov_tabagismo_nao:cm("mov_tabagismo_nao"),
+  mov_cardiaco_sim:cm("mov_cardiaco_sim"),mov_cardiaco_nao:cm("mov_cardiaco_nao"),
+  mov_diabetes_sim:cm("mov_diabetes_sim"),mov_diabetes_nao:cm("mov_diabetes_nao"),
+  mov_hipertensao_sim:cm("mov_hipertensao_sim"),mov_hipertensao_nao:cm("mov_hipertensao_nao"),
+  mov_medicamento_sim:cm("mov_medicamento_sim"),mov_medicamento_nao:cm("mov_medicamento_nao"),mov_medicamento_desc:cv("mov_medicamento_desc"),
+  mov_lesao_sim:cm("mov_lesao_sim"),mov_lesao_nao:cm("mov_lesao_nao"),mov_lesao_desc:cv("mov_lesao_desc"),
+  mov_cirurgia_sim:cm("mov_cirurgia_sim"),mov_cirurgia_nao:cm("mov_cirurgia_nao"),mov_cirurgia_desc:cv("mov_cirurgia_desc"),
+  mov_alergia_sim:cm("mov_alergia_sim"),mov_alergia_nao:cm("mov_alergia_nao"),mov_alergia_desc:cv("mov_alergia_desc"),
+  mov_tontura_sim:cm("mov_tontura_sim"),mov_tontura_nao:cm("mov_tontura_nao"),
+  mov_dieta_sim:cm("mov_dieta_sim"),mov_dieta_nao:cm("mov_dieta_nao"),mov_profissao:cv("mov_profissao"),
+  mov_prog_esporte:cv("mov_prog_esporte"),mov_prog_inicio:cv("mov_prog_inicio"),
+  mov_prog_queixaPrincipal:cv("mov_prog_queixaPrincipal"),mov_prog_diagnosticoCinetico:cv("mov_prog_diagnosticoCinetico"),
+  mov_prog_objetivos:cv("mov_prog_objetivos"),mov_prog_conduta:cv("mov_prog_conduta"),mov_prog_fisioterapeuta:cv("mov_prog_fisioterapeuta")
+});
 
-window.salvarCondicionamento=()=>salvarBase({totalpass:cm("cond_totalpass"),gympass:cm("cond_gympass"),mensalidade:cm("cond_mensalidade"),nomeCompleto:cv("cond_nomeCompleto"),dataNascimento:cv("cond_dataNascimento"),cpf:cv("cond_cpf"),telefone:cv("cond_telefone"),email:cv("cond_email"),dataAvaliacao:cv("cond_dataAvaliacao"),peso:cv("cond_peso"),altura:cv("cond_altura"),queixaPrincipal:cv("cond_queixaPrincipal"),metasPessoais:cv("cond_metasPessoais"),planoTerapeutico:cv("cond_planoTerapeutico"),profissional:cv("cond_profissional")});
+window.salvarCondicionamento=()=>salvarBase({
+  totalpass:cm("cond_totalpass"),gympass:cm("cond_gympass"),mensalidade:cm("cond_mensalidade"),
+  nomeCompleto:cv("cond_nomeCompleto"),dataNascimento:cv("cond_dataNascimento"),cpf:cv("cond_cpf"),
+  sexoMasculino:cm("cond_sexo_masculino"),sexoFeminino:cm("cond_sexo_feminino"),
+  responsavelNome:cv("cond_responsavel_nome"),responsavelParentesco:cv("cond_responsavel_parentesco"),responsavelCpf:cv("cond_responsavel_cpf"),
+  profissaoOcupacao:cv("cond_profissao_ocupacao"),enderecoResidencial:cv("cond_endereco_residencial"),
+  telefone:cv("cond_telefone"),email:cv("cond_email"),dataAvaliacao:cv("cond_dataAvaliacao"),
+  diagnosticoClinico:cv("cond_diagnosticoClinico"),diagnosticoFisio:cv("cond_diagnosticoFisio"),cbdf:cv("cond_cbdf"),
+  queixaPrincipal:cv("cond_queixaPrincipal"),hda:cv("cond_hda"),historicoLesoes:cv("cond_historicoLesoes"),
+  acompanhamentoSim:cm("cond_acompanhamento_sim"),acompanhamentoNao:cm("cond_acompanhamento_nao"),acompanhamentoQuais:cv("cond_acompanhamento_quais"),
+  medicamentosSim:cm("cond_medicamentos_sim"),medicamentosNao:cm("cond_medicamentos_nao"),medicamentosQuais:cv("cond_medicamentos_quais"),
+  peso:cv("cond_peso"),altura:cv("cond_altura"),habitosVida:cv("cond_habitosVida"),metasPessoais:cv("cond_metasPessoais"),evaRegiao:cv("cond_evaRegiao"),
+  ativo:cm("cond_ativo"),moderadamenteAtivo:cm("cond_moderadamente_ativo"),sedentario:cm("cond_sedentario"),
+  atividadeSim:cm("cond_atividade_sim"),atividadeNao:cm("cond_atividade_nao"),atividadeQuais:cv("cond_atividade_quais"),borg:cv("cond_borg"),
+  desviosSim:cm("cond_desvios_sim"),desviosNao:cm("cond_desvios_nao"),desviosQuais:cv("cond_desvios_quais"),
+  movimentosComDor:cm("cond_movimentos_com_dor"),movimentosSemDor:cm("cond_movimentos_sem_dor"),movimentosQuais:cv("cond_movimentos_quais"),
+  movimentosFuncionais:cv("cond_movimentos_funcionais"),mobilidade:cv("cond_mobilidade"),flexibilidade:cv("cond_flexibilidade"),
+  resistenciaMuscularCardio:cv("cond_resistencia"),planoTerapeutico:cv("cond_planoTerapeutico"),profissional:cv("cond_profissional")
+});
 
-window.salvarPelvica=()=>salvarBase({pelvic_nome:cv("pelvic_nome"),pelvic_idade:cv("pelvic_idade"),pelvic_nascimento:cv("pelvic_nascimento"),pelvic_telefone:cv("pelvic_telefone"),pelvic_cirurgia_sim:cm("pelvic_cirurgia_sim"),pelvic_cirurgias_quais:cv("pelvic_cirurgias_quais")});
+window.salvarPelvica=()=>salvarBase({
+  pelvic_nome:cv("pelvic_nome"),pelvic_idade:cv("pelvic_idade"),
+  pelvic_nascimento:cv("pelvic_nascimento"),pelvic_telefone:cv("pelvic_telefone"),
+  pelvic_cirurgia_sim:cm("pelvic_cirurgia_sim"),pelvic_cirurgia_nao:cm("pelvic_cirurgia_nao"),
+  pelvic_cirurgias_quais:cv("pelvic_cirurgias_quais")
+});
 
 window.carregarAvaliacoes=function(){
   const filtro=document.getElementById("filtroTipo").value;
   const lista=document.getElementById("listaAvaliacoes");
-  lista.innerHTML="";
-  onValue(ref(dbAval,"avaliacoes"),snap=>{
+  lista.innerHTML="<p style='color:var(--muted);padding:8px;font-size:.82rem'>Carregando...</p>";
+  // usa get (único) em vez de onValue para carregar mais rápido sem listener permanente
+  get(ref(dbAval,"avaliacoes")).then(snap=>{
     lista.innerHTML="";
     if(!snap.exists()){lista.innerHTML="<p style='color:var(--muted);padding:12px'>Nenhuma avaliação.</p>";return;}
     snap.forEach(child=>{
@@ -1509,6 +2113,7 @@ window.carregarAvaliacoes=function(){
       div.innerHTML=`<div><div class="nome">${d.nome}</div><div class="tipo">${d.tipo} • ${fmtD(d.data)}</div></div>`;
       div.onclick=()=>abrirDetalhe(child.key,d);lista.appendChild(div);
     });
+    if(!lista.children.length) lista.innerHTML="<p style='color:var(--muted);padding:12px'>Nenhuma avaliação encontrada.</p>";
   });
 };
 
@@ -1516,10 +2121,19 @@ window.abrirDetalhe=function(id,dados){
   avalAtualId=id;avalAtualDados=dados;
   document.getElementById("telaInicial").classList.add("hidden");
   document.getElementById("telaDetalhe").classList.remove("hidden");
-  document.getElementById("tituloDetalhe").innerText=`${dados.nome} — ${dados.tipo}`;
-  let html="";
-  for(const k in dados){if(!["nome","tipo","data","criadoEm"].includes(k)){const v=dados[k];if(v===true||v===false||v)html+=`<p><strong>${k.replace(/([A-Z])/g," $1").replace(/_/g," ")}:</strong> ${v===true?"Sim":v===false?"Não":v}</p>`;}}
+  // Nome editável inline
+  document.getElementById("tituloDetalhe").innerHTML=
+    `<input id="nomeEditavel" value="${dados.nome}" style="font-family:'Nunito',sans-serif;font-size:1.1rem;font-weight:800;color:var(--text);border:none;border-bottom:2px solid var(--lilas);background:transparent;outline:none;width:100%;max-width:400px;padding:2px 4px"> — ${dados.tipo}`;
+  document.getElementById("nomeEditavel").onchange=function(){
+    update(ref(dbAval,`avaliacoes/${avalAtualId}`),{nome:this.value});
+  };
+  // Exibe campos na mesma ordem da ficha
+  const rotulos=dados.tipo==="Fisioterapia"?ROTULOS_FISIO:dados.tipo==="Pilates"?ROTULOS_PILATES:dados.tipo==="Recovery"?ROTULOS_RECOVERY:dados.tipo==="Condicionamento"?ROTULOS_COND:null;
+  const html=rotulos?renderDetalhe(dados,rotulos):Object.entries(dados).filter(([k])=>!["nome","tipo","data","criadoEm"].includes(k)).map(([k,v])=>v!==false&&v!==undefined&&v!==""?`<p style="margin:4px 0;font-size:.84rem"><strong style="color:var(--lilas)">${k}:</strong> ${v===true?"✔ Sim":v}</p>`:"").join("");
   document.getElementById("dadosAvaliacao").innerHTML=html||"<p>Sem dados adicionais.</p>";
+  // placeholder estruturado no campo de evolução
+  const campoEvo=document.getElementById("textoEvolucao");
+  if(campoEvo) campoEvo.placeholder=EVO_PLACEHOLDER;
   carregarEvolucoes();
 };
 
@@ -1537,17 +2151,30 @@ window.apagarAvaliacaoAtual=async function(){
   await remove(ref(dbAval,`avaliacoes/${avalAtualId}`));alert("Apagada.");voltar();
 };
 
+const EVO_PLACEHOLDER="DATA: \nPROCEDIMENTOS: \nINTERCORRÊNCIA: \nEVOLUÇÃO DO ESTADO DE SAÚDE: \nPROFISSIONAL/REGISTRO CONSELHO: ";
+
 function carregarEvolucoes(){
-  const evo=document.getElementById("evolucoes");evo.innerHTML="<strong style='color:var(--lilas)'>Evoluções</strong>";
-  onValue(ref(dbAval,`avaliacoes/${avalAtualId}/evolucoes`),snap=>{
-    if(!snap.exists()){evo.innerHTML+="<p style='color:var(--muted);font-size:.82rem;margin-top:6px'>Nenhuma evolução.</p>";return;}
-    snap.forEach(c=>{const e=c.val();evo.innerHTML+=`<div class="evo-item"><strong>${e.data}</strong><p>${e.texto}</p></div>`;});
+  const evo=document.getElementById("evolucoes");
+  evo.innerHTML="<strong style='color:var(--lilas);font-size:.9rem'>📋 Evoluções</strong>";
+  // Define o placeholder no campo de evolução
+  const campo=document.getElementById("textoEvolucao");
+  if(campo) campo.placeholder=EVO_PLACEHOLDER;
+  get(ref(dbAval,`avaliacoes/${avalAtualId}/evolucoes`)).then(snap=>{
+    evo.innerHTML="<strong style='color:var(--lilas);font-size:.9rem'>📋 Evoluções</strong>";
+    if(!snap.exists()){evo.innerHTML+="<p style='color:var(--muted);font-size:.82rem;margin-top:6px'>Nenhuma evolução registrada.</p>";return;}
+    // Mais recente primeiro
+    const items=[];snap.forEach(c=>items.push(c.val()));
+    items.reverse().forEach(e=>{
+      evo.innerHTML+=`<div class="evo-item"><strong>${e.data}</strong><p style="white-space:pre-line">${e.texto}</p></div>`;
+    });
   });
 }
 
 window.salvarEvolucao=function(){
-  const t=document.getElementById("textoEvolucao");if(!t.value)return;
-  set(push(ref(dbAval,`avaliacoes/${avalAtualId}/evolucoes`)),{texto:t.value,data:new Date().toLocaleDateString("pt-BR")});t.value="";
+  const t=document.getElementById("textoEvolucao");if(!t.value||t.value===EVO_PLACEHOLDER)return;
+  set(push(ref(dbAval,`avaliacoes/${avalAtualId}/evolucoes`)),{texto:t.value,data:new Date().toLocaleDateString("pt-BR")});
+  t.value="";
+  carregarEvolucoes();
 };
 
 window.voltar=function(){
@@ -1585,7 +2212,9 @@ function renderAgenda(){
   const listV=document.getElementById("agListaVencidas");
   tabela.innerHTML="";listV.innerHTML="";alerta.style.display="none";
   const hoje=hojeISO();
-  Object.entries(agCache).forEach(([id,d])=>{
+  // Mais recentes primeiro: inverte a ordem das entradas
+  const entradas=Object.entries(agCache).reverse();
+  entradas.forEach(([id,d])=>{
     const pendente=!d.realizada;
     const vencida=d.dataReavaliacao<hoje&&pendente;
     if(vencida){alerta.style.display="block";const li=document.createElement("li");li.textContent=`${d.nome||"Sem nome"} – ${br(d.dataReavaliacao)}`;listV.appendChild(li);}
@@ -1688,15 +2317,4 @@ function yogaCarregar(){
 window.yogaDel=async function(id){await deleteDoc(doc(fsYoga,"movimentacoes",document.getElementById("yoga_mes").value,"itens",id));};
 
 // expor usuário para colaboradores
-window.__getUsuario=()=>usuarioAtual;
-</script>
-
-<!-- hack: expor usuário no módulo scope -->
-<script>
-window._usuario = null;
-// substituir carregarColaboradores após login para acessar usuário
-const _origIniciar = window.iniciarSessao;
-</script>
-
-</body>
-</html>
+window.__getUsuario=()=>usuarioAtua
