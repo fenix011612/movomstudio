@@ -1562,39 +1562,35 @@ function siteNav(id, btn){
 </script>
 
 <!-- FIREBASE INIT + MÓDULOS -->
-<script type="module">
-import { initializeApp }   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, set, get, push, onValue, remove, update }
-  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc }
-  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
+<!-- FIREBASE COMPAT – escopo global, sem problemas de módulo -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+<script>
 /* ══════════════════════
-   FIREBASE APPS
+   FIREBASE APPS (compat)
 ══════════════════════ */
-const fbColab = initializeApp({apiKey:"AIzaSyD9Er27RZlKcFVVwrnWfo2xvWkPUla9JRs",databaseURL:"https://colaboradores-5a2a2-default-rtdb.firebaseio.com"},"colab");
-const fbFin   = initializeApp({apiKey:"AIzaSyAiaiPHw98hV9yPt1M8mN-2ZC62TVUG6Lk",authDomain:"movomentradas.firebaseapp.com",databaseURL:"https://movomentradas-default-rtdb.firebaseio.com/",projectId:"movomentradas"},"fin");
-const fbGrade = initializeApp({apiKey:"AIzaSyASKbZ204Yls9IU3HenHTsHwqgbpotUga0",databaseURL:"https://horariomovom-default-rtdb.firebaseio.com",projectId:"horariomovom"},"grade");
-const fbAval  = initializeApp({apiKey:"AIzaSyAFNuEzaEvvpBKBGNG7NUf3zt74Q3r1fdo",databaseURL:"https://sistemaavaliacoes-26513-default-rtdb.firebaseio.com",projectId:"sistemaavaliacoes-26513"},"aval");
-const fbAgenda= initializeApp({apiKey:"AIzaSyDQvA6XiiwiyMrh0xjdy5s4QNjXwIgQoh4",authDomain:"agendamovom.firebaseapp.com",databaseURL:"https://agendamovom-default-rtdb.firebaseio.com",projectId:"agendamovom"},"agenda");
-const fbIns   = initializeApp({apiKey:"AIzaSyByv8SN7FXTKG9kc2jJCeYGMa86R0ZVf9g",databaseURL:"https://insumos-41ece-default-rtdb.firebaseio.com",projectId:"insumos-41ece"},"ins");
-const fbYoga  = initializeApp({apiKey:"AIzaSyDyD1PIfduFrLl-vXlBVisZFirQ3iKi2vI",authDomain:"yoga-4abef.firebaseapp.com",projectId:"yoga-4abef",storageBucket:"yoga-4abef.firebasestorage.app",messagingSenderId:"217283131263",appId:"1:217283131263:web:0431c954294ce56d7ecc4a"},"yoga");
+const fbColab  = firebase.initializeApp({apiKey:"AIzaSyD9Er27RZlKcFVVwrnWfo2xvWkPUla9JRs",databaseURL:"https://colaboradores-5a2a2-default-rtdb.firebaseio.com"},"colab");
+const fbFin    = firebase.initializeApp({apiKey:"AIzaSyAiaiPHw98hV9yPt1M8mN-2ZC62TVUG6Lk",authDomain:"movomentradas.firebaseapp.com",databaseURL:"https://movomentradas-default-rtdb.firebaseio.com/",projectId:"movomentradas"},"fin");
+const fbGrade  = firebase.initializeApp({apiKey:"AIzaSyASKbZ204Yls9IU3HenHTsHwqgbpotUga0",databaseURL:"https://horariomovom-default-rtdb.firebaseio.com",projectId:"horariomovom"},"grade");
+const fbAval   = firebase.initializeApp({apiKey:"AIzaSyAFNuEzaEvvpBKBGNG7NUf3zt74Q3r1fdo",databaseURL:"https://sistemaavaliacoes-26513-default-rtdb.firebaseio.com",projectId:"sistemaavaliacoes-26513"},"aval");
+const fbAgenda = firebase.initializeApp({apiKey:"AIzaSyDQvA6XiiwiyMrh0xjdy5s4QNjXwIgQoh4",authDomain:"agendamovom.firebaseapp.com",databaseURL:"https://agendamovom-default-rtdb.firebaseio.com",projectId:"agendamovom"},"agenda");
+const fbIns    = firebase.initializeApp({apiKey:"AIzaSyByv8SN7FXTKG9kc2jJCeYGMa86R0ZVf9g",databaseURL:"https://insumos-41ece-default-rtdb.firebaseio.com",projectId:"insumos-41ece"},"ins");
+const fbYoga   = firebase.initializeApp({apiKey:"AIzaSyDyD1PIfduFrLl-vXlBVisZFirQ3iKi2vI",authDomain:"yoga-4abef.firebaseapp.com",projectId:"yoga-4abef",storageBucket:"yoga-4abef.firebasestorage.app",messagingSenderId:"217283131263",appId:"1:217283131263:web:0431c954294ce56d7ecc4a"},"yoga");
 
-const dbColab = getDatabase(fbColab);
-const dbFin   = getDatabase(fbFin);
-const dbGrade = getDatabase(fbGrade);
-const dbAval  = getDatabase(fbAval);
-const dbAgenda= getDatabase(fbAgenda);
-const dbIns   = getDatabase(fbIns);
-const fsYoga  = getFirestore(fbYoga);
+const dbColab  = fbColab.database();
+const dbFin    = fbFin.database();
+const dbGrade  = fbGrade.database();
+const dbAval   = fbAval.database();
+const dbAgenda = fbAgenda.database();
+const dbIns    = fbIns.database();
+const fsYoga   = fbYoga.firestore();
 
 window.inicializarFirebases = function(){ initColab(); initFin(); initGrade(); initAgenda(); initInsumos(); initYoga(); };
 
 /* ══════════════════════
    COLABORADORES
 ══════════════════════ */
-let colaboradorAtual=null, mesAtual=new Date().toISOString().slice(0,7), colabDebounce=null;
-let colabUnsub=null; // guarda função de cancelamento do onValue ativo
+let colaboradorAtual=null, mesAtual=new Date().toISOString().slice(0,7), colabDebounce=null, colabUnsub=null;
 
 function initColab(){
   const ms=document.getElementById("mesSelect");
@@ -1603,80 +1599,54 @@ function initColab(){
   carregarColaboradores();
 }
 
-async function carregarColaboradores(){
+function carregarColaboradores(){
   const sel  = document.getElementById("colaboradorSelect");
   const btnN = document.getElementById("btnNovoColab");
   const btnR = document.getElementById("btnRemColab");
   const u    = usuarioAtual;
-  sel.innerHTML = "";
+  sel.innerHTML="";
 
-  // 1. Busca lista real de chaves do Firebase
-  const snap = await get(ref(dbColab,"colaboradores"));
-  const todosNomes = Object.keys(snap.val()||{});
+  dbColab.ref("colaboradores").once("value").then(snap=>{
+    const todosNomes = Object.keys(snap.val()||{});
 
-  if(u.role==="colab"){
-    btnN.style.display="none";
-    btnR.style.display="none";
-    sel.disabled=true;
-
-    // Encontra a chave exata no Firebase que corresponde ao nome de login
-    // (compara sem diferenciar maiúsculas, minúsculas ou espaços extras)
-    const loginNorm = u.nome.trim().toLowerCase();
-    const chaveReal = todosNomes.find(n => n.trim().toLowerCase() === loginNorm);
-
-    if(chaveReal){
-      colaboradorAtual = chaveReal; // usa a chave EXATA do Firebase
+    if(u.role==="colab"){
+      btnN.style.display="none"; btnR.style.display="none"; sel.disabled=true;
+      const loginNorm = u.nome.trim().toLowerCase();
+      const chaveReal = todosNomes.find(n=>n.trim().toLowerCase()===loginNorm) || u.nome;
+      colaboradorAtual = chaveReal;
+      const op=document.createElement("option"); op.value=chaveReal; op.textContent=chaveReal;
+      sel.appendChild(op);
     } else {
-      // Colaborador ainda não tem entrada: cria sem apagar nada
-      colaboradorAtual = u.nome;
-      await set(ref(dbColab,"colaboradores/"+u.nome), {});
+      btnN.style.display=""; btnR.style.display=""; sel.disabled=false;
+      todosNomes.forEach(n=>{ const o=document.createElement("option"); o.value=o.textContent=n; sel.appendChild(o); });
+      colaboradorAtual=sel.value;
     }
 
-    const op = document.createElement("option");
-    op.value = colaboradorAtual;
-    op.textContent = colaboradorAtual;
-    sel.appendChild(op);
-
-  } else {
-    btnN.style.display=""; btnR.style.display="";
-    sel.disabled=false;
-    todosNomes.forEach(n=>{
-      const o=document.createElement("option");
-      o.value=o.textContent=n;
-      sel.appendChild(o);
-    });
-    colaboradorAtual = sel.value;
-  }
-
-  sel.onchange=()=>{
-    colaboradorAtual=sel.value;
+    sel.onchange=()=>{ colaboradorAtual=sel.value; carregarDadosColab(); calcularMedia(); };
     carregarDadosColab();
     calcularMedia();
-  };
-
-  carregarDadosColab();
-  calcularMedia();
+  });
 }
 
 function carregarDadosColab(){
-  const corpo = document.getElementById("corpoTabela");
+  const corpo=document.getElementById("corpoTabela");
   corpo.innerHTML="";
   if(!colaboradorAtual){ calcularTotal(); return; }
   montarCabecalho();
 
-  // Cancela listener anterior para evitar duplicatas
   if(colabUnsub){ colabUnsub(); colabUnsub=null; }
 
-  const rPath = `colaboradores/${colaboradorAtual}/ciclos/${mesAtual}/alunos`;
+  const rPath=`colaboradores/${colaboradorAtual}/ciclos/${mesAtual}/alunos`;
+  const rRef=dbColab.ref(rPath);
 
-  // onValue = tempo real, igual ao comportamento do admin
-  colabUnsub = onValue(ref(dbColab, rPath), snap=>{
+  colabUnsub = function(){ rRef.off("value"); };
+
+  rRef.on("value", snap=>{
     corpo.innerHTML="";
     if(snap.exists()){
-      const val = snap.val();
-      // Firebase pode retornar array ou objeto — trata os dois
-      const lista = Array.isArray(val) ? val : Object.values(val);
-      lista.forEach(a => adicionarAluno(a, /*remoto=*/true));
+      const val=snap.val();
+      const lista=Array.isArray(val)?val:Object.values(val);
+      lista.forEach(a=>adicionarAluno(a,true));
     }
     calcularTotal();
   });
@@ -1720,38 +1690,9 @@ function salvarColab(){
   colabDebounce=setTimeout(()=>{
     const alunos=[];
     document.getElementById("corpoTabela").querySelectorAll("tr").forEach(tr=>{
-      alunos.push({
-        nome:tr.querySelector(".nome").value,
-        tipo:tr.querySelector(".tipo").value,
-        valorBase:tr.querySelector(".base").value,
-        valorExtra:tr.querySelector(".extra").value,
-        dias:[...tr.querySelectorAll("input[type=checkbox]")].map(c=>c.checked)
-      });
+      alunos.push({nome:tr.querySelector(".nome").value,tipo:tr.querySelector(".tipo").value,valorBase:tr.querySelector(".base").value,valorExtra:tr.querySelector(".extra").value,dias:[...tr.querySelectorAll("input[type=checkbox]")].map(c=>c.checked)});
     });
-    // Pausa o listener durante o save para não causar re-render desnecessário
-    if(colabUnsub){ colabUnsub(); colabUnsub=null; }
-    set(ref(dbColab,`colaboradores/${colaboradorAtual}/ciclos/${mesAtual}/alunos`),alunos)
-      .then(()=>{
-        // Reconecta listener após salvar
-        const rPath=`colaboradores/${colaboradorAtual}/ciclos/${mesAtual}/alunos`;
-        colabUnsub=onValue(ref(dbColab,rPath),snap=>{
-          const corpo=document.getElementById("corpoTabela");
-          // Só re-renderiza se houve mudança externa (outro dispositivo)
-          // Para evitar loop: compara alunos salvos com o que está na tela
-          if(!snap.exists()) return;
-          const val=snap.val();
-          const lista=Array.isArray(val)?val:Object.values(val);
-          // Verifica se é diferente do que está na tela
-          const atual=[];
-          corpo.querySelectorAll("tr").forEach(tr=>{
-            atual.push({nome:tr.querySelector(".nome").value,tipo:tr.querySelector(".tipo").value,valorBase:tr.querySelector(".base").value});
-          });
-          if(JSON.stringify(lista.map(a=>({nome:a.nome,tipo:a.tipo,valorBase:a.valorBase})))===JSON.stringify(atual)) return;
-          corpo.innerHTML="";
-          lista.forEach(a=>adicionarAluno(a,true));
-          calcularTotal();
-        });
-      });
+    dbColab.ref(`colaboradores/${colaboradorAtual}/ciclos/${mesAtual}/alunos`).set(alunos);
   },600);
 }
 
@@ -1760,24 +1701,22 @@ function calcularTotal(){
   document.getElementById("corpoTabela").querySelectorAll("tr").forEach(tr=>{
     const b=+tr.querySelector(".base").value||0,e=+tr.querySelector(".extra").value||0;
     const d=tr.querySelectorAll("input[type=checkbox]:checked").length;
-    const t=(b*d)+e;
-    tr.querySelector(".total-cell").innerText=t.toFixed(2);
-    tot+=t;
+    const t=(b*d)+e; tr.querySelector(".total-cell").innerText=t.toFixed(2); tot+=t;
   });
   document.getElementById("total").innerText="💰 Total do mês: R$ "+tot.toFixed(2);
 }
 
 function calcularMedia(){
   if(!colaboradorAtual) return;
-  get(ref(dbColab,`colaboradores/${colaboradorAtual}/ciclos`)).then(snap=>{
+  dbColab.ref(`colaboradores/${colaboradorAtual}/ciclos`).once("value").then(snap=>{
     let soma=0,cont=0;
-    snap.forEach(m=>{Object.values(m.val().alunos||{}).forEach(a=>{const d=(a.dias||[]).filter(Boolean).length;soma+=(+a.valorBase||0)*d+(+a.valorExtra||0);});cont++;});
+    snap.forEach(m=>{ Object.values(m.val().alunos||{}).forEach(a=>{ const d=(a.dias||[]).filter(Boolean).length; soma+=(+a.valorBase||0)*d+(+a.valorExtra||0); }); cont++; });
     document.getElementById("media").innerText="📊 Média salarial: R$ "+(cont?soma/cont:0).toFixed(2);
   });
 }
 
-window.novoColaborador=function(){ const n=prompt("Nome:");if(n){set(ref(dbColab,"colaboradores/"+n),{});carregarColaboradores();} };
-window.removerColaborador=function(){ if(confirm("Remover?")){ remove(ref(dbColab,"colaboradores/"+colaboradorAtual));carregarColaboradores(); } };
+window.novoColaborador=function(){ const n=prompt("Nome:");if(n){ dbColab.ref("colaboradores/"+n).set({}); carregarColaboradores(); } };
+window.removerColaborador=function(){ if(confirm("Remover?")){ dbColab.ref("colaboradores/"+colaboradorAtual).remove(); carregarColaboradores(); } };
 
 /* ══════════════════════
    FINANCEIRO – ENTRADAS
@@ -1795,7 +1734,7 @@ function initFin(){
 window.addEntrada=function(){
   const mes=document.getElementById("fin_mesSelect").value;
   const dados={nome:document.getElementById("fin_nome").value,gmail:document.getElementById("fin_gmail").value,cpf:document.getElementById("fin_cpf").value,atividade:document.getElementById("fin_atividade").value,pagamento:document.getElementById("fin_pagamento").value,valor:Number(document.getElementById("fin_valor").value||0),nf:document.getElementById("fin_nf").value,data:new Date().toLocaleString("pt-BR")};
-  push(ref(dbFin,"entradas/"+mes),dados);
+  dbFin.ref("entradas/"+mes).push(dados);
   ["fin_nome","fin_gmail","fin_cpf","fin_valor","fin_nf"].forEach(id=>document.getElementById(id).value="");
 };
 
@@ -1804,12 +1743,12 @@ function carregarFinanceiro(){
   const tabela=document.getElementById("fin_tabela");
   const totalEl=document.getElementById("fin_totalMes");
   tabela.innerHTML=""; totalEl.innerText="Total do mês: R$ 0,00";
-  if(finCurrentRef) finCurrentRef.off?.();
-  finCurrentRef=ref(dbFin,"entradas/"+mes);
-  onValue(finCurrentRef,snap=>{
-    tabela.innerHTML="";let tot=0;
+  if(finCurrentRef) finCurrentRef.off();
+  finCurrentRef=dbFin.ref("entradas/"+mes);
+  finCurrentRef.on("value",snap=>{
+    tabela.innerHTML=""; let tot=0;
     snap.forEach(item=>{
-      const e=item.val();tot+=Number(e.valor||0);
+      const e=item.val(); tot+=Number(e.valor||0);
       const tr=document.createElement("tr");
       tr.innerHTML=`<td>${e.nome}</td><td>${e.gmail||""}</td><td>${e.cpf}</td><td>${e.atividade}</td><td>${e.pagamento}</td><td>R$ ${Number(e.valor).toFixed(2)}</td><td>${e.data}</td>
         <td><input style="width:80px;padding:4px 6px;border:2px solid var(--border);border-radius:7px;font-family:'Poppins',sans-serif;font-size:.78rem;outline:none" value="${e.nf||""}" onchange="updateNF('${mes}','${item.key}',this.value)"></td>
@@ -1819,8 +1758,8 @@ function carregarFinanceiro(){
     totalEl.innerText=`Total do mês: R$ ${tot.toFixed(2)}`;
   });
 }
-window.updateNF=(mes,id,v)=>update(ref(dbFin,`entradas/${mes}/${id}`),{nf:v});
-window.delEntrada=(mes,id)=>remove(ref(dbFin,`entradas/${mes}/${id}`));
+window.updateNF=(mes,id,v)=>dbFin.ref(`entradas/${mes}/${id}`).update({nf:v});
+window.delEntrada=(mes,id)=>dbFin.ref(`entradas/${mes}/${id}`).remove();
 
 /* ══════════════════════
    GRADE DE HORÁRIOS
@@ -1829,9 +1768,8 @@ let gradeTyping=false;
 const semana=[{dia:"Segunda-feira",h:[7,19]},{dia:"Terça-feira",h:[7,19]},{dia:"Quarta-feira",h:[7,19]},{dia:"Quinta-feira",h:[7,19]},{dia:"Sexta-feira",h:[7,18]},{dia:"Sábado",h:[7,10]}];
 
 function initGrade(){
-  const gradeRef=ref(dbGrade,"gradeHorarios");
   document.getElementById("filtroDia").onchange=filtrarGrade;
-  onValue(gradeRef,s=>renderGrade(s.val()));
+  dbGrade.ref("gradeHorarios").on("value",s=>renderGrade(s.val()));
 }
 
 function gerarHs(a,b){const r=[];for(let h=a;h<=b;h++)r.push(String(h).padStart(2,"0")+":00");return r;}
@@ -1839,21 +1777,20 @@ function gerarHs(a,b){const r=[];for(let h=a;h<=b;h++)r.push(String(h).padStart(
 function salvarGrade(){
   const data={};
   document.querySelectorAll("table.grade-tbl[data-dia]").forEach(t=>{
-    const dia=t.dataset.dia;data[dia]=[];
+    const dia=t.dataset.dia; data[dia]=[];
     t.querySelectorAll("tbody tr").forEach(tr=>{
       data[dia].push({horario:tr.querySelector(".horario-lbl").textContent,instr1:tr.querySelector(".i1").value,instr2:tr.querySelector(".i2").value,alunos1:[...tr.querySelectorAll(".a1 input")].map(i=>i.value),alunos2:[...tr.querySelectorAll(".a2 input")].map(i=>i.value)});
     });
   });
-  set(ref(dbGrade,"gradeHorarios"),data);
+  dbGrade.ref("gradeHorarios").set(data);
 }
 
 function criarAlunoEl(nome){
-  const d=document.createElement("div");d.className="aluno-row";
-  const i=document.createElement("input");i.value=nome||"";
-  i.onfocus=()=>gradeTyping=true;i.onblur=()=>{gradeTyping=false;salvarGrade();};
-  const b=document.createElement("button");b.textContent="X";b.className="btn-rem-a";
-  b.onclick=()=>{d.remove();salvarGrade();};
-  d.append(i,b);return d;
+  const d=document.createElement("div"); d.className="aluno-row";
+  const i=document.createElement("input"); i.value=nome||"";
+  i.onfocus=()=>gradeTyping=true; i.onblur=()=>{gradeTyping=false;salvarGrade();};
+  const b=document.createElement("button"); b.textContent="X"; b.className="btn-rem-a";
+  b.onclick=()=>{d.remove();salvarGrade();}; d.append(i,b); return d;
 }
 
 function criarLinhaGrade(l){
@@ -1861,7 +1798,7 @@ function criarLinhaGrade(l){
   tr.innerHTML=`<td class="horario-lbl">${l.horario}</td>
     <td><input class="instr-inp i1" placeholder="Instrutor 1"><div class="alunos-box a1"></div><button class="btn-add-a">+ Aluno</button></td>
     <td><input class="instr-inp i2" placeholder="Instrutor 2"><div class="alunos-box a2"></div><button class="btn-add-a">+ Aluno</button></td>`;
-  tr.querySelector(".i1").value=l.instr1||"";tr.querySelector(".i2").value=l.instr2||"";
+  tr.querySelector(".i1").value=l.instr1||""; tr.querySelector(".i2").value=l.instr2||"";
   tr.querySelectorAll(".instr-inp").forEach(i=>{i.onfocus=()=>gradeTyping=true;i.onblur=()=>{gradeTyping=false;salvarGrade();};});
   l.alunos1?.forEach(a=>tr.querySelector(".a1").appendChild(criarAlunoEl(a)));
   l.alunos2?.forEach(a=>tr.querySelector(".a2").appendChild(criarAlunoEl(a)));
@@ -1873,16 +1810,16 @@ function criarLinhaGrade(l){
 
 function renderGrade(data){
   if(gradeTyping) return;
-  const c=document.getElementById("grade_container");c.innerHTML="";
+  const c=document.getElementById("grade_container"); c.innerHTML="";
   semana.forEach(d=>{
-    const sec=document.createElement("div");sec.className="grade-section";
-    const h3=document.createElement("h3");h3.textContent=d.dia;h3.dataset.dia=d.dia;
-    const tbl=document.createElement("table");tbl.className="grade-tbl";tbl.dataset.dia=d.dia;
+    const sec=document.createElement("div"); sec.className="grade-section";
+    const h3=document.createElement("h3"); h3.textContent=d.dia; h3.dataset.dia=d.dia;
+    const tbl=document.createElement("table"); tbl.className="grade-tbl"; tbl.dataset.dia=d.dia;
     tbl.innerHTML="<thead><tr><th>Horário</th><th>Instrutor 1</th><th>Instrutor 2</th></tr></thead>";
     const tb=document.createElement("tbody");
     const salvos=data?.[d.dia]||[];
     gerarHs(d.h[0],d.h[1]).forEach(h=>{const e=salvos.find(l=>l.horario===h);tb.appendChild(criarLinhaGrade(e||{horario:h,alunos1:[],alunos2:[]}));});
-    tbl.appendChild(tb);sec.append(h3,tbl);c.appendChild(sec);
+    tbl.appendChild(tb); sec.append(h3,tbl); c.appendChild(sec);
   });
   filtrarGrade();
 }
@@ -1902,114 +1839,16 @@ const cv=id=>{const e=document.getElementById(id);return e?e.value:"";};
 const cm=id=>{const e=document.getElementById(id);return e?e.checked:false;};
 const fmtD=v=>{if(!v)return"-";if(/^\d{4}-\d{2}-\d{2}$/.test(v)){const[a,m,d]=v.split("-");return`${d}/${m}/${a}`;}return v;};
 
-// MAPA DE RÓTULOS – mesma ordem do formulário original
-const ROTULOS_FISIO=[
-  ["sessao","Sessão"],["pacote","Pacote"],["qtdSessoes","Quantidade de sessões"],
-  ["pix","Pix"],["parcelado","Parcelado"],["parcelas","Parcelas"],["parceria","Parceria"],
-  ["nomeCompleto","Nome completo"],["dataNascimento","Data de nascimento"],["cpf","CPF"],
-  ["masculino","Masculino"],["feminino","Feminino"],["responsavel","Responsável"],
-  ["parentesco","Grau de parentesco"],["cpfResponsavel","CPF Responsável"],
-  ["profissao","Profissão/Ocupação"],["endereco","Endereço"],["telefone","Telefone"],["email","E-mail"],
-  ["dataAvaliacao","Data da Avaliação"],["diagClinico","Diagnóstico Clínico"],
-  ["diagFisio","Diagnóstico Fisioterapêutico"],["cbdf","CBDF"],
-  ["queixaPrincipal","Queixa Principal"],["hpp","HDA"],["antecedentesPessoais","HPP"],
-  ["antecedentesFamiliares","Antecedentes Familiares"],["tratamentos","Tratamentos Realizados"],
-  ["habitos","Hábitos de vida"],["acompanhamentoSim","Acompanhamento – Sim"],
-  ["acompanhamentoNao","Acompanhamento – Não"],["especialidade","Especialidade"],
-  ["examesSim","Exames – Sim"],["examesNao","Exames – Não"],["examesQuais","Exames – Quais"],
-  ["medicamentoSim","Medicamentos – Sim"],["medicamentoNao","Medicamentos – Não"],
-  ["medicamentosQuais","Medicamentos – Quais"],
-  ["orientado","Deambulando e orientado"],["apoio","Deambulando com apoio"],
-  ["confuso","Confuso"],["desorientado","Desorientado"],
-  ["cirurgiaSim","Cirurgia – Sim"],["cirurgiaNao","Cirurgia – Não"],["cirurgias","Cirurgias – Quais"],
-  ["normal","Inspeção Normal"],["edema","Edema"],["cicatriz","Cicatrização incompleta"],
-  ["eritema","Eritemas"],["outros","Outros"],["inspecaoDetalhes","Detalhes Inspeção/Palpação"],
-  ["peso","Peso"],["altura","Altura"],
-  ["joelhoYSim","Y Teste – Sim"],["joelhoYNao","Y Teste – Não"],
-  ["rombergPos","Romberg – Positivo"],["rombergNeg","Romberg – Negativo"],
-  ["tugNormal","TUG – Normal"],["tugBaixo","TUG – Baixo risco"],
-  ["tugMedio","TUG – Médio risco"],["tugAlto","TUG – Alto risco"],
-  ["laseguePos","Lasegue – Positivo"],["lasegueNeg","Lasegue – Negativo"],
-  ["g0","Grau 0"],["g1","Grau 1"],["g2","Grau 2"],["g3","Grau 3"],["g4","Grau 4"],["g5","Grau 5"],
-  ["objetivos","Objetivos do Tratamento"],["recursos","Recursos Terapêuticos"],
-  ["planoTratamento","Plano do Tratamento"],["profissional","Profissional / Registro Conselho"]
-];
-const ROTULOS_PILATES=[
-  ["totalpass","Totalpass"],["gympass","Gympass"],["gurupass","Gurupass"],["mensalidade","Mensalidade"],
-  ["parceria","Parceria"],["nomeCompleto","Nome completo"],["dataNascimento","Data de nascimento"],
-  ["cpf","CPF"],["masculino","Masculino"],["feminino","Feminino"],
-  ["responsavel","Responsável"],["parentesco","Grau de parentesco"],["cpfResponsavel","CPF Responsável"],
-  ["profissao","Profissão/Ocupação"],["endereco","Endereço"],["telefone","Telefone"],["email","E-mail"],
-  ["dataAvaliacao","Data da Avaliação"],["diagClinico","Diagnóstico Clínico"],
-  ["diagFisio","Diagnóstico Fisioterapêutico"],["cbdf","CBDF"],
-  ["queixaPrincipal","Queixa Principal"],["hpp","HPP"],["antecedentesPessoais","Antecedentes Pessoais"],
-  ["antecedentesFamiliares","Antecedentes Familiares"],["tratamentos","Tratamentos Realizados"],
-  ["habitos","Hábitos de vida"],["acompanhamentoSim","Acompanhamento – Sim"],
-  ["especialidade","Especialidade"],["tipoApoio","Se apoio, qual"],
-  ["examesSim","Exames – Sim"],["quaisExames","Exames – Quais"],
-  ["medicamentoSim","Medicamentos – Sim"],["quaisMedicamentos","Medicamentos – Quais"],
-  ["cirurgiaSim","Cirurgia – Sim"],["cirurgias","Cirurgias – Quais"],
-  ["normal","Inspeção Normal"],["edema","Edema"],["cicatriz","Cicatrização incompleta"],
-  ["eritema","Eritemas"],["outros","Outros"],["inspecaoDetalhes","Detalhes Inspeção/Palpação"],
-  ["semiologia","Semiologia"],["pressao","Pressão Arterial"],["peso","Peso"],["altura","Altura"],
-  ["adipometroPeitoralToracica","Adipômetro – Peitoral/Torácica"],
-  ["adipometroSubescapular","Adipômetro – Subescapular"],["adipometroSuprailiaca","Adipômetro – Suprailiaca"],
-  ["adipometroAxilarMedia","Adipômetro – Axilar média"],["adipometroTriceps","Adipômetro – Tríceps"],
-  ["adipometroBiceps","Adipômetro – Bíceps"],["adipometroAbdominal","Adipômetro – Abdominal"],
-  ["adipometroCoxa","Adipômetro – Coxa"],["escalaBorg","Escala de Borg"],
-  ["objetivos","Objetivos do Tratamento"],["recursos","Recursos Terapêuticos"],
-  ["planoTratamento","Plano do Tratamento"],["profissional","Profissional / Registro Conselho"]
-];
-const ROTULOS_RECOVERY=[
-  ["mov_nome","Nome"],["mov_nascimento","Data de Nascimento"],["mov_telefone","Telefone"],
-  ["mov_sexo_fem","Sexo Feminino"],["mov_sexo_masc","Sexo Masculino"],
-  ["mov_endereco","Endereço"],["mov_fisioterapeuta","Fisioterapeuta"],
-  ["mov_atleta_amador","Atleta – Amador"],["mov_atleta_profissional","Atleta – Profissional"],
-  ["mov_esporte","Esporte / Há quanto tempo"],["mov_pratica_sim","Pratica atividade – Sim"],
-  ["mov_frequencia","Frequência semanal"],["mov_objetivos","Objetivos no programa"],
-  ["mov_tabagismo_sim","Tabagismo – Sim"],["mov_cardiaco_sim","Alterações cardíacas – Sim"],
-  ["mov_diabetes_sim","Diabetes – Sim"],["mov_hipertensao_sim","Hipertensão – Sim"],
-  ["mov_medicamento_sim","Medicamentos – Sim"],["mov_medicamento_desc","Medicamentos – Quais"],
-  ["mov_lesao_sim","Lesão – Sim"],["mov_lesao_desc","Lesão – Qual"],
-  ["mov_cirurgia_sim","Cirurgia – Sim"],["mov_cirurgia_desc","Cirurgia – Qual"],
-  ["mov_alergia_sim","Alergia – Sim"],["mov_alergia_desc","Alergia – Qual"],
-  ["mov_tontura_sim","Tontura – Sim"],["mov_dieta_sim","Dieta – Sim"],
-  ["mov_profissao","Profissão"],
-  ["mov_prog_esporte","Esporte (Programa)"],["mov_prog_inicio","Início"],
-  ["mov_prog_queixaPrincipal","Queixa principal"],["mov_prog_diagnosticoCinetico","Diagnóstico Cinético Funcional"],
-  ["mov_prog_objetivos","Objetivos"],["mov_prog_conduta","Conduta Fisioterapêutica"],
-  ["mov_prog_fisioterapeuta","Fisioterapeuta responsável"]
-];
-const ROTULOS_COND=[
-  ["totalpass","Totalpass"],["gympass","Gympass"],["mensalidade","Mensalidade"],
-  ["nomeCompleto","Nome completo"],["dataNascimento","Data de nascimento"],["cpf","CPF"],
-  ["sexoMasculino","Sexo Masculino"],["sexoFeminino","Sexo Feminino"],
-  ["responsavelNome","Responsável – Nome"],["responsavelParentesco","Responsável – Parentesco"],
-  ["responsavelCpf","Responsável – CPF"],["profissaoOcupacao","Profissão/Ocupação"],
-  ["enderecoResidencial","Endereço"],["telefone","Telefone"],["email","E-mail"],
-  ["dataAvaliacao","Data da Avaliação"],["diagnosticoClinico","Diagnóstico Clínico"],
-  ["diagnosticoFisio","Diagnóstico Fisioterapêutico"],["cbdf","CBDF"],
-  ["queixaPrincipal","Queixa Principal"],["hda","HDA"],["historicoLesoes","Histórico de Lesões"],
-  ["acompanhamentoSim","Acompanhamento – Sim"],["acompanhamentoQuais","Acompanhamento – Quais"],
-  ["medicamentosSim","Medicamentos – Sim"],["medicamentosQuais","Medicamentos – Quais"],
-  ["peso","Peso (kg)"],["altura","Altura (cm)"],["habitosVida","Hábitos de Vida"],
-  ["metasPessoais","Metas Pessoais"],["evaRegiao","EVA / Região"],
-  ["ativo","Ativo"],["moderadamenteAtivo","Moderadamente Ativo"],["sedentario","Sedentário"],
-  ["atividadeSim","Atividade Física – Sim"],["atividadeQuais","Atividade Física – Quais"],
-  ["borg","Escala de Borg"],["desviosSim","Desvios Posturais – Sim"],["desviosQuais","Desvios – Quais"],
-  ["movimentosComDor","Movimentos Com Dor"],["movimentosSemDor","Movimentos Sem Dor"],
-  ["movimentosQuais","Movimentos – Quais"],["movimentosFuncionais","Movimentos Funcionais"],
-  ["mobilidade","Mobilidade"],["flexibilidade","Flexibilidade"],
-  ["resistenciaMuscularCardio","Resistência Muscular/Cardiovascular"],
-  ["planoTerapeutico","Plano Terapêutico"],["profissional","Profissional / Registro Conselho"]
-];
+const ROTULOS_FISIO=[["sessao","Sessão"],["pacote","Pacote"],["qtdSessoes","Qtd sessões"],["pix","Pix"],["parcelado","Parcelado"],["parcelas","Parcelas"],["parceria","Parceria"],["nomeCompleto","Nome completo"],["dataNascimento","Data de nascimento"],["cpf","CPF"],["masculino","Masculino"],["feminino","Feminino"],["responsavel","Responsável"],["parentesco","Grau de parentesco"],["cpfResponsavel","CPF Responsável"],["profissao","Profissão/Ocupação"],["endereco","Endereço"],["telefone","Telefone"],["email","E-mail"],["dataAvaliacao","Data da Avaliação"],["diagClinico","Diagnóstico Clínico"],["diagFisio","Diagnóstico Fisioterapêutico"],["cbdf","CBDF"],["queixaPrincipal","Queixa Principal"],["hpp","HDA"],["antecedentesPessoais","HPP"],["antecedentesFamiliares","Antecedentes Familiares"],["tratamentos","Tratamentos Realizados"],["habitos","Hábitos de vida"],["acompanhamentoSim","Acompanhamento – Sim"],["acompanhamentoNao","Acompanhamento – Não"],["especialidade","Especialidade"],["examesSim","Exames – Sim"],["examesNao","Exames – Não"],["examesQuais","Exames – Quais"],["medicamentoSim","Medicamentos – Sim"],["medicamentoNao","Medicamentos – Não"],["medicamentosQuais","Medicamentos – Quais"],["orientado","Deambulando e orientado"],["apoio","Deambulando com apoio"],["confuso","Confuso"],["desorientado","Desorientado"],["cirurgiaSim","Cirurgia – Sim"],["cirurgiaNao","Cirurgia – Não"],["cirurgias","Cirurgias – Quais"],["normal","Inspeção Normal"],["edema","Edema"],["cicatriz","Cicatrização incompleta"],["eritema","Eritemas"],["outros","Outros"],["inspecaoDetalhes","Detalhes Inspeção/Palpação"],["peso","Peso"],["altura","Altura"],["joelhoYSim","Y Teste – Sim"],["joelhoYNao","Y Teste – Não"],["rombergPos","Romberg – Positivo"],["rombergNeg","Romberg – Negativo"],["tugNormal","TUG – Normal"],["tugBaixo","TUG – Baixo risco"],["tugMedio","TUG – Médio risco"],["tugAlto","TUG – Alto risco"],["laseguePos","Lasegue – Positivo"],["lasegueNeg","Lasegue – Negativo"],["g0","Grau 0"],["g1","Grau 1"],["g2","Grau 2"],["g3","Grau 3"],["g4","Grau 4"],["g5","Grau 5"],["objetivos","Objetivos do Tratamento"],["recursos","Recursos Terapêuticos"],["planoTratamento","Plano do Tratamento"],["profissional","Profissional / Registro Conselho"]];
+const ROTULOS_PILATES=[["totalpass","Totalpass"],["gympass","Gympass"],["gurupass","Gurupass"],["mensalidade","Mensalidade"],["parceria","Parceria"],["nomeCompleto","Nome completo"],["dataNascimento","Data de nascimento"],["cpf","CPF"],["masculino","Masculino"],["feminino","Feminino"],["responsavel","Responsável"],["parentesco","Grau de parentesco"],["cpfResponsavel","CPF Responsável"],["profissao","Profissão/Ocupação"],["endereco","Endereço"],["telefone","Telefone"],["email","E-mail"],["dataAvaliacao","Data da Avaliação"],["diagClinico","Diagnóstico Clínico"],["diagFisio","Diagnóstico Fisioterapêutico"],["cbdf","CBDF"],["queixaPrincipal","Queixa Principal"],["hpp","HPP"],["antecedentesPessoais","Antecedentes Pessoais"],["antecedentesFamiliares","Antecedentes Familiares"],["tratamentos","Tratamentos Realizados"],["habitos","Hábitos de vida"],["acompanhamentoSim","Acompanhamento – Sim"],["especialidade","Especialidade"],["tipoApoio","Se apoio, qual"],["examesSim","Exames – Sim"],["quaisExames","Exames – Quais"],["medicamentoSim","Medicamentos – Sim"],["quaisMedicamentos","Medicamentos – Quais"],["cirurgiaSim","Cirurgia – Sim"],["cirurgias","Cirurgias – Quais"],["normal","Inspeção Normal"],["edema","Edema"],["cicatriz","Cicatrização incompleta"],["eritema","Eritemas"],["outros","Outros"],["inspecaoDetalhes","Detalhes Inspeção/Palpação"],["semiologia","Semiologia"],["pressao","Pressão Arterial"],["peso","Peso"],["altura","Altura"],["adipometroPeitoralToracica","Adipômetro – Peitoral/Torácica"],["adipometroSubescapular","Adipômetro – Subescapular"],["adipometroSuprailiaca","Adipômetro – Suprailiaca"],["adipometroAxilarMedia","Adipômetro – Axilar média"],["adipometroTriceps","Adipômetro – Tríceps"],["adipometroBiceps","Adipômetro – Bíceps"],["adipometroAbdominal","Adipômetro – Abdominal"],["adipometroCoxa","Adipômetro – Coxa"],["escalaBorg","Escala de Borg"],["objetivos","Objetivos do Tratamento"],["recursos","Recursos Terapêuticos"],["planoTratamento","Plano do Tratamento"],["profissional","Profissional / Registro Conselho"]];
+const ROTULOS_RECOVERY=[["mov_nome","Nome"],["mov_nascimento","Data de Nascimento"],["mov_telefone","Telefone"],["mov_sexo_fem","Sexo Feminino"],["mov_sexo_masc","Sexo Masculino"],["mov_endereco","Endereço"],["mov_fisioterapeuta","Fisioterapeuta"],["mov_atleta_amador","Atleta – Amador"],["mov_atleta_profissional","Atleta – Profissional"],["mov_esporte","Esporte / Há quanto tempo"],["mov_pratica_sim","Pratica atividade – Sim"],["mov_frequencia","Frequência semanal"],["mov_objetivos","Objetivos no programa"],["mov_tabagismo_sim","Tabagismo – Sim"],["mov_cardiaco_sim","Alterações cardíacas – Sim"],["mov_diabetes_sim","Diabetes – Sim"],["mov_hipertensao_sim","Hipertensão – Sim"],["mov_medicamento_sim","Medicamentos – Sim"],["mov_medicamento_desc","Medicamentos – Quais"],["mov_lesao_sim","Lesão – Sim"],["mov_lesao_desc","Lesão – Qual"],["mov_cirurgia_sim","Cirurgia – Sim"],["mov_cirurgia_desc","Cirurgia – Qual"],["mov_alergia_sim","Alergia – Sim"],["mov_alergia_desc","Alergia – Qual"],["mov_tontura_sim","Tontura – Sim"],["mov_dieta_sim","Dieta – Sim"],["mov_profissao","Profissão"],["mov_prog_esporte","Esporte (Programa)"],["mov_prog_inicio","Início"],["mov_prog_queixaPrincipal","Queixa principal"],["mov_prog_diagnosticoCinetico","Diagnóstico Cinético Funcional"],["mov_prog_objetivos","Objetivos"],["mov_prog_conduta","Conduta Fisioterapêutica"],["mov_prog_fisioterapeuta","Fisioterapeuta responsável"]];
+const ROTULOS_COND=[["totalpass","Totalpass"],["gympass","Gympass"],["mensalidade","Mensalidade"],["nomeCompleto","Nome completo"],["dataNascimento","Data de nascimento"],["cpf","CPF"],["sexoMasculino","Sexo Masculino"],["sexoFeminino","Sexo Feminino"],["responsavelNome","Responsável – Nome"],["responsavelParentesco","Responsável – Parentesco"],["responsavelCpf","Responsável – CPF"],["profissaoOcupacao","Profissão/Ocupação"],["enderecoResidencial","Endereço"],["telefone","Telefone"],["email","E-mail"],["dataAvaliacao","Data da Avaliação"],["diagnosticoClinico","Diagnóstico Clínico"],["diagnosticoFisio","Diagnóstico Fisioterapêutico"],["cbdf","CBDF"],["queixaPrincipal","Queixa Principal"],["hda","HDA"],["historicoLesoes","Histórico de Lesões"],["acompanhamentoSim","Acompanhamento – Sim"],["acompanhamentoQuais","Acompanhamento – Quais"],["medicamentosSim","Medicamentos – Sim"],["medicamentosQuais","Medicamentos – Quais"],["peso","Peso (kg)"],["altura","Altura (cm)"],["habitosVida","Hábitos de Vida"],["metasPessoais","Metas Pessoais"],["evaRegiao","EVA / Região"],["ativo","Ativo"],["moderadamenteAtivo","Moderadamente Ativo"],["sedentario","Sedentário"],["atividadeSim","Atividade Física – Sim"],["atividadeQuais","Atividade Física – Quais"],["borg","Escala de Borg"],["desviosSim","Desvios Posturais – Sim"],["desviosQuais","Desvios – Quais"],["movimentosComDor","Movimentos Com Dor"],["movimentosSemDor","Movimentos Sem Dor"],["movimentosQuais","Movimentos – Quais"],["movimentosFuncionais","Movimentos Funcionais"],["mobilidade","Mobilidade"],["flexibilidade","Flexibilidade"],["resistenciaMuscularCardio","Resistência Muscular/Cardiovascular"],["planoTerapeutico","Plano Terapêutico"],["profissional","Profissional / Registro Conselho"]];
 
 function renderDetalhe(dados,rotulos){
-  let html=`<p style="margin-bottom:6px"><strong>Data:</strong> ${fmtD(dados.data)}</p>`;
+  let html=`<p style="margin-bottom:8px"><strong>Data:</strong> ${fmtD(dados.data)}</p>`;
   for(const [k,label] of rotulos){
     const v=dados[k];
-    if(v===undefined||v===null||v==="")continue;
-    if(v===false)continue; // não mostra "Não" para economia de espaço
+    if(v===undefined||v===null||v===""||v===false) continue;
     const display=v===true?"✔ Sim":(typeof v==="string"&&(k.toLowerCase().includes("data")||k.toLowerCase().includes("nascimento"))?fmtD(v):v);
     html+=`<p style="margin:4px 0;font-size:.84rem;line-height:1.6"><strong style="color:var(--lilas)">${label}:</strong> ${display}</p>`;
   }
@@ -2020,177 +1859,77 @@ window.abrirTelaPorTipo=function(){
   tempNome=cv("nome");tempTipo=cv("tipo");tempData=cv("data");
   if(!tempNome||!tempTipo||!tempData){alert("Preencha todos os campos.");return;}
   document.getElementById("telaInicial").classList.add("hidden");
-  const id="tela"+tempTipo.replace("ç","c").replace("é","e");
-  document.getElementById(id)?.classList.remove("hidden");
+  document.getElementById("tela"+tempTipo.replace("ç","c").replace("é","e"))?.classList.remove("hidden");
 };
 
 function salvarBase(extras){
   if(!tempNome||!tempTipo||!tempData){alert("Volte e preencha nome/tipo/data.");return;}
-  const dest=avalEditId?ref(dbAval,`avaliacoes/${avalEditId}`):push(ref(dbAval,"avaliacoes"));
-  set(dest,{nome:tempNome,tipo:tempTipo,data:tempData,...extras,criadoEm:new Date().toLocaleString("pt-BR")});
-  alert(avalEditId?"Atualizada!":"Salva com sucesso!");avalEditId=null;voltar();
+  const dest=avalEditId?dbAval.ref(`avaliacoes/${avalEditId}`):dbAval.ref("avaliacoes").push();
+  dest.set({nome:tempNome,tipo:tempTipo,data:tempData,...extras,criadoEm:new Date().toLocaleString("pt-BR")});
+  alert(avalEditId?"Atualizada!":"Salva!");avalEditId=null;voltar();
 }
 
-window.salvarFisioterapia=()=>salvarBase({
-  sessao:cm("fisio_sessao"),pacote:cm("fisio_pacote"),qtdSessoes:cv("fisio_qtdSessoes"),
-  pix:cm("fisio_pix"),parcelado:cm("fisio_parcelado"),parcelas:cv("fisio_parcelas"),parceria:cv("fisio_parceria"),
-  nomeCompleto:cv("fisio_nomeCompleto"),dataNascimento:cv("fisio_dataNascimento"),cpf:cv("fisio_cpf"),
-  masculino:cm("fisio_masculino"),feminino:cm("fisio_feminino"),
-  responsavel:cv("fisio_responsavel"),parentesco:cv("fisio_parentesco"),cpfResponsavel:cv("fisio_cpfResponsavel"),
-  profissao:cv("fisio_profissao"),endereco:cv("fisio_endereco"),telefone:cv("fisio_telefone"),email:cv("fisio_email"),
-  dataAvaliacao:cv("fisio_dataAvaliacao"),diagClinico:cv("fisio_diagClinico"),diagFisio:cv("fisio_diagFisio"),cbdf:cv("fisio_cbdf"),
-  queixaPrincipal:cv("fisio_queixaPrincipal"),hpp:cv("fisio_hpp"),antecedentesPessoais:cv("fisio_antecedentesPessoais"),
-  antecedentesFamiliares:cv("fisio_antecedentesFamiliares"),tratamentos:cv("fisio_tratamentos"),habitos:cv("fisio_habitos"),
-  acompanhamentoSim:cm("fisio_acompanhamentoSim"),acompanhamentoNao:cm("fisio_acompanhamentoNao"),especialidade:cv("fisio_especialidade"),
-  examesSim:cm("fisio_examesSim"),examesNao:cm("fisio_examesNao"),examesQuais:cv("fisio_examesQuais"),
-  medicamentoSim:cm("fisio_medicamentoSim"),medicamentoNao:cm("fisio_medicamentoNao"),medicamentosQuais:cv("fisio_medicamentosQuais"),
-  orientado:cm("fisio_orientado"),apoio:cm("fisio_apoio"),confuso:cm("fisio_confuso"),desorientado:cm("fisio_desorientado"),
-  cirurgiaSim:cm("fisio_cirurgiaSim"),cirurgiaNao:cm("fisio_cirurgiaNao"),cirurgias:cv("fisio_cirurgias"),
-  normal:cm("fisio_normal"),edema:cm("fisio_edema"),cicatriz:cm("fisio_cicatriz"),eritema:cm("fisio_eritema"),outros:cm("fisio_outros"),
-  inspecaoDetalhes:cv("fisio_inspecaoDetalhes"),peso:cv("fisio_peso"),altura:cv("fisio_altura"),
-  joelhoYSim:cm("fisio_joelhoY_sim"),joelhoYNao:cm("fisio_joelhoY_nao"),
-  rombergPos:cm("fisio_romberg_pos"),rombergNeg:cm("fisio_romberg_neg"),
-  tugNormal:cm("fisio_tug_normal"),tugBaixo:cm("fisio_tug_baixo"),tugMedio:cm("fisio_tug_medio"),tugAlto:cm("fisio_tug_alto"),
-  laseguePos:cm("fisio_lasegue_pos"),lasegueNeg:cm("fisio_lasegue_neg"),
-  g0:cm("fisio_g0"),g1:cm("fisio_g1"),g2:cm("fisio_g2"),g3:cm("fisio_g3"),g4:cm("fisio_g4"),g5:cm("fisio_g5"),
-  objetivos:cv("fisio_objetivos"),recursos:cv("fisio_recursos"),planoTratamento:cv("fisio_planoTratamento"),profissional:cv("fisio_profissional")
-});
+window.salvarFisioterapia=()=>salvarBase({sessao:cm("fisio_sessao"),pacote:cm("fisio_pacote"),qtdSessoes:cv("fisio_qtdSessoes"),pix:cm("fisio_pix"),parcelado:cm("fisio_parcelado"),parcelas:cv("fisio_parcelas"),parceria:cv("fisio_parceria"),nomeCompleto:cv("fisio_nomeCompleto"),dataNascimento:cv("fisio_dataNascimento"),cpf:cv("fisio_cpf"),masculino:cm("fisio_masculino"),feminino:cm("fisio_feminino"),responsavel:cv("fisio_responsavel"),parentesco:cv("fisio_parentesco"),cpfResponsavel:cv("fisio_cpfResponsavel"),profissao:cv("fisio_profissao"),endereco:cv("fisio_endereco"),telefone:cv("fisio_telefone"),email:cv("fisio_email"),dataAvaliacao:cv("fisio_dataAvaliacao"),diagClinico:cv("fisio_diagClinico"),diagFisio:cv("fisio_diagFisio"),cbdf:cv("fisio_cbdf"),queixaPrincipal:cv("fisio_queixaPrincipal"),hpp:cv("fisio_hpp"),antecedentesPessoais:cv("fisio_antecedentesPessoais"),antecedentesFamiliares:cv("fisio_antecedentesFamiliares"),tratamentos:cv("fisio_tratamentos"),habitos:cv("fisio_habitos"),acompanhamentoSim:cm("fisio_acompanhamentoSim"),acompanhamentoNao:cm("fisio_acompanhamentoNao"),especialidade:cv("fisio_especialidade"),examesSim:cm("fisio_examesSim"),examesNao:cm("fisio_examesNao"),examesQuais:cv("fisio_examesQuais"),medicamentoSim:cm("fisio_medicamentoSim"),medicamentoNao:cm("fisio_medicamentoNao"),medicamentosQuais:cv("fisio_medicamentosQuais"),orientado:cm("fisio_orientado"),apoio:cm("fisio_apoio"),confuso:cm("fisio_confuso"),desorientado:cm("fisio_desorientado"),cirurgiaSim:cm("fisio_cirurgiaSim"),cirurgiaNao:cm("fisio_cirurgiaNao"),cirurgias:cv("fisio_cirurgias"),normal:cm("fisio_normal"),edema:cm("fisio_edema"),cicatriz:cm("fisio_cicatriz"),eritema:cm("fisio_eritema"),outros:cm("fisio_outros"),inspecaoDetalhes:cv("fisio_inspecaoDetalhes"),peso:cv("fisio_peso"),altura:cv("fisio_altura"),joelhoYSim:cm("fisio_joelhoY_sim"),joelhoYNao:cm("fisio_joelhoY_nao"),rombergPos:cm("fisio_romberg_pos"),rombergNeg:cm("fisio_romberg_neg"),tugNormal:cm("fisio_tug_normal"),tugBaixo:cm("fisio_tug_baixo"),tugMedio:cm("fisio_tug_medio"),tugAlto:cm("fisio_tug_alto"),laseguePos:cm("fisio_lasegue_pos"),lasegueNeg:cm("fisio_lasegue_neg"),g0:cm("fisio_g0"),g1:cm("fisio_g1"),g2:cm("fisio_g2"),g3:cm("fisio_g3"),g4:cm("fisio_g4"),g5:cm("fisio_g5"),objetivos:cv("fisio_objetivos"),recursos:cv("fisio_recursos"),planoTratamento:cv("fisio_planoTratamento"),profissional:cv("fisio_profissional")});
 
-window.salvarPilates=()=>salvarBase({
-  totalpass:cm("pilates_totalpass"),gympass:cm("pilates_gympass"),gurupass:cm("pilates_gurupass"),mensalidade:cm("pilates_mensalidade"),
-  parceria:cv("pilates_parceria"),nomeCompleto:cv("pilates_nomeCompleto"),dataNascimento:cv("pilates_dataNascimento"),cpf:cv("pilates_cpf"),
-  masculino:cm("pilates_masculino"),feminino:cm("pilates_feminino"),
-  responsavel:cv("pilates_responsavel"),parentesco:cv("pilates_parentesco"),cpfResponsavel:cv("pilates_cpfResponsavel"),
-  profissao:cv("pilates_profissao"),endereco:cv("pilates_endereco"),telefone:cv("pilates_telefone"),email:cv("pilates_email"),
-  dataAvaliacao:cv("pilates_dataAvaliacao"),diagClinico:cv("pilates_diagClinico"),diagFisio:cv("pilates_diagFisio"),cbdf:cv("pilates_cbdf"),
-  queixaPrincipal:cv("pilates_queixaPrincipal"),hpp:cv("pilates_hpp"),antecedentesPessoais:cv("pilates_antecedentesPessoais"),
-  antecedentesFamiliares:cv("pilates_antecedentesFamiliares"),tratamentos:cv("pilates_tratamentos"),habitos:cv("pilates_habitos"),
-  acompanhamentoSim:cm("pilates_acompanhamentoSim"),acompanhamentoNao:cm("pilates_acompanhamentoNao"),especialidade:cv("pilates_especialidade"),
-  orientado:cm("pilates_orientado"),apoio:cm("pilates_apoio"),tipoApoio:cv("pilates_tipoApoio"),confuso:cm("pilates_confuso"),desorientado:cm("pilates_desorientado"),
-  examesSim:cm("pilates_examesSim"),examesNao:cm("pilates_examesNao"),quaisExames:cv("pilates_quaisExames"),
-  medicamentoSim:cm("pilates_medicamentoSim"),medicamentoNao:cm("pilates_medicamentoNao"),quaisMedicamentos:cv("pilates_quaisMedicamentos"),
-  cirurgiaSim:cm("pilates_cirurgiaSim"),cirurgiaNao:cm("pilates_cirurgiaNao"),cirurgias:cv("pilates_cirurgias"),
-  normal:cm("pilates_normal"),edema:cm("pilates_edema"),cicatriz:cm("pilates_cicatriz"),eritema:cm("pilates_eritema"),outros:cm("pilates_outros"),
-  inspecaoDetalhes:cv("pilates_inspecaoDetalhes"),semiologia:cv("pilates_semiologia"),pressao:cv("pilates_pressao"),
-  peso:cv("pilates_peso"),altura:cv("pilates_altura"),
-  adipometroPeitoralToracica:cv("pilates_adipometro_peitoral_toracica"),adipometroSubescapular:cv("pilates_adipometro_subescapular"),
-  adipometroSuprailiaca:cv("pilates_adipometro_suprailiaca"),adipometroAxilarMedia:cv("pilates_adipometro_axilar_media"),
-  adipometroTriceps:cv("pilates_adipometro_triceps"),adipometroBiceps:cv("pilates_adipometro_biceps"),
-  adipometroAbdominal:cv("pilates_adipometro_abdominal"),adipometroCoxa:cv("pilates_adipometro_coxa"),
-  escalaBorg:cv("pilates_escalaBorg"),objetivos:cv("pilates_objetivos"),recursos:cv("pilates_recursos"),
-  planoTratamento:cv("pilates_planoTratamento"),profissional:cv("pilates_profissional")
-});
+window.salvarPilates=()=>salvarBase({totalpass:cm("pilates_totalpass"),gympass:cm("pilates_gympass"),gurupass:cm("pilates_gurupass"),mensalidade:cm("pilates_mensalidade"),parceria:cv("pilates_parceria"),nomeCompleto:cv("pilates_nomeCompleto"),dataNascimento:cv("pilates_dataNascimento"),cpf:cv("pilates_cpf"),masculino:cm("pilates_masculino"),feminino:cm("pilates_feminino"),responsavel:cv("pilates_responsavel"),parentesco:cv("pilates_parentesco"),cpfResponsavel:cv("pilates_cpfResponsavel"),profissao:cv("pilates_profissao"),endereco:cv("pilates_endereco"),telefone:cv("pilates_telefone"),email:cv("pilates_email"),dataAvaliacao:cv("pilates_dataAvaliacao"),diagClinico:cv("pilates_diagClinico"),diagFisio:cv("pilates_diagFisio"),cbdf:cv("pilates_cbdf"),queixaPrincipal:cv("pilates_queixaPrincipal"),hpp:cv("pilates_hpp"),antecedentesPessoais:cv("pilates_antecedentesPessoais"),antecedentesFamiliares:cv("pilates_antecedentesFamiliares"),tratamentos:cv("pilates_tratamentos"),habitos:cv("pilates_habitos"),acompanhamentoSim:cm("pilates_acompanhamentoSim"),acompanhamentoNao:cm("pilates_acompanhamentoNao"),especialidade:cv("pilates_especialidade"),orientado:cm("pilates_orientado"),apoio:cm("pilates_apoio"),tipoApoio:cv("pilates_tipoApoio"),confuso:cm("pilates_confuso"),desorientado:cm("pilates_desorientado"),examesSim:cm("pilates_examesSim"),examesNao:cm("pilates_examesNao"),quaisExames:cv("pilates_quaisExames"),medicamentoSim:cm("pilates_medicamentoSim"),medicamentoNao:cm("pilates_medicamentoNao"),quaisMedicamentos:cv("pilates_quaisMedicamentos"),cirurgiaSim:cm("pilates_cirurgiaSim"),cirurgiaNao:cm("pilates_cirurgiaNao"),cirurgias:cv("pilates_cirurgias"),normal:cm("pilates_normal"),edema:cm("pilates_edema"),cicatriz:cm("pilates_cicatriz"),eritema:cm("pilates_eritema"),outros:cm("pilates_outros"),inspecaoDetalhes:cv("pilates_inspecaoDetalhes"),semiologia:cv("pilates_semiologia"),pressao:cv("pilates_pressao"),peso:cv("pilates_peso"),altura:cv("pilates_altura"),adipometroPeitoralToracica:cv("pilates_adipometro_peitoral_toracica"),adipometroSubescapular:cv("pilates_adipometro_subescapular"),adipometroSuprailiaca:cv("pilates_adipometro_suprailiaca"),adipometroAxilarMedia:cv("pilates_adipometro_axilar_media"),adipometroTriceps:cv("pilates_adipometro_triceps"),adipometroBiceps:cv("pilates_adipometro_biceps"),adipometroAbdominal:cv("pilates_adipometro_abdominal"),adipometroCoxa:cv("pilates_adipometro_coxa"),escalaBorg:cv("pilates_escalaBorg"),objetivos:cv("pilates_objetivos"),recursos:cv("pilates_recursos"),planoTratamento:cv("pilates_planoTratamento"),profissional:cv("pilates_profissional")});
 
-window.salvarRecovery=()=>salvarBase({
-  mov_nome:cv("mov_nome"),mov_nascimento:cv("mov_nascimento"),mov_telefone:cv("mov_telefone"),
-  mov_sexo_fem:cm("mov_sexo_fem"),mov_sexo_masc:cm("mov_sexo_masc"),
-  mov_endereco:cv("mov_endereco"),mov_fisioterapeuta:cv("mov_fisioterapeuta"),
-  mov_atleta_amador:cm("mov_atleta_amador"),mov_atleta_profissional:cm("mov_atleta_profissional"),
-  mov_esporte:cv("mov_esporte"),mov_pratica_sim:cm("mov_pratica_sim"),mov_pratica_nao:cm("mov_pratica_nao"),
-  mov_frequencia:cv("mov_frequencia"),mov_objetivos:cv("mov_objetivos"),
-  mov_tabagismo_sim:cm("mov_tabagismo_sim"),mov_tabagismo_nao:cm("mov_tabagismo_nao"),
-  mov_cardiaco_sim:cm("mov_cardiaco_sim"),mov_cardiaco_nao:cm("mov_cardiaco_nao"),
-  mov_diabetes_sim:cm("mov_diabetes_sim"),mov_diabetes_nao:cm("mov_diabetes_nao"),
-  mov_hipertensao_sim:cm("mov_hipertensao_sim"),mov_hipertensao_nao:cm("mov_hipertensao_nao"),
-  mov_medicamento_sim:cm("mov_medicamento_sim"),mov_medicamento_nao:cm("mov_medicamento_nao"),mov_medicamento_desc:cv("mov_medicamento_desc"),
-  mov_lesao_sim:cm("mov_lesao_sim"),mov_lesao_nao:cm("mov_lesao_nao"),mov_lesao_desc:cv("mov_lesao_desc"),
-  mov_cirurgia_sim:cm("mov_cirurgia_sim"),mov_cirurgia_nao:cm("mov_cirurgia_nao"),mov_cirurgia_desc:cv("mov_cirurgia_desc"),
-  mov_alergia_sim:cm("mov_alergia_sim"),mov_alergia_nao:cm("mov_alergia_nao"),mov_alergia_desc:cv("mov_alergia_desc"),
-  mov_tontura_sim:cm("mov_tontura_sim"),mov_tontura_nao:cm("mov_tontura_nao"),
-  mov_dieta_sim:cm("mov_dieta_sim"),mov_dieta_nao:cm("mov_dieta_nao"),mov_profissao:cv("mov_profissao"),
-  mov_prog_esporte:cv("mov_prog_esporte"),mov_prog_inicio:cv("mov_prog_inicio"),
-  mov_prog_queixaPrincipal:cv("mov_prog_queixaPrincipal"),mov_prog_diagnosticoCinetico:cv("mov_prog_diagnosticoCinetico"),
-  mov_prog_objetivos:cv("mov_prog_objetivos"),mov_prog_conduta:cv("mov_prog_conduta"),mov_prog_fisioterapeuta:cv("mov_prog_fisioterapeuta")
-});
+window.salvarRecovery=()=>salvarBase({mov_nome:cv("mov_nome"),mov_nascimento:cv("mov_nascimento"),mov_telefone:cv("mov_telefone"),mov_sexo_fem:cm("mov_sexo_fem"),mov_sexo_masc:cm("mov_sexo_masc"),mov_endereco:cv("mov_endereco"),mov_fisioterapeuta:cv("mov_fisioterapeuta"),mov_atleta_amador:cm("mov_atleta_amador"),mov_atleta_profissional:cm("mov_atleta_profissional"),mov_esporte:cv("mov_esporte"),mov_pratica_sim:cm("mov_pratica_sim"),mov_pratica_nao:cm("mov_pratica_nao"),mov_frequencia:cv("mov_frequencia"),mov_objetivos:cv("mov_objetivos"),mov_tabagismo_sim:cm("mov_tabagismo_sim"),mov_tabagismo_nao:cm("mov_tabagismo_nao"),mov_cardiaco_sim:cm("mov_cardiaco_sim"),mov_cardiaco_nao:cm("mov_cardiaco_nao"),mov_diabetes_sim:cm("mov_diabetes_sim"),mov_diabetes_nao:cm("mov_diabetes_nao"),mov_hipertensao_sim:cm("mov_hipertensao_sim"),mov_hipertensao_nao:cm("mov_hipertensao_nao"),mov_medicamento_sim:cm("mov_medicamento_sim"),mov_medicamento_nao:cm("mov_medicamento_nao"),mov_medicamento_desc:cv("mov_medicamento_desc"),mov_lesao_sim:cm("mov_lesao_sim"),mov_lesao_nao:cm("mov_lesao_nao"),mov_lesao_desc:cv("mov_lesao_desc"),mov_cirurgia_sim:cm("mov_cirurgia_sim"),mov_cirurgia_nao:cm("mov_cirurgia_nao"),mov_cirurgia_desc:cv("mov_cirurgia_desc"),mov_alergia_sim:cm("mov_alergia_sim"),mov_alergia_nao:cm("mov_alergia_nao"),mov_alergia_desc:cv("mov_alergia_desc"),mov_tontura_sim:cm("mov_tontura_sim"),mov_tontura_nao:cm("mov_tontura_nao"),mov_dieta_sim:cm("mov_dieta_sim"),mov_dieta_nao:cm("mov_dieta_nao"),mov_profissao:cv("mov_profissao"),mov_prog_esporte:cv("mov_prog_esporte"),mov_prog_inicio:cv("mov_prog_inicio"),mov_prog_queixaPrincipal:cv("mov_prog_queixaPrincipal"),mov_prog_diagnosticoCinetico:cv("mov_prog_diagnosticoCinetico"),mov_prog_objetivos:cv("mov_prog_objetivos"),mov_prog_conduta:cv("mov_prog_conduta"),mov_prog_fisioterapeuta:cv("mov_prog_fisioterapeuta")});
 
-window.salvarCondicionamento=()=>salvarBase({
-  totalpass:cm("cond_totalpass"),gympass:cm("cond_gympass"),mensalidade:cm("cond_mensalidade"),
-  nomeCompleto:cv("cond_nomeCompleto"),dataNascimento:cv("cond_dataNascimento"),cpf:cv("cond_cpf"),
-  sexoMasculino:cm("cond_sexo_masculino"),sexoFeminino:cm("cond_sexo_feminino"),
-  responsavelNome:cv("cond_responsavel_nome"),responsavelParentesco:cv("cond_responsavel_parentesco"),responsavelCpf:cv("cond_responsavel_cpf"),
-  profissaoOcupacao:cv("cond_profissao_ocupacao"),enderecoResidencial:cv("cond_endereco_residencial"),
-  telefone:cv("cond_telefone"),email:cv("cond_email"),dataAvaliacao:cv("cond_dataAvaliacao"),
-  diagnosticoClinico:cv("cond_diagnosticoClinico"),diagnosticoFisio:cv("cond_diagnosticoFisio"),cbdf:cv("cond_cbdf"),
-  queixaPrincipal:cv("cond_queixaPrincipal"),hda:cv("cond_hda"),historicoLesoes:cv("cond_historicoLesoes"),
-  acompanhamentoSim:cm("cond_acompanhamento_sim"),acompanhamentoNao:cm("cond_acompanhamento_nao"),acompanhamentoQuais:cv("cond_acompanhamento_quais"),
-  medicamentosSim:cm("cond_medicamentos_sim"),medicamentosNao:cm("cond_medicamentos_nao"),medicamentosQuais:cv("cond_medicamentos_quais"),
-  peso:cv("cond_peso"),altura:cv("cond_altura"),habitosVida:cv("cond_habitosVida"),metasPessoais:cv("cond_metasPessoais"),evaRegiao:cv("cond_evaRegiao"),
-  ativo:cm("cond_ativo"),moderadamenteAtivo:cm("cond_moderadamente_ativo"),sedentario:cm("cond_sedentario"),
-  atividadeSim:cm("cond_atividade_sim"),atividadeNao:cm("cond_atividade_nao"),atividadeQuais:cv("cond_atividade_quais"),borg:cv("cond_borg"),
-  desviosSim:cm("cond_desvios_sim"),desviosNao:cm("cond_desvios_nao"),desviosQuais:cv("cond_desvios_quais"),
-  movimentosComDor:cm("cond_movimentos_com_dor"),movimentosSemDor:cm("cond_movimentos_sem_dor"),movimentosQuais:cv("cond_movimentos_quais"),
-  movimentosFuncionais:cv("cond_movimentos_funcionais"),mobilidade:cv("cond_mobilidade"),flexibilidade:cv("cond_flexibilidade"),
-  resistenciaMuscularCardio:cv("cond_resistencia"),planoTerapeutico:cv("cond_planoTerapeutico"),profissional:cv("cond_profissional")
-});
+window.salvarCondicionamento=()=>salvarBase({totalpass:cm("cond_totalpass"),gympass:cm("cond_gympass"),mensalidade:cm("cond_mensalidade"),nomeCompleto:cv("cond_nomeCompleto"),dataNascimento:cv("cond_dataNascimento"),cpf:cv("cond_cpf"),sexoMasculino:cm("cond_sexo_masculino"),sexoFeminino:cm("cond_sexo_feminino"),responsavelNome:cv("cond_responsavel_nome"),responsavelParentesco:cv("cond_responsavel_parentesco"),responsavelCpf:cv("cond_responsavel_cpf"),profissaoOcupacao:cv("cond_profissao_ocupacao"),enderecoResidencial:cv("cond_endereco_residencial"),telefone:cv("cond_telefone"),email:cv("cond_email"),dataAvaliacao:cv("cond_dataAvaliacao"),diagnosticoClinico:cv("cond_diagnosticoClinico"),diagnosticoFisio:cv("cond_diagnosticoFisio"),cbdf:cv("cond_cbdf"),queixaPrincipal:cv("cond_queixaPrincipal"),hda:cv("cond_hda"),historicoLesoes:cv("cond_historicoLesoes"),acompanhamentoSim:cm("cond_acompanhamento_sim"),acompanhamentoNao:cm("cond_acompanhamento_nao"),acompanhamentoQuais:cv("cond_acompanhamento_quais"),medicamentosSim:cm("cond_medicamentos_sim"),medicamentosNao:cm("cond_medicamentos_nao"),medicamentosQuais:cv("cond_medicamentos_quais"),peso:cv("cond_peso"),altura:cv("cond_altura"),habitosVida:cv("cond_habitosVida"),metasPessoais:cv("cond_metasPessoais"),evaRegiao:cv("cond_evaRegiao"),ativo:cm("cond_ativo"),moderadamenteAtivo:cm("cond_moderadamente_ativo"),sedentario:cm("cond_sedentario"),atividadeSim:cm("cond_atividade_sim"),atividadeNao:cm("cond_atividade_nao"),atividadeQuais:cv("cond_atividade_quais"),borg:cv("cond_borg"),desviosSim:cm("cond_desvios_sim"),desviosNao:cm("cond_desvios_nao"),desviosQuais:cv("cond_desvios_quais"),movimentosComDor:cm("cond_movimentos_com_dor"),movimentosSemDor:cm("cond_movimentos_sem_dor"),movimentosQuais:cv("cond_movimentos_quais"),movimentosFuncionais:cv("cond_movimentos_funcionais"),mobilidade:cv("cond_mobilidade"),flexibilidade:cv("cond_flexibilidade"),resistenciaMuscularCardio:cv("cond_resistencia"),planoTerapeutico:cv("cond_planoTerapeutico"),profissional:cv("cond_profissional")});
 
-window.salvarPelvica=()=>salvarBase({
-  pelvic_nome:cv("pelvic_nome"),pelvic_idade:cv("pelvic_idade"),
-  pelvic_nascimento:cv("pelvic_nascimento"),pelvic_telefone:cv("pelvic_telefone"),
-  pelvic_cirurgia_sim:cm("pelvic_cirurgia_sim"),pelvic_cirurgia_nao:cm("pelvic_cirurgia_nao"),
-  pelvic_cirurgias_quais:cv("pelvic_cirurgias_quais")
-});
+window.salvarPelvica=()=>salvarBase({pelvic_nome:cv("pelvic_nome"),pelvic_idade:cv("pelvic_idade"),pelvic_nascimento:cv("pelvic_nascimento"),pelvic_telefone:cv("pelvic_telefone"),pelvic_cirurgia_sim:cm("pelvic_cirurgia_sim"),pelvic_cirurgia_nao:cm("pelvic_cirurgia_nao"),pelvic_cirurgias_quais:cv("pelvic_cirurgias_quais")});
 
 window.carregarAvaliacoes=function(){
   const filtro=document.getElementById("filtroTipo").value;
   const lista=document.getElementById("listaAvaliacoes");
   lista.innerHTML="<p style='color:var(--muted);padding:8px;font-size:.82rem'>Carregando...</p>";
-  // usa get (único) em vez de onValue para carregar mais rápido sem listener permanente
-  get(ref(dbAval,"avaliacoes")).then(snap=>{
+  dbAval.ref("avaliacoes").once("value").then(snap=>{
     lista.innerHTML="";
     if(!snap.exists()){lista.innerHTML="<p style='color:var(--muted);padding:12px'>Nenhuma avaliação.</p>";return;}
     snap.forEach(child=>{
-      const d=child.val();if(filtro&&d.tipo!==filtro)return;
-      const div=document.createElement("div");div.className="lista-aval-item";
+      const d=child.val(); if(filtro&&d.tipo!==filtro)return;
+      const div=document.createElement("div"); div.className="lista-aval-item";
       div.innerHTML=`<div><div class="nome">${d.nome}</div><div class="tipo">${d.tipo} • ${fmtD(d.data)}</div></div>`;
-      div.onclick=()=>abrirDetalhe(child.key,d);lista.appendChild(div);
+      div.onclick=()=>abrirDetalhe(child.key,d); lista.appendChild(div);
     });
     if(!lista.children.length) lista.innerHTML="<p style='color:var(--muted);padding:12px'>Nenhuma avaliação encontrada.</p>";
   });
 };
 
 window.abrirDetalhe=function(id,dados){
-  avalAtualId=id;avalAtualDados=dados;
+  avalAtualId=id; avalAtualDados=dados;
   document.getElementById("telaInicial").classList.add("hidden");
   document.getElementById("telaDetalhe").classList.remove("hidden");
-  // Nome editável inline
   document.getElementById("tituloDetalhe").innerHTML=
     `<input id="nomeEditavel" value="${dados.nome}" style="font-family:'Nunito',sans-serif;font-size:1.1rem;font-weight:800;color:var(--text);border:none;border-bottom:2px solid var(--lilas);background:transparent;outline:none;width:100%;max-width:400px;padding:2px 4px"> — ${dados.tipo}`;
-  document.getElementById("nomeEditavel").onchange=function(){
-    update(ref(dbAval,`avaliacoes/${avalAtualId}`),{nome:this.value});
-  };
-  // Exibe campos na mesma ordem da ficha
+  document.getElementById("nomeEditavel").onchange=function(){ dbAval.ref(`avaliacoes/${avalAtualId}`).update({nome:this.value}); };
   const rotulos=dados.tipo==="Fisioterapia"?ROTULOS_FISIO:dados.tipo==="Pilates"?ROTULOS_PILATES:dados.tipo==="Recovery"?ROTULOS_RECOVERY:dados.tipo==="Condicionamento"?ROTULOS_COND:null;
   const html=rotulos?renderDetalhe(dados,rotulos):Object.entries(dados).filter(([k])=>!["nome","tipo","data","criadoEm"].includes(k)).map(([k,v])=>v!==false&&v!==undefined&&v!==""?`<p style="margin:4px 0;font-size:.84rem"><strong style="color:var(--lilas)">${k}:</strong> ${v===true?"✔ Sim":v}</p>`:"").join("");
-  document.getElementById("dadosAvaliacao").innerHTML=html||"<p>Sem dados adicionais.</p>";
+  document.getElementById("dadosAvaliacao").innerHTML=html||"<p>Sem dados.</p>";
   carregarEvolucoes();
 };
 
 window.editarAvaliacaoAtual=function(){
   if(!avalAtualId||!avalAtualDados)return;
   avalEditId=avalAtualId;
-  tempNome=avalAtualDados.nome||"";tempTipo=avalAtualDados.tipo||"";tempData=avalAtualDados.data||"";
-  document.getElementById("nome").value=tempNome;document.getElementById("tipo").value=tempTipo;document.getElementById("data").value=tempData;
+  tempNome=avalAtualDados.nome||""; tempTipo=avalAtualDados.tipo||""; tempData=avalAtualDados.data||"";
+  document.getElementById("nome").value=tempNome; document.getElementById("tipo").value=tempTipo; document.getElementById("data").value=tempData;
   document.getElementById("telaDetalhe").classList.add("hidden");
   document.getElementById("tela"+tempTipo.replace("ç","c").replace("é","e"))?.classList.remove("hidden");
 };
 
-window.apagarAvaliacaoAtual=async function(){
-  if(!avalAtualId)return;if(!confirm("Apagar?"))return;
-  await remove(ref(dbAval,`avaliacoes/${avalAtualId}`));alert("Apagada.");voltar();
+window.apagarAvaliacaoAtual=function(){
+  if(!avalAtualId)return; if(!confirm("Apagar?"))return;
+  dbAval.ref(`avaliacoes/${avalAtualId}`).remove().then(()=>{alert("Apagada.");voltar();});
 };
 
 function carregarEvolucoes(){
   const evo=document.getElementById("evolucoes");
   evo.innerHTML="<strong style='color:var(--lilas);font-size:.9rem'>📋 Evoluções</strong>";
-  get(ref(dbAval,`avaliacoes/${avalAtualId}/evolucoes`)).then(snap=>{
+  dbAval.ref(`avaliacoes/${avalAtualId}/evolucoes`).once("value").then(snap=>{
     evo.innerHTML="<strong style='color:var(--lilas);font-size:.9rem'>📋 Evoluções</strong>";
-    if(!snap.exists()){
-      evo.innerHTML+="<p style='color:var(--muted);font-size:.82rem;margin-top:6px'>Nenhuma evolução registrada.</p>";
-      return;
-    }
-    // Mais recente primeiro
-    const items=[];
-    snap.forEach(c=>items.push(c.val()));
+    if(!snap.exists()){evo.innerHTML+="<p style='color:var(--muted);font-size:.82rem;margin-top:6px'>Nenhuma evolução registrada.</p>";return;}
+    const items=[]; snap.forEach(c=>items.push(c.val()));
     items.reverse().forEach(e=>{
       evo.innerHTML+=`<div class="evo-item"><strong>${e.data}</strong><p style="white-space:pre-line;margin-top:4px">${e.texto}</p></div>`;
     });
@@ -2198,43 +1937,39 @@ function carregarEvolucoes(){
 }
 
 window.salvarEvolucao=function(){
-  const t=document.getElementById("textoEvolucao");
-  if(!t.value.trim()) return;
-  set(push(ref(dbAval,`avaliacoes/${avalAtualId}/evolucoes`)),{
-    texto: t.value,
-    data: new Date().toLocaleDateString("pt-BR")
-  });
-  t.value="";
-  carregarEvolucoes();
+  const t=document.getElementById("textoEvolucao"); if(!t.value.trim())return;
+  dbAval.ref(`avaliacoes/${avalAtualId}/evolucoes`).push({texto:t.value,data:new Date().toLocaleDateString("pt-BR")});
+  t.value=""; carregarEvolucoes();
 };
 
 window.voltar=function(){
   ["telaFisioterapia","telaPilates","telaRecovery","telaCondicionamento","telaPelvica","telaDetalhe"].forEach(id=>document.getElementById(id)?.classList.add("hidden"));
   document.getElementById("telaInicial").classList.remove("hidden");
-  avalAtualDados=null;avalEditId=null;
+  avalAtualDados=null; avalEditId=null;
 };
 
 /* ══════════════════════
    AGENDA
 ══════════════════════ */
-const agRef=ref(dbAgenda,"alunos");
-let agCache={},agFiltro="todos";
+let agCache={}, agFiltro="todos";
 function hojeISO(){return new Date().toISOString().split("T")[0];}
 function calcReav(d){const x=new Date(d);x.setMonth(x.getMonth()+3);return x.toISOString().split("T")[0];}
-function br(d){if(!d)return"";const[y,m,dd]=d.split("-");return`${dd}/${m}/${y}`;}
+function brDate(d){if(!d)return"";const[y,m,dd]=d.split("-");return`${dd}/${m}/${y}`;}
 
-function initAgenda(){onValue(agRef,snap=>{agCache=snap.val()||{};renderAgenda();});}
+function initAgenda(){
+  dbAgenda.ref("alunos").on("value",snap=>{agCache=snap.val()||{};renderAgenda();});
+}
 
 window.agAdicionar=function(){
-  const n=push(agRef);set(n,{nome:"",tipo:"Avaliação",dataAvaliacao:hojeISO(),horario:"",dataReavaliacao:calcReav(hojeISO()),plano:"Mensal",realizada:false});
+  dbAgenda.ref("alunos").push({nome:"",tipo:"Avaliação",dataAvaliacao:hojeISO(),horario:"",dataReavaliacao:calcReav(hojeISO()),plano:"Mensal",realizada:false});
 };
 
 window.agSalvar=function(id,campo,valor){
   const d={};d[campo]=valor;if(campo==="dataAvaliacao")d.dataReavaliacao=calcReav(valor);
-  update(ref(dbAgenda,"alunos/"+id),d);
+  dbAgenda.ref("alunos/"+id).update(d);
 };
-window.agStatus=function(id,estado){update(ref(dbAgenda,"alunos/"+id),{realizada:!estado});};
-window.agExcluir=function(id){if(confirm("Excluir?"))remove(ref(dbAgenda,"alunos/"+id));};
+window.agStatus=function(id,estado){dbAgenda.ref("alunos/"+id).update({realizada:!estado});};
+window.agExcluir=function(id){if(confirm("Excluir?"))dbAgenda.ref("alunos/"+id).remove();};
 window.setFiltroAg=function(f,btn){agFiltro=f;document.querySelectorAll(".filtros-row button").forEach(b=>b.classList.remove("active-f"));btn.classList.add("active-f");renderAgenda();};
 
 function renderAgenda(){
@@ -2243,21 +1978,21 @@ function renderAgenda(){
   const listV=document.getElementById("agListaVencidas");
   tabela.innerHTML="";listV.innerHTML="";alerta.style.display="none";
   const hoje=hojeISO();
-  // Mais recentes primeiro: inverte a ordem das entradas
-  const entradas=Object.entries(agCache).reverse();
+  const entradas=Object.entries(agCache).reverse(); // mais recente primeiro
   entradas.forEach(([id,d])=>{
     const pendente=!d.realizada;
     const vencida=d.dataReavaliacao<hoje&&pendente;
-    if(vencida){alerta.style.display="block";const li=document.createElement("li");li.textContent=`${d.nome||"Sem nome"} – ${br(d.dataReavaliacao)}`;listV.appendChild(li);}
+    if(vencida){alerta.style.display="block";const li=document.createElement("li");li.textContent=`${d.nome||"Sem nome"} – ${brDate(d.dataReavaliacao)}`;listV.appendChild(li);}
     if(agFiltro==="pendente"&&!pendente)return;if(agFiltro==="feito"&&pendente)return;
     const tr=document.createElement("tr");if(vencida)tr.classList.add("row-vencida");
+    const iSt="border:2px solid var(--border);border-radius:8px;padding:5px 8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none";
     tr.innerHTML=`
-      <td><input value="${d.nome||""}" onchange="agSalvar('${id}','nome',this.value)" style="border:2px solid var(--border);border-radius:8px;padding:5px 8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none;width:100%"></td>
-      <td><select onchange="agSalvar('${id}','tipo',this.value)" style="padding:5px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none"><option ${d.tipo==="Avaliação"?"selected":""}>Avaliação</option><option ${d.tipo==="Aula"?"selected":""}>Aula</option></select></td>
-      <td><input type="date" value="${d.dataAvaliacao}" onchange="agSalvar('${id}','dataAvaliacao',this.value)" style="border:2px solid var(--border);border-radius:8px;padding:5px 8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none"></td>
-      <td><input type="time" value="${d.horario}" onchange="agSalvar('${id}','horario',this.value)" style="border:2px solid var(--border);border-radius:8px;padding:5px 8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none"></td>
-      <td>${br(d.dataReavaliacao)}</td>
-      <td><select onchange="agSalvar('${id}','plano',this.value)" style="padding:5px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none"><option ${d.plano==="Mensal"?"selected":""}>Mensal</option><option ${d.plano==="Gympass"?"selected":""}>Gympass</option><option ${d.plano==="Totalpass"?"selected":""}>Totalpass</option></select></td>
+      <td><input value="${d.nome||""}" onchange="agSalvar('${id}','nome',this.value)" style="${iSt};width:100%"></td>
+      <td><select onchange="agSalvar('${id}','tipo',this.value)" style="${iSt}"><option ${d.tipo==="Avaliação"?"selected":""}>Avaliação</option><option ${d.tipo==="Aula"?"selected":""}>Aula</option></select></td>
+      <td><input type="date" value="${d.dataAvaliacao||""}" onchange="agSalvar('${id}','dataAvaliacao',this.value)" style="${iSt}"></td>
+      <td><input type="time" value="${d.horario||""}" onchange="agSalvar('${id}','horario',this.value)" style="${iSt}"></td>
+      <td>${brDate(d.dataReavaliacao)}</td>
+      <td><select onchange="agSalvar('${id}','plano',this.value)" style="${iSt}"><option ${d.plano==="Mensal"?"selected":""}>Mensal</option><option ${d.plano==="Gympass"?"selected":""}>Gympass</option><option ${d.plano==="Totalpass"?"selected":""}>Totalpass</option></select></td>
       <td><button class="${pendente?"btn-pendente":"btn-feito"}" onclick="agStatus('${id}',${d.realizada})">${pendente?"Pendente":"Feito"}</button></td>
       <td><button class="btn-excluir-sm" onclick="agExcluir('${id}')">🗑</button></td>`;
     tabela.appendChild(tr);
@@ -2267,14 +2002,14 @@ function renderAgenda(){
 /* ══════════════════════
    INSUMOS
 ══════════════════════ */
-let insMeses=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+const insMeses=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
 function initInsumos(){
   const ms=document.getElementById("ins_mes");
   const an=document.getElementById("ins_ano");
   insMeses.forEach((m,i)=>{const o=document.createElement("option");o.value=i;o.textContent=m;ms.appendChild(o);});
   for(let a=2024;a<=2035;a++){const o=document.createElement("option");o.value=a;o.textContent=a;an.appendChild(o);}
-  ms.value=new Date().getMonth();an.value=new Date().getFullYear();
-  ms.onchange=carregarInsumos;an.onchange=carregarInsumos;
+  ms.value=new Date().getMonth(); an.value=new Date().getFullYear();
+  ms.onchange=carregarInsumos; an.onchange=carregarInsumos;
   carregarInsumos();
 }
 function insCaminho(){return`insumos/${document.getElementById("ins_ano").value}/${document.getElementById("ins_mes").value}`;}
@@ -2283,7 +2018,7 @@ function insCalc(){
   document.getElementById("ins_tabela").querySelectorAll("tr").forEach(tr=>{
     const c=Number(tr.children[1].querySelector("input").value)||0;
     const q=Number(tr.children[2].querySelector("input").value)||0;
-    const t=c*q;tr.querySelector(".ins-line-tot").textContent=t.toFixed(2);soma+=t;
+    const t=c*q; tr.querySelector(".ins-line-tot").textContent=t.toFixed(2); soma+=t;
   });
   document.getElementById("ins_total").textContent=`Total do Mês: R$ ${soma.toFixed(2)}`;
 }
@@ -2293,25 +2028,26 @@ function insSalvar(){
     const i=tr.querySelectorAll("input");
     dados.push({insumo:i[0].value,custo:i[1].value,quantidade:i[2].value,data:i[3].value,local:i[4].value,pagamento:i[5].value});
   });
-  set(ref(dbIns,insCaminho()),dados);
+  dbIns.ref(insCaminho()).set(dados);
 }
 function insCriarLinha(item={}){
   const tr=document.createElement("tr");
-  const iStyle="border:2px solid var(--border);border-radius:8px;padding:5px 8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none;width:100%";
-  tr.innerHTML=`<td><input value="${item.insumo||""}" style="${iStyle}"></td><td><input type="number" step="0.01" value="${item.custo||""}" style="${iStyle}"></td><td><input type="number" value="${item.quantidade||""}" style="${iStyle}"></td><td><input type="date" value="${item.data||""}" style="${iStyle}"></td><td><input value="${item.local||""}" style="${iStyle}"></td><td><input value="${item.pagamento||""}" style="${iStyle}"></td><td class="ins-line-tot">0,00</td><td><button class="btn-excluir-sm" onclick="this.closest('tr').remove();insCalc();insSalvar()">🗑</button></td>`;
+  const iSt="border:2px solid var(--border);border-radius:8px;padding:5px 8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none;width:100%";
+  tr.innerHTML=`<td><input value="${item.insumo||""}" style="${iSt}"></td><td><input type="number" step="0.01" value="${item.custo||""}" style="${iSt}"></td><td><input type="number" value="${item.quantidade||""}" style="${iSt}"></td><td><input type="date" value="${item.data||""}" style="${iSt}"></td><td><input value="${item.local||""}" style="${iSt}"></td><td><input value="${item.pagamento||""}" style="${iSt}"></td><td class="ins-line-tot">0,00</td><td><button class="btn-excluir-sm" onclick="this.closest('tr').remove();insCalc();insSalvar()">🗑</button></td>`;
   tr.querySelectorAll("input").forEach(i=>i.addEventListener("input",()=>{insCalc();insSalvar();}));
   document.getElementById("ins_tabela").appendChild(tr);
 }
 window.insAdicionar=function(){insCriarLinha();insSalvar();};
-async function carregarInsumos(){
+function carregarInsumos(){
   document.getElementById("ins_tabela").innerHTML="";
-  const snap=await get(ref(dbIns,insCaminho()));
-  if(!snap.exists())return;
-  snap.val().forEach(item=>insCriarLinha(item));insCalc();
+  dbIns.ref(insCaminho()).once("value").then(snap=>{
+    if(!snap.exists())return;
+    snap.val().forEach(item=>insCriarLinha(item)); insCalc();
+  });
 }
 
 /* ══════════════════════
-   FINANCEIRO YOGA
+   FINANCEIRO YOGA (Firestore)
 ══════════════════════ */
 let yogaUnsub=null;
 function initYoga(){
@@ -2319,25 +2055,33 @@ function initYoga(){
   const sel=document.getElementById("yoga_mes");
   meses.forEach(m=>{const o=document.createElement("option");o.value=o.textContent=m;sel.appendChild(o);});
   sel.value=meses[new Date().getMonth()];
-  sel.onchange=yogaCarregar;yogaCarregar();
+  sel.onchange=yogaCarregar; yogaCarregar();
 }
 window.yogaLabel=function(){
   const t=document.getElementById("yoga_tipo").value;
   document.getElementById("yoga_labelNome").textContent=t==="prof"?"Nome do professor:":"Nome do aluno:";
 };
-window.yogaAdd=async function(){
+window.yogaAdd=function(){
   const tipo=document.getElementById("yoga_tipo").value;
-  await addDoc(collection(fsYoga,"movimentacoes",document.getElementById("yoga_mes").value,"itens"),{tipo,movimento:tipo==="prof"?"saida":"entrada",nome:document.getElementById("yoga_nome").value,pagamento:document.getElementById("yoga_pag").value,descricao:document.getElementById("yoga_desc").value,valor:Number(document.getElementById("yoga_valor").value),data:new Date().toLocaleString("pt-BR")});
+  const mes=document.getElementById("yoga_mes").value;
+  fsYoga.collection("movimentacoes").doc(mes).collection("itens").add({
+    tipo,movimento:tipo==="prof"?"saida":"entrada",
+    nome:document.getElementById("yoga_nome").value,
+    pagamento:document.getElementById("yoga_pag").value,
+    descricao:document.getElementById("yoga_desc").value,
+    valor:Number(document.getElementById("yoga_valor").value),
+    data:new Date().toLocaleString("pt-BR")
+  });
   ["yoga_nome","yoga_desc","yoga_valor"].forEach(id=>document.getElementById(id).value="");
 };
 function yogaCarregar(){
-  if(yogaUnsub)yogaUnsub();
+  if(yogaUnsub) yogaUnsub();
   const mes=document.getElementById("yoga_mes").value;
   const tabela=document.getElementById("yoga_tabela");
-  yogaUnsub=onSnapshot(collection(fsYoga,"movimentacoes",mes,"itens"),snap=>{
-    tabela.innerHTML="";let ent=0,sai=0;
+  yogaUnsub=fsYoga.collection("movimentacoes").doc(mes).collection("itens").onSnapshot(snap=>{
+    tabela.innerHTML=""; let ent=0,sai=0;
     snap.forEach(d=>{
-      const e=d.data();e.movimento==="entrada"?ent+=e.valor:sai+=e.valor;
+      const e=d.data(); e.movimento==="entrada"?ent+=e.valor:sai+=e.valor;
       tabela.innerHTML+=`<tr><td>${e.movimento==="entrada"?"Entrada":"Saída"}</td><td>${e.nome}</td><td>${e.pagamento}</td><td>${e.descricao}</td><td>R$ ${e.valor.toFixed(2)}</td><td>${e.data}</td><td><button class="btn-excluir-sm" onclick="yogaDel('${d.id}')">🗑</button></td></tr>`;
     });
     document.getElementById("yoga_ent").textContent=ent.toFixed(2);
@@ -2345,7 +2089,10 @@ function yogaCarregar(){
     document.getElementById("yoga_sal").textContent=(ent-sai).toFixed(2);
   });
 }
-window.yogaDel=async function(id){await deleteDoc(doc(fsYoga,"movimentacoes",document.getElementById("yoga_mes").value,"itens",id));};
-
-// expor usuário para colaboradores
-window.__getUsuario=()=>usuarioAtua
+window.yogaDel=function(id){
+  const mes=document.getElementById("yoga_mes").value;
+  fsYoga.collection("movimentacoes").doc(mes).collection("itens").doc(id).delete();
+};
+</script>
+</body>
+</html>
