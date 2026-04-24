@@ -555,6 +555,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
           <div>
             <button class="btn-aluno add" id="btnAddAluno" onclick="adicionarAluno()">➕ Aluno</button>
             <button class="btn-aluno clear" onclick="limparDias()">🧹 Limpar dias</button>
+            <button class="btn-aluno" onclick="restaurarDias()" style="background:var(--ciano-light);color:var(--ciano);border:2px solid var(--ciano-mid)">↩️ Restaurar dias</button>
           </div>
           <div class="resumo-bar">
             <p id="total">💰 Total do mês: R$ 0,00</p>
@@ -1628,6 +1629,13 @@ function carregarColaboradores(){
   });
 }
 
+function mesAnterior(mesISO){
+  const [ano,mes]=mesISO.split("-");
+  const d=new Date(ano,mes-1,1); // dia 1 do mês atual
+  d.setMonth(d.getMonth()-1);    // vai para mês anterior
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
+}
+
 function carregarDadosColab(){
   const corpo=document.getElementById("corpoTabela");
   corpo.innerHTML="";
@@ -1638,17 +1646,42 @@ function carregarDadosColab(){
 
   const rPath=`colaboradores/${colaboradorAtual}/ciclos/${mesAtual}/alunos`;
   const rRef=dbColab.ref(rPath);
-
-  colabUnsub = function(){ rRef.off("value"); };
+  colabUnsub=function(){ rRef.off("value"); };
 
   rRef.on("value", snap=>{
     corpo.innerHTML="";
     if(snap.exists()){
+      // Mês tem dados → renderiza normalmente
       const val=snap.val();
       const lista=Array.isArray(val)?val:Object.values(val);
       lista.forEach(a=>adicionarAluno(a,true));
+      calcularTotal();
+    } else {
+      // Mês vazio → busca mês anterior e copia alunos (sem os dias marcados)
+      const mesAnt=mesAnterior(mesAtual);
+      dbColab.ref(`colaboradores/${colaboradorAtual}/ciclos/${mesAnt}/alunos`).once("value").then(snapAnt=>{
+        if(snapAnt.exists()){
+          const val=snapAnt.val();
+          const lista=Array.isArray(val)?val:Object.values(val);
+          // Copia nome, tipo e valorBase — zera dias e extra
+          const alunosCopias=lista.map(a=>({
+            nome:a.nome||"",
+            tipo:a.tipo||"Mensal",
+            valorBase:a.valorBase||"",
+            valorExtra:"",
+            dias:[]
+          }));
+          // Salva no mês atual e renderiza
+          rRef.set(alunosCopias).then(()=>{
+            alunosCopias.forEach(a=>adicionarAluno(a,true));
+            calcularTotal();
+          });
+        } else {
+          // Sem mês anterior também → tabela vazia
+          calcularTotal();
+        }
+      });
     }
-    calcularTotal();
   });
 }
 
@@ -1658,6 +1691,9 @@ function montarCabecalho(){
   document.getElementById("cabecalho").innerHTML=
     `<th>Aluno</th><th>Tipo</th><th>Base</th><th>Extra</th>${Array.from({length:dias},(_,i)=>`<th>${i+1}</th>`).join("")}<th>Total</th><th></th>`;
 }
+
+// Preços fixos por tipo de plano
+const PRECOS_PLANO = { "TotalPass": 7.38, "Gympass": 7.34, "Mensal": "" };
 
 window.adicionarAluno=function(data={},remoto=false){
   const [ano,mes]=mesAtual.split("-");
@@ -1671,18 +1707,55 @@ window.adicionarAluno=function(data={},remoto=false){
     <td class="total-cell">0</td>
     <td><button onclick="this.closest('tr').remove();salvarColab()" style="background:#fee2e2;color:#b91c1c;border:none;border-radius:7px;padding:3px 8px;cursor:pointer">❌</button></td>`;
   document.getElementById("corpoTabela").appendChild(tr);
+
+  const tipoSel = tr.querySelector(".tipo");
+  const baseInp = tr.querySelector(".base");
+
   tr.querySelector(".nome").value=data.nome||"";
-  tr.querySelector(".tipo").value=data.tipo||"Mensal";
-  tr.querySelector(".base").value=data.valorBase||"";
+  tipoSel.value=data.tipo||"Mensal";
+  // Aplica preço automático se for Gympass/TotalPass e não tiver valorBase salvo
+  const precoAuto = PRECOS_PLANO[data.tipo];
+  baseInp.value = data.valorBase !== undefined && data.valorBase !== "" ? data.valorBase : (precoAuto||"");
   tr.querySelector(".extra").value=data.valorExtra||"";
   (data.dias||[]).forEach((d,i)=>{const c=tr.querySelectorAll("input[type=checkbox]")[i];if(c)c.checked=d;});
-  tr.querySelectorAll("input,select").forEach(i=>i.onchange=()=>{salvarColab();calcularTotal();});
+
+  // Quando trocar o tipo, atualiza o preço automaticamente
+  tipoSel.onchange=()=>{
+    const preco=PRECOS_PLANO[tipoSel.value];
+    if(preco) baseInp.value=preco;
+    else if(tipoSel.value==="Mensal") baseInp.value="";
+    salvarColab(); calcularTotal();
+  };
+
+  tr.querySelectorAll("input").forEach(i=>i.onchange=()=>{salvarColab();calcularTotal();});
   if(!remoto) salvarColab();
 };
 
 window.limparDias=function(){
+  if(!confirm("Limpar todos os dias marcados? Os dados serão salvos automaticamente.")) return;
+  // Faz backup dos dias antes de limpar
+  const backup=[];
+  document.getElementById("corpoTabela").querySelectorAll("tr").forEach(tr=>{
+    backup.push([...tr.querySelectorAll("input[type=checkbox]")].map(c=>c.checked));
+  });
+  sessionStorage.setItem("backup_dias_"+colaboradorAtual+"_"+mesAtual, JSON.stringify(backup));
   document.getElementById("corpoTabela").querySelectorAll("input[type=checkbox]").forEach(c=>c.checked=false);
   salvarColab(); calcularTotal();
+  alert("Dias limpos! Use 'Restaurar dias' para desfazer.");
+};
+
+window.restaurarDias=function(){
+  const key="backup_dias_"+colaboradorAtual+"_"+mesAtual;
+  const backup=JSON.parse(sessionStorage.getItem(key)||"null");
+  if(!backup){alert("Nenhum backup disponível para este mês.\n\nO backup é criado automaticamente ao usar 'Limpar dias'.");return;}
+  if(!confirm("Restaurar os dias marcados do backup?")) return;
+  const rows=document.getElementById("corpoTabela").querySelectorAll("tr");
+  backup.forEach((dias,ri)=>{
+    if(!rows[ri]) return;
+    dias.forEach((v,di)=>{const c=rows[ri].querySelectorAll("input[type=checkbox]")[di];if(c)c.checked=v;});
+  });
+  salvarColab(); calcularTotal();
+  alert("Dias restaurados com sucesso!");
 };
 
 function salvarColab(){
