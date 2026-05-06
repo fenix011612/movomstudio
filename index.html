@@ -474,6 +474,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
           <option value="Ale">Ale</option>
           <option value="Ana Aline">Ana Aline</option>
           <option value="Andriely">Andriely</option>
+          <option value="Giovanna">Giovanna</option>
           <option value="Jefferson">Jefferson</option>
           <option value="Sthefanny">Sthefanny</option>
           <option value="Vanessa">Vanessa</option>
@@ -641,35 +642,55 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
       <!-- ════ AVALIAÇÕES ════ -->
       <div class="page" id="page-avaliacoes">
         <div class="inner">
-          <!-- tela inicial -->
-          <div id="telaInicial">
-            <div class="form-card">
-              <h3>📋 Nova Avaliação</h3>
-              <div class="form-grid">
-                <div class="field-group"><label>Nome do paciente</label><input type="text" id="nome" placeholder="Nome completo"></div>
-                <div class="field-group"><label>Data</label><input type="date" id="data"></div>
-                <div class="field-group form-full"><label>Tipo</label>
-                  <select id="tipo">
-                    <option value="">Selecione...</option>
+          <!-- TABS -->
+          <div class="aval-tabs" style="margin-bottom:16px;border-bottom:2px solid var(--border);padding-bottom:12px;display:flex;gap:8px">
+            <button class="aval-tab" style="padding:10px 16px;border:none;background:transparent;cursor:pointer;font-family:'Poppins',sans-serif;font-size:.85rem;font-weight:700;color:var(--muted);border-bottom:3px solid transparent;transition:all .2s;border-bottom-color:var(--lilas);color:var(--lilas)" onclick="mudarAbaAval('avaliacoes',this)">📋 Avaliações</button>
+            <button class="aval-tab" style="padding:10px 16px;border:none;background:transparent;cursor:pointer;font-family:'Poppins',sans-serif;font-size:.85rem;font-weight:700;color:var(--muted);border-bottom:3px solid transparent;transition:all .2s" onclick="mudarAbaAval('evolucoes',this)">📈 Evoluções dos Pacientes</button>
+          </div>
+
+          <!-- ABA: AVALIAÇÕES -->
+          <div id="aval-avaliacoes">
+            <!-- tela inicial -->
+            <div id="telaInicial">
+              <div class="form-card">
+                <h3>📋 Nova Avaliação</h3>
+                <div class="form-grid">
+                  <div class="field-group"><label>Nome do paciente</label><input type="text" id="nome" placeholder="Nome completo"></div>
+                  <div class="field-group"><label>Data</label><input type="date" id="data"></div>
+                  <div class="field-group form-full"><label>Tipo</label>
+                    <select id="tipo">
+                      <option value="">Selecione...</option>
+                      <option>Fisioterapia</option><option>Pilates</option>
+                      <option>Pélvica</option><option>Recovery</option><option>Condicionamento</option>
+                    </select>
+                  </div>
+                </div>
+                <button class="btn-save" onclick="abrirTelaPorTipo()">Continuar →</button>
+              </div>
+              <div class="table-card">
+                <div class="table-header">
+                  <span class="table-title">Avaliações Salvas</span>
+                  <select id="filtroTipo" onchange="carregarAvaliacoes()" style="margin-left:auto;padding:6px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none;">
+                    <option value="">Todas</option>
                     <option>Fisioterapia</option><option>Pilates</option>
                     <option>Pélvica</option><option>Recovery</option><option>Condicionamento</option>
                   </select>
                 </div>
+                <div id="listaAvaliacoes" style="padding:12px 20px">Carregando...</div>
               </div>
-              <button class="btn-save" onclick="abrirTelaPorTipo()">Continuar →</button>
-            </div>
-            <div class="table-card">
-              <div class="table-header">
-                <span class="table-title">Avaliações Salvas</span>
-                <select id="filtroTipo" onchange="carregarAvaliacoes()" style="margin-left:auto;padding:6px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none;">
-                  <option value="">Todas</option>
-                  <option>Fisioterapia</option><option>Pilates</option>
-                  <option>Pélvica</option><option>Recovery</option><option>Condicionamento</option>
-                </select>
-              </div>
-              <div id="listaAvaliacoes" style="padding:12px 20px">Carregando...</div>
             </div>
           </div>
+
+          <!-- ABA: EVOLUÇÕES -->
+          <div id="aval-evolucoes" style="display:none">
+            <div class="table-card">
+              <div class="table-header">
+                <span class="table-title">📈 Todas as Evoluções dos Pacientes</span>
+              </div>
+              <div id="listaEvolucoes" style="padding:12px 20px;max-height:600px;overflow-y:auto">Carregando...</div>
+            </div>
+          </div>
+
           <!-- fichas – injetadas abaixo -->
           <div id="fichasAval"></div>
           <!-- detalhe -->
@@ -860,6 +881,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
             <div class="user-row"><div class="user-av">AL</div><div class="user-info"><div class="uname">Ale</div><div class="urole">Colaboradora • Acesso: Avaliações, Financeiro, Grade, Colaboradores (próprio)</div></div></div>
             <div class="user-row"><div class="user-av">AA</div><div class="user-info"><div class="uname">Ana Aline</div><div class="urole">Colaboradora • Acesso: Avaliações, Financeiro, Grade, Colaboradores (próprio)</div></div></div>
             <div class="user-row"><div class="user-av">AN</div><div class="user-info"><div class="uname">Andriely</div><div class="urole">Colaboradora • Acesso: Avaliações, Financeiro, Grade, Colaboradores (próprio)</div></div></div>
+            <div class="user-row"><div class="user-av">GI</div><div class="user-info"><div class="uname">Giovanna</div><div class="urole">Colaboradora • Acesso: Avaliações, Financeiro, Grade, Colaboradores (próprio)</div></div></div>
             <div class="user-row"><div class="user-av">JE</div><div class="user-info"><div class="uname">Jefferson</div><div class="urole">Colaborador • Acesso: Avaliações, Financeiro, Grade, Colaboradores (próprio)</div></div></div>
             <div class="user-row"><div class="user-av">ST</div><div class="user-info"><div class="uname">Sthefanny</div><div class="urole">Colaboradora • Acesso: Avaliações, Financeiro, Grade, Colaboradores (próprio)</div></div></div>
             <div class="user-row"><div class="user-av">VA</div><div class="user-info"><div class="uname">Vanessa</div><div class="urole">Colaboradora • Acesso: Avaliações, Financeiro, Grade, Colaboradores (próprio)</div></div></div>
@@ -873,6 +895,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                 <tr><td>Ale</td><td><span class="badge-pill p-lilas">ale123</span></td><td>Colaborador</td></tr>
                 <tr><td>Ana Aline</td><td><span class="badge-pill p-lilas">café123</span></td><td>Colaborador</td></tr>
                 <tr><td>Andriely</td><td><span class="badge-pill p-lilas">flamengo123</span></td><td>Colaborador</td></tr>
+                <tr><td>Giovanna</td><td><span class="badge-pill p-lilas">Gio123</span></td><td>Colaborador</td></tr>
                 <tr><td>Jefferson</td><td><span class="badge-pill p-lilas">personal123</span></td><td>Colaborador</td></tr>
                 <tr><td>Sthefanny</td><td><span class="badge-pill p-lilas">bts123</span></td><td>Colaborador</td></tr>
                 <tr><td>Vanessa</td><td><span class="badge-pill p-lilas">academia123</span></td><td>Colaborador</td></tr>
@@ -1421,6 +1444,7 @@ const CREDENCIAIS = {
   "Ale":       "ale123",
   "Ana Aline": "café123",
   "Andriely":  "flamengo123",
+  "Giovanna":  "Gio123",
   "Jefferson": "personal123",
   "Sthefanny": "bts123",
   "Vanessa":   "academia123"
@@ -1822,12 +1846,9 @@ function carregarFinanceiro(){
     tabela.innerHTML=""; let tot=0;
     snap.forEach(item=>{
       const e=item.val(); tot+=Number(e.valor||0);
-      const inpStyle="padding:4px 6px;border:2px solid var(--border);border-radius:7px;font-family:'Poppins',sans-serif;font-size:.78rem;outline:none";
       const tr=document.createElement("tr");
-      tr.innerHTML=`<td>${e.nome}</td><td>${e.gmail||""}</td>
-        <td><input style="width:110px;${inpStyle}" value="${e.cpf||""}" onchange="updateCPF('${mes}','${item.key}',this.value)"></td>
-        <td>${e.atividade}</td><td>${e.pagamento}</td><td>R$ ${Number(e.valor).toFixed(2)}</td><td>${e.data}</td>
-        <td><input style="width:80px;${inpStyle}" value="${e.nf||""}" onchange="updateNF('${mes}','${item.key}',this.value)"></td>
+      tr.innerHTML=`<td>${e.nome}</td><td>${e.gmail||""}</td><td>${e.cpf}</td><td>${e.atividade}</td><td>${e.pagamento}</td><td>R$ ${Number(e.valor).toFixed(2)}</td><td>${e.data}</td>
+        <td><input style="width:80px;padding:4px 6px;border:2px solid var(--border);border-radius:7px;font-family:'Poppins',sans-serif;font-size:.78rem;outline:none" value="${e.nf||""}" onchange="updateNF('${mes}','${item.key}',this.value)"></td>
         <td><button class="btn-excluir-sm" onclick="delEntrada('${mes}','${item.key}')">🗑</button></td>`;
       tabela.appendChild(tr);
     });
@@ -1835,7 +1856,6 @@ function carregarFinanceiro(){
   });
 }
 window.updateNF=(mes,id,v)=>dbFin.ref(`entradas/${mes}/${id}`).update({nf:v});
-window.updateCPF=(mes,id,v)=>dbFin.ref(`entradas/${mes}/${id}`).update({cpf:v});
 window.delEntrada=(mes,id)=>dbFin.ref(`entradas/${mes}/${id}`).remove();
 
 /* ══════════════════════
@@ -1956,7 +1976,42 @@ window.salvarCondicionamento=()=>salvarBase({totalpass:cm("cond_totalpass"),gymp
 
 window.salvarPelvica=()=>salvarBase({pelvic_nome:cv("pelvic_nome"),pelvic_idade:cv("pelvic_idade"),pelvic_nascimento:cv("pelvic_nascimento"),pelvic_telefone:cv("pelvic_telefone"),pelvic_cirurgia_sim:cm("pelvic_cirurgia_sim"),pelvic_cirurgia_nao:cm("pelvic_cirurgia_nao"),pelvic_cirurgias_quais:cv("pelvic_cirurgias_quais")});
 
-window.carregarAvaliacoes=function(){
+window.mudarAbaAval=function(aba,btn){
+  document.getElementById("aval-avaliacoes").style.display = aba==="avaliacoes"?"":"none";
+  document.getElementById("aval-evolucoes").style.display = aba==="evolucoes"?"":"none";
+  document.querySelectorAll(".aval-tab").forEach(b=>b.style.borderBottomColor="transparent");
+  if(btn) btn.style.borderBottomColor="var(--lilas)";
+  if(aba==="evolucoes") carregarAllEvolucoes();
+};
+
+window.carregarAllEvolucoes=function(){
+  const lista = document.getElementById("listaEvolucoes");
+  lista.innerHTML = "<p style='color:var(--muted);padding:8px;font-size:.82rem'>Carregando...</p>";
+  dbAval.ref("avaliacoes").once("value").then(snap=>{
+    lista.innerHTML = "";
+    if(!snap.exists()){lista.innerHTML="<p style='color:var(--muted);padding:12px'>Nenhuma evolução registrada.</p>";return;}
+    snap.forEach(child=>{
+      const d = child.val();
+      // Obtém evoluções deste paciente
+      dbAval.ref(`avaliacoes/${child.key}/evolucoes`).once("value").then(snapEvo=>{
+        if(!snapEvo.exists()) return;
+        snapEvo.forEach(evoChild=>{
+          const evo = evoChild.val();
+          const div = document.createElement("div");
+          div.className = "lista-evolucoes-item";
+          div.style.cursor = "pointer";
+          div.innerHTML = `<div class="paciente">${d.nome} (${d.tipo})</div><div class="tipo">${d.tipo}</div><div class="data">Evolução em ${evo.data}</div>`;
+          div.onclick = ()=>abrirDetalheEvolucao(child.key, d.nome, evo.data, evo.texto);
+          lista.appendChild(div);
+        });
+      });
+    });
+  });
+};
+
+window.abrirDetalheEvolucao=function(id, paciente, data, texto){
+  alert(`📈 EVOLUÇÃO DE ${paciente}\n\nData: ${data}\n\n${texto}`);
+};
   const filtro=document.getElementById("filtroTipo").value;
   const lista=document.getElementById("listaAvaliacoes");
   lista.innerHTML="<p style='color:var(--muted);padding:8px;font-size:.82rem'>Carregando...</p>";
