@@ -1892,7 +1892,7 @@ function salvarGrade(){
   document.querySelectorAll("table.grade-tbl[data-dia]").forEach(t=>{
     const dia=t.dataset.dia; data[dia]=[];
     t.querySelectorAll("tbody tr").forEach(tr=>{
-      data[dia].push({horario:tr.querySelector(".horario-lbl").textContent,instr1:tr.querySelector(".i1").value,instr2:tr.querySelector(".i2").value,alunos1:[...tr.querySelectorAll(".a1 input")].map(i=>i.value),alunos2:[...tr.querySelectorAll(".a2 input")].map(i=>i.value)});
+      data[dia].push({horario:tr.querySelector(".horario-lbl").textContent,instr1:tr.querySelector(".i1").value,instr2:tr.querySelector(".i2").value,instr3:tr.querySelector(".i3").value,alunos1:[...tr.querySelectorAll(".a1 input")].map(i=>i.value),alunos2:[...tr.querySelectorAll(".a2 input")].map(i=>i.value),alunos3:[...tr.querySelectorAll(".a3 input")].map(i=>i.value)});
     });
   });
   dbGrade.ref("gradeHorarios").set(data);
@@ -1910,14 +1910,19 @@ function criarLinhaGrade(l){
   const tr=document.createElement("tr");
   tr.innerHTML=`<td class="horario-lbl">${l.horario}</td>
     <td><input class="instr-inp i1" placeholder="Instrutor 1"><div class="alunos-box a1"></div><button class="btn-add-a">+ Aluno</button></td>
-    <td><input class="instr-inp i2" placeholder="Instrutor 2"><div class="alunos-box a2"></div><button class="btn-add-a">+ Aluno</button></td>`;
-  tr.querySelector(".i1").value=l.instr1||""; tr.querySelector(".i2").value=l.instr2||"";
+    <td><input class="instr-inp i2" placeholder="Instrutor 2"><div class="alunos-box a2"></div><button class="btn-add-a">+ Aluno</button></td>
+    <td><input class="instr-inp i3" placeholder="Instrutor 3"><div class="alunos-box a3"></div><button class="btn-add-a">+ Aluno</button></td>`;
+  tr.querySelector(".i1").value=l.instr1||""; 
+  tr.querySelector(".i2").value=l.instr2||"";
+  tr.querySelector(".i3").value=l.instr3||"";
   tr.querySelectorAll(".instr-inp").forEach(i=>{i.onfocus=()=>gradeTyping=true;i.onblur=()=>{gradeTyping=false;salvarGrade();};});
   l.alunos1?.forEach(a=>tr.querySelector(".a1").appendChild(criarAlunoEl(a)));
   l.alunos2?.forEach(a=>tr.querySelector(".a2").appendChild(criarAlunoEl(a)));
+  l.alunos3?.forEach(a=>tr.querySelector(".a3").appendChild(criarAlunoEl(a)));
   const btns=tr.querySelectorAll(".btn-add-a");
   btns[0].onclick=()=>{if(tr.querySelector(".a1").children.length<5){tr.querySelector(".a1").appendChild(criarAlunoEl(""));salvarGrade();}};
   btns[1].onclick=()=>{if(tr.querySelector(".a2").children.length<5){tr.querySelector(".a2").appendChild(criarAlunoEl(""));salvarGrade();}};
+  btns[2].onclick=()=>{if(tr.querySelector(".a3").children.length<5){tr.querySelector(".a3").appendChild(criarAlunoEl(""));salvarGrade();}};
   return tr;
 }
 
@@ -1928,10 +1933,10 @@ function renderGrade(data){
     const sec=document.createElement("div"); sec.className="grade-section";
     const h3=document.createElement("h3"); h3.textContent=d.dia; h3.dataset.dia=d.dia;
     const tbl=document.createElement("table"); tbl.className="grade-tbl"; tbl.dataset.dia=d.dia;
-    tbl.innerHTML="<thead><tr><th>Horário</th><th>Instrutor 1</th><th>Instrutor 2</th></tr></thead>";
+    tbl.innerHTML="<thead><tr><th>Horário</th><th>Instrutor 1</th><th>Instrutor 2</th><th>Instrutor 3</th></tr></thead>";
     const tb=document.createElement("tbody");
     const salvos=data?.[d.dia]||[];
-    gerarHs(d.h[0],d.h[1]).forEach(h=>{const e=salvos.find(l=>l.horario===h);tb.appendChild(criarLinhaGrade(e||{horario:h,alunos1:[],alunos2:[]}));});
+    gerarHs(d.h[0],d.h[1]).forEach(h=>{const e=salvos.find(l=>l.horario===h);tb.appendChild(criarLinhaGrade(e||{horario:h,alunos1:[],alunos2:[],alunos3:[]}));});
     tbl.appendChild(tb); sec.append(h3,tbl); c.appendChild(sec);
   });
   filtrarGrade();
