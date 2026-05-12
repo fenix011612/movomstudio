@@ -917,132 +917,168 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 
 <!-- ════ FISIOTERAPIA COMPLETA ════ -->
 <div id="telaFisioterapia" class="hidden">
-  <div class="form-card">
-    <button class="btn-back" onclick="voltar()">⬅ Voltar</button>
+  <div class="card">
+    <button onclick="voltar()">⬅ Voltar</button>
     <h3>FICHA DE ANAMNESE E (RE)AVALIAÇÃO – FISIOTERAPIA</h3>
-    <h4 style="color:var(--lilas);margin:12px 0 8px">Tipo de Atendimento</h4>
-    <div class="inline-opts">
+
+    <!-- TIPO DE ATENDIMENTO -->
+    <h4>Tipo de Atendimento</h4>
+    <div class="inline-group">
       <label><input type="checkbox" id="fisio_sessao"> Sessão</label>
       <label><input type="checkbox" id="fisio_pacote"> Pacote</label>
-      <input style="max-width:200px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none" id="fisio_qtdSessoes" placeholder="Quantidade de sessões">
+      <input type="text" id="fisio_qtdSessoes" placeholder="Quantidade de sessões">
     </div>
-    <h4 style="color:var(--lilas);margin:12px 0 8px">Forma de Pagamento</h4>
-    <div class="inline-opts">
+
+    <!-- FORMA DE PAGAMENTO -->
+    <h4>Forma de Pagamento</h4>
+    <div class="inline-group">
       <label><input type="checkbox" id="fisio_pix"> Pix</label>
       <label><input type="checkbox" id="fisio_parcelado"> Parcelado</label>
-      <input style="max-width:200px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none" id="fisio_parcelas" placeholder="Parcelado em quantas vezes">
+      <input type="text" id="fisio_parcelas" placeholder="Parcelado em quantas vezes">
     </div>
-    <div class="field-group"><label>Parceria? Se sim qual?</label><input type="text" id="fisio_parceria"></div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">📌 IDENTIFICAÇÃO</h4>
-    <div class="form-grid">
-      <div class="field-group"><label>Nome completo</label><input type="text" id="fisio_nomeCompleto"></div>
-      <div class="field-group"><label>Data de nascimento</label><input type="date" id="fisio_dataNascimento"></div>
-      <div class="field-group"><label>CPF</label><input type="text" id="fisio_cpf"></div>
-      <div class="field-group"><label>Data da Avaliação</label><input type="date" id="fisio_dataAvaliacao"></div>
-    </div>
-    <div class="inline-opts">
+
+    <label>Parceria? Se sim qual?</label>
+    <input type="text" id="fisio_parceria">
+
+    <!-- IDENTIFICAÇÃO -->
+    <h4>📌 IDENTIFICAÇÃO</h4>
+    <input type="text" id="fisio_nomeCompleto" placeholder="Nome completo">
+    <input type="date" id="fisio_dataNascimento" placeholder="Data de nascimento">
+    <input type="text" id="fisio_cpf" placeholder="CPF">
+
+    <div class="inline-group">
       <label><input type="checkbox" id="fisio_masculino"> Masculino</label>
       <label><input type="checkbox" id="fisio_feminino"> Feminino</label>
     </div>
-    <div class="form-grid">
-      <div class="field-group"><label>Responsável (se menor)</label><input type="text" id="fisio_responsavel"></div>
-      <div class="field-group"><label>Grau de parentesco</label><input type="text" id="fisio_parentesco"></div>
-      <div class="field-group"><label>CPF Responsável</label><input type="text" id="fisio_cpfResponsavel"></div>
-      <div class="field-group"><label>Profissão/Ocupação</label><input type="text" id="fisio_profissao"></div>
-      <div class="field-group form-full"><label>Endereço Residencial</label><input type="text" id="fisio_endereco"></div>
-      <div class="field-group"><label>Telefone</label><input type="text" id="fisio_telefone"></div>
-      <div class="field-group"><label>E-mail</label><input type="email" id="fisio_email"></div>
-      <div class="field-group form-full"><label>Diagnóstico Clínico</label><textarea id="fisio_diagClinico"></textarea></div>
-      <div class="field-group form-full"><label>Diagnóstico Fisioterapêutico</label><textarea id="fisio_diagFisio"></textarea></div>
-      <div class="field-group"><label>CBDF</label><input type="text" id="fisio_cbdf"></div>
-    </div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ HISTÓRIA CLÍNICA</h4>
-    <div class="field-group"><label>Queixa Principal</label><textarea id="fisio_queixaPrincipal"></textarea></div>
-    <div class="field-group"><label>HDA</label><textarea id="fisio_hpp"></textarea></div>
-    <div class="field-group"><label>HPP</label><textarea id="fisio_antecedentesPessoais"></textarea></div>
-    <div class="field-group"><label>Antecedentes Familiares</label><textarea id="fisio_antecedentesFamiliares"></textarea></div>
-    <div class="field-group"><label>Tratamentos Realizados</label><textarea id="fisio_tratamentos"></textarea></div>
-    <div class="field-group"><label>Hábitos de vida</label><textarea id="fisio_habitos"></textarea></div>
-    <div style="margin-bottom:10px">
-      <span style="font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Acompanhamento médico/fisioterapêutico?</span>
-      <div class="inline-opts" style="margin-top:6px">
-        <label><input type="checkbox" id="fisio_acompanhamentoSim"> Sim</label>
-        <label><input type="checkbox" id="fisio_acompanhamentoNao"> Não</label>
-        <input style="max-width:200px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none" id="fisio_especialidade" placeholder="Qual especialidade?">
-      </div>
-    </div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ EXAMES COMPLEMENTARES</h4>
-    <div class="inline-opts">
-      <label><input type="checkbox" id="fisio_examesSim"> Sim</label>
-      <label><input type="checkbox" id="fisio_examesNao"> Não</label>
-    </div>
-    <div class="field-group"><textarea id="fisio_examesQuais" placeholder="Se sim, quais?"></textarea></div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ USA MEDICAMENTOS</h4>
-    <div class="inline-opts">
-      <label><input type="checkbox" id="fisio_medicamentoSim"> Sim</label>
-      <label><input type="checkbox" id="fisio_medicamentoNao"> Não</label>
-    </div>
-    <div class="field-group"><textarea id="fisio_medicamentosQuais" placeholder="Se sim, quais?"></textarea></div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ APRESENTAÇÃO DO PACIENTE</h4>
-    <div class="opts-grid">
+
+    <input type="text" id="fisio_responsavel" placeholder="Responsável (se menor)">
+    <input type="text" id="fisio_parentesco" placeholder="Grau de parentesco">
+    <input type="text" id="fisio_cpfResponsavel" placeholder="CPF Responsável">
+    <input type="text" id="fisio_profissao" placeholder="Profissão/Ocupação">
+    <input type="text" id="fisio_endereco" placeholder="Endereço Residencial">
+    <input type="text" id="fisio_telefone" placeholder="Telefone">
+    <input type="email" id="fisio_email" placeholder="E-mail">
+    <input type="date" id="fisio_dataAvaliacao" placeholder="Data da Avaliação">
+
+    <label>Diagnóstico Clínico:</label>
+    <textarea id="fisio_diagClinico"></textarea>
+
+    <label>Diagnóstico Fisioterapêutico:</label>
+    <textarea id="fisio_diagFisio"></textarea>
+
+    <input type="text" id="fisio_cbdf" placeholder="CBDF">
+
+    <!-- HISTÓRIA CLÍNICA -->
+ <h4>⚕️ HISTÓRIA CLÍNICA</h4>
+
+<label>Queixa Principal:</label>
+<textarea id="fisio_queixaPrincipal"></textarea>
+
+<label>HDA:</label>
+<textarea id="fisio_hpp"></textarea>
+
+<label>HPP:</label>
+<textarea id="fisio_antecedentesPessoais"></textarea>
+
+<label>Antecedentes Familiares:</label>
+<textarea id="fisio_antecedentesFamiliares"></textarea>
+
+<label>Tratamentos Realizados:</label>
+<textarea id="fisio_tratamentos"></textarea>
+
+<label>Hábitos de vida:</label>
+<textarea id="fisio_habitos"></textarea>
+
+<div class="inline-group">
+  <label><input type="checkbox" id="fisio_acompanhamentoSim"> Sim</label>
+  <label><input type="checkbox" id="fisio_acompanhamentoNao"> Não</label>
+  <input type="text" id="fisio_especialidade" placeholder="Qual especialidade?">
+</div>
+
+<h4>⚕️ EXAMES COMPLEMENTARES</h4>
+<div class="inline-group">
+  <label><input type="checkbox" id="fisio_examesSim"> Sim</label>
+  <label><input type="checkbox" id="fisio_examesNao"> Não</label>
+</div>
+
+<textarea id="fisio_examesQuais" placeholder="Se sim, quais?"></textarea>
+
+<h4>⚕️ USA MEDICAMENTOS</h4>
+<div class="inline-group">
+  <label><input type="checkbox" id="fisio_medicamentoSim"> Sim</label>
+  <label><input type="checkbox" id="fisio_medicamentoNao"> Não</label>
+</div>
+
+<textarea id="fisio_medicamentosQuais" placeholder="Se sim, quais?"></textarea>
+
+    <!-- APRESENTAÇÃO DO PACIENTE -->
+    <h4>⚕️ APRESENTAÇÃO DO PACIENTE</h4>
+    <div class="inline-group">
       <label><input type="checkbox" id="fisio_orientado"> Deambulando e orientado</label>
       <label><input type="checkbox" id="fisio_apoio"> Deambulando com apoio</label>
       <label><input type="checkbox" id="fisio_confuso"> Confuso</label>
       <label><input type="checkbox" id="fisio_desorientado"> Desorientado</label>
     </div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ REALIZOU CIRURGIA</h4>
-    <div class="inline-opts">
+
+
+    <!-- CIRURGIA -->
+    <h4>⚕️ REALIZOU CIRURGIA</h4>
+    <div class="inline-group">
       <label><input type="checkbox" id="fisio_cirurgiaSim"> Sim</label>
       <label><input type="checkbox" id="fisio_cirurgiaNao"> Não</label>
     </div>
-    <div class="field-group"><textarea id="fisio_cirurgias" placeholder="Se sim, quais?"></textarea></div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ INSPEÇÃO / PALPAÇÃO</h4>
-    <div class="opts-grid">
+    <textarea id="fisio_cirurgias" placeholder="Se sim, quais"></textarea>
+
+    <!-- INSPEÇÃO/PALPAÇÃO -->
+    <h4>⚕️ INSPEÇÃO/PALPAÇÃO</h4>
+    <div class="inline-group">
       <label><input type="checkbox" id="fisio_normal"> Normal</label>
       <label><input type="checkbox" id="fisio_edema"> Edema</label>
       <label><input type="checkbox" id="fisio_cicatriz"> Cicatrização incompleta</label>
       <label><input type="checkbox" id="fisio_eritema"> Eritemas</label>
       <label><input type="checkbox" id="fisio_outros"> Outros</label>
     </div>
-    <div class="field-group"><label>Detalhes adicionais da inspeção/palpação</label><textarea id="fisio_inspecaoDetalhes"></textarea></div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ AVALIAÇÃO FÍSICA</h4>
-    <div class="form-grid">
-      <div class="field-group"><label>Peso</label><input type="number" id="fisio_peso"></div>
-      <div class="field-group"><label>Altura</label><input type="number" id="fisio_altura"></div>
+    <label>Detalhes adicionais da inspeção/palpação:</label>
+    <textarea id="fisio_inspecaoDetalhes"></textarea>
+
+    <!-- AVALIAÇÃO FÍSICA -->
+    <h4>⚕️ AVALIAÇÃO FÍSICA</h4>
+    <div class="inline-group">
+      <input type="number" id="fisio_peso" placeholder="Peso">
+      <input type="number" id="fisio_altura" placeholder="Altura">
     </div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">📌 TESTES FISIOTERAPÊUTICOS</h4>
-    <div style="margin-bottom:10px">
-      <span style="font-size:.82rem;font-weight:700;color:var(--muted)">Teste de Joelhos (Y Teste):</span>
-      <div class="inline-opts" style="margin-top:4px">
-        <label><input type="checkbox" id="fisio_joelhoY_sim"> Sim</label>
-        <label><input type="checkbox" id="fisio_joelhoY_nao"> Não</label>
-      </div>
+
+    <!-- TESTES FISIOTERAPÊUTICOS -->
+    <h4>📌 TESTES FISIOTERAPÊUTICOS</h4>
+    <div class="inline-group">
+      <label>Teste de Joelhos (Y Teste):</label>
+      <label><input type="checkbox" id="fisio_joelhoY_sim"> Sim</label>
+      <label><input type="checkbox" id="fisio_joelhoY_nao"> Não</label>
     </div>
-    <div style="margin-bottom:10px">
-      <span style="font-size:.82rem;font-weight:700;color:var(--muted)">Romberg:</span>
-      <div class="inline-opts" style="margin-top:4px">
-        <label><input type="checkbox" id="fisio_romberg_pos"> Positivo</label>
-        <label><input type="checkbox" id="fisio_romberg_neg"> Negativo</label>
-      </div>
+
+    <div class="inline-group">
+      <label>Romberg:</label>
+      <label><input type="checkbox" id="fisio_romberg_pos"> Positivo</label>
+      <label><input type="checkbox" id="fisio_romberg_neg"> Negativo</label>
     </div>
-    <div style="margin-bottom:10px">
-      <span style="font-size:.82rem;font-weight:700;color:var(--muted)">TUG:</span>
-      <div class="inline-opts" style="margin-top:4px">
-        <label><input type="checkbox" id="fisio_tug_normal"> Normal</label>
-        <label><input type="checkbox" id="fisio_tug_baixo"> Baixo risco</label>
-        <label><input type="checkbox" id="fisio_tug_medio"> Médio risco</label>
-        <label><input type="checkbox" id="fisio_tug_alto"> Alto risco</label>
-      </div>
+
+    <div class="inline-group">
+      <label>TUG:</label>
+      <label><input type="checkbox" id="fisio_tug_normal"> Normal</label>
+      <label><input type="checkbox" id="fisio_tug_baixo"> Baixo risco</label>
+      <label><input type="checkbox" id="fisio_tug_medio"> Médio risco</label>
+      <label><input type="checkbox" id="fisio_tug_alto"> Alto risco</label>
     </div>
-    <div style="margin-bottom:10px">
-      <span style="font-size:.82rem;font-weight:700;color:var(--muted)">Lasegue:</span>
-      <div class="inline-opts" style="margin-top:4px">
-        <label><input type="checkbox" id="fisio_lasegue_pos"> Positivo</label>
-        <label><input type="checkbox" id="fisio_lasegue_neg"> Negativo</label>
-      </div>
+
+    <div class="inline-group">
+      <label>Lasegue:</label>
+      <label><input type="checkbox" id="fisio_lasegue_pos"> Positivo</label>
+      <label><input type="checkbox" id="fisio_lasegue_neg"> Negativo</label>
     </div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ ESCALA DE FORÇA MUSCULAR</h4>
-    <div class="opts-grid">
+
+    <!-- ESCALA DE FORÇA MUSCULAR -->
+    <h4>⚕️ ESCALA DE FORÇA MUSCULAR</h4>
+    <div class="inline-group">
       <label><input type="checkbox" id="fisio_g0"> Grau 0</label>
       <label><input type="checkbox" id="fisio_g1"> Grau 1</label>
       <label><input type="checkbox" id="fisio_g2"> Grau 2</label>
@@ -1050,181 +1086,314 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
       <label><input type="checkbox" id="fisio_g4"> Grau 4</label>
       <label><input type="checkbox" id="fisio_g5"> Grau 5</label>
     </div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">📌 PLANO TERAPÊUTICO</h4>
-    <div class="field-group"><label>Objetivos do Tratamento</label><textarea id="fisio_objetivos"></textarea></div>
-    <div class="field-group"><label>Recursos Terapêuticos</label><textarea id="fisio_recursos"></textarea></div>
-    <div class="field-group"><label>Plano do Tratamento</label><textarea id="fisio_planoTratamento"></textarea></div>
-    <div class="field-group"><label>Profissional / Registro Conselho</label><input type="text" id="fisio_profissional"></div>
-    <button class="btn-save" onclick="salvarFisioterapia()">💾 Salvar Avaliação</button>
+
+    <!-- PLANO TERAPÊUTICO -->
+    <h4>📌 PLANO TERAPÊUTICO</h4>
+    <textarea id="fisio_objetivos" placeholder="Objetivos do Tratamento"></textarea>
+    <textarea id="fisio_recursos" placeholder="Recursos Terapêuticos"></textarea>
+    <textarea id="fisio_planoTratamento" placeholder="Plano do Tratamento"></textarea>
+    <input type="text" id="fisio_profissional" placeholder="Profissional / Registro Conselho">
+
+    <button onclick="salvarFisioterapia()">Salvar Avaliação</button>
   </div>
 </div>
-
-<!-- ════ PILATES COMPLETO ════ -->
+<!-- TELA PILATES -->
 <div id="telaPilates" class="hidden">
-  <div class="form-card">
-    <button class="btn-back" onclick="voltar()">⬅ Voltar</button>
+  <div class="card">
+    <button onclick="voltar()">⬅ Voltar</button>
     <h3>Avaliação Pilates</h3>
-    <h4 style="color:var(--lilas);margin:12px 0 8px">📌 IDENTIFICAÇÃO</h4>
-    <div class="opts-grid" style="margin-bottom:12px">
+
+    <!-- ================= IDENTIFICAÇÃO ================= -->
+
+    <h4>📌 IDENTIFICAÇÃO</h4>
+
+    <div class="opcoes-grid">
       <label><input type="checkbox" id="pilates_totalpass"> Totalpass</label>
       <label><input type="checkbox" id="pilates_gympass"> Gympass</label>
       <label><input type="checkbox" id="pilates_gurupass"> Gurupass</label>
       <label><input type="checkbox" id="pilates_mensalidade"> Mensalidade</label>
     </div>
-    <div class="field-group"><label>Parceria? Se sim qual?</label><input type="text" id="pilates_parceria"></div>
-    <div class="form-grid">
-      <div class="field-group"><label>Nome completo</label><input type="text" id="pilates_nomeCompleto"></div>
-      <div class="field-group"><label>Data de nascimento</label><input type="date" id="pilates_dataNascimento"></div>
-      <div class="field-group"><label>CPF</label><input type="text" id="pilates_cpf"></div>
-      <div class="field-group"><label>Data da Avaliação</label><input type="date" id="pilates_dataAvaliacao"></div>
+
+    <label>Parceria? Se sim qual?</label>
+    <input type="text" id="pilates_parceria">
+
+    <label>Nome completo:</label>
+    <input type="text" id="pilates_nomeCompleto">
+
+    <div class="grid-2">
+      <div>
+        <label>Data de nascimento:</label>
+        <input type="date" id="pilates_dataNascimento">
+      </div>
+      <div>
+        <label>CPF:</label>
+        <input type="text" id="pilates_cpf">
+      </div>
     </div>
-    <div class="inline-opts">
+
+    <div class="opcoes">
       <label><input type="radio" name="pilates_sexo" id="pilates_masculino"> Masculino</label>
       <label><input type="radio" name="pilates_sexo" id="pilates_feminino"> Feminino</label>
     </div>
-    <div class="form-grid">
-      <div class="field-group"><label>Responsável (se menor)</label><input type="text" id="pilates_responsavel"></div>
-      <div class="field-group"><label>Grau de parentesco</label><input type="text" id="pilates_parentesco"></div>
-      <div class="field-group"><label>CPF Responsável</label><input type="text" id="pilates_cpfResponsavel"></div>
-      <div class="field-group"><label>Profissão/Ocupação</label><input type="text" id="pilates_profissao"></div>
-      <div class="field-group form-full"><label>Endereço Residencial</label><input type="text" id="pilates_endereco"></div>
-      <div class="field-group"><label>Telefone</label><input type="text" id="pilates_telefone"></div>
-      <div class="field-group"><label>E-mail</label><input type="email" id="pilates_email"></div>
-      <div class="field-group form-full"><label>Diagnóstico Clínico</label><textarea id="pilates_diagClinico"></textarea></div>
-      <div class="field-group form-full"><label>Diagnóstico Fisioterapêutico</label><textarea id="pilates_diagFisio"></textarea></div>
-      <div class="field-group"><label>CBDF</label><input type="text" id="pilates_cbdf"></div>
-    </div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ HISTÓRIA CLÍNICA</h4>
-    <div class="field-group"><label>Queixa Principal</label><textarea id="pilates_queixaPrincipal"></textarea></div>
-    <div class="field-group"><label>História Patológica Pregressa (HPP)</label><textarea id="pilates_hpp"></textarea></div>
-    <div class="field-group"><label>Antecedentes Pessoais</label><textarea id="pilates_antecedentesPessoais"></textarea></div>
-    <div class="field-group"><label>Antecedentes Familiares</label><textarea id="pilates_antecedentesFamiliares"></textarea></div>
-    <div class="field-group"><label>Tratamentos Realizados</label><textarea id="pilates_tratamentos"></textarea></div>
-    <div class="field-group"><label>Hábitos de vida</label><textarea id="pilates_habitos"></textarea></div>
-    <div style="margin-bottom:10px">
-      <span style="font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Acompanhamento médico/fisioterapêutico?</span>
-      <div class="inline-opts" style="margin-top:6px">
-        <label><input type="radio" name="pilates_acompanhamento" id="pilates_acompanhamentoSim"> Sim</label>
-        <label><input type="radio" name="pilates_acompanhamento" id="pilates_acompanhamentoNao"> Não</label>
-        <input style="max-width:200px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none" id="pilates_especialidade" placeholder="Qual especialidade?">
+
+    <label>Responsável (se menor):</label>
+    <input type="text" id="pilates_responsavel">
+
+    <div class="grid-2">
+      <div>
+        <label>Grau de parentesco:</label>
+        <input type="text" id="pilates_parentesco">
+      </div>
+      <div>
+        <label>CPF:</label>
+        <input type="text" id="pilates_cpfResponsavel">
       </div>
     </div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ APRESENTAÇÃO DO PACIENTE</h4>
-    <div class="opts-grid">
+
+    <label>Profissão/Ocupação:</label>
+    <input type="text" id="pilates_profissao">
+
+    <label>Endereço Residencial:</label>
+    <input type="text" id="pilates_endereco">
+
+    <div class="grid-2">
+      <div>
+        <label>Telefone:</label>
+        <input type="text" id="pilates_telefone">
+      </div>
+      <div>
+        <label>E-mail:</label>
+        <input type="email" id="pilates_email">
+      </div>
+    </div>
+
+    <label>Data da Avaliação:</label>
+    <input type="date" id="pilates_dataAvaliacao">
+
+    <label>Diagnóstico Clínico:</label>
+    <textarea id="pilates_diagClinico"></textarea>
+
+    <label>Diagnóstico Fisioterapêutico:</label>
+    <textarea id="pilates_diagFisio"></textarea>
+
+    <label>CBDF:</label>
+    <input type="text" id="pilates_cbdf">
+
+    <!-- ================= HISTÓRIA CLÍNICA ================= -->
+
+    <h4>⚕️ HISTÓRIA CLÍNICA</h4>
+
+    <label>Queixa Principal:</label>
+    <textarea id="pilates_queixaPrincipal"></textarea>
+
+    <label>História Patológica Pregressa (HPP):</label>
+    <textarea id="pilates_hpp"></textarea>
+
+    <label>Antecedentes Pessoais:</label>
+    <textarea id="pilates_antecedentesPessoais"></textarea>
+
+    <label>Antecedentes Familiares:</label>
+    <textarea id="pilates_antecedentesFamiliares"></textarea>
+
+    <label>Tratamentos Realizados:</label>
+    <textarea id="pilates_tratamentos"></textarea>
+
+    <label>Hábitos de vida:</label>
+    <textarea id="pilates_habitos"></textarea>
+
+    <div class="campo">
+      <label>Realiza acompanhamento médico/fisioterapêutico?</label>
+      <div class="opcoes">
+        <label><input type="radio" name="pilates_acompanhamento" id="pilates_acompanhamentoSim"> Sim</label>
+        <label><input type="radio" name="pilates_acompanhamento" id="pilates_acompanhamentoNao"> Não</label>
+      </div>
+      <label>Qual especialidade?</label>
+      <input type="text" id="pilates_especialidade">
+    </div>
+
+    <!-- ================= APRESENTAÇÃO ================= -->
+
+    <h4>⚕️ APRESENTAÇÃO DO PACIENTE</h4>
+
+    <div class="opcoes-grid">
       <label><input type="checkbox" id="pilates_orientado"> Deambulando e orientado</label>
       <label><input type="checkbox" id="pilates_apoio"> Deambulando com apoio</label>
       <label><input type="checkbox" id="pilates_confuso"> Confuso</label>
       <label><input type="checkbox" id="pilates_desorientado"> Desorientado</label>
     </div>
-    <div class="field-group"><label>Se apoio, qual?</label><input type="text" id="pilates_tipoApoio"></div>
-    <div style="margin-bottom:10px">
-      <span style="font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Exames complementares?</span>
-      <div class="inline-opts" style="margin-top:6px">
+
+    <!-- Novo campo para "Se apoio, qual?" -->
+    <label>Se apoio, qual?</label>
+    <input type="text" id="pilates_tipoApoio">
+
+    <!-- ================= EXAMES / MEDICAMENTOS / CIRURGIA ================= -->
+
+    <div class="campo">
+      <label>Exames complementares?</label>
+      <div class="opcoes">
         <label><input type="radio" name="pilates_exames" id="pilates_examesSim"> Sim</label>
         <label><input type="radio" name="pilates_exames" id="pilates_examesNao"> Não</label>
-        <input style="max-width:200px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none" id="pilates_quaisExames" placeholder="Se sim, quais?">
       </div>
+      <label>Se sim, quais?</label>
+      <input type="text" id="pilates_quaisExames">
     </div>
-    <div style="margin-bottom:10px">
-      <span style="font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Usa medicamentos?</span>
-      <div class="inline-opts" style="margin-top:6px">
+
+    <div class="campo">
+      <label>Usa medicamentos?</label>
+      <div class="opcoes">
         <label><input type="radio" name="pilates_medicamentos" id="pilates_medicamentoSim"> Sim</label>
         <label><input type="radio" name="pilates_medicamentos" id="pilates_medicamentoNao"> Não</label>
-        <input style="max-width:200px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none" id="pilates_quaisMedicamentos" placeholder="Se sim, quais?">
       </div>
+      <label>Se sim, quais?</label>
+      <input type="text" id="pilates_quaisMedicamentos">
     </div>
-    <div style="margin-bottom:10px">
-      <span style="font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Realizou cirurgia?</span>
-      <div class="inline-opts" style="margin-top:6px">
+
+    <div class="campo">
+      <label>Realizou cirurgia?</label>
+      <div class="opcoes">
         <label><input type="radio" name="pilates_cirurgia" id="pilates_cirurgiaSim"> Sim</label>
         <label><input type="radio" name="pilates_cirurgia" id="pilates_cirurgiaNao"> Não</label>
       </div>
-      <div class="field-group" style="margin-top:6px"><textarea id="pilates_cirurgias" placeholder="Se sim, quais?"></textarea></div>
+      <label>Se sim, quais:</label>
+      <textarea id="pilates_cirurgias"></textarea>
     </div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ INSPEÇÃO / PALPAÇÃO</h4>
-    <div class="opts-grid">
+
+    <!-- ================= INSPEÇÃO ================= -->
+
+    <h4>⚕️ INSPEÇÃO / PALPAÇÃO</h4>
+
+    <div class="opcoes-grid">
       <label><input type="checkbox" id="pilates_normal"> Normal</label>
       <label><input type="checkbox" id="pilates_edema"> Edema</label>
       <label><input type="checkbox" id="pilates_cicatriz"> Cicatrização incompleta</label>
       <label><input type="checkbox" id="pilates_eritema"> Eritemas</label>
       <label><input type="checkbox" id="pilates_outros"> Outros</label>
     </div>
-    <div class="field-group"><label>Detalhes adicionais da inspeção/palpação</label><textarea id="pilates_inspecaoDetalhes"></textarea></div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ SEMIOLOGIA</h4>
-    <div class="field-group"><textarea id="pilates_semiologia"></textarea></div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ PRESSÃO ARTERIAL</h4>
-    <div class="field-group"><input type="text" id="pilates_pressao"></div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">🏃 AVALIAÇÃO FÍSICA</h4>
-    <div class="form-grid">
-      <div class="field-group"><label>Peso</label><input type="number" id="pilates_peso"></div>
-      <div class="field-group"><label>Altura</label><input type="number" id="pilates_altura"></div>
-    </div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">Composição Corporal por Adipômetro</h4>
-    <div class="form-grid">
-      <div class="field-group"><label>Peitoral/Torácica</label><input type="text" id="pilates_adipometro_peitoral_toracica"></div>
-      <div class="field-group"><label>Subescapular</label><input type="text" id="pilates_adipometro_subescapular"></div>
-      <div class="field-group"><label>Suprailiaca</label><input type="text" id="pilates_adipometro_suprailiaca"></div>
-      <div class="field-group"><label>Axilar média</label><input type="text" id="pilates_adipometro_axilar_media"></div>
-      <div class="field-group"><label>Tríceps</label><input type="text" id="pilates_adipometro_triceps"></div>
-      <div class="field-group"><label>Bíceps</label><input type="text" id="pilates_adipometro_biceps"></div>
-      <div class="field-group"><label>Abdominal</label><input type="text" id="pilates_adipometro_abdominal"></div>
-      <div class="field-group"><label>Coxa</label><input type="text" id="pilates_adipometro_coxa"></div>
-    </div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">📌 TESTES FISIOTERAPÊUTICOS</h4>
-    <div style="margin-bottom:8px"><strong style="font-size:.82rem;color:var(--muted)">Y BALANCE TESTE</strong>
-      <div class="inline-opts" style="margin-top:4px">
-        <label><input type="radio" name="pilates_ybalance" id="pilates_y_risco"> Assimetria - Sim com risco</label>
-        <label><input type="radio" name="pilates_ybalance" id="pilates_y_nao"> Não</label>
+
+    <!-- Novo campo para detalhes adicionais de inspeção -->
+    <label>Detalhes adicionais da inspeção/palpação:</label>
+    <textarea id="pilates_inspecaoDetalhes"></textarea>
+
+    <!-- ================= SEMIOLOGIA ================= -->
+
+    <h4>⚕️ SEMIOLOGIA</h4>
+    <textarea id="pilates_semiologia"></textarea>
+
+    <h4>⚕️ PRESSÃO ARTERIAL</h4>
+    <input type="text" id="pilates_pressao">
+
+    <!-- ================= AVALIAÇÃO FÍSICA ================= -->
+
+    <h4>🏃 AVALIAÇÃO FÍSICA</h4>
+
+    <div class="grid-2">
+      <div>
+        <label>Peso:</label>
+        <input type="number" id="pilates_peso">
+      </div>
+      <div>
+        <label>Altura:</label>
+        <input type="number" id="pilates_altura">
       </div>
     </div>
-    <div style="margin-bottom:8px"><strong style="font-size:.82rem;color:var(--muted)">ROMBERG</strong>
-      <div class="inline-opts" style="margin-top:4px">
-        <label><input type="radio" name="pilates_romberg" id="pilates_romberg_pos"> Positivo</label>
-        <label><input type="radio" name="pilates_romberg" id="pilates_romberg_neg"> Negativo</label>
+
+    <h4>Composição Corporal por Adipômetro</h4>
+    <div class="grid-2">
+      <div>
+        <label>Peitoral/Torácica:</label>
+        <input type="text" id="pilates_adipometro_peitoral_toracica">
+      </div>
+      <div>
+        <label>Subescapular:</label>
+        <input type="text" id="pilates_adipometro_subescapular">
+      </div>
+      <div>
+        <label>Suprailiaca:</label>
+        <input type="text" id="pilates_adipometro_suprailiaca">
+      </div>
+      <div>
+        <label>Axilar média:</label>
+        <input type="text" id="pilates_adipometro_axilar_media">
+      </div>
+      <div>
+        <label>Tríceps:</label>
+        <input type="text" id="pilates_adipometro_triceps">
+      </div>
+      <div>
+        <label>Bíceps:</label>
+        <input type="text" id="pilates_adipometro_biceps">
+      </div>
+      <div>
+        <label>Abdominal:</label>
+        <input type="text" id="pilates_adipometro_abdominal">
+      </div>
+      <div>
+        <label>Coxa:</label>
+        <input type="text" id="pilates_adipometro_coxa">
       </div>
     </div>
-    <div style="margin-bottom:8px"><strong style="font-size:.82rem;color:var(--muted)">APOIO UNIPODAL – TAU</strong>
-      <div class="inline-opts" style="margin-top:4px">
-        <label><input type="radio" name="pilates_tau" id="pilates_tau_menor"> Menor risco de queda</label>
-        <label><input type="radio" name="pilates_tau" id="pilates_tau_maior"> Maior risco de queda</label>
-      </div>
+
+    <!-- ================= TESTES FISIOTERAPÊUTICOS ================= -->
+
+    <h4>📌 TESTES FISIOTERAPÊUTICOS</h4>
+
+    <strong>Y BALANCE TESTE (Equilíbrio Funcional)</strong>
+    <div class="opcoes">
+      <label><input type="radio" name="pilates_ybalance" id="pilates_y_risco"> Assimetria - Sim com risco</label>
+      <label><input type="radio" name="pilates_ybalance" id="pilates_y_nao"> Não</label>
     </div>
-    <div style="margin-bottom:8px"><strong style="font-size:.82rem;color:var(--muted)">TUG</strong>
-      <div class="inline-opts" style="margin-top:4px">
-        <label><input type="radio" name="pilates_tug" id="pilates_tug_normal"> Normal</label>
-        <label><input type="radio" name="pilates_tug" id="pilates_tug_baixo"> Baixo risco</label>
-        <label><input type="radio" name="pilates_tug" id="pilates_tug_medio"> Médio risco</label>
-        <label><input type="radio" name="pilates_tug" id="pilates_tug_alto"> Alto risco</label>
-      </div>
+
+    <strong>TESTE DE ROMBERG (Equilíbrio Estático)</strong>
+    <div class="opcoes">
+      <label><input type="radio" name="pilates_romberg" id="pilates_romberg_pos"> Positivo</label>
+      <label><input type="radio" name="pilates_romberg" id="pilates_romberg_neg"> Negativo</label>
     </div>
-    <div style="margin-bottom:8px"><strong style="font-size:.82rem;color:var(--muted)">MARCHA EM TANDEM</strong>
-      <div class="inline-opts" style="margin-top:4px">
-        <label><input type="radio" name="pilates_tandem" id="pilates_tandem_normal"> Normal</label>
-        <label><input type="radio" name="pilates_tandem_leve"> Leve comprometimento</label>
-        <label><input type="radio" name="pilates_tandem_moderado"> Moderado</label>
-        <label><input type="radio" name="pilates_tandem_grave"> Grave</label>
-      </div>
+
+    <strong>TESTE DE APOIO UNIPODAL – TAU</strong>
+    <div class="opcoes">
+      <label><input type="radio" name="pilates_tau" id="pilates_tau_menor"> Menor risco de queda</label>
+      <label><input type="radio" name="pilates_tau" id="pilates_tau_maior"> Maior risco de queda</label>
     </div>
-    <div style="margin-bottom:8px"><strong style="font-size:.82rem;color:var(--muted)">LASEGUE</strong>
-      <div class="inline-opts" style="margin-top:4px">
-        <label><input type="radio" name="pilates_lasegue" id="pilates_lasegue_pos"> Positivo</label>
-        <label><input type="radio" name="pilates_lasegue" id="pilates_lasegue_neg"> Negativo</label>
-      </div>
+
+    <strong>TESTE TUG</strong>
+    <div class="opcoes">
+      <label><input type="radio" name="pilates_tug" id="pilates_tug_normal"> Normal</label>
+      <label><input type="radio" name="pilates_tug" id="pilates_tug_baixo"> Baixo risco</label>
+      <label><input type="radio" name="pilates_tug" id="pilates_tug_medio"> Médio risco</label>
+      <label><input type="radio" name="pilates_tug" id="pilates_tug_alto"> Alto risco</label>
     </div>
-    <div style="margin-bottom:8px"><strong style="font-size:.82rem;color:var(--muted)">LASEGUE INVERTIDO</strong>
-      <div class="inline-opts" style="margin-top:4px">
-        <label><input type="radio" name="pilates_lasegue_inv" id="pilates_lasegue_inv_pos"> Positivo</label>
-        <label><input type="radio" name="pilates_lasegue_inv" id="pilates_lasegue_inv_neg"> Negativo</label>
-      </div>
+
+    <strong>TESTE DE MARCHA EM TANDEM</strong>
+    <div class="opcoes">
+      <label><input type="radio" name="pilates_tandem" id="pilates_tandem_normal"> Normal</label>
+      <label><input type="radio" name="pilates_tandem_leve"> Leve comprometimento</label>
+      <label><input type="radio" name="pilates_tandem_moderado"> Moderado</label>
+      <label><input type="radio" name="pilates_tandem_grave"> Grave</label>
     </div>
-    <div style="margin-bottom:8px"><strong style="font-size:.82rem;color:var(--muted)">SPURLING</strong>
-      <div class="inline-opts" style="margin-top:4px">
-        <label><input type="radio" name="pilates_spurling" id="pilates_spurling_pos"> Positivo</label>
-        <label><input type="radio" name="pilates_spurling" id="pilates_spurling_neg"> Negativo</label>
-      </div>
+
+    <strong>TESTE DE LASEGUE</strong>
+    <div class="opcoes">
+      <label><input type="radio" name="pilates_lasegue" id="pilates_lasegue_pos"> Positivo</label>
+      <label><input type="radio" name="pilates_lasegue" id="pilates_lasegue_neg"> Negativo</label>
     </div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ ESCALA DE FORÇA MUSCULAR</h4>
-    <div class="opts-grid">
+
+    <strong>TESTE DE LASEGUE INVERTIDO</strong>
+    <div class="opcoes">
+      <label><input type="radio" name="pilates_lasegue_inv" id="pilates_lasegue_inv_pos"> Positivo</label>
+      <label><input type="radio" name="pilates_lasegue_inv" id="pilates_lasegue_inv_neg"> Negativo</label>
+    </div>
+
+    <strong>TESTE DE SPURLING</strong>
+    <div class="opcoes">
+      <label><input type="radio" name="pilates_spurling" id="pilates_spurling_pos"> Positivo</label>
+      <label><input type="radio" name="pilates_spurling" id="pilates_spurling_neg"> Negativo</label>
+    </div>
+
+    <!-- ================= ESCALA DE FORÇA MUSCULAR ================= -->
+
+    <h4>⚕️ ESCALA DE FORÇA MUSCULAR</h4>
+
+    <div class="opcoes-grid">
       <label><input type="radio" name="pilates_forca" id="pilates_g0"> Grau 0</label>
       <label><input type="radio" name="pilates_forca" id="pilates_g1"> Grau 1</label>
       <label><input type="radio" name="pilates_forca" id="pilates_g2"> Grau 2</label>
@@ -1232,206 +1401,678 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
       <label><input type="radio" name="pilates_forca" id="pilates_g4"> Grau 4</label>
       <label><input type="radio" name="pilates_forca" id="pilates_g5"> Grau 5</label>
     </div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ ESCALA DE BORG</h4>
-    <div class="field-group"><input type="text" id="pilates_escalaBorg" placeholder="Observações / Pontuação"></div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">📌 PLANO TERAPÊUTICO</h4>
-    <div class="field-group"><label>Objetivos do Tratamento</label><textarea id="pilates_objetivos"></textarea></div>
-    <div class="field-group"><label>Recursos Terapêuticos</label><textarea id="pilates_recursos"></textarea></div>
-    <div class="field-group"><label>Plano do Tratamento</label><textarea id="pilates_planoTratamento"></textarea></div>
-    <div class="field-group"><label>Profissional / Registro Conselho</label><input type="text" id="pilates_profissional"></div>
-    <button class="btn-save" onclick="salvarPilates()">💾 Salvar Avaliação</button>
-  </div>
-</div>
 
-<!-- ════ RECOVERY COMPLETO ════ -->
+    <!-- ================= DINAMÔMETRO ================= -->
+
+    <h4>Teste de Força Muscular no Dinamômetro</h4>
+
+    <div class="grid-2">
+      <div>
+        <label>Bíceps:</label>
+        <input type="text" id="pilates_biceps">
+      </div>
+      <div>
+        <label>Abdutores de Ombro:</label>
+        <input type="text" id="pilates_abdutores">
+      </div>
+      <div>
+        <label>Flexores de Ombro:</label>
+        <input type="text" id="pilates_flexores_ombro">
+      </div>
+      <div>
+        <label>Extensores de Ombro:</label>
+        <input type="text" id="pilates_extensores_ombro">
+      </div>
+      <div>
+        <label>Rotadores Mediais:</label>
+        <input type="text" id="pilates_rot_mediais">
+      </div>
+      <div>
+        <label>Rotadores Laterais:</label>
+        <input type="text" id="pilates_rot_laterais">
+      </div>
+    </div>
+
+    <!-- ================= FORÇA E RESISTÊNCIA ================= -->
+
+    <h4>Força e Resistência Muscular (Repetições por minuto)</h4>
+
+    <label>Abdominal Supra:</label>
+    <input type="text" id="pilates_abdominal_supra">
+
+    <label>Abdominal Infra:</label>
+    <input type="text" id="pilates_abdominal_infra">
+
+    <label>Prancha Isométrica:</label>
+    <input type="text" id="pilates_prancha">
+
+    <!-- ================= EVA ================= -->
+
+    <h4>⚕️ Avaliação da Intensidade da Dor – EVA</h4>
+
+    <div class="grid-2">
+      <div>
+        <label>EVA 1:</label>
+        <input type="text" id="pilates_eva1">
+        <label>Região:</label>
+        <input type="text" id="pilates_regiao1">
+      </div>
+
+    </div>
+
+    <!-- ================= ESCALA DE BORG ================= -->
+
+    <h4>⚕️ ESCALA DE BORG</h4>
+    <label>Observações / Pontuação:</label>
+    <input type="text" id="pilates_escalaBorg">
+
+    <!-- ================= PLANO TERAPÊUTICO ================= -->
+
+    <h4>📌 PLANO TERAPÊUTICO</h4>
+
+    <label>Objetivos do Tratamento:</label>
+    <textarea id="pilates_objetivos"></textarea>
+
+    <label>Recursos Terapêuticos:</label>
+    <textarea id="pilates_recursos"></textarea>
+
+    <label>Plano do Tratamento:</label>
+    <textarea id="pilates_planoTratamento"></textarea>
+
+    <!-- ================= EVOLUÇÃO ================= -->
+
+    <h4>🗓️ EVOLUÇÃO DOS ATENDIMENTOS</h4>
+
+    <label>Data:</label>
+    <input type="date" id="pilates_dataEvolucao">
+
+    <label>Procedimentos:</label>
+    <textarea id="pilates_procedimentos"></textarea>
+
+    <label>Intercorrência:</label>
+    <textarea id="pilates_intercorrencia"></textarea>
+
+    <label>Evolução do Estado de Saúde:</label>
+    <textarea id="pilates_evolucaoEstado"></textarea>
+
+    <label>Profissional / Registro Conselho:</label>
+    <input type="text" id="pilates_profissional">
+
+    <button onclick="salvarPilates()">💾 Salvar Avaliação</button>
+
+  </div> <!-- FECHA card Pilates -->
+</div> <!-- FECHA telaPilates -->
+  
+<!-- TELA RECOVERY -->
 <div id="telaRecovery" class="hidden">
-  <div class="form-card">
-    <button class="btn-back" onclick="voltar()">⬅ Voltar</button>
-    <h3>Avaliação Recovery</h3>
-    <h4 style="color:var(--lilas);margin:12px 0 8px">📌 DADOS PESSOAIS</h4>
-    <div class="form-grid">
-      <div class="field-group"><label>Nome</label><input type="text" id="mov_nome"></div>
-      <div class="field-group"><label>Data de Nascimento</label><input type="date" id="mov_nascimento"></div>
-      <div class="field-group"><label>Telefone</label><input type="text" id="mov_telefone"></div>
-      <div class="field-group"><label>Fisioterapeuta</label><input type="text" id="mov_fisioterapeuta"></div>
-      <div class="field-group form-full"><label>Endereço</label><input type="text" id="mov_endereco"></div>
-    </div>
-    <div class="inline-opts">
-      <label><input type="radio" name="mov_sexo" id="mov_sexo_fem"> Feminino</label>
-      <label><input type="radio" name="mov_sexo" id="mov_sexo_masc"> Masculino</label>
-    </div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">🏃 PERFIL ESPORTIVO</h4>
-    <div class="inline-opts">
-      <label><input type="radio" name="mov_atleta" id="mov_atleta_amador"> Amador</label>
-      <label><input type="radio" name="mov_atleta" id="mov_atleta_profissional"> Profissional</label>
-    </div>
-    <div class="form-grid">
-      <div class="field-group"><label>Esporte / Há quanto tempo</label><input type="text" id="mov_esporte"></div>
-      <div class="field-group"><label>Frequência semanal</label><input type="text" id="mov_frequencia"></div>
-      <div class="field-group"><label>Profissão</label><input type="text" id="mov_profissao"></div>
-    </div>
-    <div class="inline-opts">
-      <span style="font-size:.82rem;color:var(--muted)">Pratica atividade física?</span>
-      <label><input type="radio" name="mov_pratica" id="mov_pratica_sim"> Sim</label>
-      <label><input type="radio" name="mov_pratica" id="mov_pratica_nao"> Não</label>
-    </div>
-    <div class="field-group"><label>Objetivos no programa</label><textarea id="mov_objetivos"></textarea></div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ HISTÓRICO DE SAÚDE</h4>
-    <div class="inline-opts"><span style="font-size:.82rem;color:var(--muted)">Tabagismo?</span><label><input type="radio" name="mov_tabagismo" id="mov_tabagismo_sim"> Sim</label><label><input type="radio" name="mov_tabagismo" id="mov_tabagismo_nao"> Não</label></div>
-    <div class="inline-opts"><span style="font-size:.82rem;color:var(--muted)">Alterações cardíacas?</span><label><input type="radio" name="mov_cardiaco" id="mov_cardiaco_sim"> Sim</label><label><input type="radio" name="mov_cardiaco" id="mov_cardiaco_nao"> Não</label></div>
-    <div class="inline-opts"><span style="font-size:.82rem;color:var(--muted)">Diabetes?</span><label><input type="radio" name="mov_diabetes" id="mov_diabetes_sim"> Sim</label><label><input type="radio" name="mov_diabetes" id="mov_diabetes_nao"> Não</label></div>
-    <div class="inline-opts"><span style="font-size:.82rem;color:var(--muted)">Hipertensão?</span><label><input type="radio" name="mov_hipertensao" id="mov_hipertensao_sim"> Sim</label><label><input type="radio" name="mov_hipertensao" id="mov_hipertensao_nao"> Não</label></div>
-    <div class="inline-opts"><span style="font-size:.82rem;color:var(--muted)">Medicamentos?</span><label><input type="radio" name="mov_medicamento" id="mov_medicamento_sim"> Sim</label><label><input type="radio" name="mov_medicamento" id="mov_medicamento_nao"> Não</label></div>
-    <div class="field-group"><textarea id="mov_medicamento_desc" placeholder="Se sim, quais?"></textarea></div>
-    <div class="inline-opts"><span style="font-size:.82rem;color:var(--muted)">Lesão/acidente?</span><label><input type="radio" name="mov_lesao" id="mov_lesao_sim"> Sim</label><label><input type="radio" name="mov_lesao" id="mov_lesao_nao"> Não</label></div>
-    <div class="field-group"><textarea id="mov_lesao_desc" placeholder="Se sim, qual?"></textarea></div>
-    <div class="inline-opts"><span style="font-size:.82rem;color:var(--muted)">Cirurgia?</span><label><input type="radio" name="mov_cirurgia" id="mov_cirurgia_sim"> Sim</label><label><input type="radio" name="mov_cirurgia" id="mov_cirurgia_nao"> Não</label></div>
-    <div class="field-group"><textarea id="mov_cirurgia_desc" placeholder="Se sim, qual?"></textarea></div>
-    <div class="inline-opts"><span style="font-size:.82rem;color:var(--muted)">Alergia?</span><label><input type="radio" name="mov_alergia" id="mov_alergia_sim"> Sim</label><label><input type="radio" name="mov_alergia" id="mov_alergia_nao"> Não</label></div>
-    <div class="field-group"><textarea id="mov_alergia_desc" placeholder="Se sim, qual?"></textarea></div>
-    <div class="inline-opts"><span style="font-size:.82rem;color:var(--muted)">Tontura/desmaio?</span><label><input type="radio" name="mov_tontura" id="mov_tontura_sim"> Sim</label><label><input type="radio" name="mov_tontura" id="mov_tontura_nao"> Não</label></div>
-    <div class="inline-opts"><span style="font-size:.82rem;color:var(--muted)">Dieta perder/ganhar peso?</span><label><input type="radio" name="mov_dieta" id="mov_dieta_sim"> Sim</label><label><input type="radio" name="mov_dieta" id="mov_dieta_nao"> Não</label></div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">📌 PROGRAMA MOV RECOVERY – AVALIAÇÃO FISIOTERAPÊUTICA</h4>
-    <div class="form-grid">
-      <div class="field-group"><label>Esporte</label><input type="text" id="mov_prog_esporte"></div>
-      <div class="field-group"><label>Início</label><input type="text" id="mov_prog_inicio"></div>
-      <div class="field-group form-full"><label>Queixa principal</label><textarea id="mov_prog_queixaPrincipal"></textarea></div>
-      <div class="field-group form-full"><label>Diagnóstico Cinético Funcional</label><textarea id="mov_prog_diagnosticoCinetico"></textarea></div>
-      <div class="field-group form-full"><label>Objetivos</label><textarea id="mov_prog_objetivos"></textarea></div>
-      <div class="field-group form-full"><label>Conduta Fisioterapêutica</label><textarea id="mov_prog_conduta"></textarea></div>
-      <div class="field-group form-full"><label>Fisioterapeuta</label><input type="text" id="mov_prog_fisioterapeuta"></div>
-    </div>
-    <button class="btn-save" onclick="salvarRecovery()">💾 Salvar</button>
+<div class="card">
+<button onclick="voltar()">⬅ Voltar</button>
+<h3>Avaliação Recovery</h3>
+<!-- ================= AVALIAÇÃO RECOVERY ================= -->
+
+<div class="card" id="modulo_mov_recovery">
+
+<h3>Avaliação Recovery - Anamnese</h3>
+
+<!-- ================= DADOS PESSOAIS ================= -->
+
+<h4>📌 DADOS PESSOAIS</h4>
+
+<label>Nome:</label>
+<input type="text" id="mov_nome">
+
+<div class="grid-2">
+<div>
+<label>Data de Nascimento:</label>
+<input type="date" id="mov_nascimento">
+</div>
+
+<div>
+<label>Telefone:</label>
+<input type="text" id="mov_telefone">
+</div>
+</div>
+
+<div class="campo">
+<label>Sexo:</label>
+<div class="inline-group">
+<label><input type="radio" name="mov_sexo" id="mov_sexo_fem"> Feminino</label>
+<label><input type="radio" name="mov_sexo" id="mov_sexo_masc"> Masculino</label>
+</div>
+</div>
+
+<label>Endereço:</label>
+<input type="text" id="mov_endereco">
+
+<label>Fisioterapeuta:</label>
+<input type="text" id="mov_fisioterapeuta">
+
+<!-- ================= PERFIL ESPORTIVO ================= -->
+
+<h4>🏃 PERFIL ESPORTIVO</h4>
+
+<div class="campo">
+<label>Atleta:</label>
+<div class="inline-group">
+<label><input type="radio" name="mov_atleta" id="mov_atleta_amador"> Amador</label>
+<label><input type="radio" name="mov_atleta" id="mov_atleta_profissional"> Profissional</label>
+</div>
+</div>
+
+<label>Esporte / Há quanto tempo:</label>
+<input type="text" id="mov_esporte">
+
+<div class="campo">
+<label>Pratica atividade física atualmente?</label>
+<div class="inline-group">
+<label><input type="radio" name="mov_pratica" id="mov_pratica_sim"> Sim</label>
+<label><input type="radio" name="mov_pratica" id="mov_pratica_nao"> Não</label>
+</div>
+</div>
+
+<label>Frequência semanal:</label>
+<input type="text" id="mov_frequencia">
+
+<label>Objetivos no programa:</label>
+<textarea id="mov_objetivos"></textarea>
+
+<!-- ================= HISTÓRICO DE SAÚDE ================= -->
+
+<h4>⚕️ HISTÓRICO DE SAÚDE</h4>
+
+<div class="campo">
+<label>Tabagismo?</label>
+<div class="inline-group">
+<label><input type="radio" name="mov_tabagismo" id="mov_tabagismo_sim"> Sim</label>
+<label><input type="radio" name="mov_tabagismo" id="mov_tabagismo_nao"> Não</label>
+</div>
+</div>
+
+<div class="campo">
+<label>Alterações cardíacas?</label>
+<div class="inline-group">
+<label><input type="radio" name="mov_cardiaco" id="mov_cardiaco_sim"> Sim</label>
+<label><input type="radio" name="mov_cardiaco" id="mov_cardiaco_nao"> Não</label>
+</div>
+</div>
+
+<div class="campo">
+<label>Diabetes?</label>
+<div class="inline-group">
+<label><input type="radio" name="mov_diabetes" id="mov_diabetes_sim"> Sim</label>
+<label><input type="radio" name="mov_diabetes" id="mov_diabetes_nao"> Não</label>
+</div>
+</div>
+
+<div class="campo">
+<label>Hipertensão?</label>
+<div class="inline-group">
+<label><input type="radio" name="mov_hipertensao" id="mov_hipertensao_sim"> Sim</label>
+<label><input type="radio" name="mov_hipertensao" id="mov_hipertensao_nao"> Não</label>
+</div>
+</div>
+
+<div class="campo">
+<label>Usa medicamentos?</label>
+<div class="inline-group">
+<label><input type="radio" name="mov_medicamento" id="mov_medicamento_sim"> Sim</label>
+<label><input type="radio" name="mov_medicamento" id="mov_medicamento_nao"> Não</label>
+</div>
+
+<textarea
+  id="mov_medicamento_desc"
+  placeholder="Se sim, quais?"
+  style="width:100%; margin-top:8px;">
+</textarea>
+</div>
+
+<div class="campo">
+<label>Já sofreu acidente ou lesão?</label>
+<div class="inline-group">
+<label><input type="radio" name="mov_lesao" id="mov_lesao_sim"> Sim</label>
+<label><input type="radio" name="mov_lesao" id="mov_lesao_nao"> Não</label>
+</div>
+
+<textarea
+  id="mov_lesao_desc"
+  placeholder="Se sim, qual?"
+  style="width:100%; margin-top:8px;">
+</textarea>
+</div>
+
+<div class="campo">
+<label>Já realizou cirurgia?</label>
+<div class="inline-group">
+<label><input type="radio" name="mov_cirurgia" id="mov_cirurgia_sim"> Sim</label>
+<label><input type="radio" name="mov_cirurgia" id="mov_cirurgia_nao"> Não</label>
+</div>
+
+<textarea
+  id="mov_cirurgia_desc"
+  placeholder="Se sim, qual?"
+  style="width:100%; margin-top:8px;">
+</textarea>
+</div>
+
+<div class="campo">
+<label>Possui alergia?</label>
+<div class="inline-group">
+<label><input type="radio" name="mov_alergia" id="mov_alergia_sim"> Sim</label>
+<label><input type="radio" name="mov_alergia" id="mov_alergia_nao"> Não</label>
+</div>
+
+<textarea
+  id="mov_alergia_desc"
+  placeholder="Se sim, qual?"
+  style="width:100%; margin-top:8px;">
+</textarea>
+</div>
+
+<div class="campo">
+<label>Apresenta tontura ou desmaio?</label>
+<div class="inline-group">
+<label><input type="radio" name="mov_tontura" id="mov_tontura_sim"> Sim</label>
+<label><input type="radio" name="mov_tontura" id="mov_tontura_nao"> Não</label>
+</div>
+</div>
+
+<div class="campo">
+<label>Está em dieta para perder ou ganhar peso?</label>
+<div class="inline-group">
+<label><input type="radio" name="mov_dieta" id="mov_dieta_sim"> Sim</label>
+<label><input type="radio" name="mov_dieta" id="mov_dieta_nao"> Não</label>
+</div>
+</div>
+
+<label>Profissão:</label>
+<input type="text" id="mov_profissao">
+
+<h4>📌 PROGRAMA MOV RECOVERY - AVALIAÇÃO FISIOTERAPÊUTICA</h4>
+<div class="grid-2">
+  <div>
+    <label>Esporte:</label>
+    <input type="text" id="mov_prog_esporte">
+  </div>
+  <div>
+    <label>Início:</label>
+    <input type="text" id="mov_prog_inicio">
   </div>
 </div>
 
-<!-- ════ CONDICIONAMENTO COMPLETO ════ -->
+<label>Queixa principal:</label>
+<textarea id="mov_prog_queixaPrincipal" rows="4"></textarea>
+
+<label>Diagnóstico Cinético Funcional:</label>
+<textarea id="mov_prog_diagnosticoCinetico" rows="4"></textarea>
+
+<label>Objetivos:</label>
+<textarea id="mov_prog_objetivos" rows="4"></textarea>
+
+<label>Conduta Fisioterapêutica:</label>
+<textarea id="mov_prog_conduta" rows="4"></textarea>
+
+<label>FISIOTERAPEUTA:</label>
+<input type="text" id="mov_prog_fisioterapeuta">
+
+</div>
+<button onclick="salvarRecovery()">Salvar</button>
+</div>
+</div>
+
+<!-- TELA CONDICIONAMENTO -->
 <div id="telaCondicionamento" class="hidden">
-  <div class="form-card">
-    <button class="btn-back" onclick="voltar()">⬅ Voltar</button>
-    <h3>Avaliação Condicionamento Funcional – Aula em Grupo</h3>
-    <div class="opts-grid" style="margin-bottom:12px">
+  <div class="card">
+    <button onclick="voltar()">⬅ Voltar</button>
+    <h3>Avaliação Condicionamento Funcional - Aula em Grupo</h3>
+
+    <div class="opcoes-grid">
       <label><input type="checkbox" id="cond_totalpass"> Totalpass</label>
       <label><input type="checkbox" id="cond_gympass"> Gympass</label>
       <label><input type="checkbox" id="cond_mensalidade"> Mensalidade</label>
     </div>
-    <h4 style="color:var(--lilas);margin:12px 0 8px">📌 IDENTIFICAÇÃO</h4>
-    <div class="form-grid">
-      <div class="field-group"><label>Nome completo</label><input type="text" id="cond_nomeCompleto"></div>
-      <div class="field-group"><label>Data de nascimento</label><input type="date" id="cond_dataNascimento"></div>
-      <div class="field-group"><label>CPF</label><input type="text" id="cond_cpf"></div>
-      <div class="field-group"><label>Data da Avaliação</label><input type="date" id="cond_dataAvaliacao"></div>
-    </div>
-    <div class="inline-opts">
+
+    <h4>📌 IDENTIFICAÇÃO</h4>
+    <label>Nome completo:</label>
+    <input type="text" id="cond_nomeCompleto">
+
+    <label>Data de nascimento:</label>
+    <input type="date" id="cond_dataNascimento">
+
+    <label>CPF:</label>
+    <input type="text" id="cond_cpf">
+
+    <label>Sexo:</label>
+    <div class="inline-group">
       <label><input type="radio" name="cond_sexo" id="cond_sexo_masculino"> Masculino</label>
       <label><input type="radio" name="cond_sexo" id="cond_sexo_feminino"> Feminino</label>
     </div>
-    <div class="form-grid">
-      <div class="field-group"><label>Responsável (se menor)</label><input type="text" id="cond_responsavel_nome"></div>
-      <div class="field-group"><label>Grau de parentesco</label><input type="text" id="cond_responsavel_parentesco"></div>
-      <div class="field-group"><label>CPF Responsável</label><input type="text" id="cond_responsavel_cpf"></div>
-      <div class="field-group"><label>Profissão/Ocupação</label><input type="text" id="cond_profissao_ocupacao"></div>
-      <div class="field-group form-full"><label>Endereço Residencial</label><input type="text" id="cond_endereco_residencial"></div>
-      <div class="field-group"><label>Telefone</label><input type="text" id="cond_telefone"></div>
-      <div class="field-group"><label>E-mail</label><input type="email" id="cond_email"></div>
-      <div class="field-group"><label>Diagnóstico Clínico</label><input type="text" id="cond_diagnosticoClinico"></div>
-      <div class="field-group"><label>Diagnóstico Fisioterapêutico</label><input type="text" id="cond_diagnosticoFisio"></div>
-      <div class="field-group"><label>CBDF</label><input type="text" id="cond_cbdf"></div>
+
+    <label>Se menor, identificação completa do responsável</label>
+    <label>Nome:</label>
+    <input type="text" id="cond_responsavel_nome">
+
+    <div class="grid-2">
+      <div>
+        <label>Grau de parentesco:</label>
+        <input type="text" id="cond_responsavel_parentesco">
+      </div>
+      <div>
+        <label>CPF:</label>
+        <input type="text" id="cond_responsavel_cpf">
+      </div>
     </div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ HISTÓRIA CLÍNICA</h4>
-    <div class="field-group"><label>Queixa Principal</label><textarea id="cond_queixaPrincipal"></textarea></div>
-    <div class="field-group"><label>História da Doença Atual (HDA)</label><textarea id="cond_hda"></textarea></div>
-    <div class="field-group"><label>Histórico de Lesões</label><textarea id="cond_historicoLesoes"></textarea></div>
-    <div class="inline-opts">
-      <span style="font-size:.82rem;color:var(--muted)">Acompanhamento médico?</span>
+
+    <label>Profissão/Ocupação:</label>
+    <input type="text" id="cond_profissao_ocupacao">
+
+    <label>Endereço Residencial:</label>
+    <input type="text" id="cond_endereco_residencial">
+
+    <label>Telefone:</label>
+    <input type="text" id="cond_telefone">
+
+    <label>E-mail:</label>
+    <input type="email" id="cond_email">
+
+    <label>Data da Avaliação:</label>
+    <input type="date" id="cond_dataAvaliacao">
+
+    <label>Diagnóstico Clínico:</label>
+    <input type="text" id="cond_diagnosticoClinico">
+
+    <label>Diagnóstico Fisioterapêutico:</label>
+    <input type="text" id="cond_diagnosticoFisio">
+
+    <label>CBDF:</label>
+    <input type="text" id="cond_cbdf">
+
+    <h4>⚕️ HISTÓRIA CLÍNICA</h4>
+    <label>Queixa Principal</label>
+    <textarea id="cond_queixaPrincipal"></textarea>
+
+    <label>História da Doença Atual (HDA)</label>
+    <textarea id="cond_hda"></textarea>
+
+    <label>Histórico de Lesões</label>
+    <textarea id="cond_historicoLesoes"></textarea>
+
+    <label>Acompanhamento Médico/Fisioterapêutico/Nutricional</label>
+    <div class="inline-group">
       <label><input type="radio" name="cond_acompanhamento" id="cond_acompanhamento_sim"> Sim</label>
       <label><input type="radio" name="cond_acompanhamento" id="cond_acompanhamento_nao"> Não</label>
-      <input style="max-width:180px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none" id="cond_acompanhamento_quais" placeholder="Quais?">
     </div>
-    <div class="inline-opts">
-      <span style="font-size:.82rem;color:var(--muted)">Usa medicamentos?</span>
+
+    <label>Quais</label>
+    <input type="text" id="cond_acompanhamento_quais">
+
+    <label>Usa Medicamentos</label>
+    <div class="inline-group">
       <label><input type="radio" name="cond_medicamentos" id="cond_medicamentos_sim"> Sim</label>
       <label><input type="radio" name="cond_medicamentos" id="cond_medicamentos_nao"> Não</label>
-      <input style="max-width:180px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none" id="cond_medicamentos_quais" placeholder="Quais?">
     </div>
-    <div class="form-grid">
-      <div class="field-group"><label>Peso (kg)</label><input type="number" id="cond_peso"></div>
-      <div class="field-group"><label>Altura (cm)</label><input type="number" id="cond_altura"></div>
-      <div class="field-group form-full"><label>Hábitos de Vida</label><textarea id="cond_habitosVida"></textarea></div>
-      <div class="field-group form-full"><label>Metas Pessoais</label><textarea id="cond_metasPessoais"></textarea></div>
-    </div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ AVALIAÇÃO DA DOR – EVA</h4>
-    <div class="field-group"><label>EVA / Região</label><input type="text" id="cond_evaRegiao"></div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">🏃 NÍVEL DE CONDICIONAMENTO FÍSICO</h4>
-    <div class="opts-grid">
+
+    <label>Quais</label>
+    <input type="text" id="cond_medicamentos_quais">
+
+    <label>Peso (kg)</label>
+    <input type="number" id="cond_peso">
+
+    <label>Altura (cm)</label>
+    <input type="number" id="cond_altura">
+
+    <label>Hábitos de Vida</label>
+    <textarea id="cond_habitosVida"></textarea>
+
+    <label>Metas Pessoais</label>
+    <textarea id="cond_metasPessoais"></textarea>
+
+    <h4>⚕️ AVALIAÇÃO DA DOR - EVA</h4>
+    <label>EVA / Região</label>
+    <input type="text" id="cond_evaRegiao">
+
+    <h4>🏃 NÍVEL DE CONDICIONAMENTO FÍSICO</h4>
+    <div class="inline-group">
       <label><input type="checkbox" id="cond_ativo"> Ativo</label>
       <label><input type="checkbox" id="cond_moderadamente_ativo"> Moderadamente Ativo</label>
       <label><input type="checkbox" id="cond_sedentario"> Sedentário</label>
     </div>
-    <div class="inline-opts">
-      <span style="font-size:.82rem;color:var(--muted)">Atividade Física Regular?</span>
+
+    <label>Atividade Física Regular</label>
+    <div class="inline-group">
       <label><input type="radio" name="cond_atividade" id="cond_atividade_sim"> Sim</label>
       <label><input type="radio" name="cond_atividade" id="cond_atividade_nao"> Não</label>
-      <input style="max-width:180px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none" id="cond_atividade_quais" placeholder="Quais?">
     </div>
-    <div class="field-group"><label>Classificação de Esforço – Escala de BORG</label><input type="number" min="0" max="10" id="cond_borg"></div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">⚕️ AVALIAÇÃO FÍSICA</h4>
-    <div class="inline-opts">
-      <span style="font-size:.82rem;color:var(--muted)">Desvios Posturais?</span>
+
+    <label>Quais</label>
+    <input type="text" id="cond_atividade_quais">
+
+    <label>Classificação de Esforço - Escala de BORG</label>
+    <input type="number" min="0" max="10" id="cond_borg">
+
+    <h4>⚕️ AVALIAÇÃO FÍSICA</h4>
+    <label>Desvios Posturais</label>
+    <div class="inline-group">
       <label><input type="radio" name="cond_desvios" id="cond_desvios_sim"> Sim</label>
       <label><input type="radio" name="cond_desvios" id="cond_desvios_nao"> Não</label>
-      <input style="max-width:180px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none" id="cond_desvios_quais" placeholder="Quais?">
     </div>
-    <div class="inline-opts">
-      <span style="font-size:.82rem;color:var(--muted)">Movimentos Articulares:</span>
+
+    <label>Quais</label>
+    <input type="text" id="cond_desvios_quais">
+
+    <label>Movimentos Articulares</label>
+    <div class="inline-group">
       <label><input type="radio" name="cond_movimentos" id="cond_movimentos_com_dor"> Com Dor</label>
       <label><input type="radio" name="cond_movimentos" id="cond_movimentos_sem_dor"> Sem Dor</label>
-      <input style="max-width:180px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none" id="cond_movimentos_quais" placeholder="Quais?">
     </div>
-    <div class="field-group"><label>Movimentos Funcionais</label><textarea id="cond_movimentos_funcionais"></textarea></div>
-    <div class="field-group"><label>Mobilidade</label><textarea id="cond_mobilidade"></textarea></div>
-    <div class="field-group"><label>Flexibilidade</label><input type="text" id="cond_flexibilidade"></div>
-    <div class="field-group"><label>Resistência Muscular/Cardiovascular</label>
-      <select id="cond_resistencia"><option value="">Selecione</option><option>Baixa</option><option>Média</option><option>Alta</option></select>
-    </div>
-    <h4 style="color:var(--lilas);margin:14px 0 8px">📌 PLANO TERAPÊUTICO</h4>
-    <div class="field-group"><textarea id="cond_planoTerapeutico"></textarea></div>
-    <div class="field-group"><label>Profissional / Registro Conselho</label><input type="text" id="cond_profissional"></div>
-    <button class="btn-save" onclick="salvarCondicionamento()">💾 Salvar Avaliação</button>
+
+    <label>Quais</label>
+    <input type="text" id="cond_movimentos_quais">
+
+    <label>Movimentos Funcionais</label>
+    <textarea id="cond_movimentos_funcionais"></textarea>
+
+    <label>Mobilidade</label>
+    <textarea id="cond_mobilidade"></textarea>
+
+
+    <label>Flexibilidade</label>
+    <input type="text" id="cond_flexibilidade">
+
+    <label>Resistência Muscular/Cardiovascular</label>
+    <select id="cond_resistencia">
+      <option value="">Selecione</option>
+      <option>Baixa</option>
+      <option>Média</option>
+      <option>Alta</option>
+    </select>
+
+    <h4>📌 PLANO TERAPÊUTICO</h4>
+    <textarea id="cond_planoTerapeutico"></textarea>
+
+    <label>Profissional / Registro Conselho</label>
+    <input type="text" id="cond_profissional">
+
+    <button onclick="salvarCondicionamento()">Salvar Avaliação</button>
   </div>
 </div>
 
-<!-- ════ PÉLVICA COMPLETA ════ -->
+<!-- TELA PÉLVICA -->
 <div id="telaPelvica" class="hidden">
-  <div class="form-card">
-    <button class="btn-back" onclick="voltar()">⬅ Voltar</button>
-    <h3>Ficha – Pélvica Feminina</h3>
-    <div class="form-grid">
-      <div class="field-group"><label>Nome</label><input type="text" id="pelvic_nome"></div>
-      <div class="field-group"><label>Idade</label><input type="number" id="pelvic_idade"></div>
-      <div class="field-group"><label>Data de Nascimento</label><input type="date" id="pelvic_nascimento"></div>
-      <div class="field-group"><label>Telefone</label><input type="text" id="pelvic_telefone"></div>
+
+<button onclick="voltar()">⬅ Voltar</button>
+
+<!-- ================= DADOS PESSOAIS ================= -->
+<div class="card">
+<h3>Avaliação Pélvica Feminina</h3>
+
+<h4>📌 DADOS PESSOAIS</h4>
+
+<div class="grid-2">
+  <div><label>Nome:</label><input type="text" id="pelvic_nome"></div>
+  <div><label>Idade:</label><input type="number" id="pelvic_idade"></div>
+</div>
+
+<div class="grid-2">
+  <div><label>Data de Nascimento:</label><input type="date" id="pelvic_nascimento"></div>
+  <div><label>Telefone:</label><input type="text" id="pelvic_telefone"></div>
+</div>
+
+<div class="grid-2">
+  <div><label>Profissão:</label><input type="text"></div>
+  <div><label>Estado Civil:</label><input type="text"></div>
+</div>
+
+<label>Data da Avaliação:</label>
+<input type="date">
+
+<label>Diagnóstico Médico:</label>
+<textarea></textarea>
+</div>
+
+<!-- ================= QUEIXA PRINCIPAL ================= -->
+<div class="card">
+<h4>⚕️ QUEIXA PRINCIPAL</h4>
+
+<div class="opcoes-grid">
+<label><input type="checkbox"> Assintomática</label>
+<label><input type="checkbox"> Perda de urina</label>
+<label><input type="checkbox"> Dor pélvica</label>
+<label><input type="checkbox"> Dor durante relação sexual</label>
+<label><input type="checkbox"> Ardência na vulva</label>
+<label><input type="checkbox"> Dificuldade para evacuar</label>
+<label><input type="checkbox"> Urgência urinária</label>
+<label><input type="checkbox"> Dificuldade para urinar</label>
+</div>
+
+<label>Outra:</label>
+<input type="text">
+
+<label>Observações:</label>
+<textarea></textarea>
+</div>
+
+<!-- ================= INCONTINÊNCIA ================= -->
+<div class="card">
+<h4>⚕️ INCONTINÊNCIA</h4>
+
+<div class="grid-2">
+  <div>
+    <strong>Tipo</strong>
+    <div class="opcoes">
+      <label><input type="checkbox"> Ao esforço</label>
+      <label><input type="checkbox"> Urgência</label>
+      <label><input type="checkbox"> Mista</label>
     </div>
-    <div class="opts-grid" style="margin:10px 0">
-      <label><input type="checkbox"> Perda de urina</label>
-      <label><input type="checkbox"> Dor pélvica</label>
-      <label><input type="checkbox"> Urgência urinária</label>
-      <label><input type="checkbox"> Assintomática</label>
+  </div>
+
+  <div>
+    <strong>Perda</strong>
+    <div class="opcoes">
+      <label><input type="checkbox"> Em gotas</label>
+      <label><input type="checkbox"> Em jato</label>
+      <label><input type="checkbox"> Contínuo</label>
     </div>
-    <div class="inline-opts">
-      <span style="font-size:.82rem;color:var(--muted)">Cirurgias:</span>
-      <label><input type="radio" name="pelvic_cirurgia" id="pelvic_cirurgia_sim"> Sim</label>
-      <label><input type="radio" name="pelvic_cirurgia" id="pelvic_cirurgia_nao"> Não</label>
-      <input type="text" id="pelvic_cirurgias_quais" placeholder="Quais?" style="max-width:200px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none">
-    </div>
-    <div class="field-group" style="margin-top:12px"><label>Diagnóstico Fisioterapêutico</label><textarea></textarea></div>
-    <div class="field-group"><label>Objetivos do Tratamento</label><textarea></textarea></div>
-    <div class="field-group"><label>Nome do Fisioterapeuta / CREFITO</label><input type="text"></div>
-    <button class="btn-save" onclick="salvarPelvica()">💾 Salvar</button>
   </div>
 </div>
+
+<label>Faz uso de absorvente?</label>
+<div class="opcoes">
+<label><input type="radio" name="abs"> Sim</label>
+<label><input type="radio" name="abs"> Não</label>
+</div>
+</div>
+
+<!-- ================= FLUXO URINÁRIO ================= -->
+<div class="card">
+<h4>⚕️ FLUXO URINÁRIO</h4>
+
+<div class="opcoes-grid">
+<label><input type="checkbox"> Disúria</label>
+<label><input type="checkbox"> Frequência</label>
+<label><input type="checkbox"> Enurese</label>
+<label><input type="checkbox"> Hesitação</label>
+<label><input type="checkbox"> Esforço</label>
+<label><input type="checkbox"> Perde após urinar</label>
+<label><input type="checkbox"> Jato para e recomeça</label>
+<label><input type="checkbox"> Perde antes de iniciar</label>
+<label><input type="checkbox"> Gotejamento pós miccional</label>
+<label><input type="checkbox"> Esvaziamento incompleto</label>
+</div>
+</div>
+
+<!-- ================= SISTEMA INTESTINAL ================= -->
+<div class="card">
+<h4>⚕️ SISTEMA INTESTINAL</h4>
+
+<div class="opcoes-grid">
+<label><input type="checkbox"> Normal</label>
+<label><input type="checkbox"> Hemorroida</label>
+<label><input type="checkbox"> Perda de gases</label>
+<label><input type="checkbox"> Constipação</label>
+<label><input type="checkbox"> Suja a calcinha</label>
+<label><input type="checkbox"> Perde fezes</label>
+</div>
+
+<label>Outro:</label>
+<input type="text">
+</div>
+
+<!-- ================= HPP ================= -->
+<div class="card">
+<h4>⚕️ HPP</h4>
+
+<div class="opcoes-grid">
+<label><input type="checkbox"> Ansiedade</label>
+<label><input type="checkbox"> Hipertensão</label>
+<label><input type="checkbox"> Diabetes</label>
+<label><input type="checkbox"> Epilepsia</label>
+<label><input type="checkbox"> Doenças Gastrointestinais</label>
+<label><input type="checkbox"> Cardiopatia</label>
+<label><input type="checkbox"> Doença Renal</label>
+</div>
+
+<label>Observações:</label>
+<textarea></textarea>
+
+<label>Cirurgias?</label>
+<div class="opcoes">
+<label><input type="radio" name="pelvic_cirurgia" id="pelvic_cirurgia_nao"> Não</label>
+<label><input type="radio" name="pelvic_cirurgia" id="pelvic_cirurgia_sim"> Sim</label>
+</div>
+<label>Se sim, quais?</label>
+<input type="text" id="pelvic_cirurgias_quais">
+</div>
+
+<!-- ================= HISTÓRICO SOCIAL ================= -->
+<div class="card">
+<h4>⚕️ HISTÓRICO SOCIAL</h4>
+
+<label>Fuma?</label>
+<input type="text">
+
+<label>Álcool:</label>
+<input type="text">
+
+<label>Atividade física:</label>
+<input type="text">
+
+<label>Ingestão de líquido (litros/dia):</label>
+<input type="number">
+
+<label>Evita consumo de líquido?</label>
+<div class="opcoes">
+<label><input type="radio" name="evitaLiquido"> Sim</label>
+<label><input type="radio" name="evitaLiquido"> Não</label>
+</div>
+</div>
+
+<!-- ================= MEDICAMENTOS ================= -->
+<div class="card">
+<h4>💊 MEDICAMENTOS</h4>
+
 
 </template>
+
 
 <!-- ══════════════════════════════
      SCRIPTS
