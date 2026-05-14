@@ -2641,11 +2641,18 @@ window.salvarCondicionamento=()=>salvarBase({totalpass:cm("cond_totalpass"),gymp
 window.salvarPelvica=()=>salvarBase({pelvic_nome:cv("pelvic_nome"),pelvic_idade:cv("pelvic_idade"),pelvic_nascimento:cv("pelvic_nascimento"),pelvic_telefone:cv("pelvic_telefone"),pelvic_cirurgia_sim:cm("pelvic_cirurgia_sim"),pelvic_cirurgia_nao:cm("pelvic_cirurgia_nao"),pelvic_cirurgias_quais:cv("pelvic_cirurgias_quais")});
 
 window.mudarAbaAval=function(aba,btn){
-  document.getElementById("aval-avaliacoes").style.display = aba==="avaliacoes"?"":"none";
-  document.getElementById("aval-evolucoes").style.display = aba==="evolucoes"?"":"none";
+  document.getElementById("aval-avaliacoes").style.display = aba==="avaliacoes"?"block":"none";
+  document.getElementById("aval-evolucoes").style.display = aba==="evolucoes"?"block":"none";
   document.querySelectorAll(".aval-tab").forEach(b=>b.style.borderBottomColor="transparent");
   if(btn) btn.style.borderBottomColor="var(--lilas)";
-  if(aba==="evolucoes") carregarAllEvolucoes();
+  
+  // Carrega os dados de acordo com a aba selecionada
+  if(aba==="avaliacoes") {
+    setTimeout(()=>carregarAvaliacoes(), 100);
+  }
+  if(aba==="evolucoes") {
+    setTimeout(()=>carregarAllEvolucoes(), 100);
+  }
 };
 
 window.carregarAllEvolucoes=function(){
