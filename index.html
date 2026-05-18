@@ -876,33 +876,53 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
       <!-- ════ GESTÃO DE USUÁRIOS (ADM) ════ -->
       <div class="page" id="page-usuarios">
         <div class="inner">
-          <div class="user-manage-card">
-            <h3>👥 Colaboradores Cadastrados</h3>
-            <div class="user-row"><div class="user-av">AL</div><div class="user-info"><div class="uname">Ale</div><div class="urole">Colaboradora • Acesso: Avaliações, Financeiro, Grade, Colaboradores (próprio)</div></div></div>
-            <div class="user-row"><div class="user-av">AA</div><div class="user-info"><div class="uname">Ana Aline</div><div class="urole">Colaboradora • Acesso: Avaliações, Financeiro, Grade, Colaboradores (próprio)</div></div></div>
-            <div class="user-row"><div class="user-av">AN</div><div class="user-info"><div class="uname">Andriely</div><div class="urole">Colaboradora • Acesso: Avaliações, Financeiro, Grade, Colaboradores (próprio)</div></div></div>
-            <div class="user-row"><div class="user-av">GI</div><div class="user-info"><div class="uname">Giovanna</div><div class="urole">Colaboradora • Acesso: Avaliações, Financeiro, Grade, Colaboradores (próprio)</div></div></div>
-            <div class="user-row"><div class="user-av">JE</div><div class="user-info"><div class="uname">Jefferson</div><div class="urole">Colaborador • Acesso: Avaliações, Financeiro, Grade, Colaboradores (próprio)</div></div></div>
-            <div class="user-row"><div class="user-av">ST</div><div class="user-info"><div class="uname">Sthefanny</div><div class="urole">Colaboradora • Acesso: Avaliações, Financeiro, Grade, Colaboradores (próprio)</div></div></div>
-            <div class="user-row"><div class="user-av">VA</div><div class="user-info"><div class="uname">Vanessa</div><div class="urole">Colaboradora • Acesso: Avaliações, Financeiro, Grade, Colaboradores (próprio)</div></div></div>
-            <div class="user-row" style="background:var(--lilas-light);border-radius:10px;padding:12px"><div class="user-av" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">AD</div><div class="user-info"><div class="uname">Administrador</div><div class="urole">Acesso total ao sistema</div></div></div>
+
+          <!-- ── Formulário: Adicionar colaborador ── -->
+          <div class="form-card" style="margin-bottom:20px">
+            <h3>➕ Adicionar Colaborador</h3>
+            <div class="form-grid">
+              <div class="field-group">
+                <label>Nome</label>
+                <input id="adm_novo_nome" type="text" placeholder="Nome do colaborador">
+              </div>
+              <div class="field-group">
+                <label>Senha</label>
+                <input id="adm_novo_senha" type="text" placeholder="Senha de acesso">
+              </div>
+            </div>
+            <button class="btn-save" style="margin-top:14px" onclick="admCriarColaborador()">✅ Criar Colaborador</button>
           </div>
+
+          <!-- ── Lista dinâmica de colaboradores ── -->
+          <div class="user-manage-card">
+            <h3 style="display:flex;align-items:center;justify-content:space-between">
+              👥 Colaboradores Cadastrados
+              <span id="adm_contagem" style="font-size:.75rem;color:var(--muted);font-weight:600"></span>
+            </h3>
+            <div id="adm_lista_colaboradores">
+              <p style="color:var(--muted);font-size:.84rem;padding:8px 0">Carregando...</p>
+            </div>
+            <!-- Administrador (fixo) -->
+            <div class="user-row" style="background:var(--lilas-light);border-radius:10px;padding:12px;margin-top:8px">
+              <div class="user-av" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">AD</div>
+              <div class="user-info">
+                <div class="uname">Administrador</div>
+                <div class="urole">Acesso total ao sistema</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Senhas do Sistema ── -->
           <div class="user-manage-card">
             <h3>🔑 Senhas do Sistema</h3>
             <table class="data-table" style="margin-top:0">
-              <thead><tr><th>Colaborador</th><th>Senha</th><th>Nível</th></tr></thead>
-              <tbody>
-                <tr><td>Ale</td><td><span class="badge-pill p-lilas">ale123</span></td><td>Colaborador</td></tr>
-                <tr><td>Ana Aline</td><td><span class="badge-pill p-lilas">café123</span></td><td>Colaborador</td></tr>
-                <tr><td>Andriely</td><td><span class="badge-pill p-lilas">flamengo123</span></td><td>Colaborador</td></tr>
-                <tr><td>Giovanna</td><td><span class="badge-pill p-lilas">Gio123</span></td><td>Colaborador</td></tr>
-                <tr><td>Jefferson</td><td><span class="badge-pill p-lilas">personal123</span></td><td>Colaborador</td></tr>
-                <tr><td>Sthefanny</td><td><span class="badge-pill p-lilas">bts123</span></td><td>Colaborador</td></tr>
-                <tr><td>Vanessa</td><td><span class="badge-pill p-lilas">academia123</span></td><td>Colaborador</td></tr>
-                <tr><td>adm</td><td><span class="badge-pill p-ciano">movom1973</span></td><td>Administrador</td></tr>
+              <thead><tr><th>Colaborador</th><th>Senha</th><th>Nível</th><th></th></tr></thead>
+              <tbody id="adm_tabela_senhas">
+                <tr><td>adm</td><td><span class="badge-pill p-ciano">movom1973</span></td><td>Administrador</td><td></td></tr>
               </tbody>
             </table>
           </div>
+
         </div>
       </div>
 
@@ -3038,6 +3058,110 @@ function yogaCarregar(){
 window.yogaDel=function(id){
   const mes=document.getElementById("yoga_mes").value;
   fsYoga.collection("movimentacoes").doc(mes).collection("itens").doc(id).delete();
+};
+
+/* ══════════════════════
+   ADM – GESTÃO DE COLABORADORES
+══════════════════════ */
+// Mapa local de senhas (carregado do Firebase + iniciais hardcoded)
+let admSenhasCache = {};
+
+function admCarregarColaboradores(){
+  const lista   = document.getElementById("adm_lista_colaboradores");
+  const tabela  = document.getElementById("adm_tabela_senhas");
+  const contagem= document.getElementById("adm_contagem");
+  if(!lista || !tabela) return;
+
+  lista.innerHTML  = "<p style='color:var(--muted);font-size:.84rem;padding:8px 0'>Carregando...</p>";
+  tabela.innerHTML = "<tr><td>adm</td><td><span class='badge-pill p-ciano'>movom1973</span></td><td>Administrador</td><td></td></tr>";
+
+  dbColab.ref("colaboradores").once("value").then(snap=>{
+    const dados = snap.val() || {};
+    const nomes = Object.keys(dados);
+    lista.innerHTML = "";
+    admSenhasCache  = {};
+
+    nomes.forEach(nome=>{
+      const info = dados[nome] || {};
+      const senha = info.senha || CREDENCIAIS[nome] || "—";
+      admSenhasCache[nome] = senha;
+
+      // card na lista
+      const initials = nome.split(" ").map(w=>w[0]).join("").substring(0,2).toUpperCase();
+      const row = document.createElement("div");
+      row.className = "user-row";
+      row.style.justifyContent = "space-between";
+      row.innerHTML = `
+        <div style="display:flex;align-items:center;gap:10px;flex:1">
+          <div class="user-av">${initials}</div>
+          <div class="user-info">
+            <div class="uname">${nome}</div>
+            <div class="urole">Colaborador • Acesso: Avaliações, Financeiro, Grade, Colaboradores (próprio)</div>
+          </div>
+        </div>
+        <button class="btn-del" style="padding:6px 14px;font-size:.78rem;flex-shrink:0" onclick="admRemoverColaborador('${nome.replace(/'/g,"\\'")}')">🗑 Remover</button>
+      `;
+      lista.appendChild(row);
+
+      // linha na tabela de senhas
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td>${nome}</td><td><span class="badge-pill p-lilas">${senha}</span></td><td>Colaborador</td><td><button class="btn-excluir-sm" onclick="admRemoverColaborador('${nome.replace(/'/g,"\\'")}')">🗑</button></td>`;
+      tabela.insertBefore(tr, tabela.firstChild);
+    });
+
+    contagem.textContent = `${nomes.length} colaborador${nomes.length!==1?"es":""}`;
+
+    if(nomes.length === 0){
+      lista.innerHTML = "<p style='color:var(--muted);font-size:.84rem;padding:8px 0'>Nenhum colaborador cadastrado ainda.</p>";
+    }
+  }).catch(err=>{
+    console.error("Erro ao carregar colaboradores ADM:", err);
+    lista.innerHTML = "<p style='color:#b91c1c;font-size:.84rem'>⚠️ Erro ao carregar. Tente novamente.</p>";
+  });
+}
+
+window.admCriarColaborador = function(){
+  const nomeInp  = document.getElementById("adm_novo_nome");
+  const senhaInp = document.getElementById("adm_novo_senha");
+  const nome  = nomeInp.value.trim();
+  const senha = senhaInp.value.trim();
+
+  if(!nome){ alert("Informe o nome do colaborador."); return; }
+  if(!senha){ alert("Informe a senha do colaborador."); return; }
+
+  // Verifica se já existe
+  dbColab.ref("colaboradores/" + nome).once("value").then(snap=>{
+    if(snap.exists()){ alert("Já existe um colaborador com este nome."); return; }
+
+    // Salva no Firebase (colaboradores) com a senha
+    dbColab.ref("colaboradores/" + nome).set({ senha: senha }).then(()=>{
+      // Atualiza CREDENCIAIS em memória para o login funcionar imediatamente
+      CREDENCIAIS[nome] = senha;
+
+      nomeInp.value  = "";
+      senhaInp.value = "";
+      admCarregarColaboradores();
+      // Atualiza também o select de colaboradores se estiver na página
+      carregarColaboradores();
+      alert(`Colaborador "${nome}" criado com sucesso!`);
+    });
+  });
+};
+
+window.admRemoverColaborador = function(nome){
+  if(!confirm(`Remover o colaborador "${nome}"?\n\nEsta ação não pode ser desfeita.`)) return;
+
+  dbColab.ref("colaboradores/" + nome).remove().then(()=>{
+    // Remove das credenciais em memória
+    delete CREDENCIAIS[nome];
+    admCarregarColaboradores();
+    // Atualiza o select de colaboradores se necessário
+    carregarColaboradores();
+    alert(`Colaborador "${nome}" removido com sucesso.`);
+  }).catch(err=>{
+    console.error("Erro ao remover colaborador:", err);
+    alert("Erro ao remover colaborador. Tente novamente.");
+  });
 };
 </script>
 </body>
