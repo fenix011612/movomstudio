@@ -694,7 +694,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
           <!-- fichas – injetadas abaixo -->
           <div id="fichasAval"></div>
           <!-- detalhe -->
-          <div id="telaDetalhe" class="hidden">
+          <div id="telaDetalhe" class="hidden"><div style="padding:20px"><button onclick="voltar()" style="padding:10px 20px;background:#7b5cff;color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:700;margin-bottom:20px">⬅ Voltar</button></div>
             <div class="form-card">
               <button class="btn-back" onclick="voltar()">⬅ Voltar</button>
               <h3 id="tituloDetalhe"></h3>
@@ -2302,33 +2302,63 @@ function initColab(){
 }
 
 function carregarColaboradores(){
-  const sel  = document.getElementById("colaboradorSelect");
+  const sel = document.getElementById("colaboradorSelect");
   const btnN = document.getElementById("btnNovoColab");
   const btnR = document.getElementById("btnRemColab");
-  const u    = usuarioAtual;
-  sel.innerHTML="";
-
+  const u = usuarioAtual;
+  
+  sel.innerHTML = "";
+  
   dbColab.ref("colaboradores").once("value").then(snap=>{
-    const todosNomes = Object.keys(snap.val()||{});
-
-    if(u.role==="colab"){
-      btnN.style.display="none"; btnR.style.display="none"; sel.disabled=true;
+    const todosNomes = Object.keys(snap.val() || {});
+    
+    if(!todosNomes.length){
+      const op = document.createElement("option");
+      op.textContent = "Nenhum colaborador";
+      sel.appendChild(op);
+      return;
+    }
+    
+    if(u.role === "colab"){
+      btnN.style.display = "none";
+      btnR.style.display = "none";
+      sel.disabled = true;
       const loginNorm = u.nome.trim().toLowerCase();
-      const chaveReal = todosNomes.find(n=>n.trim().toLowerCase()===loginNorm) || u.nome;
+      const chaveReal = todosNomes.find(n => n.trim().toLowerCase() === loginNorm) || u.nome;
       colaboradorAtual = chaveReal;
-      const op=document.createElement("option"); op.value=chaveReal; op.textContent=chaveReal;
+      const op = document.createElement("option");
+      op.value = chaveReal;
+      op.textContent = chaveReal;
       sel.appendChild(op);
     } else {
-      btnN.style.display=""; btnR.style.display=""; sel.disabled=false;
-      todosNomes.forEach(n=>{ const o=document.createElement("option"); o.value=o.textContent=n; sel.appendChild(o); });
-      colaboradorAtual=sel.value;
+      btnN.style.display = "";
+      btnR.style.display = "";
+      sel.disabled = false;
+      todosNomes.forEach(n => {
+        const o = document.createElement("option");
+        o.value = n;
+        o.textContent = n;
+        sel.appendChild(o);
+      });
+      colaboradorAtual = sel.value || todosNomes[0];
     }
-
-    sel.onchange=()=>{ colaboradorAtual=sel.value; carregarDadosColab(); calcularMedia(); };
+    
+    sel.onchange = () => {
+      colaboradorAtual = sel.value;
+      carregarDadosColab();
+      calcularMedia();
+    };
+    
     carregarDadosColab();
     calcularMedia();
+  }).catch(err => {
+    console.error("Erro ao carregar colaboradores:", err);
+    const op = document.createElement("option");
+    op.textContent = "Erro ao carregar";
+    sel.appendChild(op);
   });
 }
+
 
 function mesAnterior(mesISO){
   const [ano,mes]=mesISO.split("-");
@@ -2909,9 +2939,19 @@ window.salvarEvolucao=function(){
 };
 
 window.voltar=function(){
-  ["telaFisioterapia","telaPilates","telaRecovery","telaCondicionamento","telaPelvica","telaDetalhe"].forEach(id=>document.getElementById(id)?.classList.add("hidden"));
-  document.getElementById("telaInicial").classList.remove("hidden");
-  avalAtualDados=null; avalEditId=null;
+  // Oculta todas as telas de fichas
+  const fichas = ["telaFisioterapia","telaPilates","telaRecovery","telaCondicionamento","telaPelvica","telaDetalhe"];
+  fichas.forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.classList.add("hidden");
+  });
+  
+  // Mostra a tela inicial
+  const telaIni = document.getElementById("telaInicial");
+  if(telaIni) telaIni.classList.remove("hidden");
+  
+  avalAtualDados=null;
+  avalEditId=null;
 };
 
 /* ══════════════════════
