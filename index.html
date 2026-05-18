@@ -3315,14 +3315,6 @@ let usuarioAtual = null; // { nome, role }
 function setTab(t){
   tipoLogin = t;
   document.getElementById("tabColab").className = "tab-btn" + (t==="colab"?" active":"");
-  document.getElementById("tabAdm").className   = "tab-btn" + (t==="adm"?" active":"");
-  document.getElementById("loginColab").classList.toggle("hidden", t!=="colab");
-  document.getElementById("loginAdm").classList.toggle("hidden", t!=="adm");
-}
-
-function setTab(t){
-  tipoLogin = t;
-  document.getElementById("tabColab").className = "tab-btn" + (t==="colab"?" active":"");
   document.getElementById("tabAdm").className = "tab-btn" + (t==="adm"?" active":"");
   document.getElementById("loginColab").classList.toggle("hidden", t!=="colab");
   document.getElementById("loginAdm").classList.toggle("hidden", t!=="adm");
@@ -3360,8 +3352,14 @@ function iniciarSessao(u){
   document.getElementById("sbRole").textContent = u.role==="adm" ? "Administrador" : "Colaborador";
 
   montarMenu();
-  // Dados serão carregados via lazy loading quando a página for aberta
-  navigate(document.querySelector(".nav-item"));
+  
+  // Aguarda um frame para garantir que o menu foi renderizado
+  setTimeout(()=>{
+    const firstNavItem = document.querySelector(".nav-item");
+    if(firstNavItem) {
+      navigate(firstNavItem);
+    }
+  }, 10);
 }
 
 function logout(){
