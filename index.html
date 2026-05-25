@@ -457,6 +457,30 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 .galeria-foto p{padding:12px;font-size:.82rem;color:var(--muted);}
 
 /* ══════════════════════════════
+   FINANCEIRO UNIFICADO – TABS
+══════════════════════════════ */
+.fin-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:20px;flex-wrap:wrap;}
+.fin-tab{
+  padding:10px 20px;border:none;background:transparent;cursor:pointer;
+  font-family:'Poppins',sans-serif;font-size:.85rem;font-weight:700;
+  color:var(--muted);border-bottom:3px solid transparent;
+  transition:all .2s;margin-bottom:-2px;
+}
+.fin-tab:hover{color:var(--lilas);}
+.fin-tab.active{color:var(--lilas);border-bottom-color:var(--lilas);}
+.fin-subpage{display:none;}
+.fin-subpage.active{display:block;}
+
+/* Lucro cards */
+.lucro-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:16px 0;}
+.lucro-card{padding:16px;border-radius:14px;text-align:center;font-weight:700;font-family:'Nunito',sans-serif;border:2px solid transparent;}
+.lucro-card small{display:block;font-size:.7rem;font-weight:600;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;}
+.lucro-card.entradas{background:#dcfce7;color:#166534;border-color:#bbf7d0;}
+.lucro-card.despesas{background:#fee2e2;color:#b91c1c;border-color:#fecaca;}
+.lucro-card.lucro-pos{background:var(--lilas-light);color:var(--lilas);border-color:var(--lilas-mid);}
+.lucro-card.lucro-neg{background:#fff7ed;color:#c2410c;border-color:#fed7aa;}
+
+/* ══════════════════════════════
    AVALIAÇÕES
 ══════════════════════════════ */
 .lista-aval-item{
@@ -601,61 +625,183 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
         </div>
       </div>
 
-      <!-- ════ FINANCEIRO – ENTRADAS MOVOM ════ -->
+      <!-- ════ FINANCEIRO UNIFICADO ════ -->
       <div class="page" id="page-financeiro">
         <div class="inner">
-          <div class="form-card">
-            <h3>💰 Nova Entrada</h3>
-            <div class="form-grid">
-              <div class="field-group">
-                <label>Mês</label>
-                <select id="fin_mesSelect"></select>
+
+          <!-- ABAS INTERNAS DO FINANCEIRO -->
+          <div class="fin-tabs">
+            <button class="fin-tab active" onclick="finTab('entradas',this)">💰 Entradas</button>
+            <button class="fin-tab" onclick="finTab('yoga',this)">🧘 Financeiro Yoga</button>
+            <button class="fin-tab" onclick="finTab('despesas',this)">📉 Despesas Totais</button>
+            <button class="fin-tab" onclick="finTab('insumos',this)">📦 Insumos</button>
+          </div>
+
+          <!-- ──── SUB-ABA: ENTRADAS ──── -->
+          <div class="fin-subpage active" id="fin-entradas">
+            <div class="form-card">
+              <h3>💰 Nova Entrada</h3>
+              <div class="form-grid">
+                <div class="field-group">
+                  <label>Mês</label>
+                  <select id="fin_mesSelect"></select>
+                </div>
+                <div class="field-group">
+                  <label>Nome do aluno</label>
+                  <input id="fin_nome" placeholder="Nome completo">
+                </div>
+                <div class="field-group">
+                  <label>Gmail</label>
+                  <input id="fin_gmail" placeholder="email@exemplo.com">
+                </div>
+                <div class="field-group">
+                  <label>CPF / CNPJ</label>
+                  <input id="fin_cpf" placeholder="000.000.000-00">
+                </div>
+                <div class="field-group">
+                  <label>Atividade</label>
+                  <select id="fin_atividade">
+                    <option>Pilates</option><option>Yoga</option>
+                    <option>Pilates/Yoga</option><option>Fisioterapia</option><option>Outros</option>
+                  </select>
+                </div>
+                <div class="field-group">
+                  <label>Pagamento</label>
+                  <select id="fin_pagamento">
+                    <option>Pix</option><option>Dinheiro</option><option>Débito</option><option>Crédito</option>
+                  </select>
+                </div>
+                <div class="field-group">
+                  <label>Valor R$</label>
+                  <input id="fin_valor" type="number" placeholder="0,00">
+                </div>
+                <div class="field-group">
+                  <label>Nº NF (opcional)</label>
+                  <input id="fin_nf" placeholder="NF-0000">
+                </div>
+                <div class="form-full">
+                  <button class="btn-save" onclick="addEntrada()">Adicionar Entrada</button>
+                </div>
               </div>
-              <div class="field-group">
-                <label>Nome do aluno</label>
-                <input id="fin_nome" placeholder="Nome completo">
+            </div>
+            <p class="fin-total" id="fin_totalMes">Total do mês: R$ 0,00</p>
+            <div class="table-card">
+              <table class="data-table">
+                <thead><tr><th>Nome</th><th>Gmail</th><th>CPF/CNPJ</th><th>Atividade</th><th>Pagamento</th><th>Valor</th><th>Data</th><th>NF</th><th></th></tr></thead>
+                <tbody id="fin_tabela"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- ──── SUB-ABA: FINANCEIRO YOGA ──── -->
+          <div class="fin-subpage" id="fin-yoga">
+            <div class="form-card">
+              <h3>🧘 Nova Movimentação – Yoga</h3>
+              <div class="form-grid">
+                <div class="field-group"><label>Mês</label><select id="yoga_mes"></select></div>
+                <div class="field-group"><label>Tipo</label>
+                  <select id="yoga_tipo" onchange="yogaLabel()">
+                    <option value="yoga">Yoga (Entrada)</option>
+                    <option value="lojinha">Lojinha (Entrada)</option>
+                    <option value="prof">Pagamento Professores (Saída)</option>
+                  </select>
+                </div>
+                <div class="field-group"><label id="yoga_labelNome">Nome do aluno</label><input id="yoga_nome" placeholder="Nome"></div>
+                <div class="field-group"><label>Pagamento</label>
+                  <select id="yoga_pag"><option>Pix</option><option>Dinheiro</option></select>
+                </div>
+                <div class="field-group"><label>Descrição</label><input id="yoga_desc" placeholder="Descrição"></div>
+                <div class="field-group"><label>Valor R$</label><input id="yoga_valor" type="number" placeholder="0,00"></div>
+                <div class="form-full"><button class="btn-save" onclick="yogaAdd()">Adicionar</button></div>
               </div>
-              <div class="field-group">
-                <label>Gmail</label>
-                <input id="fin_gmail" placeholder="email@exemplo.com">
+            </div>
+            <div class="resumo-cards">
+              <div class="resumo-card entrada"><small>Entradas</small>R$ <span id="yoga_ent">0,00</span></div>
+              <div class="resumo-card saida"><small>Saídas</small>R$ <span id="yoga_sai">0,00</span></div>
+              <div class="resumo-card saldo"><small>Saldo</small>R$ <span id="yoga_sal">0,00</span></div>
+            </div>
+            <div class="table-card">
+              <table class="data-table">
+                <thead><tr><th>Tipo</th><th>Nome</th><th>Pagamento</th><th>Descrição</th><th>Valor</th><th>Data</th><th></th></tr></thead>
+                <tbody id="yoga_tabela"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- ──── SUB-ABA: DESPESAS TOTAIS ──── -->
+          <div class="fin-subpage" id="fin-despesas">
+            <div class="form-card">
+              <h3>📉 Nova Despesa</h3>
+              <div class="form-grid">
+                <div class="field-group"><label>Mês</label><select id="desp_mes"></select></div>
+                <div class="field-group"><label>Data</label><input type="date" id="desp_data"></div>
+                <div class="field-group"><label>Nome da despesa</label><input type="text" id="desp_nome" placeholder="Ex: Aluguel, Energia..."></div>
+                <div class="field-group"><label>Centro de custo</label>
+                  <select id="desp_centro">
+                    <option value="">Selecione...</option>
+                    <option>Administrativo</option><option>Operacional</option>
+                    <option>Marketing</option><option>RH / Pessoal</option>
+                    <option>Equipamentos</option><option>Outros</option>
+                  </select>
+                </div>
+                <div class="field-group"><label>Observação</label><input type="text" id="desp_obs" placeholder="Observações adicionais"></div>
+                <div class="field-group"><label>Valor R$</label><input type="number" id="desp_valor" placeholder="0,00" step="0.01"></div>
+                <div class="form-full">
+                  <button class="btn-save" onclick="addDespesa()">Adicionar Despesa</button>
+                </div>
               </div>
-              <div class="field-group">
-                <label>CPF / CNPJ</label>
-                <input id="fin_cpf" placeholder="000.000.000-00">
+            </div>
+
+            <!-- Resumo de lucro -->
+            <div class="table-card" style="padding:20px;margin-bottom:0">
+              <h3 style="font-family:'Nunito',sans-serif;font-weight:800;color:var(--text);margin-bottom:14px">📊 Resumo do Mês</h3>
+              <div class="lucro-grid">
+                <div class="lucro-card entradas"><small>💰 Entradas</small>R$ <span id="lucro_entradas">0,00</span></div>
+                <div class="lucro-card despesas"><small>📉 Despesas</small>R$ <span id="lucro_despesas">0,00</span></div>
+                <div class="lucro-card despesas"><small>🧘 Yoga (saídas)</small>R$ <span id="lucro_yoga">0,00</span></div>
+                <div class="lucro-card despesas"><small>📦 Insumos</small>R$ <span id="lucro_insumos">0,00</span></div>
+                <div class="lucro-card lucro-pos" id="lucroCard"><small>📈 Lucro</small>R$ <span id="lucro_valor">0,00</span></div>
               </div>
-              <div class="field-group">
-                <label>Atividade</label>
-                <select id="fin_atividade">
-                  <option>Pilates</option><option>Yoga</option>
-                  <option>Pilates/Yoga</option><option>Fisioterapia</option><option>Outros</option>
-                </select>
+            </div>
+
+            <p class="fin-total" id="desp_totalMes" style="margin-top:10px">Total de Despesas do mês: R$ 0,00</p>
+            <div class="table-card">
+              <div class="table-header">
+                <span class="table-title">📋 Despesas Cadastradas</span>
               </div>
-              <div class="field-group">
-                <label>Pagamento</label>
-                <select id="fin_pagamento">
-                  <option>Pix</option><option>Dinheiro</option><option>Débito</option><option>Crédito</option>
-                </select>
-              </div>
-              <div class="field-group">
-                <label>Valor R$</label>
-                <input id="fin_valor" type="number" placeholder="0,00">
-              </div>
-              <div class="field-group">
-                <label>Nº NF (opcional)</label>
-                <input id="fin_nf" placeholder="NF-0000">
-              </div>
-              <div class="form-full">
-                <button class="btn-save" onclick="addEntrada()">Adicionar Entrada</button>
+              <div style="overflow-x:auto">
+                <table class="data-table">
+                  <thead><tr><th>Data</th><th>Nome</th><th>Centro de Custo</th><th>Observação</th><th>Valor</th><th></th></tr></thead>
+                  <tbody id="desp_tabela"></tbody>
+                </table>
               </div>
             </div>
           </div>
-          <p class="fin-total" id="fin_totalMes">Total do mês: R$ 0,00</p>
-          <div class="table-card">
-            <table class="data-table">
-              <thead><tr><th>Nome</th><th>Gmail</th><th>CPF/CNPJ</th><th>Atividade</th><th>Pagamento</th><th>Valor</th><th>Data</th><th>NF</th><th></th></tr></thead>
-              <tbody id="fin_tabela"></tbody>
-            </table>
+
+          <!-- ──── SUB-ABA: INSUMOS ──── -->
+          <div class="fin-subpage" id="fin-insumos">
+            <div class="form-card">
+              <h3>🗂 Filtro</h3>
+              <div style="display:flex;gap:12px;flex-wrap:wrap">
+                <div class="field-group" style="flex:1"><label>Mês</label><select id="ins_mes"></select></div>
+                <div class="field-group" style="flex:1"><label>Ano</label><select id="ins_ano"></select></div>
+              </div>
+            </div>
+            <div class="table-card">
+              <div class="table-header">
+                <span class="table-title">📦 Planilha de Insumos</span>
+                <button class="btn btn-primary" onclick="insAdicionar()" style="margin-left:auto">➕ Insumo</button>
+              </div>
+              <div style="overflow-x:auto">
+                <table class="data-table">
+                  <thead><tr><th>Insumo</th><th>Custo</th><th>Qtd</th><th>Data</th><th>Local</th><th>Pagamento</th><th>Total</th><th></th></tr></thead>
+                  <tbody id="ins_tabela"></tbody>
+                </table>
+              </div>
+            </div>
+            <div class="insumos-total" id="ins_total">Total do Mês: R$ 0,00</div>
           </div>
+
         </div>
       </div>
 
@@ -727,7 +873,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
             </div>
           </div>
 
-          <!-- fichas – injetadas abaixo -->
+          <!-- fichas – injetadas via JS no DOMContentLoaded -->
           <div id="fichasAval"></div>
           <!-- detalhe -->
           <div id="telaDetalhe" class="hidden"><div style="padding:20px"><button onclick="voltar()" style="padding:10px 20px;background:#7b5cff;color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:700;margin-bottom:20px">⬅ Voltar</button></div>
@@ -779,68 +925,9 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
         </div>
       </div>
 
-      <!-- ════ INSUMOS ════ -->
-      <div class="page" id="page-insumos">
-        <div class="inner">
-          <div class="form-card">
-            <h3>🗂 Filtro</h3>
-            <div style="display:flex;gap:12px;flex-wrap:wrap">
-              <div class="field-group" style="flex:1"><label>Mês</label><select id="ins_mes"></select></div>
-              <div class="field-group" style="flex:1"><label>Ano</label><select id="ins_ano"></select></div>
-            </div>
-          </div>
-          <div class="table-card">
-            <div class="table-header">
-              <span class="table-title">📦 Planilha de Insumos</span>
-              <button class="btn btn-primary" onclick="insAdicionar()" style="margin-left:auto">➕ Insumo</button>
-            </div>
-            <div style="overflow-x:auto">
-              <table class="data-table">
-                <thead><tr><th>Insumo</th><th>Custo</th><th>Qtd</th><th>Data</th><th>Local</th><th>Pagamento</th><th>Total</th><th></th></tr></thead>
-                <tbody id="ins_tabela"></tbody>
-              </table>
-            </div>
-          </div>
-          <div class="insumos-total" id="ins_total">Total do Mês: R$ 0,00</div>
-        </div>
-      </div>
+      <!-- insumos integrado ao Financeiro -->
 
-      <!-- ════ YOGA FINANCEIRO ════ -->
-      <div class="page" id="page-yoga">
-        <div class="inner">
-          <div class="form-card">
-            <h3>🧘 Nova Movimentação – Yoga</h3>
-            <div class="form-grid">
-              <div class="field-group"><label>Mês</label><select id="yoga_mes"></select></div>
-              <div class="field-group"><label>Tipo</label>
-                <select id="yoga_tipo" onchange="yogaLabel()">
-                  <option value="yoga">Yoga (Entrada)</option>
-                  <option value="lojinha">Lojinha (Entrada)</option>
-                  <option value="prof">Pagamento Professores (Saída)</option>
-                </select>
-              </div>
-              <div class="field-group"><label id="yoga_labelNome">Nome do aluno</label><input id="yoga_nome" placeholder="Nome"></div>
-              <div class="field-group"><label>Pagamento</label>
-                <select id="yoga_pag"><option>Pix</option><option>Dinheiro</option></select>
-              </div>
-              <div class="field-group"><label>Descrição</label><input id="yoga_desc" placeholder="Descrição"></div>
-              <div class="field-group"><label>Valor R$</label><input id="yoga_valor" type="number" placeholder="0,00"></div>
-              <div class="form-full"><button class="btn-save" onclick="yogaAdd()">Adicionar</button></div>
-            </div>
-          </div>
-          <div class="resumo-cards">
-            <div class="resumo-card entrada"><small>Entradas</small>R$ <span id="yoga_ent">0,00</span></div>
-            <div class="resumo-card saida"><small>Saídas</small>R$ <span id="yoga_sai">0,00</span></div>
-            <div class="resumo-card saldo"><small>Saldo</small>R$ <span id="yoga_sal">0,00</span></div>
-          </div>
-          <div class="table-card">
-            <table class="data-table">
-              <thead><tr><th>Tipo</th><th>Nome</th><th>Pagamento</th><th>Descrição</th><th>Valor</th><th>Data</th><th></th></tr></thead>
-              <tbody id="yoga_tabela"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+      <!-- yoga integrado ao Financeiro -->
 
       <!-- ════ SITE INSTITUCIONAL ════ -->
       <div class="page" id="page-site">
@@ -1096,9 +1183,9 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 </div><!-- /app -->
 
 <!-- ══════════════════════════════
-     FICHAS DE AVALIAÇÃO (HTML)
+     FICHAS DE AVALIAÇÃO (DOM direto – sem template)
 ══════════════════════════════ -->
-<template id="tpl-fichas">
+<div id="fichasContainer" style="display:none">
 
 <!-- ════ FISIOTERAPIA COMPLETA ════ -->
 <div id="telaFisioterapia" class="hidden">
@@ -2254,9 +2341,19 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 <!-- ================= MEDICAMENTOS ================= -->
 <div class="card">
 <h4>💊 MEDICAMENTOS</h4>
+<label>Usa medicamentos?</label>
+<div class="opcoes">
+<label><input type="radio" name="pelvic_med"> Sim</label>
+<label><input type="radio" name="pelvic_med"> Não</label>
+</div>
+<textarea placeholder="Se sim, quais?"></textarea>
+</div>
 
+<button onclick="salvarPelvica()">Salvar Avaliação</button>
+</div><!-- fecha card pelvica -->
+</div><!-- fecha telaPelvica -->
 
-</template>
+</div><!-- fecha fichasContainer -->
 
 
 <!-- ══════════════════════════════
@@ -2336,8 +2433,6 @@ const MENUS = {
     {id:"grade",         icon:"📅", label:"Grade de Horários"},
     {id:"avaliacoes",    icon:"📋", label:"Avaliações"},
     {id:"agenda",        icon:"🗓", label:"Agenda"},
-    {id:"insumos",       icon:"📦", label:"Insumos"},
-    {id:"yoga",          icon:"🧘", label:"Financeiro Yoga"},
     {id:"site",          icon:"🌐", label:"Site MOVOM"},
     {id:"usuarios",      icon:"🔑", label:"Usuários"},
   ],
@@ -2351,12 +2446,10 @@ const MENUS = {
 
 const TOP_META = {
   colaboradores:{title:"Colaboradores",     badge:"Planilha",   cls:"badge-lilas"},
-  financeiro:   {title:"Financeiro",         badge:"Entradas",   cls:"badge-ciano"},
+  financeiro:   {title:"Financeiro",         badge:"Unificado",  cls:"badge-ciano"},
   grade:        {title:"Grade de Horários",  badge:"Agenda",     cls:"badge-orange"},
   avaliacoes:   {title:"Avaliações",         badge:"Fichas",     cls:"badge-red"},
   agenda:       {title:"Agenda MOVOM",       badge:"Agendamento",cls:"badge-green"},
-  insumos:      {title:"Insumos",            badge:"Planilha",   cls:"badge-lilas"},
-  yoga:         {title:"Financeiro – Yoga",  badge:"Yoga",       cls:"badge-ciano"},
   site:         {title:"Site Institucional", badge:"MOVOM",      cls:"badge-lilas"},
   usuarios:     {title:"Usuários",           badge:"Admin",      cls:"badge-orange"},
 };
@@ -2391,12 +2484,11 @@ function navigate(el){
   // Carrega dados apenas quando a página é aberta (lazy loading)
   setTimeout(()=>{
     if(pg==="colaboradores") {if(!document.getElementById("colaboradorSelect").value) initColab();}
-    if(pg==="financeiro") {if(!document.getElementById("fin_mesSelect").value) initFin();}
+    if(pg==="financeiro") { initFinanceiro(); }
     if(pg==="grade") {if(!document.getElementById("grade_container").children.length) initGrade();}
     if(pg==="agenda") {if(!document.getElementById("agTabela").innerHTML) initAgenda();}
-    if(pg==="insumos") {if(!document.getElementById("ins_mes").value) initInsumos();}
-    if(pg==="yoga") {if(!document.getElementById("yoga_mes").value) initYoga();}
     if(pg==="avaliacoes") carregarAvaliacoes();
+    if(pg==="usuarios") admCarregarColaboradores();
   }, 50);
 }
 
@@ -2450,11 +2542,9 @@ window.inicializarFirebases = function(){
   const activePageId = document.querySelector(".page.active")?.id;
   
   if(activePageId==="page-colaboradores") initColab();
-  if(activePageId==="page-financeiro") initFin();
+  if(activePageId==="page-financeiro") initFinanceiro();
   if(activePageId==="page-grade") initGrade();
   if(activePageId==="page-agenda") initAgenda();
-  if(activePageId==="page-insumos") initInsumos();
-  if(activePageId==="page-yoga") initYoga();
 };
 
 /* ══════════════════════
@@ -2690,9 +2780,46 @@ function calcularMedia(){
 window.novoColaborador=function(){ const n=prompt("Nome:");if(n){ dbColab.ref("colaboradores/"+n).set({}); carregarColaboradores(); } };
 window.removerColaborador=function(){ if(confirm("Remover?")){ dbColab.ref("colaboradores/"+colaboradorAtual).remove(); carregarColaboradores(); } };
 
-/* ══════════════════════
-   FINANCEIRO – ENTRADAS
-══════════════════════ */
+/* ══════════════════════════════
+   INICIALIZAÇÃO – injeta fichas no DOM
+══════════════════════════════ */
+document.addEventListener("DOMContentLoaded", function(){
+  // Move fichas do container oculto para dentro da page de avaliações
+  const container = document.getElementById("fichasContainer");
+  const target    = document.getElementById("fichasAval");
+  if(container && target){
+    while(container.firstChild){
+      target.appendChild(container.firstChild);
+    }
+    container.remove();
+  }
+});
+
+/* ══════════════════════════════
+   FINANCEIRO – CONTROLE DE ABAS
+══════════════════════════════ */
+let _finInit = {entradas:false, yoga:false, despesas:false, insumos:false};
+
+function finTab(id, btn){
+  document.querySelectorAll(".fin-subpage").forEach(p=>p.classList.remove("active"));
+  document.getElementById("fin-"+id).classList.add("active");
+  document.querySelectorAll(".fin-tab").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  // Lazy init de cada sub-aba
+  if(id==="entradas"  && !_finInit.entradas){ initFin();    _finInit.entradas=true; }
+  if(id==="yoga"      && !_finInit.yoga)    { initYoga();   _finInit.yoga=true;    }
+  if(id==="despesas"  && !_finInit.despesas){ initDespesas(); _finInit.despesas=true; }
+  if(id==="insumos"   && !_finInit.insumos) { initInsumos(); _finInit.insumos=true; }
+  // Atualiza lucro sempre que mudar aba despesas
+  if(id==="despesas") recalcularLucro();
+}
+
+function initFinanceiro(){
+  // Abre na aba Entradas por padrão e inicializa
+  if(!_finInit.entradas){ initFin(); _finInit.entradas=true; }
+}
+
+
 let finCurrentRef=null;
 function initFin(){
   const meses=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
@@ -2734,6 +2861,110 @@ function carregarFinanceiro(){
 window.updateNF=(mes,id,v)=>dbFin.ref(`entradas/${mes}/${id}`).update({nf:v});
 window.updateCPF=(mes,id,v)=>dbFin.ref(`entradas/${mes}/${id}`).update({cpf:v});
 window.delEntrada=(mes,id)=>dbFin.ref(`entradas/${mes}/${id}`).remove();
+
+/* ══════════════════════
+   DESPESAS TOTAIS
+══════════════════════ */
+let despCurrentRef=null, _despMeses=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+
+function initDespesas(){
+  const sel=document.getElementById("desp_mes");
+  if(!sel.options.length){
+    _despMeses.forEach(m=>{const o=document.createElement("option");o.value=o.textContent=m;sel.appendChild(o);});
+    sel.value=_despMeses[new Date().getMonth()];
+    sel.addEventListener("change",carregarDespesas);
+  }
+  // Data padrão = hoje
+  const di=document.getElementById("desp_data");
+  if(!di.value) di.value=new Date().toISOString().split("T")[0];
+  carregarDespesas();
+}
+
+window.addDespesa=function(){
+  const mes=document.getElementById("desp_mes").value;
+  const dados={
+    data:document.getElementById("desp_data").value,
+    nome:document.getElementById("desp_nome").value,
+    centro:document.getElementById("desp_centro").value,
+    obs:document.getElementById("desp_obs").value,
+    valor:Number(document.getElementById("desp_valor").value||0),
+    criadoEm:new Date().toLocaleString("pt-BR")
+  };
+  if(!dados.nome||!dados.valor){alert("Preencha nome e valor.");return;}
+  dbFin.ref("despesas/"+mes).push(dados);
+  ["desp_nome","desp_obs","desp_valor"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("desp_centro").value="";
+};
+
+function carregarDespesas(){
+  const mes=document.getElementById("desp_mes").value;
+  const tabela=document.getElementById("desp_tabela");
+  const totalEl=document.getElementById("desp_totalMes");
+  tabela.innerHTML=""; totalEl.innerText="Total de Despesas do mês: R$ 0,00";
+  if(despCurrentRef) despCurrentRef.off();
+  despCurrentRef=dbFin.ref("despesas/"+mes);
+  despCurrentRef.on("value",snap=>{
+    tabela.innerHTML=""; let tot=0;
+    snap.forEach(item=>{
+      const e=item.val(); tot+=Number(e.valor||0);
+      const tr=document.createElement("tr");
+      tr.innerHTML=`<td>${e.data||""}</td><td>${e.nome||""}</td><td>${e.centro||""}</td><td>${e.obs||""}</td>
+        <td>R$ ${Number(e.valor||0).toFixed(2)}</td>
+        <td><button class="btn-excluir-sm" onclick="delDespesa('${mes}','${item.key}')">🗑</button></td>`;
+      tabela.appendChild(tr);
+    });
+    totalEl.innerText=`Total de Despesas do mês: R$ ${tot.toFixed(2)}`;
+    recalcularLucro();
+  });
+}
+
+window.delDespesa=(mes,id)=>dbFin.ref(`despesas/${mes}/${id}`).remove();
+
+/* ══════════════════════
+   LUCRO = ENTRADAS - (DESPESAS + YOGA_SAÍDAS + INSUMOS)
+══════════════════════ */
+function recalcularLucro(){
+  const mes = (document.getElementById("desp_mes")||{}).value || _despMeses[new Date().getMonth()];
+  const finMes = (document.getElementById("fin_mesSelect")||{}).value || mes;
+
+  // Entradas
+  const pEntradas = dbFin.ref("entradas/"+finMes).once("value").then(snap=>{
+    let t=0; snap.forEach(i=>t+=Number(i.val().valor||0)); return t;
+  });
+
+  // Despesas
+  const pDesp = dbFin.ref("despesas/"+mes).once("value").then(snap=>{
+    let t=0; snap.forEach(i=>t+=Number(i.val().valor||0)); return t;
+  });
+
+  // Yoga saídas (Firestore)
+  const pYoga = fsYoga.collection("movimentacoes").doc(mes).collection("itens").get().then(snap=>{
+    let t=0; snap.forEach(d=>{ if(d.data().movimento==="saida") t+=Number(d.data().valor||0); }); return t;
+  }).catch(()=>0);
+
+  // Insumos
+  const mIdx = _despMeses.indexOf(mes);
+  const ano = (document.getElementById("ins_ano")||{}).value || new Date().getFullYear();
+  const pIns = dbIns.ref(`insumos/${ano}/${mIdx}`).once("value").then(snap=>{
+    let t=0; if(snap.exists()) snap.val().forEach(i=>t+=(Number(i.custo||0)*Number(i.quantidade||0))); return t;
+  }).catch(()=>0);
+
+  Promise.all([pEntradas, pDesp, pYoga, pIns]).then(([ent,desp,yoga,ins])=>{
+    const lucro = ent - desp - yoga - ins;
+    const el_ent = document.getElementById("lucro_entradas");
+    const el_desp = document.getElementById("lucro_despesas");
+    const el_yoga = document.getElementById("lucro_yoga");
+    const el_ins = document.getElementById("lucro_insumos");
+    const el_lucro = document.getElementById("lucro_valor");
+    const card = document.getElementById("lucroCard");
+    if(el_ent) el_ent.textContent=ent.toFixed(2);
+    if(el_desp) el_desp.textContent=desp.toFixed(2);
+    if(el_yoga) el_yoga.textContent=yoga.toFixed(2);
+    if(el_ins) el_ins.textContent=ins.toFixed(2);
+    if(el_lucro){ el_lucro.textContent=lucro.toFixed(2); }
+    if(card){ card.className="lucro-card "+(lucro>=0?"lucro-pos":"lucro-neg"); }
+  }).catch(err=>console.warn("Lucro calc error:",err));
+}
 
 /* ══════════════════════
    GRADE DE HORÁRIOS
