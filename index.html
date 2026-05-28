@@ -506,8 +506,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 .user-info .uname{font-weight:700;font-size:.88rem;}
 .user-info .urole{font-size:.72rem;color:var(--muted);}
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  </head>
+</head>
 <body>
 
 <!-- ══════════════════════════════
@@ -859,7 +858,19 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                     <option>Pélvica</option><option>Recovery</option><option>Condicionamento</option>
                   </select>
                 </div>
-                <div id="listaAvaliacoes" style="padding:12px 20px">Carregando...</div>
+                <div id="listaAvaliacoes" style="padding:12px 20px">
+        <div style="margin-bottom: 16px; display: flex; gap: 10px; flex-wrap: wrap;">
+          <input type="text" id="pesquisaAvaliacao" placeholder="🔍 Buscar paciente..." style="flex: 1; min-width: 200px; padding: 10px 14px; border: 2px solid #e4e1f5; border-radius: 10px; font-family: 'Poppins', sans-serif;">
+          <select id="filtroOrdenacao" style="padding: 10px 14px; border: 2px solid #e4e1f5; border-radius: 10px; font-family: 'Poppins', sans-serif; background: white;">
+            <option value="">Ordenar por...</option>
+            <option value="az">A → Z</option>
+            <option value="za">Z → A</option>
+            <option value="recente">Mais Recente</option>
+            <option value="antigo">Mais Antigo</option>
+          </select>
+        </div>
+        <div id="conteudoListaAvaliacoes">Carregando...</div>
+      </div>Carregando...</div>
               </div>
             </div>
           </div>
@@ -943,7 +954,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
               <a href="#" onclick="siteNav('s-agendar',this);return false">Agendar</a>
               <a href="#" onclick="siteNav('s-satisfacao',this);return false">Satisfação</a>
               <a href="#" onclick="siteNav('s-contato',this);return false">Contato</a>
-              
+              <a href="#" onclick="siteNav('s-admin',this);return false">Admin</a>
             </div>
           </nav>
           <div class="site-hero-content">
@@ -1138,78 +1149,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                 <label>Nome</label>
                 <input id="adm_novo_nome" type="text" placeholder="Nome do colaborador">
               </div>
-              
-    <!-- AVALIAÇÃO MIT -->
-    <div class="form-card">
-      <h3>🧬 Avaliação MIT</h3>
-      <div style="overflow-x: auto;">
-        <table class="eval-table" style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
-          <thead style="background: #ede9ff;">
-            <tr>
-              <th style="padding: 12px; text-align: left; font-weight: 700; border: 1px solid #e4e1f5;">Estrutura</th>
-              <th style="padding: 12px; text-align: center; border: 1px solid #e4e1f5;">ADM</th>
-              <th style="padding: 12px; text-align: center; border: 1px solid #e4e1f5;">Resistência</th>
-              <th style="padding: 12px; text-align: center; border: 1px solid #e4e1f5;">Estabilidade</th>
-              <th style="padding: 12px; text-align: center; border: 1px solid #e4e1f5;">Mov. Completo</th>
-              <th style="padding: 12px; text-align: center; border: 1px solid #e4e1f5;">Mov. Incompleto</th>
-              <th style="padding: 12px; text-align: center; border: 1px solid #e4e1f5;">Mov. c/ Dor</th>
-              <th style="padding: 12px; text-align: center; border: 1px solid #e4e1f5;">Não Mov.</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td style="padding: 12px; border: 1px solid #e4e1f5; font-weight: 600;">Pés</td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="number" style="width: 60px; padding: 6px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td></tr>
-            <tr><td style="padding: 12px; border: 1px solid #e4e1f5; font-weight: 600;">Tornozelo</td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="number" style="width: 60px; padding: 6px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td></tr>
-            <tr><td style="padding: 12px; border: 1px solid #e4e1f5; font-weight: 600;">Joelho</td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="number" style="width: 60px; padding: 6px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td></tr>
-            <tr><td style="padding: 12px; border: 1px solid #e4e1f5; font-weight: 600;">Quadril</td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="number" style="width: 60px; padding: 6px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td></tr>
-            <tr><td style="padding: 12px; border: 1px solid #e4e1f5; font-weight: 600;">Lombar</td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="number" style="width: 60px; padding: 6px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td></tr>
-            <tr><td style="padding: 12px; border: 1px solid #e4e1f5; font-weight: 600;">Escápulas</td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="number" style="width: 60px; padding: 6px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td></tr>
-            <tr><td style="padding: 12px; border: 1px solid #e4e1f5; font-weight: 600;">Ombros</td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="number" style="width: 60px; padding: 6px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td></tr>
-            <tr><td style="padding: 12px; border: 1px solid #e4e1f5; font-weight: 600;">Dorsal</td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="number" style="width: 60px; padding: 6px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td></tr>
-            <tr><td style="padding: 12px; border: 1px solid #e4e1f5; font-weight: 600;">Cervical</td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="number" style="width: 60px; padding: 6px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td><td style="padding: 12px; border: 1px solid #e4e1f5; text-align: center;"><input type="checkbox" style="width: 20px; height: 20px;"></td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="field-group">
-        <label>Observações MIT</label>
-        <textarea id="obsMIT" placeholder="Observações adicionais..." style="min-height: 80px; resize: vertical;"></textarea>
-      </div>
-    </div>
-
-    <!-- TESTES DE CONDICIONAMENTO FÍSICO -->
-    <div class="form-card">
-      <h3>🏃 Testes de Condicionamento Físico</h3>
-      <div class="form-grid g3">
-        <div class="field-group">
-          <label>Teste do Degrau/Step (TD2)</label>
-          <input type="number" id="testeDegrau" placeholder="Número de subidas">
-        </div>
-        <div class="field-group">
-          <label>Teste de Marcha Estacionária (TME2)</label>
-          <input type="number" id="testeMarcha" placeholder="Número de elevações">
-        </div>
-        <div class="field-group">
-          <label>Escala de Borg (Dispneia)</label>
-          <select id="escalaBorg">
-            <option value="">Selecione...</option>
-            <option value="0">0 - Nenhuma</option>
-            <option value="0.5">0.5 - Muito muito leve</option>
-            <option value="1">1 - Muito leve</option>
-            <option value="2">2 - Leve</option>
-            <option value="3">3 - Moderada</option>
-            <option value="4">4 - Um tanto forte</option>
-            <option value="5">5 - Forte</option>
-            <option value="6">6</option>
-            <option value="7">7 - Muito forte</option>
-            <option value="8">8</option>
-            <option value="9">9 - Muito muito forte</option>
-            <option value="10">10 - Máxima</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="field-group">
+              <div class="field-group">
                 <label>Senha</label>
                 <input id="adm_novo_senha" type="text" placeholder="Senha de acesso">
               </div>
@@ -1796,7 +1736,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 
     <div class="grid-2">
       <div>
-        <label>EVA:</label>
+        <label>EVA 1:</label>
         <input type="text" id="pilates_eva1">
         <label>Região:</label>
         <input type="text" id="pilates_regiao1">
@@ -3835,413 +3775,105 @@ window.admRemoverColaborador = function(nome){
   });
 };
 
-// ===== ADMIN PORTAL =====
-function verificarAcessoAdmin() {
-  document.getElementById('adminModal').classList.remove('hidden');
-}
-
-function entrarAdmin() {
-  const senha = document.getElementById('senhaAdminPortal').value;
-  if(senha === 'admin123') {
-    document.getElementById('adminModal').classList.add('hidden');
-    document.getElementById('painelAdmin').classList.remove('hidden');
-    carregarDashAdmin();
-  } else {
-    alert('Senha incorreta!');
-  }
-}
-
-function sairAdmin() {
-  document.getElementById('painelAdmin').classList.add('hidden');
-  document.getElementById('senhaAdminPortal').value = '';
-  fecharModal();
-}
-
-function fecharModal() {
-  document.getElementById('adminModal').classList.add('hidden');
-  document.getElementById('senhaAdminPortal').value = '';
-}
-
-function carregarDashAdmin() {
-  if(!dbColab) return;
+// Funções de filtro de avaliações
+window.filtrarAvaliacoes = function() {
+  const pesquisa = document.getElementById('pesquisaAvaliacao')?.value.toLowerCase() || '';
+  const ordenacao = document.getElementById('filtroOrdenacao')?.value || '';
   
-  // Carrega satisfação
-  dbColab.ref('satisfacao').once('value').then(snap => {
-    const dados = snap.val() || {};
-    const arr = Object.values(dados);
-    document.getElementById('adminTotalSatisfacao').textContent = arr.length;
-    if(arr.length > 0) {
-      const media = (arr.reduce((a, b) => a + parseInt(b.nota || 0), 0) / arr.length).toFixed(1);
-      document.getElementById('adminNotaMedia').textContent = media;
-    }
-  });
-
-  // Carrega leads
-  dbColab.ref('leads').once('value').then(snap => {
-    const dados = snap.val() || {};
-    const arr = Object.values(dados);
-    document.getElementById('adminTotalLeads').textContent = arr.length;
-    const matriculas = arr.filter(l => l.matricul === 'Sim').length;
-    const taxa = arr.length > 0 ? Math.round((matriculas / arr.length) * 100) : 0;
-    document.getElementById('adminTaxaConversao').textContent = taxa + '%';
-  });
-
-  // Carrega despesas (corrige o valor )
-  dbColab.ref('despesas').once('value').then(snap => {
-    const dados = snap.val() || {};
-    let total = 0;
-    Object.values(dados).forEach(d => {
-      total += parseFloat(d.valor || 0);
+  dbAval.ref('avaliacoes').once('value').then(snap => {
+    let avaliacoes = [];
+    snap.forEach(child => {
+      const d = child.val();
+      if(d && d.nome) {
+        avaliacoes.push({id: child.key, ...d});
+      }
     });
-    document.getElementById('adminTotalDespesas').textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
-  }).catch(() => {
-    document.getElementById('adminTotalDespesas').textContent = 'R$ 0,00';
-  });
-}
-
-function abrirSatisfacaoAdmin() {
-  document.getElementById('adminContentSatisfacao').classList.remove('hidden');
-  if(!dbColab) return;
-  
-  dbColab.ref('satisfacao').once('value').then(snap => {
-    const dados = snap.val() || {};
-    const arr = Object.values(dados);
-    document.getElementById('adminSatisfacaoTotal').textContent = arr.length;
     
-    if(arr.length > 0) {
-      const media = (arr.reduce((a, b) => a + parseInt(b.nota || 0), 0) / arr.length).toFixed(1);
-      document.getElementById('adminSatisfacaoMedia').textContent = media;
+    // Filtra por pesquisa
+    if(pesquisa) {
+      avaliacoes = avaliacoes.filter(a => a.nome.toLowerCase().includes(pesquisa));
     }
     
-    const tbody = document.getElementById('adminSatisfacaoTabela');
-    tbody.innerHTML = '';
-    arr.sort((a, b) => new Date(b.dataCriacao) - new Date(a.dataCriacao)).forEach(d => {
-      const tr = document.createElement('tr');
-      tr.style.borderBottom = '1px solid #e4e1f5';
-      tr.innerHTML = `
-        <td style="padding: 12px; color: #1e1b4b;">${d.nome}</td>
-        <td style="padding: 12px;"><span style="background: ${d.nota >= 4 ? '#dcfce7' : d.nota >= 3 ? '#fef3c7' : '#fee2e2'}; color: ${d.nota >= 4 ? '#166534' : d.nota >= 3 ? '#92400e' : '#b91c1c'}; padding: 4px 8px; border-radius: 6px;">${d.nota}/5</span></td>
-        <td style="padding: 12px; color: #1e1b4b;">${d.atendimento}/5</td>
-        <td style="padding: 12px; color: #6b7280;">${d.dataCriacao ? new Date(d.dataCriacao).toLocaleDateString() : 'N/A'}</td>
-        <td style="padding: 12px; color: #6b7280; max-width: 200px; overflow: hidden; text-overflow: ellipsis;">${d.comentarios || '-'}</td>
-      `;
-      tbody.appendChild(tr);
-    });
-  });
-}
-
-function abrirLeadsAdmin() {
-  document.getElementById('adminContentLeads').classList.remove('hidden');
-  if(!dbColab) return;
-  
-  dbColab.ref('leads').once('value').then(snap => {
-    const dados = snap.val() || {};
-    const tbody = document.getElementById('adminLeadsTabela');
-    tbody.innerHTML = '';
-    Object.values(dados).forEach(d => {
-      const tr = document.createElement('tr');
-      tr.style.borderBottom = '1px solid #e4e1f5';
-      tr.innerHTML = `
-        <td style="padding: 12px; color: #1e1b4b;">${d.nome}</td>
-        <td style="padding: 12px;"><a href="https://wa.me/${d.whatsapp.replace(/[^0-9]/g, '')}" style="color: #3ec6c1; text-decoration: none;">${d.whatsapp}</a></td>
-        <td style="padding: 12px; color: #1e1b4b;">${d.interesse}</td>
-        <td style="padding: 12px;"><span style="background: ${d.matricul === 'Sim' ? '#dcfce7' : '#fee2e2'}; color: ${d.matricul === 'Sim' ? '#166534' : '#b91c1c'}; padding: 4px 8px; border-radius: 6px;">${d.matricul}</span></td>
-        <td style="padding: 12px; color: #6b7280;">${d.data}</td>
-      `;
-      tbody.appendChild(tr);
-    });
-  });
-}
-
-function voltarAdmin() {
-  document.getElementById('adminContentSatisfacao').classList.add('hidden');
-  document.getElementById('adminContentLeads').classList.add('hidden');
-}
-
-function exportarPDF() {
-  if(!window.jsPDF) {
-    alert('Carregando PDF... tente novamente em alguns segundos');
-    const script = document.createElement('script');
-    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
-    document.head.appendChild(script);
-    return;
-  }
-  
-  if(!dbColab) return;
-  
-  dbColab.ref('despesas').once('value').then(snap => {
-    const dados = snap.val() || {};
-    let total = 0;
-    let conteudo = '<h2>Relatório de Despesas</h2>';
-    conteudo += '<p>Data: ' + new Date().toLocaleDateString() + '</p>';
-    conteudo += '<table border="1" cellpadding="10" style="width: 100%; border-collapse: collapse;">';
-    conteudo += '<tr><th>Data</th><th>Descrição</th><th>Centro</th><th>Observação</th><th>Valor</th></tr>';
-    
-    Object.values(dados).forEach(d => {
-      const valor = parseFloat(d.valor || 0);
-      total += valor;
-      conteudo += `<tr><td>${d.data}</td><td>${d.descricao}</td><td>${d.centro}</td><td>${d.observacao}</td><td>R$ ${valor.toFixed(2)}</td></tr>`;
-    });
-    
-    conteudo += '<tr style="font-weight: bold;"><td colspan="4">TOTAL</td><td>R$ ' + total.toFixed(2) + '</td></tr>';
-    conteudo += '</table>';
-    
-    const element = document.createElement('div');
-    element.innerHTML = conteudo;
-    const opt = {margin: 10, filename: 'despesas_' + new Date().toISOString().slice(0,10) + '.pdf', image: {type: 'jpeg', quality: 0.98}, html2canvas: {scale: 2}, jsPDF: {orientation: 'portrait', unit: 'mm', format: 'a4'}};
-    
-    if(window.html2pdf) {
-      html2pdf().set(opt).from(element).save();
-    } else {
-      alert('Biblioteca de PDF não disponível. Tente novamente.');
+    // Ordena
+    if(ordenacao === 'az') {
+      avaliacoes.sort((a, b) => a.nome.localeCompare(b.nome));
+    } else if(ordenacao === 'za') {
+      avaliacoes.sort((a, b) => b.nome.localeCompare(a.nome));
+    } else if(ordenacao === 'recente') {
+      avaliacoes.sort((a, b) => new Date(b.dataCriacao) - new Date(a.dataCriacao));
+    } else if(ordenacao === 'antigo') {
+      avaliacoes.sort((a, b) => new Date(a.dataCriacao) - new Date(b.dataCriacao));
     }
-  });
-}
-
-
-// Função para editar nome da avaliação
-window.editarNomeAvaliacao = function(avalId) {
-  const elemento = document.querySelector(`[data-aval-id="${avalId}"] .nome-avaliacao`);
-  if(!elemento) return;
-  
-  const nomeAtual = elemento.textContent;
-  const novoNome = prompt('Digite o novo nome:', nomeAtual);
-  
-  if(novoNome && novoNome.trim() && novoNome !== nomeAtual && dbAval) {
-    dbAval.ref(`avaliacoes/${avalId}`).update({nome: novoNome.trim()}).then(() => {
-      elemento.textContent = novoNome.trim();
-      alert('Nome atualizado com sucesso!');
-    }).catch(err => {
-      console.error('Erro ao atualizar:', err);
-      alert('Erro ao atualizar nome');
-    });
-  }
-};
-
-// Função para deletar avaliação
-window.deletarAvaliacao = function(avalId) {
-  if(confirm('Tem certeza que deseja deletar esta avaliação?') && dbAval) {
-    dbAval.ref(`avaliacoes/${avalId}`).remove().then(() => {
-      alert('Avaliação deletada');
-      carregarAvaliacoes();
-    });
-  }
-};
-
-
-// Função de ordenação A-Z
-window.ordenarAZ = function(lista) {
-  return lista.sort((a, b) => {
-    const nomeA = a.nome ? a.nome.toLowerCase() : '';
-    const nomeB = b.nome ? b.nome.toLowerCase() : '';
-    return nomeA.localeCompare(nomeB);
-  });
-};
-
-// Função de ordenação Z-A
-window.ordenarZA = function(lista) {
-  return lista.sort((a, b) => {
-    const nomeA = a.nome ? a.nome.toLowerCase() : '';
-    const nomeB = b.nome ? b.nome.toLowerCase() : '';
-    return nomeB.localeCompare(nomeA);
-  });
-};
-
-// Função de ordenação por data (mais recente)
-window.ordenarMaisRecente = function(lista) {
-  return lista.sort((a, b) => new Date(b.dataCriacao) - new Date(a.dataCriacao));
-};
-
-// Função de ordenação por data (mais antigo)
-window.ordenarMaisAntigo = function(lista) {
-  return lista.sort((a, b) => new Date(a.dataCriacao) - new Date(b.dataCriacao));
-};
-
-// Função de upload de fotos
-window.processarFotos = function() {
-  const input = document.getElementById('fotosAvaliacao');
-  if(!input.files.length) return;
-  
-  const container = document.getElementById('containerFotos');
-  container.innerHTML = '';
-  
-  Array.from(input.files).forEach((file, index) => {
-    if(!file.type.startsWith('image/')) {
-      alert('Por favor, selecione apenas arquivos de imagem');
+    
+    // Renderiza
+    const container = document.getElementById('conteudoListaAvaliacoes');
+    container.innerHTML = '';
+    
+    if(avaliacoes.length === 0) {
+      container.innerHTML = '<p style="color: #6b7280; text-align: center;">Nenhuma avaliação encontrada</p>';
       return;
     }
     
-    if(file.size > 5 * 1024 * 1024) {
-      alert('Arquivo ' + file.name + ' é maior que 5MB');
-      return;
-    }
-    
-    const reader = new FileReader();
-    reader.onload = function(e) {
+    avaliacoes.forEach(d => {
       const div = document.createElement('div');
-      div.style.position = 'relative';
-      div.style.borderRadius = '10px';
-      div.style.overflow = 'hidden';
+      div.style.cssText = 'display:flex;justify-content:space-between;align-items:center;padding:14px;background:#fafafa;border-radius:12px;margin-bottom:10px;border:1px solid #e4e1f5;cursor:pointer;';
       div.innerHTML = `
-        <img src="${e.target.result}" style="width: 100%; height: 100px; object-fit: cover; cursor: pointer;" onclick="abrirFoto('${e.target.result}')">
-        <button onclick="this.parentElement.remove()" style="position: absolute; top: 4px; right: 4px; background: #ef4444; color: white; border: none; border-radius: 50%; width: 28px; height: 28px; cursor: pointer; font-weight: 700;">✕</button>
+        <div onclick="abrirDetalhe('${d.id}', ${JSON.stringify(d).replace(/'/g, '&#39;')})" style="flex:1;">
+          <div style="font-weight:700;color:#1e1b4b;">${d.nome}</div>
+          <div style="font-size:.82rem;color:#6b7280;">${d.tipo} • ${d.data || 'N/A'}</div>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button onclick="editarNomeAvaliacao('${d.id}')" class="btn-save" style="padding:6px 12px;font-size:.75rem;">✏️ Editar</button>
+          <button onclick="deletarAvaliacao('${d.id}')" class="btn-del" style="padding:6px 12px;font-size:.75rem;background:#fee2e2;color:#b91c1c;border:none;border-radius:10px;cursor:pointer;">🗑️ Deletar</button>
+        </div>
       `;
       container.appendChild(div);
-    };
-    reader.readAsDataURL(file);
+    });
   });
 };
 
-// Função para abrir foto ampliada
-window.abrirFoto = function(src) {
-  const modal = document.createElement('div');
-  modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 9999;';
-  modal.innerHTML = `
-    <div style="position: relative; max-width: 90%; max-height: 90vh;">
-      <img src="${src}" style="max-width: 100%; max-height: 100%; border-radius: 10px;">
-      <button onclick="this.parentElement.parentElement.remove()" style="position: absolute; top: 10px; right: 10px; background: white; color: black; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: 700; font-size: 1.2rem;">✕</button>
-    </div>
-  `;
-  document.body.appendChild(modal);
+// Função para filtrar agenda
+window.filtrarAgenda = function() {
+  const pesquisa = document.getElementById('pesquisaAgenda')?.value.toLowerCase() || '';
+  const ordenacao = document.getElementById('filtroOrdenacaoAgenda')?.value || '';
+  
+  dbAgenda.ref('alunos').once('value').then(snap => {
+    let alunos = [];
+    snap.forEach(child => {
+      const d = child.val();
+      if(d && d.nome) {
+        alunos.push({id: child.key, ...d});
+      }
+    });
+    
+    // Filtra
+    if(pesquisa) {
+      alunos = alunos.filter(a => a.nome.toLowerCase().includes(pesquisa));
+    }
+    
+    // Ordena
+    if(ordenacao === 'az') {
+      alunos.sort((a, b) => a.nome.localeCompare(b.nome));
+    } else if(ordenacao === 'za') {
+      alunos.sort((a, b) => b.nome.localeCompare(a.nome));
+    } else if(ordenacao === 'recente') {
+      alunos.sort((a, b) => new Date(b.dataCriacao) - new Date(a.dataCriacao));
+    } else if(ordenacao === 'antigo') {
+      alunos.sort((a, b) => new Date(a.dataCriacao) - new Date(b.dataCriacao));
+    } else {
+      alunos.reverse();
+    }
+    
+    renderAgenda(alunos);
+  });
 };
 
-// Event listener para fotos
-if(document.getElementById('fotosAvaliacao')) {
-  document.getElementById('fotosAvaliacao').addEventListener('change', processarFotos);
+// Event listeners para filtro
+if(document.getElementById('pesquisaAvaliacao')) {
+  document.getElementById('pesquisaAvaliacao').addEventListener('input', filtrarAvaliacoes);
+  document.getElementById('filtroOrdenacao').addEventListener('change', filtrarAvaliacoes);
 }
 
 </script>
-
-<!-- ACESSO ADMIN DISCRETO -->
-<div id="adminAccessPortal" style="position: fixed; bottom: 10px; right: 10px; z-index: 9999;">
-  <button onclick="verificarAcessoAdmin()" style="width: 40px; height: 40px; border-radius: 50%; background: transparent; border: none; cursor: pointer; font-size: 20px; opacity: 0.3;" title="Acesso restrito">⚙️</button>
-</div>
-
-<div id="adminModal" class="hidden" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 10000;">
-  <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 20px 60px rgba(123,92,255,.18); max-width: 400px; width: 90%;">
-    <h3 style="margin-bottom: 20px; color: #1e1b4b; font-weight: 700;">Acesso Administrativo</h3>
-    <div style="margin-bottom: 16px;">
-      <label style="font-size: .78rem; font-weight: 700; color: #6b7280; display: block; margin-bottom: 6px;">Senha</label>
-      <input type="password" id="senhaAdminPortal" placeholder="Digite a senha" style="width: 100%; padding: 12px 16px; border: 2px solid #e4e1f5; border-radius: 12px; font-family: 'Poppins', sans-serif; font-size: .9rem; color: #1e1b4b;">
-    </div>
-    <button onclick="entrarAdmin()" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #7b5cff, #3ec6c1); color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; margin-bottom: 10px;">Entrar</button>
-    <button onclick="fecharModal()" style="width: 100%; padding: 12px; background: #f3f4f6; color: #6b7280; border: none; border-radius: 12px; font-weight: 700; cursor: pointer;">Cancelar</button>
-  </div>
-</div>
-
-<!-- PAINEL ADMIN OCULTO -->
-<div id="painelAdmin" class="hidden" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #f4f2ff; z-index: 9998; overflow-y: auto; display: flex; flex-direction: column;">
-  <div style="background: white; padding: 20px 32px; border-bottom: 2px solid #e4e1f5; display: flex; justify-content: space-between; align-items: center;">
-    <h2 style="font-size: 1.5rem; font-weight: 900; color: #1e1b4b;">🔐 Painel Administrativo</h2>
-    <button onclick="sairAdmin()" style="background: linear-gradient(135deg, #7b5cff, #3ec6c1); color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: 700;">Sair</button>
-  </div>
-  
-  <div style="flex: 1; padding: 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1400px; margin: auto; width: 100%;">
-    <!-- SATISFAÇÃO ADMIN -->
-    <div style="background: white; border: 2px solid #e4e1f5; border-radius: 16px; padding: 24px;">
-      <h3 style="color: #1e1b4b; font-weight: 700; margin-bottom: 16px;">⭐ Pesquisas de Satisfação</h3>
-      <div style="background: #ede9ff; padding: 16px; border-radius: 10px; margin-bottom: 16px;">
-        <div style="font-size: 2rem; font-weight: 900; color: #7b5cff;" id="adminTotalSatisfacao">0</div>
-        <div style="color: #6b7280; font-size: .85rem;">Total de respostas</div>
-      </div>
-      <div style="background: #ede9ff; padding: 16px; border-radius: 10px; margin-bottom: 16px;">
-        <div style="font-size: 2rem; font-weight: 900; color: #7b5cff;" id="adminNotaMedia">0</div>
-        <div style="color: #6b7280; font-size: .85rem;">Nota média geral</div>
-      </div>
-      <button onclick="abrirSatisfacaoAdmin()" style="width: 100%; padding: 10px; background: linear-gradient(135deg, #7b5cff, #3ec6c1); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 700;">Ver Detalhes</button>
-    </div>
-
-    <!-- LEADS ADMIN -->
-    <div style="background: white; border: 2px solid #e4e1f5; border-radius: 16px; padding: 24px;">
-      <h3 style="color: #1e1b4b; font-weight: 700; margin-bottom: 16px;">📞 Gestão de Leads</h3>
-      <div style="background: #e0faf9; padding: 16px; border-radius: 10px; margin-bottom: 16px;">
-        <div style="font-size: 2rem; font-weight: 900; color: #3ec6c1;" id="adminTotalLeads">0</div>
-        <div style="color: #6b7280; font-size: .85rem;">Total de leads</div>
-      </div>
-      <div style="background: #e0faf9; padding: 16px; border-radius: 10px; margin-bottom: 16px;">
-        <div style="font-size: 2rem; font-weight: 900; color: #3ec6c1;" id="adminTaxaConversao">0%</div>
-        <div style="color: #6b7280; font-size: .85rem;">Taxa de conversão</div>
-      </div>
-      <button onclick="abrirLeadsAdmin()" style="width: 100%; padding: 10px; background: linear-gradient(135deg, #7b5cff, #3ec6c1); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 700;">Ver Detalhes</button>
-    </div>
-
-    <!-- DESPESAS ADMIN -->
-    <div style="background: white; border: 2px solid #e4e1f5; border-radius: 16px; padding: 24px;">
-      <h3 style="color: #1e1b4b; font-weight: 700; margin-bottom: 16px;">💰 Despesas Totais</h3>
-      <div style="background: #fee2e2; padding: 16px; border-radius: 10px; margin-bottom: 16px;">
-        <div style="font-size: 2rem; font-weight: 900; color: #ef4444;" id="adminTotalDespesas">R$ 0,00</div>
-        <div style="color: #6b7280; font-size: .85rem;">Total gasto</div>
-      </div>
-      <button onclick="exportarPDF()" style="width: 100%; padding: 10px; background: linear-gradient(135deg, #7b5cff, #3ec6c1); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 700;">📥 Exportar PDF</button>
-    </div>
-  </div>
-
-  <!-- CONTEÚDO DETALHADO ADMIN -->
-  <div id="adminContentSatisfacao" class="hidden" style="padding: 32px;">
-    <button onclick="voltarAdmin()" style="margin-bottom: 20px; padding: 10px 20px; background: #f3f4f6; color: #6b7280; border: 2px solid #e4e1f5; border-radius: 10px; cursor: pointer; font-weight: 700;">⬅ Voltar</button>
-    <div style="background: white; border: 2px solid #e4e1f5; border-radius: 16px; padding: 24px;">
-      <h3 style="color: #1e1b4b; font-weight: 700; margin-bottom: 20px;">⭐ Todas as Avaliações de Satisfação</h3>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;">
-        <div style="background: #ede9ff; padding: 16px; border-radius: 10px;">
-          <div style="font-size: .85rem; color: #6b7280; margin-bottom: 8px;">Total</div>
-          <div style="font-size: 2rem; font-weight: 900; color: #7b5cff;" id="adminSatisfacaoTotal">0</div>
-        </div>
-        <div style="background: #ede9ff; padding: 16px; border-radius: 10px;">
-          <div style="font-size: .85rem; color: #6b7280; margin-bottom: 8px;">Nota Média</div>
-          <div style="font-size: 2rem; font-weight: 900; color: #7b5cff;" id="adminSatisfacaoMedia">0</div>
-        </div>
-      </div>
-      <div style="overflow-x: auto;">
-        <table style="width: 100%; border-collapse: collapse;">
-          <thead>
-            <tr style="background: #f3f4f6; border-bottom: 2px solid #e4e1f5;">
-              <th style="padding: 12px; text-align: left; font-weight: 700; color: #6b7280; font-size: .78rem; text-transform: uppercase;">Nome</th>
-              <th style="padding: 12px; text-align: left; font-weight: 700; color: #6b7280; font-size: .78rem; text-transform: uppercase;">Nota</th>
-              <th style="padding: 12px; text-align: left; font-weight: 700; color: #6b7280; font-size: .78rem; text-transform: uppercase;">Atendimento</th>
-              <th style="padding: 12px; text-align: left; font-weight: 700; color: #6b7280; font-size: .78rem; text-transform: uppercase;">Data</th>
-              <th style="padding: 12px; text-align: left; font-weight: 700; color: #6b7280; font-size: .78rem; text-transform: uppercase;">Comentário</th>
-            </tr>
-          </thead>
-          <tbody id="adminSatisfacaoTabela">
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <div id="adminContentLeads" class="hidden" style="padding: 32px;">
-    <button onclick="voltarAdmin()" style="margin-bottom: 20px; padding: 10px 20px; background: #f3f4f6; color: #6b7280; border: 2px solid #e4e1f5; border-radius: 10px; cursor: pointer; font-weight: 700;">⬅ Voltar</button>
-    <div style="background: white; border: 2px solid #e4e1f5; border-radius: 16px; padding: 24px;">
-      <h3 style="color: #1e1b4b; font-weight: 700; margin-bottom: 20px;">📞 Todos os Leads</h3>
-      <div style="overflow-x: auto;">
-        <table style="width: 100%; border-collapse: collapse;">
-          <thead>
-            <tr style="background: #f3f4f6; border-bottom: 2px solid #e4e1f5;">
-              <th style="padding: 12px; text-align: left; font-weight: 700; color: #6b7280; font-size: .78rem; text-transform: uppercase;">Nome</th>
-              <th style="padding: 12px; text-align: left; font-weight: 700; color: #6b7280; font-size: .78rem; text-transform: uppercase;">WhatsApp</th>
-              <th style="padding: 12px; text-align: left; font-weight: 700; color: #6b7280; font-size: .78rem; text-transform: uppercase;">Interesse</th>
-              <th style="padding: 12px; text-align: left; font-weight: 700; color: #6b7280; font-size: .78rem; text-transform: uppercase;">Matriculou</th>
-              <th style="padding: 12px; text-align: left; font-weight: 700; color: #6b7280; font-size: .78rem; text-transform: uppercase;">Data</th>
-            </tr>
-          </thead>
-          <tbody id="adminLeadsTabela">
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
-
 </body>
 </html>
-    <!-- FOTOS NA AVALIAÇÃO -->
-    <div class="form-card">
-      <h3>📷 Fotos da Avaliação</h3>
-      <div class="field-group">
-        <label>Upload de Imagens</label>
-        <input type="file" id="fotosAvaliacao" multiple accept="image/*" style="padding: 10px; border: 2px dashed #7b5cff; border-radius: 10px; cursor: pointer;">
-        <small style="display: block; margin-top: 8px; color: #6b7280;">Permitido: JPG, PNG, GIF. Máx. 5MB por arquivo</small>
-      </div>
-      <div id="containerFotos" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; margin-top: 16px;">
-      </div>
-    </div>
