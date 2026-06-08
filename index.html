@@ -3184,55 +3184,7 @@ window.mudarAbaAval=function(aba,btn){
   }
 };
 
-window.carregarAllEvolucoes=function(){
-  const lista = document.getElementById("listaEvolucoes");
-  lista.innerHTML = "<p style='color:var(--muted);padding:8px;font-size:.82rem'>Carregando evoluções...</p>";
-  dbAval.ref("avaliacoes").once("value").then(snap=>{
-    lista.innerHTML = "";
-    if(!snap.exists()){lista.innerHTML="<p style='color:var(--muted);padding:12px'>Nenhuma evolução registrada.</p>";return;}
-    
-    const pacientesComEvolucoes = [];
-    
-    snap.forEach(child=>{
-      const d = child.val();
-      dbAval.ref(`avaliacoes/${child.key}/evolucoes`).once("value").then(snapEvo=>{
-        if(!snapEvo.exists()) return;
-        
-        const evolucoes = [];
-        snapEvo.forEach(evoChild=>{
-          const evo = evoChild.val();
-          evolucoes.push({
-            id: evoChild.key,
-            data: evo.data,
-            texto: evo.texto,
-            dataObj: new Date(evo.data.split('/').reverse().join('-'))
-          });
-        });
-        
-        // Ordena evoluções por data (mais recente primeiro)
-        evolucoes.sort((a,b)=>b.dataObj-a.dataObj);
-        
-        if(evolucoes.length > 0){
-          pacientesComEvolucoes.push({
-            nomePaciente: d.nome,
-            tipo: d.tipo,
-            evolucoes: evolucoes,
-            ultimaData: evolucoes[0].dataObj
-          });
-          
-          // Reordena lista de pacientes por última evolução
-          pacientesComEvolucoes.sort((a,b)=>b.ultimaData-a.ultimaData);
-          
-          // Renderiza a lista completa
-          renderizarEvolucoes(pacientesComEvolucoes);
-        }
-      });
-    });
-  }).catch(err=>{
-    console.error("Erro ao carregar evoluções:",err);
-    lista.innerHTML="<p style='color:var(--text);padding:12px'>⚠️ Erro ao carregar evoluções.</p>";
-  });
-};
+
 
 function renderizarEvolucoes(pacientes){
   const lista = document.getElementById("listaEvolucoes");
@@ -3305,71 +3257,7 @@ function renderizarEvolucoes(pacientes){
   });
 };
 
-window.carregarAvaliacoes=function(){
-  // Garante que a referência do Firebase está disponível
-  if(!dbAval){
-    console.error("Firebase não inicializado para Avaliações");
-    document.getElementById("listaAvaliacoes").innerHTML="<p style='color:#b91c1c;padding:12px'>⚠️ Erro: Firebase não inicializado. Recarregue a página.</p>";
-    return;
-  }
-  
-  const filtro=document.getElementById("filtroTipo")?.value||"";
-  const lista=document.getElementById("listaAvaliacoes");
-  
-  if(!lista){
-    console.error("Elemento listaAvaliacoes não encontrado");
-    return;
-  }
-  
-  lista.innerHTML="<p style='color:var(--muted);padding:8px;font-size:.82rem'>Carregando avaliações...</p>";
-  
-  dbAval.ref("avaliacoes").once("value").then(snap=>{
-    lista.innerHTML="";
-    
-    if(!snap.exists() || !snap.val()){
-      lista.innerHTML="<p style='color:var(--muted);padding:12px'>Nenhuma avaliação registrada ainda.</p>";
-      return;
-    }
-    
-    const avaliacoes = [];
-    snap.forEach(child=>{
-      const d=child.val();
-      if(d && d.nome && d.tipo && d.data){
-        avaliacoes.push({id:child.key, nome:d.nome, tipo:d.tipo, data:d.data, ...d});
-      }
-    });
-    
-    if(avaliacoes.length === 0){
-      lista.innerHTML="<p style='color:var(--muted);padding:12px'>Nenhuma avaliação encontrada.</p>";
-      return;
-    }
-    
-    // Ordena por data mais recente primeiro
-    avaliacoes.sort((a,b)=>{
-      const dataA = a.data ? new Date(a.data.split('/').reverse().join('-')) : new Date(0);
-      const dataB = b.data ? new Date(b.data.split('/').reverse().join('-')) : new Date(0);
-      return dataB - dataA;
-    });
-    
-    avaliacoes.forEach(d=>{
-      if(filtro && d.tipo!==filtro) return;
-      
-      const div=document.createElement("div");
-      div.className="lista-aval-item";
-      div.style.cursor="pointer";
-      div.innerHTML=`<div><div class="nome">${d.nome}</div><div class="tipo">${d.tipo} • ${fmtD(d.data)}</div></div>`;
-      div.onclick=()=>abrirDetalhe(d.id, d);
-      lista.appendChild(div);
-    });
-    
-    if(lista.children.length === 0){
-      lista.innerHTML="<p style='color:var(--muted);padding:12px'>Nenhuma avaliação encontrada para este tipo.</p>";
-    }
-  }).catch(err=>{
-    console.error("Erro ao carregar avaliações:", err);
-    lista.innerHTML="<p style='color:var(--text);padding:12px'>⚠️ Erro ao carregar avaliações. Verifique sua conexão com a internet.</p>";
-  });
-};
+
 
 window.abrirDetalhe=function(id,dados){
   avalAtualId=id; avalAtualDados=dados;
@@ -3417,21 +3305,7 @@ window.salvarEvolucao=function(){
   t.value=""; carregarEvolucoes();
 };
 
-window.voltar=function(){
-  // Oculta todas as telas de fichas
-  const fichas = ["telaFisioterapia","telaPilates","telaRecovery","telaCondicionamento","telaPelvica","telaDetalhe"];
-  fichas.forEach(id=>{
-    const el = document.getElementById(id);
-    if(el) el.classList.add("hidden");
-  });
-  
-  // Mostra a tela inicial
-  const telaIni = document.getElementById("telaInicial");
-  if(telaIni) telaIni.classList.remove("hidden");
-  
-  avalAtualDados=null;
-  avalEditId=null;
-};
+
 
 /* ══════════════════════
    AGENDA
@@ -3842,6 +3716,102 @@ window.admRemoverColaborador = function(nome){
     alert("Erro ao remover colaborador. Tente novamente.");
   });
 };
+
+
+
+
+
+// ===== FILTROS E PESQUISA DE AVALIAÇÕES =====
+window.filtrarAvaliacoes = function() {
+  const pesquisa = document.getElementById('pesquisaAvaliacao')?.value.toLowerCase() || '';
+  const ordenacao = document.getElementById('filtroOrdenacao')?.value || '';
+  
+  if(!dbAval) return;
+  
+  dbAval.ref('avaliacoes').once('value').then(snap => {
+    let avaliacoes = [];
+    snap.forEach(child => {
+      const d = child.val();
+      if(d && d.nome) {
+        avaliacoes.push({id: child.key, ...d});
+      }
+    });
+    
+    // Filtra por pesquisa
+    if(pesquisa) {
+      avaliacoes = avaliacoes.filter(a => a.nome.toLowerCase().includes(pesquisa));
+    }
+    
+    // Ordena
+    if(ordenacao === 'az') {
+      avaliacoes.sort((a, b) => a.nome.localeCompare(b.nome));
+    } else if(ordenacao === 'za') {
+      avaliacoes.sort((a, b) => b.nome.localeCompare(a.nome));
+    } else if(ordenacao === 'recente') {
+      avaliacoes.sort((a, b) => new Date(b.dataCriacao || 0) - new Date(a.dataCriacao || 0));
+    } else if(ordenacao === 'antigo') {
+      avaliacoes.sort((a, b) => new Date(a.dataCriacao || 0) - new Date(b.dataCriacao || 0));
+    }
+    
+    // Renderiza
+    const container = document.getElementById('conteudoListaAvaliacoes');
+    if(!container) return;
+    
+    container.innerHTML = '';
+    
+    if(avaliacoes.length === 0) {
+      container.innerHTML = '<p style="color: #6b7280; text-align: center; padding: 20px;">Nenhuma avaliação encontrada</p>';
+      return;
+    }
+    
+    avaliacoes.forEach(d => {
+      const div = document.createElement('div');
+      div.style.cssText = 'display:flex;justify-content:space-between;align-items:center;padding:14px;background:#fafafa;border-radius:12px;margin-bottom:10px;border:1px solid #e4e1f5;';
+      div.innerHTML = `
+        <div style="flex:1;cursor:pointer;" onclick="abrirDetalhe('${d.id}', this)">
+          <div style="font-weight:700;color:#1e1b4b;">${d.nome}</div>
+          <div style="font-size:.82rem;color:#6b7280;">${d.tipo || 'N/A'} • ${d.data || 'N/A'}</div>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button onclick="editarNomeAvaliacao('${d.id}')" class="btn-save" style="padding:6px 12px;font-size:.75rem;border:none;border-radius:10px;cursor:pointer;">✏️ Editar</button>
+          <button onclick="deletarAvaliacao('${d.id}')" class="btn-del" style="padding:6px 12px;font-size:.75rem;background:#fee2e2;color:#b91c1c;border:none;border-radius:10px;cursor:pointer;">🗑️ Deletar</button>
+        </div>
+      `;
+      container.appendChild(div);
+    });
+  });
+};
+
+window.editarNomeAvaliacao = function(avalId) {
+  const nomeAtual = prompt('Digite o novo nome:');
+  if(nomeAtual && nomeAtual.trim() && dbAval) {
+    dbAval.ref(`avaliacoes/${avalId}`).update({nome: nomeAtual.trim()}).then(() => {
+      alert('Nome atualizado!');
+      filtrarAvaliacoes();
+    }).catch(err => {
+      console.error('Erro:', err);
+      alert('Erro ao atualizar');
+    });
+  }
+};
+
+window.deletarAvaliacao = function(avalId) {
+  if(confirm('Tem certeza que deseja deletar esta avaliação?') && dbAval) {
+    dbAval.ref(`avaliacoes/${avalId}`).remove().then(() => {
+      alert('Avaliação deletada');
+      filtrarAvaliacoes();
+    });
+  }
+};
+
+// Event listeners para filtros
+document.addEventListener('DOMContentLoaded', function() {
+  const pesquisa = document.getElementById('pesquisaAvaliacao');
+  const filtro = document.getElementById('filtroOrdenacao');
+  if(pesquisa) pesquisa.addEventListener('input', filtrarAvaliacoes);
+  if(filtro) filtro.addEventListener('change', filtrarAvaliacoes);
+});
+
 window.salvarFisioterapia = function(){
 
 salvarBase({
@@ -4045,97 +4015,137 @@ profissional: campoValor("pilates_profissional")
 
 };
 
+window.voltar=function(){
+  // Oculta todas as telas de fichas
+  const fichas = ["telaFisioterapia","telaPilates","telaRecovery","telaCondicionamento","telaPelvica","telaDetalhe"];
+  fichas.forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.classList.add("hidden");
+  });
+  
+  // Mostra a tela inicial
+  const telaIni = document.getElementById("telaInicial");
+  if(telaIni) telaIni.classList.remove("hidden");
+  
+  avalAtualDados=null;
+  avalEditId=null;
+};
 
-// ===== FILTROS E PESQUISA DE AVALIAÇÕES =====
-window.filtrarAvaliacoes = function() {
-  const pesquisa = document.getElementById('pesquisaAvaliacao')?.value.toLowerCase() || '';
-  const ordenacao = document.getElementById('filtroOrdenacao')?.value || '';
+window.carregarAvaliacoes=function(){
+  // Garante que a referência do Firebase está disponível
+  if(!dbAval){
+    console.error("Firebase não inicializado para Avaliações");
+    document.getElementById("listaAvaliacoes").innerHTML="<p style='color:#b91c1c;padding:12px'>⚠️ Erro: Firebase não inicializado. Recarregue a página.</p>";
+    return;
+  }
   
-  if(!dbAval) return;
+  const filtro=document.getElementById("filtroTipo")?.value||"";
+  const lista=document.getElementById("listaAvaliacoes");
   
-  dbAval.ref('avaliacoes').once('value').then(snap => {
-    let avaliacoes = [];
-    snap.forEach(child => {
-      const d = child.val();
-      if(d && d.nome) {
-        avaliacoes.push({id: child.key, ...d});
-      }
-    });
+  if(!lista){
+    console.error("Elemento listaAvaliacoes não encontrado");
+    return;
+  }
+  
+  lista.innerHTML="<p style='color:var(--muted);padding:8px;font-size:.82rem'>Carregando avaliações...</p>";
+  
+  dbAval.ref("avaliacoes").once("value").then(snap=>{
+    lista.innerHTML="";
     
-    // Filtra por pesquisa
-    if(pesquisa) {
-      avaliacoes = avaliacoes.filter(a => a.nome.toLowerCase().includes(pesquisa));
-    }
-    
-    // Ordena
-    if(ordenacao === 'az') {
-      avaliacoes.sort((a, b) => a.nome.localeCompare(b.nome));
-    } else if(ordenacao === 'za') {
-      avaliacoes.sort((a, b) => b.nome.localeCompare(a.nome));
-    } else if(ordenacao === 'recente') {
-      avaliacoes.sort((a, b) => new Date(b.dataCriacao || 0) - new Date(a.dataCriacao || 0));
-    } else if(ordenacao === 'antigo') {
-      avaliacoes.sort((a, b) => new Date(a.dataCriacao || 0) - new Date(b.dataCriacao || 0));
-    }
-    
-    // Renderiza
-    const container = document.getElementById('conteudoListaAvaliacoes');
-    if(!container) return;
-    
-    container.innerHTML = '';
-    
-    if(avaliacoes.length === 0) {
-      container.innerHTML = '<p style="color: #6b7280; text-align: center; padding: 20px;">Nenhuma avaliação encontrada</p>';
+    if(!snap.exists() || !snap.val()){
+      lista.innerHTML="<p style='color:var(--muted);padding:12px'>Nenhuma avaliação registrada ainda.</p>";
       return;
     }
     
-    avaliacoes.forEach(d => {
-      const div = document.createElement('div');
-      div.style.cssText = 'display:flex;justify-content:space-between;align-items:center;padding:14px;background:#fafafa;border-radius:12px;margin-bottom:10px;border:1px solid #e4e1f5;';
-      div.innerHTML = `
-        <div style="flex:1;cursor:pointer;" onclick="abrirDetalhe('${d.id}', this)">
-          <div style="font-weight:700;color:#1e1b4b;">${d.nome}</div>
-          <div style="font-size:.82rem;color:#6b7280;">${d.tipo || 'N/A'} • ${d.data || 'N/A'}</div>
-        </div>
-        <div style="display:flex;gap:8px;">
-          <button onclick="editarNomeAvaliacao('${d.id}')" class="btn-save" style="padding:6px 12px;font-size:.75rem;border:none;border-radius:10px;cursor:pointer;">✏️ Editar</button>
-          <button onclick="deletarAvaliacao('${d.id}')" class="btn-del" style="padding:6px 12px;font-size:.75rem;background:#fee2e2;color:#b91c1c;border:none;border-radius:10px;cursor:pointer;">🗑️ Deletar</button>
-        </div>
-      `;
-      container.appendChild(div);
+    const avaliacoes = [];
+    snap.forEach(child=>{
+      const d=child.val();
+      if(d && d.nome && d.tipo && d.data){
+        avaliacoes.push({id:child.key, nome:d.nome, tipo:d.tipo, data:d.data, ...d});
+      }
     });
+    
+    if(avaliacoes.length === 0){
+      lista.innerHTML="<p style='color:var(--muted);padding:12px'>Nenhuma avaliação encontrada.</p>";
+      return;
+    }
+    
+    // Ordena por data mais recente primeiro
+    avaliacoes.sort((a,b)=>{
+      const dataA = a.data ? new Date(a.data.split('/').reverse().join('-')) : new Date(0);
+      const dataB = b.data ? new Date(b.data.split('/').reverse().join('-')) : new Date(0);
+      return dataB - dataA;
+    });
+    
+    avaliacoes.forEach(d=>{
+      if(filtro && d.tipo!==filtro) return;
+      
+      const div=document.createElement("div");
+      div.className="lista-aval-item";
+      div.style.cursor="pointer";
+      div.innerHTML=`<div><div class="nome">${d.nome}</div><div class="tipo">${d.tipo} • ${fmtD(d.data)}</div></div>`;
+      div.onclick=()=>abrirDetalhe(d.id, d);
+      lista.appendChild(div);
+    });
+    
+    if(lista.children.length === 0){
+      lista.innerHTML="<p style='color:var(--muted);padding:12px'>Nenhuma avaliação encontrada para este tipo.</p>";
+    }
+  }).catch(err=>{
+    console.error("Erro ao carregar avaliações:", err);
+    lista.innerHTML="<p style='color:var(--text);padding:12px'>⚠️ Erro ao carregar avaliações. Verifique sua conexão com a internet.</p>";
   });
 };
 
-window.editarNomeAvaliacao = function(avalId) {
-  const nomeAtual = prompt('Digite o novo nome:');
-  if(nomeAtual && nomeAtual.trim() && dbAval) {
-    dbAval.ref(`avaliacoes/${avalId}`).update({nome: nomeAtual.trim()}).then(() => {
-      alert('Nome atualizado!');
-      filtrarAvaliacoes();
-    }).catch(err => {
-      console.error('Erro:', err);
-      alert('Erro ao atualizar');
+window.carregarAllEvolucoes=function(){
+  const lista = document.getElementById("listaEvolucoes");
+  lista.innerHTML = "<p style='color:var(--muted);padding:8px;font-size:.82rem'>Carregando evoluções...</p>";
+  dbAval.ref("avaliacoes").once("value").then(snap=>{
+    lista.innerHTML = "";
+    if(!snap.exists()){lista.innerHTML="<p style='color:var(--muted);padding:12px'>Nenhuma evolução registrada.</p>";return;}
+    
+    const pacientesComEvolucoes = [];
+    
+    snap.forEach(child=>{
+      const d = child.val();
+      dbAval.ref(`avaliacoes/${child.key}/evolucoes`).once("value").then(snapEvo=>{
+        if(!snapEvo.exists()) return;
+        
+        const evolucoes = [];
+        snapEvo.forEach(evoChild=>{
+          const evo = evoChild.val();
+          evolucoes.push({
+            id: evoChild.key,
+            data: evo.data,
+            texto: evo.texto,
+            dataObj: new Date(evo.data.split('/').reverse().join('-'))
+          });
+        });
+        
+        // Ordena evoluções por data (mais recente primeiro)
+        evolucoes.sort((a,b)=>b.dataObj-a.dataObj);
+        
+        if(evolucoes.length > 0){
+          pacientesComEvolucoes.push({
+            nomePaciente: d.nome,
+            tipo: d.tipo,
+            evolucoes: evolucoes,
+            ultimaData: evolucoes[0].dataObj
+          });
+          
+          // Reordena lista de pacientes por última evolução
+          pacientesComEvolucoes.sort((a,b)=>b.ultimaData-a.ultimaData);
+          
+          // Renderiza a lista completa
+          renderizarEvolucoes(pacientesComEvolucoes);
+        }
+      });
     });
-  }
+  }).catch(err=>{
+    console.error("Erro ao carregar evoluções:",err);
+    lista.innerHTML="<p style='color:var(--text);padding:12px'>⚠️ Erro ao carregar evoluções.</p>";
+  });
 };
-
-window.deletarAvaliacao = function(avalId) {
-  if(confirm('Tem certeza que deseja deletar esta avaliação?') && dbAval) {
-    dbAval.ref(`avaliacoes/${avalId}`).remove().then(() => {
-      alert('Avaliação deletada');
-      filtrarAvaliacoes();
-    });
-  }
-};
-
-// Event listeners para filtros
-document.addEventListener('DOMContentLoaded', function() {
-  const pesquisa = document.getElementById('pesquisaAvaliacao');
-  const filtro = document.getElementById('filtroOrdenacao');
-  if(pesquisa) pesquisa.addEventListener('input', filtrarAvaliacoes);
-  if(filtro) filtro.addEventListener('change', filtrarAvaliacoes);
-});
 
 </script>
 </body>
