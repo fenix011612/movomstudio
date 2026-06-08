@@ -662,9 +662,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                   <label>Atividade</label>
                   <select id="fin_atividade">
                     <option>Pilates</option><option>Yoga</option>
-                    <option>Pilates/Yoga</option><option>Fisioterapia</option><option>Gympass
-              </option>
-              <option value="Outros">Outros</option>
+                    <option>Pilates/Yoga</option><option>Fisioterapia</option><option>Outros</option>
                   </select>
                 </div>
                 <div class="field-group">
@@ -743,9 +741,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                     <option value="">Selecione...</option>
                     <option>Administrativo</option><option>Operacional</option>
                     <option>Marketing</option><option>RH / Pessoal</option>
-                    <option>Equipamentos</option><option>Gympass
-              </option>
-              <option value="Outros">Outros</option>
+                    <option>Equipamentos</option><option>Outros</option>
                   </select>
                 </div>
                 <div class="field-group"><label>Observação</label><input type="text" id="desp_obs" placeholder="Observações adicionais"></div>
@@ -1233,13 +1229,9 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
     <div class="opcoes-grid">
       <label><input type="checkbox" id="fisio_totalpass"> Totalpass</label>
       <label><input type="checkbox" id="fisio_mensalidade"> Mensalidade</label>
-      <label><input type="checkbox" id="fisio_outros_identificacao"> Gympass
-              </option>
-              <option value="Outros">Outros</label>
+      <label><input type="checkbox" id="fisio_outros_identificacao"> Outros</label>
     </div>
-    <input type="text" id="fisio_outros_identificacao_texto" placeholder="Descreva Gympass
-              </option>
-              <option value="Outros">Outros">
+    <input type="text" id="fisio_outros_identificacao_texto" placeholder="Descreva Outros">
     <input type="text" id="fisio_nomeCompleto" placeholder="Nome completo">
     <input type="date" id="fisio_dataNascimento" placeholder="Data de nascimento">
     <input type="text" id="fisio_cpf" placeholder="CPF">
@@ -1334,9 +1326,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
       <label><input type="checkbox" id="fisio_edema"> Edema</label>
       <label><input type="checkbox" id="fisio_cicatriz"> Cicatrização incompleta</label>
       <label><input type="checkbox" id="fisio_eritema"> Eritemas</label>
-      <label><input type="checkbox" id="fisio_outros"> Gympass
-              </option>
-              <option value="Outros">Outros</label>
+      <label><input type="checkbox" id="fisio_outros"> Outros</label>
     </div>
     <label>Detalhes adicionais da inspeção/palpação:</label>
     <textarea id="fisio_inspecaoDetalhes"></textarea>
@@ -1449,13 +1439,9 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
     <div class="opcoes-grid">
       <label><input type="checkbox" id="pilates_totalpass"> Totalpass</label>
       <label><input type="checkbox" id="pilates_mensalidade"> Mensalidade</label>
-      <label><input type="checkbox" id="pilates_outros_identificacao"> Gympass
-              </option>
-              <option value="Outros">Outros</label>
+      <label><input type="checkbox" id="pilates_outros_identificacao"> Outros</label>
     </div>
-    <input type="text" id="pilates_outros_identificacao_texto" placeholder="Descreva Gympass
-              </option>
-              <option value="Outros">Outros">
+    <input type="text" id="pilates_outros_identificacao_texto" placeholder="Descreva Outros">
 
     <label>Parceria? Se sim qual?</label>
     <input type="text" id="pilates_parceria">
@@ -1610,9 +1596,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
       <label><input type="checkbox" id="pilates_edema"> Edema</label>
       <label><input type="checkbox" id="pilates_cicatriz"> Cicatrização incompleta</label>
       <label><input type="checkbox" id="pilates_eritema"> Eritemas</label>
-      <label><input type="checkbox" id="pilates_outros"> Gympass
-              </option>
-              <option value="Outros">Outros</label>
+      <label><input type="checkbox" id="pilates_outros"> Outros</label>
     </div>
 
     <!-- Novo campo para detalhes adicionais de inspeção -->
@@ -2381,9 +2365,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 <label><input type="checkbox"> Perde fezes</label>
 </div>
 
-<label>Gympass
-              </option>
-              <option value="Outros">Outro:</label>
+<label>Outro:</label>
 <input type="text">
 </div>
 
@@ -3147,12 +3129,8 @@ const cv=id=>{const e=document.getElementById(id);return e?e.value:"";};
 const cm=id=>{const e=document.getElementById(id);return e?e.checked:false;};
 const fmtD=v=>{if(!v)return"-";if(/^\d{4}-\d{2}-\d{2}$/.test(v)){const[a,m,d]=v.split("-");return`${d}/${m}/${a}`;}return v;};
 
-const ROTULOS_FISIO=[["sessao","Sessão"],["pacote","Pacote"],["qtdSessoes","Qtd sessões"],["pix","Pix"],["parcelado","Parcelado"],["parcelas","Parcelas"],["parceria","Parceria"],["nomeCompleto","Nome completo"],["dataNascimento","Data de nascimento"],["cpf","CPF"],["masculino","Masculino"],["feminino","Feminino"],["responsavel","Responsável"],["parentesco","Grau de parentesco"],["cpfResponsavel","CPF Responsável"],["profissao","Profissão/Ocupação"],["endereco","Endereço"],["telefone","Telefone"],["email","E-mail"],["dataAvaliacao","Data da Avaliação"],["diagClinico","Diagnóstico Clínico"],["diagFisio","Diagnóstico Fisioterapêutico"],["cbdf","CBDF"],["queixaPrincipal","Queixa Principal"],["hpp","HDA"],["antecedentesPessoais","HPP"],["antecedentesFamiliares","Antecedentes Familiares"],["tratamentos","Tratamentos Realizados"],["habitos","Hábitos de vida"],["acompanhamentoSim","Acompanhamento – Sim"],["acompanhamentoNao","Acompanhamento – Não"],["especialidade","Especialidade"],["examesSim","Exames – Sim"],["examesNao","Exames – Não"],["examesQuais","Exames – Quais"],["medicamentoSim","Medicamentos – Sim"],["medicamentoNao","Medicamentos – Não"],["medicamentosQuais","Medicamentos – Quais"],["orientado","Deambulando e orientado"],["apoio","Deambulando com apoio"],["confuso","Confuso"],["desorientado","Desorientado"],["cirurgiaSim","Cirurgia – Sim"],["cirurgiaNao","Cirurgia – Não"],["cirurgias","Cirurgias – Quais"],["normal","Inspeção Normal"],["edema","Edema"],["cicatriz","Cicatrização incompleta"],["eritema","Eritemas"],["outros","Gympass
-              </option>
-              <option value="Outros">Outros"],["inspecaoDetalhes","Detalhes Inspeção/Palpação"],["peso","Peso"],["altura","Altura"],["joelhoYSim","Y Teste – Sim"],["joelhoYNao","Y Teste – Não"],["rombergPos","Romberg – Positivo"],["rombergNeg","Romberg – Negativo"],["tugNormal","TUG – Normal"],["tugBaixo","TUG – Baixo risco"],["tugMedio","TUG – Médio risco"],["tugAlto","TUG – Alto risco"],["laseguePos","Lasegue – Positivo"],["lasegueNeg","Lasegue – Negativo"],["g0","Grau 0"],["g1","Grau 1"],["g2","Grau 2"],["g3","Grau 3"],["g4","Grau 4"],["g5","Grau 5"],["objetivos","Objetivos do Tratamento"],["recursos","Recursos Terapêuticos"],["planoTratamento","Plano do Tratamento"],["profissional","Profissional / Registro Conselho"]];
-const ROTULOS_PILATES=[["totalpass","Totalpass"],["gympass","Gympass"],["gurupass","Gurupass"],["mensalidade","Mensalidade"],["parceria","Parceria"],["nomeCompleto","Nome completo"],["dataNascimento","Data de nascimento"],["cpf","CPF"],["masculino","Masculino"],["feminino","Feminino"],["responsavel","Responsável"],["parentesco","Grau de parentesco"],["cpfResponsavel","CPF Responsável"],["profissao","Profissão/Ocupação"],["endereco","Endereço"],["telefone","Telefone"],["email","E-mail"],["dataAvaliacao","Data da Avaliação"],["diagClinico","Diagnóstico Clínico"],["diagFisio","Diagnóstico Fisioterapêutico"],["cbdf","CBDF"],["queixaPrincipal","Queixa Principal"],["hpp","HPP"],["antecedentesPessoais","Antecedentes Pessoais"],["antecedentesFamiliares","Antecedentes Familiares"],["tratamentos","Tratamentos Realizados"],["habitos","Hábitos de vida"],["acompanhamentoSim","Acompanhamento – Sim"],["especialidade","Especialidade"],["tipoApoio","Se apoio, qual"],["examesSim","Exames – Sim"],["quaisExames","Exames – Quais"],["medicamentoSim","Medicamentos – Sim"],["quaisMedicamentos","Medicamentos – Quais"],["cirurgiaSim","Cirurgia – Sim"],["cirurgias","Cirurgias – Quais"],["normal","Inspeção Normal"],["edema","Edema"],["cicatriz","Cicatrização incompleta"],["eritema","Eritemas"],["outros","Gympass
-              </option>
-              <option value="Outros">Outros"],["inspecaoDetalhes","Detalhes Inspeção/Palpação"],["semiologia","Semiologia"],["pressao","Pressão Arterial"],["peso","Peso"],["altura","Altura"],["adipometroPeitoralToracica","Adipômetro – Peitoral/Torácica"],["adipometroSubescapular","Adipômetro – Subescapular"],["adipometroSuprailiaca","Adipômetro – Suprailiaca"],["adipometroAxilarMedia","Adipômetro – Axilar média"],["adipometroTriceps","Adipômetro – Tríceps"],["adipometroBiceps","Adipômetro – Bíceps"],["adipometroAbdominal","Adipômetro – Abdominal"],["adipometroCoxa","Adipômetro – Coxa"],["escalaBorg","Escala de Borg"],["objetivos","Objetivos do Tratamento"],["recursos","Recursos Terapêuticos"],["planoTratamento","Plano do Tratamento"],["profissional","Profissional / Registro Conselho"]];
+const ROTULOS_FISIO=[["sessao","Sessão"],["pacote","Pacote"],["qtdSessoes","Qtd sessões"],["pix","Pix"],["parcelado","Parcelado"],["parcelas","Parcelas"],["parceria","Parceria"],["nomeCompleto","Nome completo"],["dataNascimento","Data de nascimento"],["cpf","CPF"],["masculino","Masculino"],["feminino","Feminino"],["responsavel","Responsável"],["parentesco","Grau de parentesco"],["cpfResponsavel","CPF Responsável"],["profissao","Profissão/Ocupação"],["endereco","Endereço"],["telefone","Telefone"],["email","E-mail"],["dataAvaliacao","Data da Avaliação"],["diagClinico","Diagnóstico Clínico"],["diagFisio","Diagnóstico Fisioterapêutico"],["cbdf","CBDF"],["queixaPrincipal","Queixa Principal"],["hpp","HDA"],["antecedentesPessoais","HPP"],["antecedentesFamiliares","Antecedentes Familiares"],["tratamentos","Tratamentos Realizados"],["habitos","Hábitos de vida"],["acompanhamentoSim","Acompanhamento – Sim"],["acompanhamentoNao","Acompanhamento – Não"],["especialidade","Especialidade"],["examesSim","Exames – Sim"],["examesNao","Exames – Não"],["examesQuais","Exames – Quais"],["medicamentoSim","Medicamentos – Sim"],["medicamentoNao","Medicamentos – Não"],["medicamentosQuais","Medicamentos – Quais"],["orientado","Deambulando e orientado"],["apoio","Deambulando com apoio"],["confuso","Confuso"],["desorientado","Desorientado"],["cirurgiaSim","Cirurgia – Sim"],["cirurgiaNao","Cirurgia – Não"],["cirurgias","Cirurgias – Quais"],["normal","Inspeção Normal"],["edema","Edema"],["cicatriz","Cicatrização incompleta"],["eritema","Eritemas"],["outros","Outros"],["inspecaoDetalhes","Detalhes Inspeção/Palpação"],["peso","Peso"],["altura","Altura"],["joelhoYSim","Y Teste – Sim"],["joelhoYNao","Y Teste – Não"],["rombergPos","Romberg – Positivo"],["rombergNeg","Romberg – Negativo"],["tugNormal","TUG – Normal"],["tugBaixo","TUG – Baixo risco"],["tugMedio","TUG – Médio risco"],["tugAlto","TUG – Alto risco"],["laseguePos","Lasegue – Positivo"],["lasegueNeg","Lasegue – Negativo"],["g0","Grau 0"],["g1","Grau 1"],["g2","Grau 2"],["g3","Grau 3"],["g4","Grau 4"],["g5","Grau 5"],["objetivos","Objetivos do Tratamento"],["recursos","Recursos Terapêuticos"],["planoTratamento","Plano do Tratamento"],["profissional","Profissional / Registro Conselho"]];
+const ROTULOS_PILATES=[["totalpass","Totalpass"],["gympass","Gympass"],["gurupass","Gurupass"],["mensalidade","Mensalidade"],["parceria","Parceria"],["nomeCompleto","Nome completo"],["dataNascimento","Data de nascimento"],["cpf","CPF"],["masculino","Masculino"],["feminino","Feminino"],["responsavel","Responsável"],["parentesco","Grau de parentesco"],["cpfResponsavel","CPF Responsável"],["profissao","Profissão/Ocupação"],["endereco","Endereço"],["telefone","Telefone"],["email","E-mail"],["dataAvaliacao","Data da Avaliação"],["diagClinico","Diagnóstico Clínico"],["diagFisio","Diagnóstico Fisioterapêutico"],["cbdf","CBDF"],["queixaPrincipal","Queixa Principal"],["hpp","HPP"],["antecedentesPessoais","Antecedentes Pessoais"],["antecedentesFamiliares","Antecedentes Familiares"],["tratamentos","Tratamentos Realizados"],["habitos","Hábitos de vida"],["acompanhamentoSim","Acompanhamento – Sim"],["especialidade","Especialidade"],["tipoApoio","Se apoio, qual"],["examesSim","Exames – Sim"],["quaisExames","Exames – Quais"],["medicamentoSim","Medicamentos – Sim"],["quaisMedicamentos","Medicamentos – Quais"],["cirurgiaSim","Cirurgia – Sim"],["cirurgias","Cirurgias – Quais"],["normal","Inspeção Normal"],["edema","Edema"],["cicatriz","Cicatrização incompleta"],["eritema","Eritemas"],["outros","Outros"],["inspecaoDetalhes","Detalhes Inspeção/Palpação"],["semiologia","Semiologia"],["pressao","Pressão Arterial"],["peso","Peso"],["altura","Altura"],["adipometroPeitoralToracica","Adipômetro – Peitoral/Torácica"],["adipometroSubescapular","Adipômetro – Subescapular"],["adipometroSuprailiaca","Adipômetro – Suprailiaca"],["adipometroAxilarMedia","Adipômetro – Axilar média"],["adipometroTriceps","Adipômetro – Tríceps"],["adipometroBiceps","Adipômetro – Bíceps"],["adipometroAbdominal","Adipômetro – Abdominal"],["adipometroCoxa","Adipômetro – Coxa"],["escalaBorg","Escala de Borg"],["objetivos","Objetivos do Tratamento"],["recursos","Recursos Terapêuticos"],["planoTratamento","Plano do Tratamento"],["profissional","Profissional / Registro Conselho"]];
 const ROTULOS_RECOVERY=[["mov_nome","Nome"],["mov_nascimento","Data de Nascimento"],["mov_telefone","Telefone"],["mov_sexo_fem","Sexo Feminino"],["mov_sexo_masc","Sexo Masculino"],["mov_endereco","Endereço"],["mov_fisioterapeuta","Fisioterapeuta"],["mov_atleta_amador","Atleta – Amador"],["mov_atleta_profissional","Atleta – Profissional"],["mov_esporte","Esporte / Há quanto tempo"],["mov_pratica_sim","Pratica atividade – Sim"],["mov_frequencia","Frequência semanal"],["mov_objetivos","Objetivos no programa"],["mov_tabagismo_sim","Tabagismo – Sim"],["mov_cardiaco_sim","Alterações cardíacas – Sim"],["mov_diabetes_sim","Diabetes – Sim"],["mov_hipertensao_sim","Hipertensão – Sim"],["mov_medicamento_sim","Medicamentos – Sim"],["mov_medicamento_desc","Medicamentos – Quais"],["mov_lesao_sim","Lesão – Sim"],["mov_lesao_desc","Lesão – Qual"],["mov_cirurgia_sim","Cirurgia – Sim"],["mov_cirurgia_desc","Cirurgia – Qual"],["mov_alergia_sim","Alergia – Sim"],["mov_alergia_desc","Alergia – Qual"],["mov_tontura_sim","Tontura – Sim"],["mov_dieta_sim","Dieta – Sim"],["mov_profissao","Profissão"],["mov_prog_esporte","Esporte (Programa)"],["mov_prog_inicio","Início"],["mov_prog_queixaPrincipal","Queixa principal"],["mov_prog_diagnosticoCinetico","Diagnóstico Cinético Funcional"],["mov_prog_objetivos","Objetivos"],["mov_prog_conduta","Conduta Fisioterapêutica"],["mov_prog_fisioterapeuta","Fisioterapeuta responsável"]];
 const ROTULOS_COND=[["totalpass","Totalpass"],["gympass","Gympass"],["mensalidade","Mensalidade"],["nomeCompleto","Nome completo"],["dataNascimento","Data de nascimento"],["cpf","CPF"],["sexoMasculino","Sexo Masculino"],["sexoFeminino","Sexo Feminino"],["responsavelNome","Responsável – Nome"],["responsavelParentesco","Responsável – Parentesco"],["responsavelCpf","Responsável – CPF"],["profissaoOcupacao","Profissão/Ocupação"],["enderecoResidencial","Endereço"],["telefone","Telefone"],["email","E-mail"],["dataAvaliacao","Data da Avaliação"],["diagnosticoClinico","Diagnóstico Clínico"],["diagnosticoFisio","Diagnóstico Fisioterapêutico"],["cbdf","CBDF"],["queixaPrincipal","Queixa Principal"],["hda","HDA"],["historicoLesoes","Histórico de Lesões"],["acompanhamentoSim","Acompanhamento – Sim"],["acompanhamentoQuais","Acompanhamento – Quais"],["medicamentosSim","Medicamentos – Sim"],["medicamentosQuais","Medicamentos – Quais"],["peso","Peso (kg)"],["altura","Altura (cm)"],["habitosVida","Hábitos de Vida"],["metasPessoais","Metas Pessoais"],["evaRegiao","EVA / Região"],["ativo","Ativo"],["moderadamenteAtivo","Moderadamente Ativo"],["sedentario","Sedentário"],["atividadeSim","Atividade Física – Sim"],["atividadeQuais","Atividade Física – Quais"],["borg","Escala de Borg"],["desviosSim","Desvios Posturais – Sim"],["desviosQuais","Desvios – Quais"],["movimentosComDor","Movimentos Com Dor"],["movimentosSemDor","Movimentos Sem Dor"],["movimentosQuais","Movimentos – Quais"],["movimentosFuncionais","Movimentos Funcionais"],["mobilidade","Mobilidade"],["flexibilidade","Flexibilidade"],["resistenciaMuscularCardio","Resistência Muscular/Cardiovascular"],["planoTerapeutico","Plano Terapêutico"],["profissional","Profissional / Registro Conselho"]];
 
@@ -4167,233 +4145,6 @@ window.carregarAllEvolucoes=function(){
     console.error("Erro ao carregar evoluções:",err);
     lista.innerHTML="<p style='color:var(--text);padding:12px'>⚠️ Erro ao carregar evoluções.</p>";
   });
-};
-
-
-// ===== FINANCEIRO UNIFICADO =====
-window.mudarAbaFinanceiro = function(aba) {
-  document.getElementById('abaEntradas').classList.toggle('hidden', aba !== 'entradas');
-  document.getElementById('abaDespesas').classList.toggle('hidden', aba !== 'despesas');
-  document.querySelectorAll('.btn-aba').forEach(btn => btn.classList.remove('btn-aba-ativo'));
-  event.target.classList.add('btn-aba-ativo');
-};
-
-window.salvarEntrada = function() {
-  const data = document.getElementById('dataEntrada')?.value;
-  const descricao = document.getElementById('descricaoEntrada')?.value;
-  const valor = parseFloat(document.getElementById('valorEntrada')?.value || 0);
-  
-  if(!data || !descricao || !valor) {
-    alert('Preencha todos os campos');
-    return;
-  }
-  
-  if(dbFin) {
-    dbFin.ref('entradas').push({data, descricao, valor, dataCriacao: new Date().toISOString()});
-    document.getElementById('dataEntrada').value = '';
-    document.getElementById('descricaoEntrada').value = '';
-    document.getElementById('valorEntrada').value = '';
-    alert('Entrada salva!');
-    carregarEntradas();
-  }
-};
-
-window.salvarDespesa = function() {
-  const data = document.getElementById('dataDespesa')?.value;
-  const descricao = document.getElementById('descricaoDespesa')?.value;
-  const categoria = document.getElementById('categoriaDespesa')?.value;
-  const valor = parseFloat(document.getElementById('valorDespesa')?.value || 0);
-  const nf = document.getElementById('nfDespesa')?.value || '';
-  
-  if(!data || !descricao || !categoria || !valor) {
-    alert('Preencha os campos obrigatórios');
-    return;
-  }
-  
-  if(dbFin) {
-    dbFin.ref('despesas').push({data, descricao, categoria, valor, nf, dataCriacao: new Date().toISOString()});
-    document.getElementById('dataDespesa').value = '';
-    document.getElementById('descricaoDespesa').value = '';
-    document.getElementById('categoriaDespesa').value = '';
-    document.getElementById('valorDespesa').value = '';
-    document.getElementById('nfDespesa').value = '';
-    alert('Despesa salva!');
-    carregarDespesas();
-  }
-};
-
-window.carregarEntradas = function() {
-  if(!dbFin) return;
-  dbFin.ref('entradas').once('value').then(snap => {
-    const dados = snap.val() || {};
-    const tbody = document.getElementById('tabelaEntradas');
-    if(!tbody) return;
-    
-    tbody.innerHTML = '';
-    const arr = Object.entries(dados).map(([id, d]) => ({id, ...d}))
-      .sort((a, b) => new Date(b.data) - new Date(a.data));
-    
-    arr.forEach(d => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5;">${d.data}</td>
-        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5;">${d.descricao}</td>
-        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5; text-align: right;">R$ ${parseFloat(d.valor || 0).toFixed(2)}</td>
-        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5; text-align: center;">
-          <button onclick="deletarEntrada('${d.id}')" style="padding: 6px 12px; background: #fee2e2; color: #b91c1c; border: none; border-radius: 6px; cursor: pointer;">Deletar</button>
-        </td>
-      `;
-      tbody.appendChild(tr);
-    });
-  });
-};
-
-window.carregarDespesas = function() {
-  if(!dbFin) return;
-  dbFin.ref('despesas').once('value').then(snap => {
-    const dados = snap.val() || {};
-    const tbody = document.getElementById('tabelaDespesas');
-    if(!tbody) return;
-    
-    tbody.innerHTML = '';
-    const arr = Object.entries(dados).map(([id, d]) => ({id, ...d}))
-      .sort((a, b) => new Date(b.data) - new Date(a.data));
-    
-    arr.forEach(d => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5;">${d.data}</td>
-        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5;">${d.descricao}</td>
-        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5;">${d.categoria}</td>
-        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5; text-align: right;">R$ ${parseFloat(d.valor || 0).toFixed(2)}</td>
-        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5; text-align: center;">${d.nf || '-'}</td>
-        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5; text-align: center;">
-          <button onclick="deletarDespesa('${d.id}')" style="padding: 6px 12px; background: #fee2e2; color: #b91c1c; border: none; border-radius: 6px; cursor: pointer;">Deletar</button>
-        </td>
-      `;
-      tbody.appendChild(tr);
-    });
-  });
-};
-
-window.deletarEntrada = function(id) {
-  if(confirm('Deletar entrada?') && dbFin) {
-    dbFin.ref(`entradas/${id}`).remove();
-    carregarEntradas();
-  }
-};
-
-window.deletarDespesa = function(id) {
-  if(confirm('Deletar despesa?') && dbFin) {
-    dbFin.ref(`despesas/${id}`).remove();
-    carregarDespesas();
-  }
-};
-
-// ===== GRADE DE HORÁRIOS =====
-window.mudarAbaGrade = function(aba) {
-  document.getElementById('abaYoga').classList.toggle('hidden', aba !== 'yoga');
-  document.getElementById('abaFisioterapia').classList.toggle('hidden', aba !== 'fisioterapia');
-  document.querySelectorAll('.btn-aba').forEach(btn => btn.classList.remove('btn-aba-ativo'));
-  event.target.classList.add('btn-aba-ativo');
-};
-
-window.salvarHorarioYoga = function() {
-  const instrutor = document.getElementById('instrutorYoga')?.value;
-  const modalidade = document.getElementById('modalidadeYoga')?.value;
-  const horario = document.getElementById('horarioYoga')?.value;
-  
-  if(!instrutor || !modalidade || !horario) {
-    alert('Preencha todos os campos');
-    return;
-  }
-  
-  if(dbGrade) {
-    dbGrade.ref('yoga').push({instrutor, modalidade, horario, dataCriacao: new Date().toISOString()});
-    document.getElementById('instrutorYoga').value = '';
-    document.getElementById('modalidadeYoga').value = '';
-    document.getElementById('horarioYoga').value = '';
-    alert('Horário salvo!');
-    carregarYoga();
-  }
-};
-
-window.salvarHorarioFisioterapia = function() {
-  const fisioterapeuta = document.getElementById('fisioterapeutaGrade')?.value;
-  const indicacao = document.getElementById('indicacaoClinicaGrade')?.value;
-  const horario = document.getElementById('horarioFisioterapiaGrade')?.value;
-  
-  if(!fisioterapeuta || !indicacao || !horario) {
-    alert('Preencha todos os campos');
-    return;
-  }
-  
-  if(dbGrade) {
-    dbGrade.ref('fisioterapia').push({fisioterapeuta, indicacao, horario, dataCriacao: new Date().toISOString()});
-    document.getElementById('fisioterapeutaGrade').value = '';
-    document.getElementById('indicacaoClinicaGrade').value = '';
-    document.getElementById('horarioFisioterapiaGrade').value = '';
-    alert('Horário salvo!');
-    carregarFisioterapiaGrade();
-  }
-};
-
-window.carregarYoga = function() {
-  if(!dbGrade) return;
-  dbGrade.ref('yoga').once('value').then(snap => {
-    const dados = snap.val() || {};
-    const tbody = document.getElementById('tabelaYoga');
-    if(!tbody) return;
-    tbody.innerHTML = '';
-    Object.entries(dados).forEach(([id, d]) => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5;">${d.instrutor}</td>
-        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5;">${d.modalidade}</td>
-        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5;">${d.horario}</td>
-        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5; text-align: center;">
-          <button onclick="deletarYoga('${id}')" style="padding: 6px 12px; background: #fee2e2; color: #b91c1c; border: none; border-radius: 6px; cursor: pointer;">Deletar</button>
-        </td>
-      `;
-      tbody.appendChild(tr);
-    });
-  });
-};
-
-window.carregarFisioterapiaGrade = function() {
-  if(!dbGrade) return;
-  dbGrade.ref('fisioterapia').once('value').then(snap => {
-    const dados = snap.val() || {};
-    const tbody = document.getElementById('tabelaFisioterapiaGrade');
-    if(!tbody) return;
-    tbody.innerHTML = '';
-    Object.entries(dados).forEach(([id, d]) => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5;">${d.fisioterapeuta}</td>
-        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5;">${d.indicacao}</td>
-        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5;">${d.horario}</td>
-        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5; text-align: center;">
-          <button onclick="deletarFisioGrade('${id}')" style="padding: 6px 12px; background: #fee2e2; color: #b91c1c; border: none; border-radius: 6px; cursor: pointer;">Deletar</button>
-        </td>
-      `;
-      tbody.appendChild(tr);
-    });
-  });
-};
-
-window.deletarYoga = function(id) {
-  if(confirm('Deletar?') && dbGrade) {
-    dbGrade.ref(`yoga/${id}`).remove();
-    carregarYoga();
-  }
-};
-
-window.deletarFisioGrade = function(id) {
-  if(confirm('Deletar?') && dbGrade) {
-    dbGrade.ref(`fisioterapia/${id}`).remove();
-    carregarFisioterapiaGrade();
-  }
 };
 
 </script>
