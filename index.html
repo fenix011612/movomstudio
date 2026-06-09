@@ -632,9 +632,9 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
           <!-- ABAS INTERNAS DO FINANCEIRO -->
           <div class="fin-tabs">
             <button class="fin-tab active" onclick="finTab('entradas',this)">💰 Entradas</button>
-            <button class="fin-tab" onclick="finTab('yoga',this)">🧘 Financeiro Yoga</button>
-            <button class="fin-tab" onclick="finTab('despesas',this)">📉 Despesas Totais</button>
-            <button class="fin-tab" onclick="finTab('insumos',this)">📦 Insumos</button>
+            <button class="fin-tab fin-tab-admin" onclick="finTab('yoga',this)">🧘 Financeiro Yoga</button>
+            <button class="fin-tab fin-tab-admin" onclick="finTab('despesas',this)">📉 Despesas</button>
+            <button class="fin-tab fin-tab-admin" onclick="finTab('insumos',this)">📦 Insumos</button>
           </div>
 
           <!-- ──── SUB-ABA: ENTRADAS ──── -->
@@ -736,15 +736,19 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                 <div class="field-group"><label>Mês</label><select id="desp_mes"></select></div>
                 <div class="field-group"><label>Data</label><input type="date" id="desp_data"></div>
                 <div class="field-group"><label>Nome da despesa</label><input type="text" id="desp_nome" placeholder="Ex: Aluguel, Energia..."></div>
-                <div class="field-group"><label>Centro de custo</label>
+                <div class="field-group"><label>Categoria</label>
                   <select id="desp_centro">
                     <option value="">Selecione...</option>
-                    <option>Administrativo</option><option>Operacional</option>
-                    <option>Marketing</option><option>RH / Pessoal</option>
-                    <option>Equipamentos</option><option>Outros</option>
+                    <option>Pilates/Yoga</option>
+                    <option>Fisioterapia</option>
+                    <option>Outros</option>
+                    <option>Contas</option>
                   </select>
                 </div>
+                <div class="field-group form-full"><label>Descrição</label><input type="text" id="desp_descricao" placeholder="Descrição detalhada da despesa"></div>
                 <div class="field-group"><label>Observação</label><input type="text" id="desp_obs" placeholder="Observações adicionais"></div>
+                <div class="field-group"><label>Nota Fiscal (NF)</label><input type="text" id="desp_nf" placeholder="Nº NF ou referência"></div>
+                <div class="field-group"><label>Anexar NF (arquivo)</label><input type="file" id="desp_nf_arquivo" accept=".pdf,.jpg,.jpeg,.png" style="padding:6px 0"></div>
                 <div class="field-group"><label>Valor R$</label><input type="number" id="desp_valor" placeholder="0,00" step="0.01"></div>
                 <div class="form-full">
                   <button class="btn-save" onclick="addDespesa()">Adicionar Despesa</button>
@@ -771,7 +775,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
               </div>
               <div style="overflow-x:auto">
                 <table class="data-table">
-                  <thead><tr><th>Data</th><th>Nome</th><th>Centro de Custo</th><th>Observação</th><th>Valor</th><th></th></tr></thead>
+                  <thead><tr><th>Data</th><th>Nome</th><th>Categoria</th><th>Descrição</th><th>Observação</th><th>NF</th><th>Valor</th><th></th></tr></thead>
                   <tbody id="desp_tabela"></tbody>
                 </table>
               </div>
@@ -808,16 +812,56 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
       <!-- ════ GRADE DE HORÁRIOS ════ -->
       <div class="page" id="page-grade">
         <div class="inner">
-          <div class="colab-controls">
-            <label>Filtrar dia:</label>
-            <select id="filtroDia">
-              <option value="Todos">Todos os dias</option>
-              <option>Segunda-feira</option><option>Terça-feira</option>
-              <option>Quarta-feira</option><option>Quinta-feira</option>
-              <option>Sexta-feira</option><option>Sábado</option>
-            </select>
+
+          <!-- ABAS DA GRADE -->
+          <div class="fin-tabs" style="margin-bottom:20px">
+            <button class="fin-tab active" onclick="gradeTab('geral',this)" id="gradeTabGeral">📅 Grade de Horários</button>
+            <button class="fin-tab" onclick="gradeTab('yoga',this)" id="gradeTabYoga">🧘 Yoga</button>
+            <button class="fin-tab" onclick="gradeTab('fisioterapia',this)" id="gradeTabFisio">🦵 Fisioterapia</button>
           </div>
-          <div id="grade_container"></div>
+
+          <!-- ABA GRADE GERAL (original) -->
+          <div id="grade-geral-content">
+            <div class="colab-controls">
+              <label>Filtrar dia:</label>
+              <select id="filtroDia">
+                <option value="Todos">Todos os dias</option>
+                <option>Segunda-feira</option><option>Terça-feira</option>
+                <option>Quarta-feira</option><option>Quinta-feira</option>
+                <option>Sexta-feira</option><option>Sábado</option>
+              </select>
+            </div>
+            <div id="grade_container"></div>
+          </div>
+
+          <!-- ABA YOGA -->
+          <div id="grade-yoga-content" style="display:none">
+            <div class="colab-controls">
+              <label>Filtrar dia:</label>
+              <select id="filtroDiaYoga">
+                <option value="Todos">Todos os dias</option>
+                <option>Segunda-feira</option><option>Terça-feira</option>
+                <option>Quarta-feira</option><option>Quinta-feira</option>
+                <option>Sexta-feira</option><option>Sábado</option>
+              </select>
+            </div>
+            <div id="grade_yoga_container"></div>
+          </div>
+
+          <!-- ABA FISIOTERAPIA -->
+          <div id="grade-fisio-content" style="display:none">
+            <div class="colab-controls">
+              <label>Filtrar dia:</label>
+              <select id="filtroDiaFisio">
+                <option value="Todos">Todos os dias</option>
+                <option>Segunda-feira</option><option>Terça-feira</option>
+                <option>Quarta-feira</option><option>Quinta-feira</option>
+                <option>Sexta-feira</option><option>Sábado</option>
+              </select>
+            </div>
+            <div id="grade_fisio_container"></div>
+          </div>
+
         </div>
       </div>
 
@@ -898,11 +942,32 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                 <button class="btn-del" onclick="apagarAvaliacaoAtual()">🗑️ Apagar</button>
               </div>
               <div id="evolucoes" style="margin-top:20px"></div>
-              <div class="field-group" style="margin-top:14px">
-                <label>Nova Evolução</label>
-                <textarea id="textoEvolucao" rows="7" style="font-family:monospace;font-size:.84rem" placeholder="DATA: &#10;PROCEDIMENTOS: &#10;INTERCORRÊNCIA: &#10;EVOLUÇÃO DO ESTADO DE SAÚDE: &#10;PROFISSIONAL/REGISTRO CONSELHO: "></textarea>
+              <div class="form-card" style="margin-top:14px;border:2px solid var(--lilas-mid)">
+                <h3 style="font-size:.95rem">📝 Nova Evolução</h3>
+                <div class="form-grid">
+                  <div class="field-group">
+                    <label>Data</label>
+                    <input type="date" id="evoData">
+                  </div>
+                  <div class="field-group">
+                    <label>Profissional / Registro Conselho</label>
+                    <input type="text" id="evoProfissional" placeholder="Nome e registro">
+                  </div>
+                  <div class="field-group form-full">
+                    <label>Procedimento (Proced)</label>
+                    <textarea id="evoProcedimento" rows="2" placeholder="Procedimentos realizados..."></textarea>
+                  </div>
+                  <div class="field-group form-full">
+                    <label>Intercorrência (Interc)</label>
+                    <textarea id="evoIntercorrencia" rows="2" placeholder="Intercorrências..."></textarea>
+                  </div>
+                  <div class="field-group form-full">
+                    <label>Evolução (Evol)</label>
+                    <textarea id="evoEvolucao" rows="3" placeholder="Evolução do estado de saúde..."></textarea>
+                  </div>
+                </div>
+                <button class="btn-save" onclick="salvarEvolucao()">Salvar Evolução</button>
               </div>
-              <button class="btn-save" onclick="salvarEvolucao()">Salvar Evolução</button>
             </div>
           </div>
         </div>
@@ -1229,6 +1294,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
     <div class="opcoes-grid">
       <label><input type="checkbox" id="fisio_totalpass"> Totalpass</label>
       <label><input type="checkbox" id="fisio_mensalidade"> Mensalidade</label>
+      <label><input type="checkbox" id="fisio_gympass_id"> Gympass</label>
       <label><input type="checkbox" id="fisio_outros_identificacao"> Outros</label>
     </div>
     <input type="text" id="fisio_outros_identificacao_texto" placeholder="Descreva Outros">
@@ -1439,6 +1505,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
     <div class="opcoes-grid">
       <label><input type="checkbox" id="pilates_totalpass"> Totalpass</label>
       <label><input type="checkbox" id="pilates_mensalidade"> Mensalidade</label>
+      <label><input type="checkbox" id="pilates_gympass_id"> Gympass</label>
       <label><input type="checkbox" id="pilates_outros_identificacao"> Outros</label>
     </div>
     <input type="text" id="pilates_outros_identificacao_texto" placeholder="Descreva Outros">
@@ -1731,8 +1798,6 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
     <input type="number" id="pilates_td2_subidas">
     <label>Teste de Marcha Estacionária (TME2): número de elevações do joelho:</label>
     <input type="number" id="pilates_tme2_elevacoes">
-    <label>Escala de Borg (Dispneia):</label>
-    <input type="text" id="pilates_borg_dispneia">
 
     <!-- ================= FOTOS DA AVALIAÇÃO ================= -->
     <h4>📷 Fotos na Avaliação</h4>
@@ -1807,7 +1872,24 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
         <label>Região:</label>
         <input type="text" id="pilates_regiao1">
       </div>
-
+      <div>
+        <label>EVA 2:</label>
+        <input type="text" id="pilates_eva2">
+        <label>Região 2:</label>
+        <input type="text" id="pilates_regiao2">
+      </div>
+      <div>
+        <label>EVA 3:</label>
+        <input type="text" id="pilates_eva3">
+        <label>Região 3:</label>
+        <input type="text" id="pilates_regiao3">
+      </div>
+      <div>
+        <label>EVA 4:</label>
+        <input type="text" id="pilates_eva4">
+        <label>Região 4:</label>
+        <input type="text" id="pilates_regiao4">
+      </div>
     </div>
 
     <!-- ================= ESCALA DE BORG ================= -->
@@ -2493,8 +2575,14 @@ function iniciarSessao(u){
   document.getElementById("sbNome").textContent = u.nome;
   document.getElementById("sbRole").textContent = u.role==="adm" ? "Administrador" : "Colaborador";
 
+  // Permissão colaborador: ocultar abas financeiras restritas
+  if(u.role === "colab"){
+    setTimeout(()=>{
+      document.querySelectorAll(".fin-tab-admin").forEach(el=>el.style.display="none");
+    }, 100);
+  }
+
   montarMenu();
-  // Dados serão carregados via lazy loading quando a página for aberta
   navigate(document.querySelector(".nav-item"));
 }
 
@@ -2864,15 +2952,17 @@ window.removerColaborador=function(){ if(confirm("Remover?")){ dbColab.ref("cola
    INICIALIZAÇÃO – injeta fichas no DOM
 ══════════════════════════════ */
 document.addEventListener("DOMContentLoaded", function(){
-  // Move fichas do container oculto para dentro da page de avaliações
   const container = document.getElementById("fichasContainer");
   const target    = document.getElementById("fichasAval");
   if(container && target){
-    while(container.firstChild){
-      target.appendChild(container.firstChild);
-    }
+    while(container.firstChild){ target.appendChild(container.firstChild); }
     container.remove();
   }
+  // Pesquisa em tempo real nas avaliações
+  setTimeout(()=>{
+    const pesqEl=document.getElementById("pesquisaAvaliacao");
+    if(pesqEl) pesqEl.addEventListener("input",()=>{ if(typeof carregarAvaliacoes==="function") carregarAvaliacoes(); });
+  }, 1500);
 });
 
 /* ══════════════════════════════
@@ -2881,6 +2971,11 @@ document.addEventListener("DOMContentLoaded", function(){
 let _finInit = {entradas:false, yoga:false, despesas:false, insumos:false};
 
 function finTab(id, btn){
+  // Colaboradores só podem ver Entradas
+  if(usuarioAtual && usuarioAtual.role === "colab" && id !== "entradas"){
+    alert("Acesso restrito. Colaboradores visualizam apenas a aba Entradas.");
+    return;
+  }
   document.querySelectorAll(".fin-subpage").forEach(p=>p.classList.remove("active"));
   document.getElementById("fin-"+id).classList.add("active");
   document.querySelectorAll(".fin-tab").forEach(b=>b.classList.remove("active"));
@@ -2966,13 +3061,15 @@ window.addDespesa=function(){
     data:document.getElementById("desp_data").value,
     nome:document.getElementById("desp_nome").value,
     centro:document.getElementById("desp_centro").value,
+    descricao:document.getElementById("desp_descricao").value,
     obs:document.getElementById("desp_obs").value,
+    nf:document.getElementById("desp_nf").value,
     valor:Number(document.getElementById("desp_valor").value||0),
     criadoEm:new Date().toLocaleString("pt-BR")
   };
   if(!dados.nome||!dados.valor){alert("Preencha nome e valor.");return;}
   dbFin.ref("despesas/"+mes).push(dados);
-  ["desp_nome","desp_obs","desp_valor"].forEach(id=>document.getElementById(id).value="");
+  ["desp_nome","desp_descricao","desp_obs","desp_nf","desp_valor"].forEach(id=>document.getElementById(id).value="");
   document.getElementById("desp_centro").value="";
 };
 
@@ -2985,12 +3082,20 @@ function carregarDespesas(){
   despCurrentRef=dbFin.ref("despesas/"+mes);
   despCurrentRef.on("value",snap=>{
     tabela.innerHTML=""; let tot=0;
-    snap.forEach(item=>{
-      const e=item.val(); tot+=Number(e.valor||0);
+    const itens=[];
+    snap.forEach(item=>{ const e=item.val(); itens.push({key:item.key,...e}); tot+=Number(e.valor||0); });
+    // Ordenar por data
+    itens.sort((a,b)=>{
+      const da=a.data?new Date(a.data):new Date(0);
+      const db=b.data?new Date(b.data):new Date(0);
+      return db-da;
+    });
+    itens.forEach(e=>{
+      const dataFmt=e.data?e.data.split('-').reverse().join('/'):"—";
       const tr=document.createElement("tr");
-      tr.innerHTML=`<td>${e.data||""}</td><td>${e.nome||""}</td><td>${e.centro||""}</td><td>${e.obs||""}</td>
+      tr.innerHTML=`<td>${dataFmt}</td><td>${e.nome||""}</td><td>${e.centro||""}</td><td>${e.descricao||""}</td><td>${e.obs||""}</td><td>${e.nf||"—"}</td>
         <td>R$ ${Number(e.valor||0).toFixed(2)}</td>
-        <td><button class="btn-excluir-sm" onclick="delDespesa('${mes}','${item.key}')">🗑</button></td>`;
+        <td><button class="btn-excluir-sm" onclick="delDespesa('${mes}','${e.key}')">🗑</button></td>`;
       tabela.appendChild(tr);
     });
     totalEl.innerText=`Total de Despesas do mês: R$ ${tot.toFixed(2)}`;
@@ -3049,16 +3154,37 @@ function recalcularLucro(){
 /* ══════════════════════
    GRADE DE HORÁRIOS
 ══════════════════════ */
-let gradeTyping=false;
+let gradeTyping=false, gradeYogaTyping=false, gradeFisioTyping=false;
 const semana=[{dia:"Segunda-feira",h:[7,19]},{dia:"Terça-feira",h:[7,19]},{dia:"Quarta-feira",h:[7,19]},{dia:"Quinta-feira",h:[7,19]},{dia:"Sexta-feira",h:[7,18]},{dia:"Sábado",h:[7,10]}];
+
+window.gradeTab=function(id,btn){
+  document.getElementById("grade-geral-content").style.display = id==="geral" ? "" : "none";
+  document.getElementById("grade-yoga-content").style.display  = id==="yoga"  ? "" : "none";
+  document.getElementById("grade-fisio-content").style.display = id==="fisioterapia" ? "" : "none";
+  document.querySelectorAll("#page-grade .fin-tab").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  if(id==="yoga" && !document.getElementById("grade_yoga_container").children.length) initGradeYoga();
+  if(id==="fisioterapia" && !document.getElementById("grade_fisio_container").children.length) initGradeFisio();
+};
 
 function initGrade(){
   document.getElementById("filtroDia").onchange=filtrarGrade;
   dbGrade.ref("gradeHorarios").on("value",s=>renderGrade(s.val()));
 }
 
+function initGradeYoga(){
+  document.getElementById("filtroDiaYoga").onchange=filtrarGradeYoga;
+  dbGrade.ref("gradeYoga").on("value",s=>renderGradeYoga(s.val()));
+}
+
+function initGradeFisio(){
+  document.getElementById("filtroDiaFisio").onchange=filtrarGradeFisio;
+  dbGrade.ref("gradeFisioterapia").on("value",s=>renderGradeFisio(s.val()));
+}
+
 function gerarHs(a,b){const r=[];for(let h=a;h<=b;h++)r.push(String(h).padStart(2,"0")+":00");return r;}
 
+/* ── GRADE GERAL (original) ── */
 function salvarGrade(){
   const data={};
   document.querySelectorAll("table.grade-tbl[data-dia]").forEach(t=>{
@@ -3084,7 +3210,7 @@ function criarLinhaGrade(l){
     <td><input class="instr-inp i1" placeholder="Instrutor 1"><div class="alunos-box a1"></div><button class="btn-add-a">+ Aluno</button></td>
     <td><input class="instr-inp i2" placeholder="Instrutor 2"><div class="alunos-box a2"></div><button class="btn-add-a">+ Aluno</button></td>
     <td><input class="instr-inp i3" placeholder="Instrutor 3"><div class="alunos-box a3"></div><button class="btn-add-a">+ Aluno</button></td>`;
-  tr.querySelector(".i1").value=l.instr1||""; 
+  tr.querySelector(".i1").value=l.instr1||"";
   tr.querySelector(".i2").value=l.instr2||"";
   tr.querySelector(".i3").value=l.instr3||"";
   tr.querySelectorAll(".instr-inp").forEach(i=>{i.onfocus=()=>gradeTyping=true;i.onblur=()=>{gradeTyping=false;salvarGrade();};});
@@ -3117,6 +3243,110 @@ function renderGrade(data){
 function filtrarGrade(){
   const v=document.getElementById("filtroDia").value;
   document.querySelectorAll("#grade_container .grade-section").forEach(sec=>{
+    sec.style.display=(v==="Todos"||sec.querySelector("h3").dataset.dia===v)?"":"none";
+  });
+}
+
+/* ── GRADE YOGA ── */
+function salvarGradeYoga(){
+  const data={};
+  document.querySelectorAll("table.grade-yoga-tbl[data-dia]").forEach(t=>{
+    const dia=t.dataset.dia; data[dia]=[];
+    t.querySelectorAll("tbody tr").forEach(tr=>{
+      data[dia].push({
+        horario:tr.querySelector(".horario-lbl").textContent,
+        instrutor:tr.querySelector(".yoga-instrutor").value,
+        modalidade:tr.querySelector(".yoga-modalidade").value
+      });
+    });
+  });
+  dbGrade.ref("gradeYoga").set(data);
+}
+
+function criarLinhaGradeYoga(l){
+  const iSt="border:2px solid var(--border);border-radius:8px;padding:6px 10px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none;width:100%";
+  const tr=document.createElement("tr");
+  tr.innerHTML=`<td class="horario-lbl">${l.horario}</td>
+    <td><input class="instr-inp yoga-instrutor" placeholder="Instrutor" style="${iSt}" value="${l.instrutor||""}"></td>
+    <td><input class="instr-inp yoga-modalidade" placeholder="Modalidade" style="${iSt}" value="${l.modalidade||""}"></td>`;
+  tr.querySelectorAll(".instr-inp").forEach(i=>{
+    i.onfocus=()=>gradeYogaTyping=true;
+    i.onblur=()=>{gradeYogaTyping=false;salvarGradeYoga();};
+  });
+  return tr;
+}
+
+function renderGradeYoga(data){
+  if(gradeYogaTyping) return;
+  const c=document.getElementById("grade_yoga_container"); c.innerHTML="";
+  semana.forEach(d=>{
+    const sec=document.createElement("div"); sec.className="grade-section";
+    const h3=document.createElement("h3"); h3.textContent=d.dia; h3.dataset.dia=d.dia;
+    const tbl=document.createElement("table"); tbl.className="grade-tbl grade-yoga-tbl"; tbl.dataset.dia=d.dia;
+    tbl.innerHTML="<thead><tr><th>Horário</th><th>Instrutor</th><th>Modalidade</th></tr></thead>";
+    const tb=document.createElement("tbody");
+    const salvos=data?.[d.dia]||[];
+    gerarHs(d.h[0],d.h[1]).forEach(h=>{const e=salvos.find(l=>l.horario===h);tb.appendChild(criarLinhaGradeYoga(e||{horario:h,instrutor:"",modalidade:""}));});
+    tbl.appendChild(tb); sec.append(h3,tbl); c.appendChild(sec);
+  });
+  filtrarGradeYoga();
+}
+
+function filtrarGradeYoga(){
+  const v=document.getElementById("filtroDiaYoga").value;
+  document.querySelectorAll("#grade_yoga_container .grade-section").forEach(sec=>{
+    sec.style.display=(v==="Todos"||sec.querySelector("h3").dataset.dia===v)?"":"none";
+  });
+}
+
+/* ── GRADE FISIOTERAPIA ── */
+function salvarGradeFisio(){
+  const data={};
+  document.querySelectorAll("table.grade-fisio-tbl[data-dia]").forEach(t=>{
+    const dia=t.dataset.dia; data[dia]=[];
+    t.querySelectorAll("tbody tr").forEach(tr=>{
+      data[dia].push({
+        horario:tr.querySelector(".horario-lbl").textContent,
+        fisioterapeuta:tr.querySelector(".fis-nome").value,
+        indicacaoClinica:tr.querySelector(".fis-indicacao").value
+      });
+    });
+  });
+  dbGrade.ref("gradeFisioterapia").set(data);
+}
+
+function criarLinhaGradeFisio(l){
+  const iSt="border:2px solid var(--border);border-radius:8px;padding:6px 10px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none;width:100%";
+  const tr=document.createElement("tr");
+  tr.innerHTML=`<td class="horario-lbl">${l.horario}</td>
+    <td><input class="instr-inp fis-nome" placeholder="Fisioterapeuta" style="${iSt}" value="${l.fisioterapeuta||""}"></td>
+    <td><input class="instr-inp fis-indicacao" placeholder="Indicação Clínica" style="${iSt}" value="${l.indicacaoClinica||""}"></td>`;
+  tr.querySelectorAll(".instr-inp").forEach(i=>{
+    i.onfocus=()=>gradeFisioTyping=true;
+    i.onblur=()=>{gradeFisioTyping=false;salvarGradeFisio();};
+  });
+  return tr;
+}
+
+function renderGradeFisio(data){
+  if(gradeFisioTyping) return;
+  const c=document.getElementById("grade_fisio_container"); c.innerHTML="";
+  semana.forEach(d=>{
+    const sec=document.createElement("div"); sec.className="grade-section";
+    const h3=document.createElement("h3"); h3.textContent=d.dia; h3.dataset.dia=d.dia;
+    const tbl=document.createElement("table"); tbl.className="grade-tbl grade-fisio-tbl"; tbl.dataset.dia=d.dia;
+    tbl.innerHTML="<thead><tr><th>Horário</th><th>Fisioterapeuta</th><th>Indicação Clínica</th></tr></thead>";
+    const tb=document.createElement("tbody");
+    const salvos=data?.[d.dia]||[];
+    gerarHs(d.h[0],d.h[1]).forEach(h=>{const e=salvos.find(l=>l.horario===h);tb.appendChild(criarLinhaGradeFisio(e||{horario:h,fisioterapeuta:"",indicacaoClinica:""}));});
+    tbl.appendChild(tb); sec.append(h3,tbl); c.appendChild(sec);
+  });
+  filtrarGradeFisio();
+}
+
+function filtrarGradeFisio(){
+  const v=document.getElementById("filtroDiaFisio").value;
+  document.querySelectorAll("#grade_fisio_container .grade-section").forEach(sec=>{
     sec.style.display=(v==="Todos"||sec.querySelector("h3").dataset.dia===v)?"":"none";
   });
 }
@@ -3292,17 +3522,103 @@ function carregarEvolucoes(){
   dbAval.ref(`avaliacoes/${avalAtualId}/evolucoes`).once("value").then(snap=>{
     evo.innerHTML="<strong style='color:var(--lilas);font-size:.9rem'>📋 Evoluções</strong>";
     if(!snap.exists()){evo.innerHTML+="<p style='color:var(--muted);font-size:.82rem;margin-top:6px'>Nenhuma evolução registrada.</p>";return;}
-    const items=[]; snap.forEach(c=>items.push(c.val()));
+    const items=[]; snap.forEach(c=>items.push({id:c.key,...c.val()}));
     items.reverse().forEach(e=>{
-      evo.innerHTML+=`<div class="evo-item"><strong>${e.data}</strong><p style="white-space:pre-line;margin-top:4px">${e.texto}</p></div>`;
+      const iSt="border:2px solid var(--border);border-radius:8px;padding:6px 10px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none;width:100%;margin-top:4px";
+      const dataIso=e.data?e.data.split('/').reverse().join('-'):"";
+      const card=document.createElement("div");
+      card.className="evo-item";
+      card.style.cssText="border-left:4px solid var(--lilas);padding:12px 14px;margin:8px 0;background:var(--lilas-light);border-radius:0 10px 10px 0;";
+      card.innerHTML=`
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <strong style="color:var(--lilas);font-size:.85rem">📅 ${e.data||"—"}</strong>
+          <div style="display:flex;gap:6px">
+            <button onclick="editarEvolucao('${e.id}','${avalAtualId}',this)" style="background:var(--lilas-light);color:var(--lilas);border:2px solid var(--lilas-mid);border-radius:8px;padding:3px 10px;cursor:pointer;font-size:.75rem;font-weight:700">✏️ Editar</button>
+            <button onclick="apagarEvolucao('${e.id}','${avalAtualId}')" style="background:#fee2e2;color:#b91c1c;border:2px solid #fecaca;border-radius:8px;padding:3px 10px;cursor:pointer;font-size:.75rem;font-weight:700">🗑</button>
+          </div>
+        </div>
+        <div class="evo-campos-view" style="font-size:.82rem;line-height:1.7;white-space:pre-line;background:var(--white);padding:8px 12px;border-radius:8px">${e.texto||""}</div>
+        <div class="evo-campos-edit" style="display:none">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+            <div><label style="font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase">Data</label><input type="date" class="evo-edit-data" value="${dataIso}" style="${iSt}"></div>
+            <div><label style="font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase">Profissional</label><input type="text" class="evo-edit-prof" value="${(e.profissional||"").replace(/"/g,"&quot;")}" placeholder="Nome e registro" style="${iSt}"></div>
+            <div style="grid-column:1/-1"><label style="font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase">Procedimento (Proced)</label><textarea class="evo-edit-proc" rows="2" style="${iSt}">${e.procedimento||""}</textarea></div>
+            <div style="grid-column:1/-1"><label style="font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase">Intercorrência (Interc)</label><textarea class="evo-edit-interc" rows="2" style="${iSt}">${e.intercorrencia||""}</textarea></div>
+            <div style="grid-column:1/-1"><label style="font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase">Evolução (Evol)</label><textarea class="evo-edit-evol" rows="3" style="${iSt}">${e.evolucao||e.texto||""}</textarea></div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button onclick="salvarEdicaoEvolucao('${e.id}','${avalAtualId}',this.closest('.evo-item'))" style="padding:7px 16px;background:linear-gradient(135deg,var(--lilas),var(--ciano));color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:700;font-size:.82rem">💾 Salvar</button>
+            <button onclick="cancelarEdicaoEvolucao(this.closest('.evo-item'))" style="padding:7px 16px;background:var(--surface);color:var(--muted);border:2px solid var(--border);border-radius:10px;cursor:pointer;font-weight:700;font-size:.82rem">Cancelar</button>
+          </div>
+        </div>`;
+      evo.appendChild(card);
     });
   });
 }
 
 window.salvarEvolucao=function(){
-  const t=document.getElementById("textoEvolucao"); if(!t.value.trim())return;
-  dbAval.ref(`avaliacoes/${avalAtualId}/evolucoes`).push({texto:t.value,data:new Date().toLocaleDateString("pt-BR")});
-  t.value=""; carregarEvolucoes();
+  const dataEl=document.getElementById("evoData");
+  const procEl=document.getElementById("evoProcedimento");
+  const intercEl=document.getElementById("evoIntercorrencia");
+  const evolEl=document.getElementById("evoEvolucao");
+  const profEl=document.getElementById("evoProfissional");
+  if(!evolEl||(!evolEl.value.trim()&&!procEl.value.trim())){alert("Preencha ao menos Evolução ou Procedimento.");return;}
+  const dataFmt=dataEl.value?dataEl.value.split('-').reverse().join('/'):new Date().toLocaleDateString("pt-BR");
+  const texto=[
+    dataEl.value?"DATA: "+dataFmt:"",
+    procEl.value?"PROCEDIMENTOS: "+procEl.value:"",
+    intercEl.value?"INTERCORRÊNCIA: "+intercEl.value:"",
+    evolEl.value?"EVOLUÇÃO DO ESTADO DE SAÚDE: "+evolEl.value:"",
+    profEl.value?"PROFISSIONAL/REGISTRO CONSELHO: "+profEl.value:""
+  ].filter(Boolean).join("\n");
+  dbAval.ref(`avaliacoes/${avalAtualId}/evolucoes`).push({
+    texto,data:dataFmt,
+    procedimento:procEl.value,intercorrencia:intercEl.value,
+    evolucao:evolEl.value,profissional:profEl.value,
+    criadoEm:new Date().toLocaleString("pt-BR")
+  });
+  dataEl.value="";procEl.value="";intercEl.value="";evolEl.value="";profEl.value="";
+  carregarEvolucoes();
+};
+
+window.editarEvolucao=function(evoId,avalId,btn){
+  const card=btn.closest(".evo-item");
+  card.querySelector(".evo-campos-view").style.display="none";
+  card.querySelector(".evo-campos-edit").style.display="block";
+  btn.style.display="none";
+};
+
+window.cancelarEdicaoEvolucao=function(card){
+  card.querySelector(".evo-campos-view").style.display="";
+  card.querySelector(".evo-campos-edit").style.display="none";
+  const editBtn=card.querySelector("button[onclick*='editarEvolucao']");
+  if(editBtn)editBtn.style.display="";
+};
+
+window.salvarEdicaoEvolucao=function(evoId,avalId,card){
+  const dataVal=card.querySelector(".evo-edit-data").value;
+  const profVal=card.querySelector(".evo-edit-prof").value;
+  const procVal=card.querySelector(".evo-edit-proc").value;
+  const intercVal=card.querySelector(".evo-edit-interc").value;
+  const evolVal=card.querySelector(".evo-edit-evol").value;
+  const dataFmt=dataVal?dataVal.split('-').reverse().join('/'):"";
+  const texto=[
+    dataFmt?"DATA: "+dataFmt:"",
+    procVal?"PROCEDIMENTOS: "+procVal:"",
+    intercVal?"INTERCORRÊNCIA: "+intercVal:"",
+    evolVal?"EVOLUÇÃO DO ESTADO DE SAÚDE: "+evolVal:"",
+    profVal?"PROFISSIONAL/REGISTRO CONSELHO: "+profVal:""
+  ].filter(Boolean).join("\n");
+  dbAval.ref(`avaliacoes/${avalId}/evolucoes/${evoId}`).update({
+    data:dataFmt,procedimento:procVal,intercorrencia:intercVal,
+    evolucao:evolVal,profissional:profVal,texto,
+    editadoEm:new Date().toLocaleString("pt-BR")
+  }).then(()=>carregarEvolucoes());
+};
+
+window.apagarEvolucao=function(evoId,avalId){
+  if(!confirm("Apagar esta evolução?"))return;
+  dbAval.ref(`avaliacoes/${avalId}/evolucoes/${evoId}`).remove().then(()=>carregarEvolucoes());
 };
 
 
@@ -3337,7 +3653,12 @@ function renderAgenda(){
   const listV=document.getElementById("agListaVencidas");
   tabela.innerHTML="";listV.innerHTML="";alerta.style.display="none";
   const hoje=hojeISO();
-  const entradas=Object.entries(agCache).reverse(); // mais recente primeiro
+  // Ordenar: alfabético por nome, depois por data de avaliação
+  const entradas=Object.entries(agCache).sort((a,b)=>{
+    const n=(a[1].nome||"").localeCompare(b[1].nome||"","pt-BR");
+    if(n!==0) return n;
+    return (a[1].dataAvaliacao||"").localeCompare(b[1].dataAvaliacao||"");
+  });
   entradas.forEach(([id,d])=>{
     const pendente=!d.realizada;
     const vencida=d.dataReavaliacao<hoje&&pendente;
@@ -4032,68 +4353,52 @@ window.voltar=function(){
 };
 
 window.carregarAvaliacoes=function(){
-  // Garante que a referência do Firebase está disponível
   if(!dbAval){
-    console.error("Firebase não inicializado para Avaliações");
     document.getElementById("listaAvaliacoes").innerHTML="<p style='color:#b91c1c;padding:12px'>⚠️ Erro: Firebase não inicializado. Recarregue a página.</p>";
     return;
   }
-  
   const filtro=document.getElementById("filtroTipo")?.value||"";
-  const lista=document.getElementById("listaAvaliacoes");
-  
-  if(!lista){
-    console.error("Elemento listaAvaliacoes não encontrado");
-    return;
-  }
-  
+  const pesquisa=(document.getElementById("pesquisaAvaliacao")?.value||"").toLowerCase().trim();
+  const lista=document.getElementById("listaAvaliacoes")||document.getElementById("conteudoListaAvaliacoes");
+  if(!lista) return;
   lista.innerHTML="<p style='color:var(--muted);padding:8px;font-size:.82rem'>Carregando avaliações...</p>";
-  
   dbAval.ref("avaliacoes").once("value").then(snap=>{
     lista.innerHTML="";
-    
-    if(!snap.exists() || !snap.val()){
+    if(!snap.exists()||!snap.val()){
       lista.innerHTML="<p style='color:var(--muted);padding:12px'>Nenhuma avaliação registrada ainda.</p>";
       return;
     }
-    
-    const avaliacoes = [];
+    let avaliacoes=[];
     snap.forEach(child=>{
       const d=child.val();
-      if(d && d.nome && d.tipo && d.data){
-        avaliacoes.push({id:child.key, nome:d.nome, tipo:d.tipo, data:d.data, ...d});
-      }
+      if(d&&d.nome&&d.tipo&&d.data) avaliacoes.push({id:child.key,...d});
     });
-    
-    if(avaliacoes.length === 0){
+    if(filtro) avaliacoes=avaliacoes.filter(a=>a.tipo===filtro);
+    if(pesquisa) avaliacoes=avaliacoes.filter(a=>
+      (a.nome||"").toLowerCase().includes(pesquisa)||
+      (a.tipo||"").toLowerCase().includes(pesquisa)||
+      (a.diagClinico||"").toLowerCase().includes(pesquisa)||
+      (a.diagnosticoClinico||"").toLowerCase().includes(pesquisa)
+    );
+    if(!avaliacoes.length){
       lista.innerHTML="<p style='color:var(--muted);padding:12px'>Nenhuma avaliação encontrada.</p>";
       return;
     }
-    
-    // Ordena por data mais recente primeiro
+    // Ordem alfabética por nome, depois por data
     avaliacoes.sort((a,b)=>{
-      const dataA = a.data ? new Date(a.data.split('/').reverse().join('-')) : new Date(0);
-      const dataB = b.data ? new Date(b.data.split('/').reverse().join('-')) : new Date(0);
-      return dataB - dataA;
+      const n=(a.nome||"").localeCompare(b.nome||"","pt-BR");
+      if(n!==0) return n;
+      return (a.data||"").localeCompare(b.data||"");
     });
-    
     avaliacoes.forEach(d=>{
-      if(filtro && d.tipo!==filtro) return;
-      
       const div=document.createElement("div");
-      div.className="lista-aval-item";
-      div.style.cursor="pointer";
+      div.className="lista-aval-item"; div.style.cursor="pointer";
       div.innerHTML=`<div><div class="nome">${d.nome}</div><div class="tipo">${d.tipo} • ${fmtD(d.data)}</div></div>`;
-      div.onclick=()=>abrirDetalhe(d.id, d);
+      div.onclick=()=>abrirDetalhe(d.id,d);
       lista.appendChild(div);
     });
-    
-    if(lista.children.length === 0){
-      lista.innerHTML="<p style='color:var(--muted);padding:12px'>Nenhuma avaliação encontrada para este tipo.</p>";
-    }
   }).catch(err=>{
-    console.error("Erro ao carregar avaliações:", err);
-    lista.innerHTML="<p style='color:var(--text);padding:12px'>⚠️ Erro ao carregar avaliações. Verifique sua conexão com a internet.</p>";
+    lista.innerHTML="<p style='color:var(--text);padding:12px'>⚠️ Erro ao carregar avaliações. Verifique sua conexão.</p>";
   });
 };
 
