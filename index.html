@@ -468,6 +468,12 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 }
 .fin-tab:hover{color:var(--lilas);}
 .fin-tab.active{color:var(--lilas);border-bottom-color:var(--lilas);}
+/* Oculto via JS para colaboradores */
+.fin-total-admin.colab-hidden{display:none!important;}
+/* Botões de período do gráfico financeiro */
+.btn-chart-period{background:var(--surface);color:var(--muted);border:2px solid var(--border);border-radius:8px;padding:5px 14px;cursor:pointer;font-family:'Poppins',sans-serif;font-size:.78rem;font-weight:600;transition:all .2s;}
+.btn-chart-period:hover{color:var(--lilas);border-color:var(--lilas);}
+.btn-chart-period.active-period{background:linear-gradient(135deg,var(--lilas),var(--ciano));color:#fff;border-color:transparent;}
 .fin-subpage{display:none;}
 .fin-subpage.active{display:block;}
 
@@ -632,9 +638,11 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
           <!-- ABAS INTERNAS DO FINANCEIRO -->
           <div class="fin-tabs">
             <button class="fin-tab active" onclick="finTab('entradas',this)">💰 Entradas</button>
-            <button class="fin-tab fin-tab-admin" onclick="finTab('yoga',this)">🧘 Financeiro Yoga</button>
+            <!-- Aba Financeiro Yoga oculta na UI – dados preservados no Firebase -->
+            <button class="fin-tab fin-tab-admin" onclick="finTab('yoga',this)" style="display:none">🧘 Financeiro Yoga</button>
             <button class="fin-tab fin-tab-admin" onclick="finTab('despesas',this)">📉 Despesas</button>
-            <button class="fin-tab fin-tab-admin" onclick="finTab('insumos',this)">📦 Insumos</button>
+            <!-- Aba Insumos oculta na UI – dados preservados no Firebase -->
+            <button class="fin-tab fin-tab-admin" onclick="finTab('insumos',this)" style="display:none">📦 Insumos</button>
           </div>
 
           <!-- ──── SUB-ABA: ENTRADAS ──── -->
@@ -684,8 +692,20 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                 </div>
               </div>
             </div>
-            <p class="fin-total" id="fin_totalMes">Total do mês: R$ 0,00</p>
-            <div class="table-card">
+            <p class="fin-total fin-total-admin" id="fin_totalMes">Total do mês: R$ 0,00</p>
+
+            <!-- Gráfico de Desempenho Financeiro -->
+            <div class="table-card fin-total-admin" id="finChartCard" style="padding:20px;margin-bottom:16px">
+              <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px">
+                <h3 style="font-family:'Nunito',sans-serif;font-weight:800;color:var(--text);margin:0">📈 Desempenho Financeiro</h3>
+                <div style="display:flex;gap:8px;flex-wrap:wrap">
+                  <button id="finChartBtnMes" class="btn-chart-period active-period" onclick="finChartPeriodo('mes')">Mensal</button>
+                  <button id="finChartBtnSem" class="btn-chart-period" onclick="finChartPeriodo('semana')">Semanal</button>
+                  <button id="finChartBtnDia" class="btn-chart-period" onclick="finChartPeriodo('dia')">Diário</button>
+                </div>
+              </div>
+              <canvas id="finDesempenhoChart" style="max-height:280px"></canvas>
+            </div>
               <table class="data-table">
                 <thead><tr><th>Nome</th><th>Gmail</th><th>CPF/CNPJ</th><th>Atividade</th><th>Pagamento</th><th>Valor</th><th>Data</th><th>NF</th><th></th></tr></thead>
                 <tbody id="fin_tabela"></tbody>
@@ -2576,9 +2596,12 @@ function iniciarSessao(u){
   document.getElementById("sbRole").textContent = u.role==="adm" ? "Administrador" : "Colaborador";
 
   // Permissão colaborador: ocultar abas financeiras restritas
+  // Permissão colaborador: ocultar abas financeiras restritas e total mensal
   if(u.role === "colab"){
     setTimeout(()=>{
       document.querySelectorAll(".fin-tab-admin").forEach(el=>el.style.display="none");
+      // Ocultar total mensal de entradas para colaboradores
+      document.querySelectorAll(".fin-total-admin").forEach(el=>el.classList.add("colab-hidden"));
     }, 100);
   }
 
@@ -3031,11 +3054,145 @@ function carregarFinanceiro(){
       tabela.appendChild(tr);
     });
     totalEl.innerText=`Total do mês: R$ ${tot.toFixed(2)}`;
+    // Atualiza gráfico após carregar entradas
+    carregarDadosParaGrafico();
   });
 }
 window.updateNF=(mes,id,v)=>dbFin.ref(`entradas/${mes}/${id}`).update({nf:v});
 window.updateCPF=(mes,id,v)=>dbFin.ref(`entradas/${mes}/${id}`).update({cpf:v});
 window.delEntrada=(mes,id)=>dbFin.ref(`entradas/${mes}/${id}`).remove();
+
+/* ══════════════════════════════
+   GRÁFICO DE DESEMPENHO FINANCEIRO
+══════════════════════════════ */
+let finChartInstance = null;
+let finChartPeriodoAtual = 'mes';
+let finChartDadosCache = {}; // { "YYYY-MM": { data: valor, ... } }
+
+window.finChartPeriodo = function(periodo){
+  finChartPeriodoAtual = periodo;
+  document.querySelectorAll(".btn-chart-period").forEach(b=>b.classList.remove("active-period"));
+  const map = {mes:"finChartBtnMes", semana:"finChartBtnSem", dia:"finChartBtnDia"};
+  const el = document.getElementById(map[periodo]);
+  if(el) el.classList.add("active-period");
+  renderFinChart();
+};
+
+async function carregarDadosParaGrafico(){
+  // Busca os últimos 6 meses de entradas
+  const hoje = new Date();
+  const meses = [];
+  for(let i=5;i>=0;i--){
+    const d = new Date(hoje.getFullYear(), hoje.getMonth()-i, 1);
+    const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
+    meses.push(key);
+  }
+  const promises = meses.map(m =>
+    dbFin.ref("entradas/"+m).once("value").then(snap=>({mes:m, snap}))
+  );
+  const resultados = await Promise.all(promises);
+  finChartDadosCache = {};
+  resultados.forEach(({mes, snap})=>{
+    finChartDadosCache[mes] = {};
+    snap.forEach(item=>{
+      const e = item.val();
+      const data = e.data || mes+"-01";
+      finChartDadosCache[mes][data] = (finChartDadosCache[mes][data]||0) + Number(e.valor||0);
+    });
+  });
+  renderFinChart();
+}
+
+function renderFinChart(){
+  const ctx = document.getElementById("finDesempenhoChart");
+  if(!ctx) return;
+
+  let labels = [], valores = [], titulo = "";
+
+  if(finChartPeriodoAtual === 'mes'){
+    // Agrupa por mês (soma total de cada mês)
+    titulo = "Entradas – Últimos 6 meses";
+    const nomeMeses = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+    Object.entries(finChartDadosCache).forEach(([mesKey, dias])=>{
+      const [ano, mes] = mesKey.split("-");
+      labels.push(nomeMeses[parseInt(mes)-1]+"/"+ano.slice(2));
+      valores.push(Object.values(dias).reduce((a,b)=>a+b,0));
+    });
+  } else if(finChartPeriodoAtual === 'semana'){
+    // Agrupa por semana do mês atual
+    titulo = "Entradas – Semanas do mês atual";
+    const mesAtual = document.getElementById("fin_mesSelect")?.value || "";
+    const diasMes = finChartDadosCache[mesAtual] || {};
+    const semanas = {S1:0,S2:0,S3:0,S4:0,S5:0};
+    Object.entries(diasMes).forEach(([dataStr, val])=>{
+      const dia = parseInt((dataStr.split("-")[2]||"1"));
+      const sem = Math.ceil(dia/7);
+      const key = "S"+Math.min(sem,5);
+      semanas[key] = (semanas[key]||0)+val;
+    });
+    ["S1","S2","S3","S4","S5"].forEach(s=>{
+      labels.push("Semana "+s.replace("S",""));
+      valores.push(semanas[s]||0);
+    });
+  } else {
+    // Diário – mês selecionado
+    titulo = "Entradas – Diário do mês";
+    const mesAtual = document.getElementById("fin_mesSelect")?.value || "";
+    const diasMes = finChartDadosCache[mesAtual] || {};
+    const sorted = Object.entries(diasMes).sort((a,b)=>a[0].localeCompare(b[0]));
+    sorted.forEach(([dataStr, val])=>{
+      const parts = dataStr.split("-");
+      labels.push((parts[2]||"")+"/"+(parts[1]||""));
+      valores.push(val);
+    });
+    if(!sorted.length){ labels=["Sem dados"]; valores=[0]; }
+  }
+
+  // Gradiente
+  const gradient = ctx.getContext("2d").createLinearGradient(0,0,0,260);
+  gradient.addColorStop(0,"rgba(124,58,237,0.35)");
+  gradient.addColorStop(1,"rgba(124,58,237,0.02)");
+
+  if(finChartInstance){ finChartInstance.destroy(); finChartInstance=null; }
+
+  finChartInstance = new Chart(ctx, {
+    type: "bar",
+    data:{
+      labels,
+      datasets:[{
+        label:"Entradas (R$)",
+        data: valores,
+        backgroundColor: gradient,
+        borderColor:"rgba(124,58,237,0.85)",
+        borderWidth:2,
+        borderRadius:8,
+        borderSkipped:false,
+        tension:0.4,
+        fill:true
+      }]
+    },
+    options:{
+      responsive:true,
+      plugins:{
+        legend:{display:false},
+        title:{display:true, text:titulo, font:{size:13,family:"'Poppins',sans-serif"}, color:"#6b7280"},
+        tooltip:{
+          callbacks:{
+            label: ctx=>"R$ "+Number(ctx.parsed.y||0).toFixed(2)
+          }
+        }
+      },
+      scales:{
+        y:{
+          beginAtZero:true,
+          grid:{color:"rgba(0,0,0,0.05)"},
+          ticks:{callback:v=>"R$ "+v.toLocaleString("pt-BR")}
+        },
+        x:{grid:{display:false}}
+      }
+    }
+  });
+}
 
 /* ══════════════════════
    DESPESAS TOTAIS
@@ -3184,6 +3341,16 @@ function initGradeFisio(){
 
 function gerarHs(a,b){const r=[];for(let h=a;h<=b;h++)r.push(String(h).padStart(2,"0")+":00");return r;}
 
+/* Gera horários de 30 em 30 minutos para a grade de Yoga */
+function gerarHsMeia(a,b){
+  const r=[];
+  for(let h=a;h<=b;h++){
+    r.push(String(h).padStart(2,"0")+":00");
+    if(h<b) r.push(String(h).padStart(2,"0")+":30");
+  }
+  return r;
+}
+
 /* ── GRADE GERAL (original) ── */
 function salvarGrade(){
   const data={};
@@ -3286,7 +3453,7 @@ function renderGradeYoga(data){
     tbl.innerHTML="<thead><tr><th>Horário</th><th>Instrutor</th><th>Modalidade</th></tr></thead>";
     const tb=document.createElement("tbody");
     const salvos=data?.[d.dia]||[];
-    gerarHs(d.h[0],d.h[1]).forEach(h=>{const e=salvos.find(l=>l.horario===h);tb.appendChild(criarLinhaGradeYoga(e||{horario:h,instrutor:"",modalidade:""}));});
+    gerarHsMeia(d.h[0],d.h[1]).forEach(h=>{const e=salvos.find(l=>l.horario===h);tb.appendChild(criarLinhaGradeYoga(e||{horario:h,instrutor:"",modalidade:""}));});
     tbl.appendChild(tb); sec.append(h3,tbl); c.appendChild(sec);
   });
   filtrarGradeYoga();
