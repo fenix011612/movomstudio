@@ -516,9 +516,212 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 <body>
 
 <!-- ══════════════════════════════
+     SITE INSTITUCIONAL PÚBLICO (tela inicial)
+══════════════════════════════ -->
+<div id="pageSitePublico">
+
+      <div class="page" id="page-site">
+        <!-- HERO DO SITE -->
+        <div class="site-hero">
+          <nav class="site-topnav" id="siteTopNav">
+            <div class="site-brand"><span class="mark">⬡ Mov om</span></div>
+            <div class="site-nav-links" id="siteNavLinks">
+              <a href="#" onclick="siteNav('s-home',this);return false">Início</a>
+              <a href="#" onclick="siteNav('s-modalidades',this);return false">Modalidades</a>
+              <a href="#" onclick="siteNav('s-horarios',this);return false">Horários</a>
+              <a href="#" onclick="siteNav('s-agendar',this);return false">Agendar</a>
+              <a href="#" onclick="siteNav('s-satisfacao',this);return false">Satisfação</a>
+              <a href="#" onclick="siteNav('s-contato',this);return false">Contato</a>
+
+            </div>
+          </nav>
+          <div class="site-hero-content">
+            <p class="site-tag">Fisioterapia • Pilates • Yoga</p>
+            <h1>Mov om Espaço De Saúde e Bem Estar</h1>
+            <p>Um espaço dedicado ao cuidado integral do corpo e da mente com atendimento profissional e humanizado.</p>
+            <div class="site-btns">
+              <a class="site-btn primary" href="#" onclick="siteNav('s-agendar',null);return false">Agende sua avaliação</a>
+              <a class="site-btn wa" href="https://wa.me/5521999681425" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- SEÇÕES DO SITE -->
+        <div class="site-body">
+          <!-- HOME -->
+          <div class="site-section active-s" id="s-home">
+            <div class="site-container">
+              <h2 class="site-h2">Bem-vindo(a)</h2>
+              <p style="color:var(--muted);margin-bottom:24px;line-height:1.7">A Mov om Espaço De Saúde e Bem Estar é um ambiente dedicado ao cuidado integral do corpo e da mente, oferecendo fisioterapia, pilates e yoga com acompanhamento profissional e humanizado.</p>
+              <div class="site-btns" style="margin-bottom:32px">
+                <a class="site-btn ig" href="https://www.instagram.com/movomzenyogaepilates/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                <a class="site-btn wa" href="https://wa.me/5521999681425" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                <a class="site-btn loc" href="https://www.google.com/maps/search/?api=1&query=Rua+Marechal+Deodoro%2C+577%2C+salas+605%2C+805+e+808+-+25+de+Agosto%2C+Duque+de+Caxias+-+RJ" target="_blank"><i class="fas fa-map-marker-alt"></i> Localização</a>
+              </div>
+              <h2 class="site-h2">Nossas Atividades</h2>
+              <div class="site-cards" style="margin-top:16px">
+                <div class="site-card"><h3>Serviços</h3><p style="color:var(--muted);font-size:.84rem">Fisioterapia, Pilates, Método Suspensus, Elastic Training, treino cardiorrespiratório, funcional, yoga/aéreo yoga, meditação, massagens e drenagem linfática.</p></div>
+                <div class="site-card"><h3>Programas</h3><p style="color:var(--muted);font-size:.84rem"><strong>Mov Zen:</strong> yoga e meditação para pacientes oncológicos.<br><br><strong>Mov Recovery:</strong> recuperação muscular para atletas profissionais e amadores.</p></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MODALIDADES -->
+          <div class="site-section" id="s-modalidades">
+            <div class="site-container">
+              <h2 class="site-h2">Nossas Modalidades</h2>
+              <div class="site-cards" style="margin-top:16px">
+                <div class="site-card"><h3>🦵 Fisioterapia</h3><p style="color:var(--muted);font-size:.84rem">Atendimento individualizado com profissionais qualificados para reabilitação, prevenção e promoção da saúde.</p></div>
+                <div class="site-card"><h3>🧘 Pilates</h3><p style="color:var(--muted);font-size:.84rem">Método de exercícios com foco no fortalecimento do core, equilíbrio, flexibilidade e reabilitação.</p></div>
+                <div class="site-card"><h3>☮️ Yoga</h3><p style="color:var(--muted);font-size:.84rem">Diversas modalidades: Integrativa, Aéreo, Hatha, Chair, Restaurativa, Yin, Acroyoga, Meditação, Teens e Kids.</p></div>
+                <div class="site-card"><h3>🏃 Recovery</h3><p style="color:var(--muted);font-size:.84rem">Programa especializado em recuperação muscular e performance para atletas profissionais e amadores.</p></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- HORÁRIOS -->
+          <div class="site-section" id="s-horarios">
+            <div class="site-container">
+              <h2 class="site-h2">Horários</h2>
+              <h3 style="color:var(--lilas);font-family:'Nunito',sans-serif;font-weight:800;margin:24px 0 12px">Pilates</h3>
+              <div class="site-cards">
+                <div class="site-card"><h3>Segunda a Sexta</h3><p style="color:var(--muted)">07:00 às 19:00<br><small>Intervalo: 12:00 às 13:00</small></p></div>
+                <div class="site-card"><h3>Sábado</h3><p style="color:var(--muted)">07:00 às 12:00</p></div>
+                <div class="site-card"><h3>Domingo</h3><p style="color:var(--muted)">Fechado</p></div>
+              </div>
+              <h3 style="color:var(--lilas);font-family:'Nunito',sans-serif;font-weight:800;margin:28px 0 12px">Yoga</h3>
+              <div class="site-cards">
+                <div class="site-card"><h3>Segunda</h3><p style="color:var(--muted);font-size:.84rem">09:30 Integrativa<br>10:30 Meditação<br>17:20 Integrativa<br>18:30 Integrativa</p></div>
+                <div class="site-card"><h3>Terça</h3><p style="color:var(--muted);font-size:.84rem">07:00 Integrativa<br>09:30 Sutil<br>17:00 Teens<br>18:10 Kids</p></div>
+                <div class="site-card"><h3>Quarta</h3><p style="color:var(--muted);font-size:.84rem">08:00 Aéreo<br>09:30 Integrativa<br>17:20 Integrativa<br>18:30 Integrativa</p></div>
+                <div class="site-card"><h3>Quinta</h3><p style="color:var(--muted);font-size:.84rem">07:00 Integrativa<br>09:30 Sutil<br>17:20 Integrativa<br>18:30 Integrativa</p></div>
+                <div class="site-card"><h3>Sexta</h3><p style="color:var(--muted);font-size:.84rem">07:00 Aéreo<br>08:15 Hatha<br>09:30 Chair<br>10:40 Restaurativa<br>17:20 / 18:30 Yin</p></div>
+                <div class="site-card"><h3>Sábado</h3><p style="color:var(--muted);font-size:.84rem">08:00 Acroyoga<br>09:15 Hatha<br>10:30 Aéreo<br>11:45 Restaurativa</p></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- AGENDAMENTO -->
+          <div class="site-section" id="s-agendar">
+            <div class="site-container">
+              <h2 class="site-h2">Agende sua avaliação</h2>
+              <p style="color:var(--muted);margin-bottom:20px">Preencha o formulário e entraremos em contato pelo WhatsApp.</p>
+              <div class="form-card">
+                <div class="form-grid">
+                  <div class="field-group"><label>Data</label><input type="date" id="lead_data"></div>
+                  <div class="field-group"><label>Nome</label><input type="text" id="lead_nome" placeholder="Seu nome completo"></div>
+                  <div class="field-group"><label>WhatsApp</label><input type="text" id="lead_whatsapp" placeholder="(21) 99999-9999"></div>
+                  <div class="field-group"><label>Interesse</label><input type="text" id="lead_interesse" placeholder="Pilates, Yoga, Fisioterapia..."></div>
+                  <div class="field-group"><label>Indicação</label><input type="text" id="lead_indicacao" placeholder="Quem te indicou?"></div>
+                  <div class="field-group"><label>Convênio</label><input type="text" id="lead_convenio" placeholder="TotalPass, Gympass..."></div>
+                  <div class="form-full"><button class="btn-save" onclick="enviarLead()">📤 Enviar</button></div>
+                </div>
+                <p id="leadMsg" style="margin-top:12px;font-weight:600;color:var(--ciano);display:none"></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- SATISFAÇÃO PÚBLICA -->
+          <div class="site-section" id="s-satisfacao">
+            <div class="site-container">
+              <h2 class="site-h2">Pesquisa de Satisfação</h2>
+              <p style="color:var(--muted);margin-bottom:20px">Sua opinião é muito importante para nós!</p>
+              <div class="form-card">
+                <div class="form-grid">
+                  <div class="field-group"><label>Nome (opcional)</label><input type="text" id="survey_nome" placeholder="Seu nome"></div>
+                  <div class="field-group"><label>Nota (1 a 5)</label><input type="number" id="survey_nota" min="1" max="5" placeholder="5"></div>
+                  <div class="field-group form-full"><label>Comentário</label><input type="text" id="survey_comentario" placeholder="Conte sua experiência..."></div>
+                  <div class="form-full"><button class="btn-save" onclick="enviarSurvey()">⭐ Enviar Avaliação</button></div>
+                </div>
+                <p id="surveyMsg" style="margin-top:12px;font-weight:600;color:var(--ciano);display:none"></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- CONTATO -->
+          <div class="site-section" id="s-contato">
+            <div class="site-container">
+              <h2 class="site-h2">Contato</h2>
+              <div class="site-card" style="max-width:440px">
+                <p style="margin-bottom:12px"><i class="fas fa-envelope" style="color:var(--lilas);margin-right:8px"></i> movom.zenyoga@gmail.com</p>
+                <p style="margin-bottom:12px"><i class="fab fa-whatsapp" style="color:var(--ciano);margin-right:8px"></i> (21) 99968-1425</p>
+                <a class="site-btn loc" style="margin-top:12px;display:inline-flex" href="https://www.google.com/maps/search/?api=1&query=Rua+Marechal+Deodoro%2C+577%2C+salas+605%2C+805+e+808+-+25+de+Agosto%2C+Duque+de+Caxias+-+RJ%2C+Centro+Empresarial+Jomasa" target="_blank" rel="noopener"><i class="fas fa-map-marker-alt"></i> Localização no Mapa</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- ADMIN DO SITE -->
+          <div class="site-section" id="s-admin">
+            <div class="site-container">
+              <h2 class="site-h2">Área Administrativa – Site</h2>
+
+              <!-- Leads -->
+              <div class="form-card">
+                <h3>📋 Cadastro de Lead (Admin)</h3>
+                <div class="form-grid">
+                  <div class="field-group"><label>Data</label><input type="date" id="admlead_data"></div>
+                  <div class="field-group"><label>Nome</label><input type="text" id="admlead_nome" placeholder="Nome"></div>
+                  <div class="field-group"><label>WhatsApp</label><input type="text" id="admlead_whatsapp" placeholder="WhatsApp"></div>
+                  <div class="field-group"><label>Interesse</label><input type="text" id="admlead_interesse" placeholder="Interesse"></div>
+                  <div class="field-group"><label>Indicação</label><input type="text" id="admlead_indicacao" placeholder="Indicação"></div>
+                  <div class="field-group"><label>Convênio</label><input type="text" id="admlead_convenio" placeholder="Convênio"></div>
+                  <div class="field-group"><label>Matriculou?</label>
+                    <select id="admlead_matriculou"><option value="Não">Não matriculou</option><option value="Sim">Matriculou</option></select>
+                  </div>
+                  <div class="field-group"><label>Motivo</label><input type="text" id="admlead_motivo" placeholder="Motivo da não matrícula"></div>
+                  <div class="form-full"><button class="btn-save" onclick="salvarLeadAdmin()">💾 Salvar Lead</button></div>
+                </div>
+              </div>
+
+              <!-- Pesquisa de satisfação admin -->
+              <div class="form-card">
+                <h3>⭐ Pesquisa de Satisfação (Admin)</h3>
+                <div class="form-grid">
+                  <div class="field-group"><label>Nome</label><input type="text" id="admsurvey_nome" placeholder="Nome (opcional)"></div>
+                  <div class="field-group"><label>Nota (1-5)</label><input type="number" id="admsurvey_nota" min="1" max="5" placeholder="5"></div>
+                  <div class="field-group form-full"><label>Comentário</label><input type="text" id="admsurvey_comentario" placeholder="Comentário"></div>
+                  <div class="form-full"><button class="btn-save" onclick="salvarSurveyAdmin()">💾 Salvar Resposta</button></div>
+                </div>
+              </div>
+
+              <!-- Tabela de Leads -->
+              <div class="table-card">
+                <div class="table-header">
+                  <span class="table-title">📊 Leads Cadastrados</span>
+                  <button class="btn btn-primary" onclick="exportarLeadsCSV()" style="margin-left:auto">📥 Exportar CSV</button>
+                </div>
+                <div id="siteLeadTableWrap" style="overflow-x:auto;padding:0 8px 12px">
+                  <p style="color:var(--muted);padding:12px;font-size:.84rem">Carregando leads...</p>
+                </div>
+              </div>
+
+              <!-- Dashboard Charts -->
+              <div class="form-card">
+                <h3>📈 Dashboard</h3>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:8px">
+                  <div class="table-card" style="padding:16px"><canvas id="leadsChart"></canvas></div>
+                  <div class="table-card" style="padding:16px"><canvas id="conversionChart"></canvas></div>
+                  <div class="table-card" style="padding:16px"><canvas id="interestChart"></canvas></div>
+                  <div class="table-card" style="padding:16px"><canvas id="satisfactionChart"></canvas></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div><!-- /site-body -->
+
+        <!-- WhatsApp flutuante (apenas na página site) -->
+        <a class="site-wa-float" href="https://wa.me/5521999681425" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <div class="site-footer">© 2026 Mov om Espaço De Saúde e Bem Estar
+          &nbsp;·&nbsp;
+          <a href="#" onclick="abrirLoginInterno();return false;" style="color:rgba(255,255,255,.35);text-decoration:none;font-size:.75rem" title="Acesso restrito">🔒</a>
+        </div>
+</div>
+
+<!-- ══════════════════════════════
      TELA DE LOGIN
 ══════════════════════════════ -->
-<div id="telaLogin">
+<div id="telaLogin" class="hidden">
   <div class="login-card">
     <div class="login-logo">
       <div class="mark">⬡ MOVOM</div>
@@ -1026,200 +1229,11 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 
       <!-- yoga integrado ao Financeiro -->
 
-      <!-- ════ SITE INSTITUCIONAL ════ -->
+      <!-- ════ SITE INSTITUCIONAL (stub – abre tela pública) ════ -->
       <div class="page" id="page-site">
-        <!-- HERO DO SITE -->
-        <div class="site-hero">
-          <nav class="site-topnav" id="siteTopNav">
-            <div class="site-brand"><span class="mark">⬡ Mov om</span></div>
-            <div class="site-nav-links" id="siteNavLinks">
-              <a href="#" onclick="siteNav('s-home',this);return false">Início</a>
-              <a href="#" onclick="siteNav('s-modalidades',this);return false">Modalidades</a>
-              <a href="#" onclick="siteNav('s-horarios',this);return false">Horários</a>
-              <a href="#" onclick="siteNav('s-agendar',this);return false">Agendar</a>
-              <a href="#" onclick="siteNav('s-satisfacao',this);return false">Satisfação</a>
-              <a href="#" onclick="siteNav('s-contato',this);return false">Contato</a>
-              <a href="#" onclick="siteNav('s-admin',this);return false">Admin</a>
-            </div>
-          </nav>
-          <div class="site-hero-content">
-            <p class="site-tag">Fisioterapia • Pilates • Yoga</p>
-            <h1>Mov om Espaço De Saúde e Bem Estar</h1>
-            <p>Um espaço dedicado ao cuidado integral do corpo e da mente com atendimento profissional e humanizado.</p>
-            <div class="site-btns">
-              <a class="site-btn primary" href="#" onclick="siteNav('s-agendar',null);return false">Agende sua avaliação</a>
-              <a class="site-btn wa" href="https://wa.me/5521999681425" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-            </div>
-          </div>
+        <div class="inner" style="text-align:center;padding:80px 32px">
+          <p style="color:var(--muted);font-size:.9rem">Abrindo site institucional…</p>
         </div>
-
-        <!-- SEÇÕES DO SITE -->
-        <div class="site-body">
-          <!-- HOME -->
-          <div class="site-section active-s" id="s-home">
-            <div class="site-container">
-              <h2 class="site-h2">Bem-vindo(a)</h2>
-              <p style="color:var(--muted);margin-bottom:24px;line-height:1.7">A Mov om Espaço De Saúde e Bem Estar é um ambiente dedicado ao cuidado integral do corpo e da mente, oferecendo fisioterapia, pilates e yoga com acompanhamento profissional e humanizado.</p>
-              <div class="site-btns" style="margin-bottom:32px">
-                <a class="site-btn ig" href="https://www.instagram.com/movomzenyogaepilates/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-                <a class="site-btn wa" href="https://wa.me/5521999681425" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-                <a class="site-btn loc" href="https://www.google.com/maps/search/?api=1&query=Rua+Marechal+Deodoro%2C+577%2C+salas+605%2C+805+e+808+-+25+de+Agosto%2C+Duque+de+Caxias+-+RJ" target="_blank"><i class="fas fa-map-marker-alt"></i> Localização</a>
-              </div>
-              <h2 class="site-h2">Nossas Atividades</h2>
-              <div class="site-cards" style="margin-top:16px">
-                <div class="site-card"><h3>Serviços</h3><p style="color:var(--muted);font-size:.84rem">Fisioterapia, Pilates, Método Suspensus, Elastic Training, treino cardiorrespiratório, funcional, yoga/aéreo yoga, meditação, massagens e drenagem linfática.</p></div>
-                <div class="site-card"><h3>Programas</h3><p style="color:var(--muted);font-size:.84rem"><strong>Mov Zen:</strong> yoga e meditação para pacientes oncológicos.<br><br><strong>Mov Recovery:</strong> recuperação muscular para atletas profissionais e amadores.</p></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- MODALIDADES -->
-          <div class="site-section" id="s-modalidades">
-            <div class="site-container">
-              <h2 class="site-h2">Nossas Modalidades</h2>
-              <div class="site-cards" style="margin-top:16px">
-                <div class="site-card"><h3>🦵 Fisioterapia</h3><p style="color:var(--muted);font-size:.84rem">Atendimento individualizado com profissionais qualificados para reabilitação, prevenção e promoção da saúde.</p></div>
-                <div class="site-card"><h3>🧘 Pilates</h3><p style="color:var(--muted);font-size:.84rem">Método de exercícios com foco no fortalecimento do core, equilíbrio, flexibilidade e reabilitação.</p></div>
-                <div class="site-card"><h3>☮️ Yoga</h3><p style="color:var(--muted);font-size:.84rem">Diversas modalidades: Integrativa, Aéreo, Hatha, Chair, Restaurativa, Yin, Acroyoga, Meditação, Teens e Kids.</p></div>
-                <div class="site-card"><h3>🏃 Recovery</h3><p style="color:var(--muted);font-size:.84rem">Programa especializado em recuperação muscular e performance para atletas profissionais e amadores.</p></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- HORÁRIOS -->
-          <div class="site-section" id="s-horarios">
-            <div class="site-container">
-              <h2 class="site-h2">Horários</h2>
-              <h3 style="color:var(--lilas);font-family:'Nunito',sans-serif;font-weight:800;margin:24px 0 12px">Pilates</h3>
-              <div class="site-cards">
-                <div class="site-card"><h3>Segunda a Sexta</h3><p style="color:var(--muted)">07:00 às 19:00<br><small>Intervalo: 12:00 às 13:00</small></p></div>
-                <div class="site-card"><h3>Sábado</h3><p style="color:var(--muted)">07:00 às 12:00</p></div>
-                <div class="site-card"><h3>Domingo</h3><p style="color:var(--muted)">Fechado</p></div>
-              </div>
-              <h3 style="color:var(--lilas);font-family:'Nunito',sans-serif;font-weight:800;margin:28px 0 12px">Yoga</h3>
-              <div class="site-cards">
-                <div class="site-card"><h3>Segunda</h3><p style="color:var(--muted);font-size:.84rem">09:30 Integrativa<br>10:30 Meditação<br>17:20 Integrativa<br>18:30 Integrativa</p></div>
-                <div class="site-card"><h3>Terça</h3><p style="color:var(--muted);font-size:.84rem">07:00 Integrativa<br>09:30 Sutil<br>17:00 Teens<br>18:10 Kids</p></div>
-                <div class="site-card"><h3>Quarta</h3><p style="color:var(--muted);font-size:.84rem">08:00 Aéreo<br>09:30 Integrativa<br>17:20 Integrativa<br>18:30 Integrativa</p></div>
-                <div class="site-card"><h3>Quinta</h3><p style="color:var(--muted);font-size:.84rem">07:00 Integrativa<br>09:30 Sutil<br>17:20 Integrativa<br>18:30 Integrativa</p></div>
-                <div class="site-card"><h3>Sexta</h3><p style="color:var(--muted);font-size:.84rem">07:00 Aéreo<br>08:15 Hatha<br>09:30 Chair<br>10:40 Restaurativa<br>17:20 / 18:30 Yin</p></div>
-                <div class="site-card"><h3>Sábado</h3><p style="color:var(--muted);font-size:.84rem">08:00 Acroyoga<br>09:15 Hatha<br>10:30 Aéreo<br>11:45 Restaurativa</p></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- AGENDAMENTO -->
-          <div class="site-section" id="s-agendar">
-            <div class="site-container">
-              <h2 class="site-h2">Agende sua avaliação</h2>
-              <p style="color:var(--muted);margin-bottom:20px">Preencha o formulário e entraremos em contato pelo WhatsApp.</p>
-              <div class="form-card">
-                <div class="form-grid">
-                  <div class="field-group"><label>Data</label><input type="date" id="lead_data"></div>
-                  <div class="field-group"><label>Nome</label><input type="text" id="lead_nome" placeholder="Seu nome completo"></div>
-                  <div class="field-group"><label>WhatsApp</label><input type="text" id="lead_whatsapp" placeholder="(21) 99999-9999"></div>
-                  <div class="field-group"><label>Interesse</label><input type="text" id="lead_interesse" placeholder="Pilates, Yoga, Fisioterapia..."></div>
-                  <div class="field-group"><label>Indicação</label><input type="text" id="lead_indicacao" placeholder="Quem te indicou?"></div>
-                  <div class="field-group"><label>Convênio</label><input type="text" id="lead_convenio" placeholder="TotalPass, Gympass..."></div>
-                  <div class="form-full"><button class="btn-save" onclick="enviarLead()">📤 Enviar</button></div>
-                </div>
-                <p id="leadMsg" style="margin-top:12px;font-weight:600;color:var(--ciano);display:none"></p>
-              </div>
-            </div>
-          </div>
-
-          <!-- SATISFAÇÃO PÚBLICA -->
-          <div class="site-section" id="s-satisfacao">
-            <div class="site-container">
-              <h2 class="site-h2">Pesquisa de Satisfação</h2>
-              <p style="color:var(--muted);margin-bottom:20px">Sua opinião é muito importante para nós!</p>
-              <div class="form-card">
-                <div class="form-grid">
-                  <div class="field-group"><label>Nome (opcional)</label><input type="text" id="survey_nome" placeholder="Seu nome"></div>
-                  <div class="field-group"><label>Nota (1 a 5)</label><input type="number" id="survey_nota" min="1" max="5" placeholder="5"></div>
-                  <div class="field-group form-full"><label>Comentário</label><input type="text" id="survey_comentario" placeholder="Conte sua experiência..."></div>
-                  <div class="form-full"><button class="btn-save" onclick="enviarSurvey()">⭐ Enviar Avaliação</button></div>
-                </div>
-                <p id="surveyMsg" style="margin-top:12px;font-weight:600;color:var(--ciano);display:none"></p>
-              </div>
-            </div>
-          </div>
-
-          <!-- CONTATO -->
-          <div class="site-section" id="s-contato">
-            <div class="site-container">
-              <h2 class="site-h2">Contato</h2>
-              <div class="site-card" style="max-width:440px">
-                <p style="margin-bottom:12px"><i class="fas fa-envelope" style="color:var(--lilas);margin-right:8px"></i> movom.zenyoga@gmail.com</p>
-                <p style="margin-bottom:12px"><i class="fab fa-whatsapp" style="color:var(--ciano);margin-right:8px"></i> (21) 99968-1425</p>
-                <a class="site-btn loc" style="margin-top:12px;display:inline-flex" href="https://www.google.com/maps/search/?api=1&query=Rua+Marechal+Deodoro%2C+577%2C+salas+605%2C+805+e+808+-+25+de+Agosto%2C+Duque+de+Caxias+-+RJ%2C+Centro+Empresarial+Jomasa" target="_blank" rel="noopener"><i class="fas fa-map-marker-alt"></i> Localização no Mapa</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- ADMIN DO SITE -->
-          <div class="site-section" id="s-admin">
-            <div class="site-container">
-              <h2 class="site-h2">Área Administrativa – Site</h2>
-
-              <!-- Leads -->
-              <div class="form-card">
-                <h3>📋 Cadastro de Lead (Admin)</h3>
-                <div class="form-grid">
-                  <div class="field-group"><label>Data</label><input type="date" id="admlead_data"></div>
-                  <div class="field-group"><label>Nome</label><input type="text" id="admlead_nome" placeholder="Nome"></div>
-                  <div class="field-group"><label>WhatsApp</label><input type="text" id="admlead_whatsapp" placeholder="WhatsApp"></div>
-                  <div class="field-group"><label>Interesse</label><input type="text" id="admlead_interesse" placeholder="Interesse"></div>
-                  <div class="field-group"><label>Indicação</label><input type="text" id="admlead_indicacao" placeholder="Indicação"></div>
-                  <div class="field-group"><label>Convênio</label><input type="text" id="admlead_convenio" placeholder="Convênio"></div>
-                  <div class="field-group"><label>Matriculou?</label>
-                    <select id="admlead_matriculou"><option value="Não">Não matriculou</option><option value="Sim">Matriculou</option></select>
-                  </div>
-                  <div class="field-group"><label>Motivo</label><input type="text" id="admlead_motivo" placeholder="Motivo da não matrícula"></div>
-                  <div class="form-full"><button class="btn-save" onclick="salvarLeadAdmin()">💾 Salvar Lead</button></div>
-                </div>
-              </div>
-
-              <!-- Pesquisa de satisfação admin -->
-              <div class="form-card">
-                <h3>⭐ Pesquisa de Satisfação (Admin)</h3>
-                <div class="form-grid">
-                  <div class="field-group"><label>Nome</label><input type="text" id="admsurvey_nome" placeholder="Nome (opcional)"></div>
-                  <div class="field-group"><label>Nota (1-5)</label><input type="number" id="admsurvey_nota" min="1" max="5" placeholder="5"></div>
-                  <div class="field-group form-full"><label>Comentário</label><input type="text" id="admsurvey_comentario" placeholder="Comentário"></div>
-                  <div class="form-full"><button class="btn-save" onclick="salvarSurveyAdmin()">💾 Salvar Resposta</button></div>
-                </div>
-              </div>
-
-              <!-- Tabela de Leads -->
-              <div class="table-card">
-                <div class="table-header">
-                  <span class="table-title">📊 Leads Cadastrados</span>
-                  <button class="btn btn-primary" onclick="exportarLeadsCSV()" style="margin-left:auto">📥 Exportar CSV</button>
-                </div>
-                <div id="siteLeadTableWrap" style="overflow-x:auto;padding:0 8px 12px">
-                  <p style="color:var(--muted);padding:12px;font-size:.84rem">Carregando leads...</p>
-                </div>
-              </div>
-
-              <!-- Dashboard Charts -->
-              <div class="form-card">
-                <h3>📈 Dashboard</h3>
-                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:8px">
-                  <div class="table-card" style="padding:16px"><canvas id="leadsChart"></canvas></div>
-                  <div class="table-card" style="padding:16px"><canvas id="conversionChart"></canvas></div>
-                  <div class="table-card" style="padding:16px"><canvas id="interestChart"></canvas></div>
-                  <div class="table-card" style="padding:16px"><canvas id="satisfactionChart"></canvas></div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div><!-- /site-body -->
-
-        <!-- WhatsApp flutuante (apenas na página site) -->
-        <a class="site-wa-float" href="https://wa.me/5521999681425" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-        <div class="site-footer">© 2026 Mov om Espaço De Saúde e Bem Estar</div>
       </div>
 
       <!-- ════ GESTÃO DE USUÁRIOS (ADM) ════ -->
@@ -2702,6 +2716,72 @@ function siteNav(id, btn){
   // Inicia Firebase do site quando admin é aberto
   if(id==="s-admin") initSiteFirebase();
 }
+
+/* ══════════════════════════════
+   CONTROLE DE TELAS (Site Público ↔ Login ↔ App)
+══════════════════════════════ */
+
+// Inicialização: mostra site público, oculta login e app
+(function init(){
+  // Verifica se URL contém ?admin ou #admin para acesso direto ao login
+  const url = window.location.search + window.location.hash;
+  if(url.includes('admin') || url.includes('login')){
+    mostrarLogin();
+  } else {
+    mostrarSitePublico();
+  }
+})();
+
+function mostrarSitePublico(){
+  document.getElementById('pageSitePublico').style.display = '';
+  document.getElementById('telaLogin').classList.add('hidden');
+  document.getElementById('app').classList.add('hidden');
+  // Garante que a seção home esteja ativa
+  siteNav('s-home', document.querySelector('#siteNavLinks a'));
+}
+
+function mostrarLogin(){
+  document.getElementById('pageSitePublico').style.display = 'none';
+  document.getElementById('telaLogin').classList.remove('hidden');
+  document.getElementById('app').classList.add('hidden');
+}
+
+function abrirLoginInterno(){
+  mostrarLogin();
+}
+
+// Sobrescreve iniciarSessao para ocultar o site público ao fazer login
+const _iniciarSessaoOrig = iniciarSessao;
+window.iniciarSessao = function(u){
+  document.getElementById('pageSitePublico').style.display = 'none';
+  _iniciarSessaoOrig(u);
+};
+
+// Sobrescreve logout para voltar ao site público
+const _logoutOrig = logout;
+window.logout = function(){
+  usuarioAtual = null;
+  document.getElementById('app').classList.add('hidden');
+  document.getElementById('telaLogin').classList.add('hidden');
+  document.getElementById('pageSitePublico').style.display = '';
+  siteNav('s-home', document.querySelector('#siteNavLinks a'));
+};
+
+// Quando o admin clica em "Site MOVOM" no menu interno,
+// abre o site institucional em cima do app (sem sair da sessão)
+const _navigateOrig = navigate;
+window.navigate = function(el){
+  if(!el) return;
+  if(el.dataset.page === 'site'){
+    // Mostra site público mas mantém sessão ativa
+    document.getElementById('pageSitePublico').style.display = '';
+    document.getElementById('app').classList.add('hidden');
+    siteNav('s-home', document.querySelector('#siteNavLinks a'));
+    return;
+  }
+  _navigateOrig(el);
+};
+
 </script>
 
 <!-- FIREBASE INIT + MÓDULOS -->
