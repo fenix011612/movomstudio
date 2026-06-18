@@ -2721,22 +2721,10 @@ function siteNav(id, btn){
    CONTROLE DE TELAS (Site Público ↔ Login ↔ App)
 ══════════════════════════════ */
 
-// Inicialização: mostra site público, oculta login e app
-(function init(){
-  // Verifica se URL contém ?admin ou #admin para acesso direto ao login
-  const url = window.location.search + window.location.hash;
-  if(url.includes('admin') || url.includes('login')){
-    mostrarLogin();
-  } else {
-    mostrarSitePublico();
-  }
-})();
-
 function mostrarSitePublico(){
   document.getElementById('pageSitePublico').style.display = '';
   document.getElementById('telaLogin').classList.add('hidden');
   document.getElementById('app').classList.add('hidden');
-  // Garante que a seção home esteja ativa
   siteNav('s-home', document.querySelector('#siteNavLinks a'));
 }
 
@@ -2750,15 +2738,14 @@ function abrirLoginInterno(){
   mostrarLogin();
 }
 
-// Sobrescreve iniciarSessao para ocultar o site público ao fazer login
-const _iniciarSessaoOrig = iniciarSessao;
+// Patch: oculta site público ao entrar no sistema
+const _iniciarSessaoBase = window.iniciarSessao || iniciarSessao;
 window.iniciarSessao = function(u){
   document.getElementById('pageSitePublico').style.display = 'none';
-  _iniciarSessaoOrig(u);
+  _iniciarSessaoBase(u);
 };
 
-// Sobrescreve logout para voltar ao site público
-const _logoutOrig = logout;
+// Patch: ao fazer logout volta para o site público
 window.logout = function(){
   usuarioAtual = null;
   document.getElementById('app').classList.add('hidden');
@@ -2767,20 +2754,28 @@ window.logout = function(){
   siteNav('s-home', document.querySelector('#siteNavLinks a'));
 };
 
-// Quando o admin clica em "Site MOVOM" no menu interno,
-// abre o site institucional em cima do app (sem sair da sessão)
-const _navigateOrig = navigate;
+// Patch: clique em "Site MOVOM" no menu interno mostra o site sem sair da sessão
+const _navigateBase = window.navigate || navigate;
 window.navigate = function(el){
   if(!el) return;
-  if(el.dataset.page === 'site'){
-    // Mostra site público mas mantém sessão ativa
+  if(el.dataset && el.dataset.page === 'site'){
     document.getElementById('pageSitePublico').style.display = '';
     document.getElementById('app').classList.add('hidden');
     siteNav('s-home', document.querySelector('#siteNavLinks a'));
     return;
   }
-  _navigateOrig(el);
+  _navigateBase(el);
 };
+
+// Inicialização segura após DOM pronto
+document.addEventListener('DOMContentLoaded', function(){
+  const url = window.location.search + window.location.hash;
+  if(url.includes('admin') || url.includes('login')){
+    mostrarLogin();
+  } else {
+    mostrarSitePublico();
+  }
+});
 
 </script>
 
