@@ -335,6 +335,35 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 .fin-total{font-family:'Nunito',sans-serif;font-size:1.2rem;font-weight:900;color:var(--lilas);margin:16px 0 10px;}
 
 /* ══════════════════════════════
+   DASHBOARD FINANCEIRO PROFISSIONAL
+══════════════════════════════ */
+.fin-kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:18px;}
+.fin-kpi-card{background:var(--white);border:2px solid var(--border);border-radius:16px;padding:18px 20px;display:flex;align-items:flex-start;gap:14px;box-shadow:var(--shadow-sm);transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden;}
+.fin-kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:3px 3px 0 0;}
+.fin-kpi-card:hover{transform:translateY(-2px);box-shadow:var(--shadow);}
+.fin-kpi-entrada::before{background:linear-gradient(90deg,#22c55e,#16a34a);}
+.fin-kpi-despesa::before{background:linear-gradient(90deg,#ef4444,#dc2626);}
+.fin-kpi-lucro::before{background:linear-gradient(90deg,var(--lilas),var(--ciano));}
+.fin-kpi-ticket::before{background:linear-gradient(90deg,#f59e0b,#d97706);}
+.fin-kpi-count::before{background:linear-gradient(90deg,var(--ciano),#38bdf8);}
+.fin-kpi-crescimento::before{background:linear-gradient(90deg,#a78bfa,var(--lilas));}
+.fin-kpi-icon{font-size:1.6rem;line-height:1;flex-shrink:0;margin-top:2px;}
+.fin-kpi-content{min-width:0;}
+.fin-kpi-label{font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.fin-kpi-value{font-family:'Nunito',sans-serif;font-size:1.5rem;font-weight:900;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.1;}
+.fin-kpi-sub{font-size:.7rem;color:var(--muted);margin-top:3px;display:flex;align-items:center;gap:4px;}
+.fin-kpi-lucro.negativo .fin-kpi-value{color:#ef4444;}
+.fin-kpi-lucro.positivo .fin-kpi-value{color:#16a34a;}
+.fin-insights{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px;}
+.fin-insight-item{background:var(--white);border:2px solid var(--border);border-radius:12px;padding:12px 16px;font-size:.8rem;color:var(--text);box-shadow:var(--shadow-sm);display:flex;align-items:center;gap:8px;}
+.fin-insight-item strong{color:var(--lilas);}
+.fin-chart-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:16px;}
+.fin-period-group{display:flex;gap:6px;flex-wrap:wrap;}
+.btn-chart-period{padding:6px 14px;border:2px solid var(--border);border-radius:20px;font-family:'Poppins',sans-serif;font-size:.76rem;font-weight:700;cursor:pointer;background:transparent;color:var(--muted);transition:all .18s;}
+.btn-chart-period:hover{border-color:var(--lilas);color:var(--lilas);}
+.active-period{background:var(--lilas)!important;color:#fff!important;border-color:var(--lilas)!important;}
+
+/* ══════════════════════════════
    GRADE DE HORÁRIOS
 ══════════════════════════════ */
 .grade-section{margin-bottom:24px;}
@@ -903,17 +932,97 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
             </div>
             <p class="fin-total fin-total-admin" id="fin_totalMes">Total do mês: R$ 0,00</p>
 
-            <!-- Gráfico de Desempenho Financeiro -->
-            <div class="table-card fin-total-admin" id="finChartCard" style="padding:20px;margin-bottom:16px">
-              <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px">
-                <h3 style="font-family:'Nunito',sans-serif;font-weight:800;color:var(--text);margin:0">📈 Desempenho Financeiro</h3>
-                <div style="display:flex;gap:8px;flex-wrap:wrap">
-                  <button id="finChartBtnMes" class="btn-chart-period active-period" onclick="finChartPeriodo('mes')">Mensal</button>
-                  <button id="finChartBtnSem" class="btn-chart-period" onclick="finChartPeriodo('semana')">Semanal</button>
-                  <button id="finChartBtnDia" class="btn-chart-period" onclick="finChartPeriodo('dia')">Diário</button>
+            <!-- ── DASHBOARD FINANCEIRO PROFISSIONAL ── -->
+            <div class="fin-total-admin" id="finDashboardSection">
+
+              <!-- KPI CARDS -->
+              <div class="fin-kpi-grid" id="finKpiGrid">
+                <div class="fin-kpi-card fin-kpi-entrada">
+                  <div class="fin-kpi-icon">💰</div>
+                  <div class="fin-kpi-content">
+                    <div class="fin-kpi-label">Total de Entradas</div>
+                    <div class="fin-kpi-value" id="kpi_entradas">R$ 0,00</div>
+                    <div class="fin-kpi-sub" id="kpi_entradas_sub">–</div>
+                  </div>
+                </div>
+                <div class="fin-kpi-card fin-kpi-despesa">
+                  <div class="fin-kpi-icon">📉</div>
+                  <div class="fin-kpi-content">
+                    <div class="fin-kpi-label">Total de Despesas</div>
+                    <div class="fin-kpi-value" id="kpi_despesas">R$ 0,00</div>
+                    <div class="fin-kpi-sub" id="kpi_despesas_sub">–</div>
+                  </div>
+                </div>
+                <div class="fin-kpi-card fin-kpi-lucro" id="finKpiLucroCard">
+                  <div class="fin-kpi-icon">📈</div>
+                  <div class="fin-kpi-content">
+                    <div class="fin-kpi-label">Lucro Líquido</div>
+                    <div class="fin-kpi-value" id="kpi_lucro">R$ 0,00</div>
+                    <div class="fin-kpi-sub" id="kpi_lucro_sub">–</div>
+                  </div>
+                </div>
+                <div class="fin-kpi-card fin-kpi-ticket">
+                  <div class="fin-kpi-icon">💳</div>
+                  <div class="fin-kpi-content">
+                    <div class="fin-kpi-label">Ticket Médio</div>
+                    <div class="fin-kpi-value" id="kpi_ticket">R$ 0,00</div>
+                    <div class="fin-kpi-sub" id="kpi_ticket_sub">–</div>
+                  </div>
+                </div>
+                <div class="fin-kpi-card fin-kpi-count">
+                  <div class="fin-kpi-icon">👥</div>
+                  <div class="fin-kpi-content">
+                    <div class="fin-kpi-label">Pagamentos</div>
+                    <div class="fin-kpi-value" id="kpi_pagamentos">0</div>
+                    <div class="fin-kpi-sub" id="kpi_pagamentos_sub">–</div>
+                  </div>
+                </div>
+                <div class="fin-kpi-card fin-kpi-crescimento">
+                  <div class="fin-kpi-icon">📊</div>
+                  <div class="fin-kpi-content">
+                    <div class="fin-kpi-label">Crescimento</div>
+                    <div class="fin-kpi-value" id="kpi_crescimento">–</div>
+                    <div class="fin-kpi-sub" id="kpi_crescimento_sub">vs período anterior</div>
+                  </div>
                 </div>
               </div>
-              <canvas id="finDesempenhoChart" style="max-height:280px"></canvas>
+
+              <!-- INDICADORES DE INTELIGÊNCIA -->
+              <div class="fin-insights" id="finInsights" style="display:none">
+                <div class="fin-insight-item" id="insight_melhor"></div>
+                <div class="fin-insight-item" id="insight_pior"></div>
+                <div class="fin-insight-item" id="insight_maior"></div>
+                <div class="fin-insight-item" id="insight_menor"></div>
+              </div>
+
+              <!-- GRÁFICO MISTO -->
+              <div class="table-card" id="finChartCard" style="padding:24px;margin-bottom:16px">
+                <div class="fin-chart-header">
+                  <div>
+                    <h3 style="font-family:'Nunito',sans-serif;font-weight:800;color:var(--text);margin:0 0 2px">📈 Desempenho Financeiro</h3>
+                    <p style="font-size:.75rem;color:var(--muted);margin:0" id="finChartSubtitle">Entradas · Despesas · Lucro</p>
+                  </div>
+                  <div class="fin-period-group">
+                    <button id="finChartBtnDia"  class="btn-chart-period" onclick="finChartPeriodo('dia')">Diário</button>
+                    <button id="finChartBtnSem"  class="btn-chart-period" onclick="finChartPeriodo('semana')">Semanal</button>
+                    <button id="finChartBtnMes"  class="btn-chart-period active-period" onclick="finChartPeriodo('mes')">Mensal</button>
+                    <button id="finChartBtnAno"  class="btn-chart-period" onclick="finChartPeriodo('ano')">Anual</button>
+                    <button id="finChartBtnCustom" class="btn-chart-period" onclick="finChartPeriodo('custom')">Período</button>
+                  </div>
+                </div>
+                <!-- Filtro de período personalizado -->
+                <div id="finCustomPeriod" style="display:none;margin:10px 0;display:none;gap:10px;flex-wrap:wrap;align-items:center">
+                  <label style="font-size:.78rem;font-weight:700;color:var(--muted)">De:</label>
+                  <input type="date" id="finCustomDe" style="padding:7px 12px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none">
+                  <label style="font-size:.78rem;font-weight:700;color:var(--muted)">Até:</label>
+                  <input type="date" id="finCustomAte" style="padding:7px 12px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none">
+                  <button class="btn btn-primary" style="padding:7px 16px;font-size:.8rem" onclick="renderFinChart()">Aplicar</button>
+                </div>
+                <div style="position:relative;height:320px">
+                  <canvas id="finDesempenhoChart"></canvas>
+                </div>
+              </div>
+
             </div>
               <table class="data-table">
                 <thead><tr><th>Nome</th><th>Gmail</th><th>CPF/CNPJ</th><th>Atividade</th><th>Pagamento</th><th>Valor</th><th>Data</th><th>NF</th><th></th></tr></thead>
@@ -3103,10 +3212,14 @@ let finCurrentRef=null;
 function initFin(){
   const meses=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
   const sel=document.getElementById("fin_mesSelect");
-  meses.forEach(m=>{const o=document.createElement("option");o.value=o.textContent=m;sel.appendChild(o);});
-  sel.value=meses[new Date().getMonth()];
-  sel.addEventListener("change",carregarFinanceiro);
+  if(!sel.options.length){
+    meses.forEach(m=>{const o=document.createElement("option");o.value=o.textContent=m;sel.appendChild(o);});
+    sel.value=meses[new Date().getMonth()];
+    sel.addEventListener("change",carregarFinanceiro);
+  }
   carregarFinanceiro();
+  // Inicia listeners em tempo real do dashboard profissional
+  initFinDashListeners();
 }
 
 window.addEntrada=function(){
@@ -3144,135 +3257,473 @@ window.updateCPF=(mes,id,v)=>dbFin.ref(`entradas/${mes}/${id}`).update({cpf:v});
 window.delEntrada=(mes,id)=>dbFin.ref(`entradas/${mes}/${id}`).remove();
 
 /* ══════════════════════════════
-   GRÁFICO DE DESEMPENHO FINANCEIRO
+   DASHBOARD FINANCEIRO PROFISSIONAL
 ══════════════════════════════ */
 let finChartInstance = null;
 let finChartPeriodoAtual = 'mes';
-let finChartDadosCache = {}; // { "YYYY-MM": { data: valor, ... } }
+
+// Cache real: { entradas: {mesKey: [{valor, data}, ...]}, despesas: {mesKey: [{valor, data}, ...]} }
+let finDashCache = { entradas: {}, despesas: {} };
+let finDashListeners = { entradas: null, despesas: null };
+
+/* Formato de moeda */
+function fmtBRL(v){ return 'R$ '+Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+
+/* Converte string de data de entrada para YYYY-MM-DD */
+function parseDateEntry(str){
+  if(!str) return null;
+  // Ex: "22/01/2025, 10:30:00" ou "2025-01-22"
+  if(/^\d{4}-\d{2}-\d{2}/.test(str)) return str.slice(0,10);
+  const m = str.match(/(\d{2})\/(\d{2})\/(\d{4})/);
+  if(m) return `${m[3]}-${m[2]}-${m[1]}`;
+  return null;
+}
+
+/* Inicializa listeners em tempo real para dashboard */
+function initFinDashListeners(){
+  const MESES_NOME = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+
+  // Listener para TODAS as entradas (todos os meses)
+  if(finDashListeners.entradas) finDashListeners.entradas.off();
+  finDashListeners.entradas = dbFin.ref("entradas");
+  finDashListeners.entradas.on("value", snap=>{
+    finDashCache.entradas = {};
+    snap.forEach(mesSnap=>{
+      const mesKey = mesSnap.key; // ex: "Janeiro", ou "2025-01"
+      if(!finDashCache.entradas[mesKey]) finDashCache.entradas[mesKey] = [];
+      mesSnap.forEach(item=>{
+        const e = item.val();
+        if(e && (e.valor||0) > 0){
+          finDashCache.entradas[mesKey].push({
+            valor: Number(e.valor||0),
+            data: parseDateEntry(e.data) || mesKey
+          });
+        }
+      });
+    });
+    atualizarDashboard();
+    renderFinChart();
+  });
+
+  // Listener para TODAS as despesas (todos os meses)
+  if(finDashListeners.despesas) finDashListeners.despesas.off();
+  finDashListeners.despesas = dbFin.ref("despesas");
+  finDashListeners.despesas.on("value", snap=>{
+    finDashCache.despesas = {};
+    snap.forEach(mesSnap=>{
+      const mesKey = mesSnap.key;
+      if(!finDashCache.despesas[mesKey]) finDashCache.despesas[mesKey] = [];
+      mesSnap.forEach(item=>{
+        const e = item.val();
+        if(e && (e.valor||0) > 0){
+          finDashCache.despesas[mesKey].push({
+            valor: Number(e.valor||0),
+            data: e.data || null // YYYY-MM-DD
+          });
+        }
+      });
+    });
+    atualizarDashboard();
+    renderFinChart();
+  });
+}
+
+/* Normaliza chave de mês para YYYY-MM */
+function normalizaMesKey(key){
+  if(!key) return null;
+  if(/^\d{4}-\d{2}$/.test(key)) return key; // já é YYYY-MM
+  // Converte nome do mês
+  const MESES = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+  const idx = MESES.indexOf(key);
+  if(idx>=0){
+    const ano = new Date().getFullYear();
+    return `${ano}-${String(idx+1).padStart(2,"0")}`;
+  }
+  return null;
+}
+
+/* Agrupa todos os registros em { "YYYY-MM-DD": valor } por tipo */
+function agruparPorData(tipo){
+  const cache = finDashCache[tipo];
+  const resultado = {};
+  Object.entries(cache).forEach(([mesKey, itens])=>{
+    itens.forEach(item=>{
+      let dataISO = item.data;
+      // Se a data já é YYYY-MM-DD
+      if(!dataISO || !/^\d{4}-\d{2}-\d{2}$/.test(dataISO)){
+        // Tenta normalizar pelo mês
+        const mk = normalizaMesKey(mesKey);
+        dataISO = mk ? mk+"-01" : null;
+      }
+      if(!dataISO) return;
+      resultado[dataISO] = (resultado[dataISO]||0) + item.valor;
+    });
+  });
+  return resultado;
+}
+
+/* Soma total de um tipo */
+function somaTotal(tipo){
+  let t = 0;
+  Object.values(finDashCache[tipo]).forEach(itens=>itens.forEach(i=>t+=i.valor));
+  return t;
+}
+
+/* Soma total de um tipo no período selecionado */
+function somaPeriodo(tipo, de, ate){
+  let t = 0;
+  const por_data = agruparPorData(tipo);
+  Object.entries(por_data).forEach(([d,v])=>{
+    if(d >= de && d <= ate) t+=v;
+  });
+  return t;
+}
+
+/* Contagem de entradas no período */
+function contarPagamentos(de, ate){
+  let c = 0;
+  Object.entries(finDashCache.entradas).forEach(([mesKey, itens])=>{
+    itens.forEach(item=>{
+      let dataISO = item.data;
+      if(!dataISO || !/^\d{4}-\d{2}-\d{2}$/.test(dataISO)){
+        const mk = normalizaMesKey(mesKey); dataISO = mk ? mk+"-01" : null;
+      }
+      if(dataISO && dataISO >= de && dataISO <= ate) c++;
+    });
+  });
+  return c;
+}
+
+/* Calcula o período atual e anterior conforme filtro */
+function calcularPeriodos(){
+  const hoje = new Date();
+  const p = finChartPeriodoAtual;
+  let de, ate, deAnt, ateAnt;
+  if(p==='dia'){
+    const d = hoje.toISOString().slice(0,10);
+    const ant = new Date(hoje); ant.setDate(ant.getDate()-1);
+    de=ate=d; deAnt=ateAnt=ant.toISOString().slice(0,10);
+  } else if(p==='semana'){
+    const dow = hoje.getDay();
+    const ini = new Date(hoje); ini.setDate(hoje.getDate()-dow);
+    const fim = new Date(ini); fim.setDate(ini.getDate()+6);
+    de=ini.toISOString().slice(0,10); ate=fim.toISOString().slice(0,10);
+    const iniAnt = new Date(ini); iniAnt.setDate(ini.getDate()-7);
+    const fimAnt = new Date(fim); fimAnt.setDate(fim.getDate()-7);
+    deAnt=iniAnt.toISOString().slice(0,10); ateAnt=fimAnt.toISOString().slice(0,10);
+  } else if(p==='mes'){
+    de=`${hoje.getFullYear()}-${String(hoje.getMonth()+1).padStart(2,"0")}-01`;
+    const fimMes = new Date(hoje.getFullYear(), hoje.getMonth()+1, 0);
+    ate=fimMes.toISOString().slice(0,10);
+    const antMes = new Date(hoje.getFullYear(), hoje.getMonth()-1, 1);
+    const antFim = new Date(hoje.getFullYear(), hoje.getMonth(), 0);
+    deAnt=antMes.toISOString().slice(0,10); ateAnt=antFim.toISOString().slice(0,10);
+  } else if(p==='ano'){
+    de=`${hoje.getFullYear()}-01-01`; ate=`${hoje.getFullYear()}-12-31`;
+    deAnt=`${hoje.getFullYear()-1}-01-01`; ateAnt=`${hoje.getFullYear()-1}-12-31`;
+  } else if(p==='custom'){
+    de=document.getElementById("finCustomDe")?.value||`${hoje.getFullYear()}-01-01`;
+    ate=document.getElementById("finCustomAte")?.value||hoje.toISOString().slice(0,10);
+    deAnt=de; ateAnt=ate; // período anterior não calculado para custom
+  } else {
+    de=`${hoje.getFullYear()}-${String(hoje.getMonth()+1).padStart(2,"0")}-01`;
+    ate=hoje.toISOString().slice(0,10);
+    deAnt=de; ateAnt=ate;
+  }
+  return {de,ate,deAnt,ateAnt};
+}
+
+/* Atualiza KPI cards */
+function atualizarDashboard(){
+  const {de,ate,deAnt,ateAnt} = calcularPeriodos();
+
+  const ent = somaPeriodo('entradas',de,ate);
+  const desp = somaPeriodo('despesas',de,ate);
+  const lucro = ent - desp;
+  const pags = contarPagamentos(de,ate);
+  const ticket = pags > 0 ? ent/pags : 0;
+
+  const entAnt = somaPeriodo('entradas',deAnt,ateAnt);
+  const crescimento = entAnt > 0 ? ((ent - entAnt)/entAnt*100) : (ent>0?100:0);
+
+  // KPI Values
+  setText("kpi_entradas", fmtBRL(ent));
+  setText("kpi_despesas", fmtBRL(desp));
+  setText("kpi_lucro", fmtBRL(lucro));
+  setText("kpi_ticket", fmtBRL(ticket));
+  setText("kpi_pagamentos", pags);
+  const cres = crescimento.toFixed(1);
+  const arrow = crescimento>=0?"⬆":"⬇";
+  const cor = crescimento>=0?"color:#16a34a":"color:#ef4444";
+  const kpiCresc = document.getElementById("kpi_crescimento");
+  if(kpiCresc) kpiCresc.innerHTML=`<span style="${cor}">${arrow} ${Math.abs(cres)}%</span>`;
+
+  // Lucro card color
+  const lCard = document.getElementById("finKpiLucroCard");
+  if(lCard){
+    lCard.classList.remove("positivo","negativo");
+    lCard.classList.add(lucro>=0?"positivo":"negativo");
+  }
+
+  // Sub texts
+  setText("kpi_entradas_sub", `${pags} pagamento${pags!==1?"s":""}`);
+  setText("kpi_despesas_sub", `${de.slice(0,7)} → ${ate.slice(0,7)}`);
+  setText("kpi_lucro_sub", lucro>=0?"▲ Resultado positivo":"▼ Resultado negativo");
+  setText("kpi_ticket_sub", pags>0?`Média de ${pags} pag.`:"Nenhum pagamento");
+  setText("kpi_pagamentos_sub", `${de} → ${ate}`);
+
+  // Insights
+  atualizarInsights(de, ate);
+}
+
+function setText(id,val){const el=document.getElementById(id);if(el)el.textContent=val;}
+
+function atualizarInsights(de,ate){
+  const porData = agruparPorData('entradas');
+  const entradasPeriodo = Object.entries(porData).filter(([d])=>d>=de&&d<=ate);
+  const ins = document.getElementById("finInsights");
+  if(!ins||!entradasPeriodo.length){if(ins)ins.style.display="none";return;}
+  ins.style.display="grid";
+
+  // Melhor e pior dia/período
+  const sorted = [...entradasPeriodo].sort((a,b)=>b[1]-a[1]);
+  const melhor = sorted[0];
+  const pior   = sorted[sorted.length-1];
+
+  const fmtD2 = d=>{ const p=d.split("-"); return p[2]+"/"+p[1]+"/"+p[0]; };
+
+  setInsight("insight_melhor","🏆","Maior faturamento",`${fmtD2(melhor[0])}: <strong>${fmtBRL(melhor[1])}</strong>`);
+  setInsight("insight_pior","⚠️","Menor faturamento",`${fmtD2(pior[0])}: <strong>${fmtBRL(pior[1])}</strong>`);
+
+  // Mês com maior e menor faturamento
+  const porMes = {};
+  entradasPeriodo.forEach(([d,v])=>{ const m=d.slice(0,7); porMes[m]=(porMes[m]||0)+v; });
+  const meses = Object.entries(porMes).sort((a,b)=>b[1]-a[1]);
+  if(meses.length>0){
+    const NOME_MES=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+    const fmtMes=m=>{ const p=m.split("-"); return NOME_MES[parseInt(p[1])-1]+"/"+p[0].slice(2); };
+    setInsight("insight_maior","📈","Melhor mês",`${fmtMes(meses[0][0])}: <strong>${fmtBRL(meses[0][1])}</strong>`);
+    if(meses.length>1)
+      setInsight("insight_menor","📉","Pior mês",`${fmtMes(meses[meses.length-1][0])}: <strong>${fmtBRL(meses[meses.length-1][1])}</strong>`);
+  }
+}
+
+function setInsight(id,icon,label,html){
+  const el=document.getElementById(id);
+  if(el) el.innerHTML=`<span style="font-size:1.1rem">${icon}</span><span><span style="font-size:.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">${label}</span><br>${html}</span>`;
+}
 
 window.finChartPeriodo = function(periodo){
   finChartPeriodoAtual = periodo;
   document.querySelectorAll(".btn-chart-period").forEach(b=>b.classList.remove("active-period"));
-  const map = {mes:"finChartBtnMes", semana:"finChartBtnSem", dia:"finChartBtnDia"};
+  const map = {dia:"finChartBtnDia",semana:"finChartBtnSem",mes:"finChartBtnMes",ano:"finChartBtnAno",custom:"finChartBtnCustom"};
   const el = document.getElementById(map[periodo]);
   if(el) el.classList.add("active-period");
+
+  // Mostra/oculta filtro custom
+  const cp = document.getElementById("finCustomPeriod");
+  if(cp) cp.style.display = periodo==="custom"?"flex":"none";
+
+  atualizarDashboard();
   renderFinChart();
 };
 
-async function carregarDadosParaGrafico(){
-  // Busca os últimos 6 meses de entradas
-  const hoje = new Date();
-  const meses = [];
-  for(let i=5;i>=0;i--){
-    const d = new Date(hoje.getFullYear(), hoje.getMonth()-i, 1);
-    const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
-    meses.push(key);
-  }
-  const promises = meses.map(m =>
-    dbFin.ref("entradas/"+m).once("value").then(snap=>({mes:m, snap}))
-  );
-  const resultados = await Promise.all(promises);
-  finChartDadosCache = {};
-  resultados.forEach(({mes, snap})=>{
-    finChartDadosCache[mes] = {};
-    snap.forEach(item=>{
-      const e = item.val();
-      const data = e.data || mes+"-01";
-      finChartDadosCache[mes][data] = (finChartDadosCache[mes][data]||0) + Number(e.valor||0);
-    });
+/* Agrupa entradas e despesas para o gráfico conforme período */
+function agruparParaGrafico(){
+  const {de,ate} = calcularPeriodos();
+  const p = finChartPeriodoAtual;
+  const NOME_MES=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+
+  const entPorData  = agruparPorData('entradas');
+  const despPorData = agruparPorData('despesas');
+
+  // Filtra dentro do intervalo
+  const entr = Object.entries(entPorData).filter(([d])=>d>=de&&d<=ate);
+  const desp = Object.entries(despPorData).filter(([d])=>d>=de&&d<=ate);
+
+  // Combina todas as datas relevantes
+  const todasDatas = [...new Set([...entr.map(([d])=>d),...desp.map(([d])=>d)])].sort();
+
+  if(!todasDatas.length) return {labels:[], entradas:[], despesas:[], lucros:[]};
+
+  let grupos = {};
+
+  const getGrupo = d=>{
+    if(p==='dia') return d;
+    if(p==='semana'){
+      const dt=new Date(d); const dow=dt.getDay();
+      const ini=new Date(dt); ini.setDate(dt.getDate()-dow);
+      return ini.toISOString().slice(0,10);
+    }
+    if(p==='mes'||p==='custom') return d.slice(0,7);
+    if(p==='ano') return d.slice(0,4);
+    return d.slice(0,7);
+  };
+
+  todasDatas.forEach(d=>{
+    const g = getGrupo(d);
+    if(!grupos[g]) grupos[g]={entradas:0,despesas:0};
+    grupos[g].entradas  += entPorData[d]||0;
+    grupos[g].despesas  += despPorData[d]||0;
   });
-  renderFinChart();
+
+  const sortedGrupos = Object.entries(grupos).sort((a,b)=>a[0].localeCompare(b[0]));
+
+  const fmtLabel = k=>{
+    if(p==='dia'){ const p2=k.split("-"); return p2[2]+"/"+p2[1]; }
+    if(p==='semana'){ const p2=k.split("-"); return p2[2]+"/"+p2[1]; }
+    if(p==='mes'||p==='custom'){ const p2=k.split("-"); return NOME_MES[parseInt(p2[1])-1]+"/"+p2[0].slice(2); }
+    if(p==='ano') return k;
+    return k;
+  };
+
+  const labels=[], entradas=[], despesas=[], lucros=[];
+  sortedGrupos.forEach(([k,v])=>{
+    if(v.entradas===0&&v.despesas===0) return; // ignora vazios
+    labels.push(fmtLabel(k));
+    entradas.push(v.entradas);
+    despesas.push(v.despesas);
+    lucros.push(v.entradas-v.despesas);
+  });
+
+  return {labels,entradas,despesas,lucros};
 }
 
+/* Renderiza o gráfico misto (bar+line) */
 function renderFinChart(){
   const ctx = document.getElementById("finDesempenhoChart");
   if(!ctx) return;
 
-  let labels = [], valores = [], titulo = "";
-
-  if(finChartPeriodoAtual === 'mes'){
-    // Agrupa por mês (soma total de cada mês)
-    titulo = "Entradas – Últimos 6 meses";
-    const nomeMeses = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
-    Object.entries(finChartDadosCache).forEach(([mesKey, dias])=>{
-      const [ano, mes] = mesKey.split("-");
-      labels.push(nomeMeses[parseInt(mes)-1]+"/"+ano.slice(2));
-      valores.push(Object.values(dias).reduce((a,b)=>a+b,0));
-    });
-  } else if(finChartPeriodoAtual === 'semana'){
-    // Agrupa por semana do mês atual
-    titulo = "Entradas – Semanas do mês atual";
-    const mesAtual = document.getElementById("fin_mesSelect")?.value || "";
-    const diasMes = finChartDadosCache[mesAtual] || {};
-    const semanas = {S1:0,S2:0,S3:0,S4:0,S5:0};
-    Object.entries(diasMes).forEach(([dataStr, val])=>{
-      const dia = parseInt((dataStr.split("-")[2]||"1"));
-      const sem = Math.ceil(dia/7);
-      const key = "S"+Math.min(sem,5);
-      semanas[key] = (semanas[key]||0)+val;
-    });
-    ["S1","S2","S3","S4","S5"].forEach(s=>{
-      labels.push("Semana "+s.replace("S",""));
-      valores.push(semanas[s]||0);
-    });
-  } else {
-    // Diário – mês selecionado
-    titulo = "Entradas – Diário do mês";
-    const mesAtual = document.getElementById("fin_mesSelect")?.value || "";
-    const diasMes = finChartDadosCache[mesAtual] || {};
-    const sorted = Object.entries(diasMes).sort((a,b)=>a[0].localeCompare(b[0]));
-    sorted.forEach(([dataStr, val])=>{
-      const parts = dataStr.split("-");
-      labels.push((parts[2]||"")+"/"+(parts[1]||""));
-      valores.push(val);
-    });
-    if(!sorted.length){ labels=["Sem dados"]; valores=[0]; }
-  }
-
-  // Gradiente
-  const gradient = ctx.getContext("2d").createLinearGradient(0,0,0,260);
-  gradient.addColorStop(0,"rgba(124,58,237,0.35)");
-  gradient.addColorStop(1,"rgba(124,58,237,0.02)");
+  const {labels,entradas,despesas,lucros} = agruparParaGrafico();
 
   if(finChartInstance){ finChartInstance.destroy(); finChartInstance=null; }
+
+  if(!labels.length){
+    // Sem dados – mostra mensagem no canvas
+    const c2 = ctx.getContext("2d");
+    c2.clearRect(0,0,ctx.width,ctx.height);
+    c2.fillStyle="#9ca3af";c2.font="14px Poppins,sans-serif";c2.textAlign="center";
+    c2.fillText("Nenhum dado disponível para o período selecionado.", ctx.width/2, 60);
+    return;
+  }
+
+  // Gradientes
+  const c2 = ctx.getContext("2d");
+  const gEnt = c2.createLinearGradient(0,0,0,280);
+  gEnt.addColorStop(0,"rgba(123,92,255,0.7)");
+  gEnt.addColorStop(1,"rgba(123,92,255,0.08)");
+  const gDesp = c2.createLinearGradient(0,0,0,280);
+  gDesp.addColorStop(0,"rgba(239,68,68,0.65)");
+  gDesp.addColorStop(1,"rgba(239,68,68,0.05)");
 
   finChartInstance = new Chart(ctx, {
     type: "bar",
     data:{
       labels,
-      datasets:[{
-        label:"Entradas (R$)",
-        data: valores,
-        backgroundColor: gradient,
-        borderColor:"rgba(124,58,237,0.85)",
-        borderWidth:2,
-        borderRadius:8,
-        borderSkipped:false,
-        tension:0.4,
-        fill:true
-      }]
+      datasets:[
+        {
+          label:"Entradas",
+          data: entradas,
+          backgroundColor: gEnt,
+          borderColor:"rgba(123,92,255,0.9)",
+          borderWidth:2,
+          borderRadius:8,
+          borderSkipped:false,
+          order:2
+        },
+        {
+          label:"Despesas",
+          data: despesas,
+          backgroundColor: gDesp,
+          borderColor:"rgba(239,68,68,0.9)",
+          borderWidth:2,
+          borderRadius:8,
+          borderSkipped:false,
+          order:3
+        },
+        {
+          label:"Lucro Líquido",
+          data: lucros,
+          type:"line",
+          borderColor:"rgba(62,198,193,1)",
+          backgroundColor:"rgba(62,198,193,0.15)",
+          borderWidth:3,
+          pointBackgroundColor:"rgba(62,198,193,1)",
+          pointBorderColor:"#fff",
+          pointBorderWidth:2,
+          pointRadius:5,
+          pointHoverRadius:7,
+          tension:0.45,
+          fill:false,
+          order:1
+        }
+      ]
     },
     options:{
       responsive:true,
+      maintainAspectRatio:false,
+      interaction:{mode:"index",intersect:false},
       plugins:{
-        legend:{display:false},
-        title:{display:true, text:titulo, font:{size:13,family:"'Poppins',sans-serif"}, color:"#6b7280"},
+        legend:{
+          display:true,
+          position:"bottom",
+          labels:{
+            usePointStyle:true,
+            font:{family:"'Poppins',sans-serif",size:11},
+            color:"#6b7280",
+            padding:16
+          }
+        },
         tooltip:{
+          backgroundColor:"rgba(30,27,75,0.92)",
+          titleColor:"#fff",
+          bodyColor:"#d1d5db",
+          borderColor:"rgba(123,92,255,0.3)",
+          borderWidth:1,
+          padding:12,
+          cornerRadius:10,
           callbacks:{
-            label: ctx=>"R$ "+Number(ctx.parsed.y||0).toFixed(2)
+            label: ctx=>{
+              const v=Number(ctx.parsed.y||0);
+              const label=ctx.dataset.label||"";
+              return ` ${label}: ${fmtBRL(v)}`;
+            }
           }
         }
       },
       scales:{
         y:{
           beginAtZero:true,
-          grid:{color:"rgba(0,0,0,0.05)"},
-          ticks:{callback:v=>"R$ "+v.toLocaleString("pt-BR")}
+          grid:{color:"rgba(0,0,0,0.05)",drawBorder:false},
+          border:{display:false},
+          ticks:{
+            callback:v=>{
+              if(v>=1000) return "R$"+Math.round(v/1000)+"k";
+              return "R$"+v;
+            },
+            color:"#9ca3af",
+            font:{family:"'Poppins',sans-serif",size:10}
+          }
         },
-        x:{grid:{display:false}}
+        x:{
+          grid:{display:false},
+          border:{display:false},
+          ticks:{color:"#9ca3af",font:{family:"'Poppins',sans-serif",size:10}}
+        }
       }
     }
   });
+
+  // Atualiza subtítulo
+  const periodos={dia:"Visualização diária",semana:"Visualização semanal",mes:"Visualização mensal",ano:"Visualização anual",custom:"Período personalizado"};
+  const sub = document.getElementById("finChartSubtitle");
+  if(sub) sub.textContent=`Entradas · Despesas · Lucro — ${periodos[finChartPeriodoAtual]||""}`;
+}
+
+/* Alias para retrocompatibilidade – chamado por carregarFinanceiro */
+async function carregarDadosParaGrafico(){
+  // Dados já chegam via listeners em tempo real; apenas força re-render
+  renderFinChart();
 }
 
 /* ══════════════════════
