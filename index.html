@@ -797,135 +797,6 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
             </div>
           </div>
 
-          <!-- ADMIN DO SITE -->
-          <div class="site-section" id="s-admin">
-            <div class="site-container">
-              <h2 class="site-h2">Área Administrativa – Site</h2>
-
-              <!-- ABAS ADMIN -->
-              <div class="adm-tabs">
-                <button class="adm-tab active" onclick="admSiteTab('leads',this)">📋 Leads & Satisfação</button>
-                <button class="adm-tab" onclick="admSiteTab('horarios',this)">🕐 Horários</button>
-                <button class="adm-tab" onclick="admSiteTab('modalidades',this)">🏃 Modalidades</button>
-                <button class="adm-tab" onclick="admSiteTab('espaco',this)">📸 Nosso Espaço</button>
-                <button class="adm-tab" onclick="admSiteTab('infos',this)">ℹ️ Informações</button>
-              </div>
-
-              <!-- PAINEL: LEADS & SATISFAÇÃO -->
-              <div class="adm-panel active" id="admPanel-leads">
-                <div class="form-card">
-                  <h3>📋 Cadastro de Lead (Admin)</h3>
-                  <div class="form-grid">
-                    <div class="field-group"><label>Data</label><input type="date" id="admlead_data"></div>
-                    <div class="field-group"><label>Nome</label><input type="text" id="admlead_nome" placeholder="Nome"></div>
-                    <div class="field-group"><label>WhatsApp</label><input type="text" id="admlead_whatsapp" placeholder="WhatsApp"></div>
-                    <div class="field-group"><label>Interesse</label><input type="text" id="admlead_interesse" placeholder="Interesse"></div>
-                    <div class="field-group"><label>Indicação</label><input type="text" id="admlead_indicacao" placeholder="Indicação"></div>
-                    <div class="field-group"><label>Convênio</label><input type="text" id="admlead_convenio" placeholder="Convênio"></div>
-                    <div class="field-group"><label>Matriculou?</label>
-                      <select id="admlead_matriculou"><option value="Não">Não matriculou</option><option value="Sim">Matriculou</option></select>
-                    </div>
-                    <div class="field-group"><label>Motivo</label><input type="text" id="admlead_motivo" placeholder="Motivo da não matrícula"></div>
-                    <div class="form-full"><button class="btn-save" onclick="salvarLeadAdmin()">💾 Salvar Lead</button></div>
-                  </div>
-                </div>
-                <div class="form-card">
-                  <h3>⭐ Pesquisa de Satisfação (Admin)</h3>
-                  <div class="form-grid">
-                    <div class="field-group"><label>Nome</label><input type="text" id="admsurvey_nome" placeholder="Nome (opcional)"></div>
-                    <div class="field-group"><label>Nota (1-5)</label><input type="number" id="admsurvey_nota" min="1" max="5" placeholder="5"></div>
-                    <div class="field-group form-full"><label>Comentário</label><input type="text" id="admsurvey_comentario" placeholder="Comentário"></div>
-                    <div class="form-full"><button class="btn-save" onclick="salvarSurveyAdmin()">💾 Salvar Resposta</button></div>
-                  </div>
-                </div>
-                <div class="table-card">
-                  <div class="table-header">
-                    <span class="table-title">📊 Leads Cadastrados</span>
-                    <button class="btn btn-primary" onclick="exportarLeadsCSV()" style="margin-left:auto">📥 Exportar CSV</button>
-                  </div>
-                  <div id="siteLeadTableWrap" style="overflow-x:auto;padding:0 8px 12px">
-                    <p style="color:var(--muted);padding:12px;font-size:.84rem">Carregando leads...</p>
-                  </div>
-                </div>
-                <div class="form-card">
-                  <h3>📈 Dashboard</h3>
-                  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:8px">
-                    <div class="table-card" style="padding:16px"><canvas id="leadsChart"></canvas></div>
-                    <div class="table-card" style="padding:16px"><canvas id="conversionChart"></canvas></div>
-                    <div class="table-card" style="padding:16px"><canvas id="interestChart"></canvas></div>
-                    <div class="table-card" style="padding:16px"><canvas id="satisfactionChart"></canvas></div>
-                  </div>
-                </div>
-              </div><!-- /admPanel-leads -->
-
-              <!-- PAINEL: HORÁRIOS -->
-              <div class="adm-panel" id="admPanel-horarios">
-                <div class="form-card">
-                  <h3 style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
-                    🕐 Gerenciar Horários
-                    <button class="btn-save" style="margin-top:0;font-size:.8rem;padding:9px 20px" onclick="admHorariosAddBloco()">➕ Novo Bloco</button>
-                  </h3>
-                  <p style="color:var(--muted);font-size:.83rem;margin-bottom:16px">Edite os blocos de horários exibidos na seção "Horários" do site. As alterações são salvas automaticamente no Firebase.</p>
-                  <div id="admHorariosLista">
-                    <p style="color:var(--muted);font-size:.84rem">Carregando...</p>
-                  </div>
-                  <button class="btn-save" style="margin-top:16px" onclick="admSalvarHorarios()">💾 Salvar Todos os Horários</button>
-                </div>
-              </div><!-- /admPanel-horarios -->
-
-              <!-- PAINEL: MODALIDADES -->
-              <div class="adm-panel" id="admPanel-modalidades">
-                <div class="form-card">
-                  <h3 style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
-                    🏃 Gerenciar Modalidades
-                    <button class="btn-save" style="margin-top:0;font-size:.8rem;padding:9px 20px" onclick="admModalidadesAdd()">➕ Nova Modalidade</button>
-                  </h3>
-                  <p style="color:var(--muted);font-size:.83rem;margin-bottom:16px">Edite nome, descrição e ordem das modalidades exibidas no site.</p>
-                  <div id="admModalidadesLista">
-                    <p style="color:var(--muted);font-size:.84rem">Carregando...</p>
-                  </div>
-                  <button class="btn-save" style="margin-top:16px" onclick="admSalvarModalidades()">💾 Salvar Modalidades</button>
-                </div>
-              </div><!-- /admPanel-modalidades -->
-
-              <!-- PAINEL: NOSSO ESPAÇO -->
-              <div class="adm-panel" id="admPanel-espaco">
-                <div class="form-card">
-                  <h3 style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
-                    📸 Gerenciar Nosso Espaço
-                    <button class="btn-save" style="margin-top:0;font-size:.8rem;padding:9px 20px" onclick="admEspacoAdd()">➕ Novo Card</button>
-                  </h3>
-                  <p style="color:var(--muted);font-size:.83rem;margin-bottom:16px">Gerencie os cards da seção "Nosso Espaço". Adicione foto (URL ou base64), título e legenda de cada espaço da clínica.</p>
-                  <div id="admEspacoGrid" class="galeria-adm-grid">
-                    <p style="color:var(--muted);font-size:.84rem">Carregando...</p>
-                  </div>
-                </div>
-              </div><!-- /admPanel-espaco -->
-
-              <!-- PAINEL: INFORMAÇÕES DO SITE -->
-              <div class="adm-panel" id="admPanel-infos">
-                <div class="form-card">
-                  <h3>ℹ️ Informações do Site</h3>
-                  <p style="color:var(--muted);font-size:.83rem;margin-bottom:16px">Edite os textos e dados de contato exibidos no site institucional.</p>
-                  <div class="form-grid">
-                    <div class="field-group form-full"><label>Título Principal (Hero)</label><input type="text" id="siteInfo_titulo" placeholder="Mov om Espaço De Saúde e Bem Estar"></div>
-                    <div class="field-group form-full"><label>Subtítulo / Tag Hero</label><input type="text" id="siteInfo_subtitulo" placeholder="Fisioterapia • Pilates • Yoga"></div>
-                    <div class="field-group form-full"><label>Texto Hero</label><textarea id="siteInfo_textoHero" style="min-height:70px;resize:vertical;width:100%;padding:10px 14px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:.84rem;color:var(--text);background:var(--surface);outline:none" placeholder="Um espaço dedicado ao cuidado integral..."></textarea></div>
-                    <div class="field-group form-full"><label>Texto Bem-vindo (Home)</label><textarea id="siteInfo_textoBemVindo" style="min-height:80px;resize:vertical;width:100%;padding:10px 14px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:.84rem;color:var(--text);background:var(--surface);outline:none" placeholder="A Mov om Espaço De Saúde..."></textarea></div>
-                    <div class="field-group form-full"><label>Texto Introdutório – Nosso Espaço</label><textarea id="siteInfo_textoEspaco" style="min-height:70px;resize:vertical;width:100%;padding:10px 14px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:.84rem;color:var(--text);background:var(--surface);outline:none" placeholder="Conheça a estrutura da nossa clínica..."></textarea></div>
-                    <div class="field-group"><label>Telefone</label><input type="text" id="siteInfo_telefone" placeholder="(21) 99968-1425"></div>
-                    <div class="field-group"><label>WhatsApp (número sem formatação)</label><input type="text" id="siteInfo_whatsapp" placeholder="5521999681425"></div>
-                    <div class="field-group"><label>E-mail</label><input type="email" id="siteInfo_email" placeholder="movom.zenyoga@gmail.com"></div>
-                    <div class="field-group form-full"><label>Endereço</label><input type="text" id="siteInfo_endereco" placeholder="Rua Marechal Deodoro, 577..."></div>
-                    <div class="field-group"><label>Instagram (URL completa)</label><input type="url" id="siteInfo_instagram" placeholder="https://www.instagram.com/..."></div>
-                    <div class="field-group"><label>Link Google Maps (URL completa)</label><input type="url" id="siteInfo_maps" placeholder="https://www.google.com/maps/..."></div>
-                    <div class="form-full"><button class="btn-save" onclick="admSalvarInfos()">💾 Salvar Informações</button></div>
-                  </div>
-                </div>
-              </div><!-- /admPanel-infos -->
-
-            </div>
-          </div>
         </div><!-- /site-body -->
 
         <!-- WhatsApp flutuante (apenas na página site) -->
@@ -1584,6 +1455,183 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
               </tbody>
             </table>
           </div>
+
+        </div>
+      </div>
+
+      <!-- ════ GERENCIAR SITE (CMS – SOMENTE ADMINISTRADOR) ════ -->
+      <div class="page" id="page-gerenciar-site">
+        <div class="inner">
+
+          <!-- ABAS DO CMS -->
+          <div class="adm-tabs" id="cmsTabs">
+            <button class="adm-tab active" onclick="cmsTab('dashboard',this)">📊 Dashboard</button>
+            <button class="adm-tab" onclick="cmsTab('leads',this)">📋 Formulários</button>
+            <button class="adm-tab" onclick="cmsTab('horarios',this)">🕐 Horários</button>
+            <button class="adm-tab" onclick="cmsTab('modalidades',this)">🏃 Modalidades</button>
+            <button class="adm-tab" onclick="cmsTab('espaco',this)">📸 Nosso Espaço</button>
+            <button class="adm-tab" onclick="cmsTab('infos',this)">ℹ️ Informações</button>
+          </div>
+
+          <!-- PAINEL: DASHBOARD -->
+          <div class="adm-panel active" id="cmsPanel-dashboard">
+            <div class="fin-kpi-grid" id="cmsDashboardKpis">
+              <div class="fin-kpi-card fin-kpi-count">
+                <div class="fin-kpi-icon">📋</div>
+                <div class="fin-kpi-content">
+                  <div class="fin-kpi-label">Leads</div>
+                  <div class="fin-kpi-value" id="kpiLeads">–</div>
+                </div>
+              </div>
+              <div class="fin-kpi-card fin-kpi-ticket">
+                <div class="fin-kpi-icon">⭐</div>
+                <div class="fin-kpi-content">
+                  <div class="fin-kpi-label">Avaliações</div>
+                  <div class="fin-kpi-value" id="kpiAvaliacoes">–</div>
+                </div>
+              </div>
+              <div class="fin-kpi-card fin-kpi-lucro positivo">
+                <div class="fin-kpi-icon">🏃</div>
+                <div class="fin-kpi-content">
+                  <div class="fin-kpi-label">Modalidades</div>
+                  <div class="fin-kpi-value" id="kpiModalidades">–</div>
+                </div>
+              </div>
+              <div class="fin-kpi-card fin-kpi-crescimento">
+                <div class="fin-kpi-icon">🖼️</div>
+                <div class="fin-kpi-content">
+                  <div class="fin-kpi-label">Imagens cadastradas</div>
+                  <div class="fin-kpi-value" id="kpiImagens">–</div>
+                </div>
+              </div>
+              <div class="fin-kpi-card fin-kpi-entrada">
+                <div class="fin-kpi-icon">🕓</div>
+                <div class="fin-kpi-content">
+                  <div class="fin-kpi-label">Última atualização</div>
+                  <div class="fin-kpi-value" id="kpiUltimaAtt" style="font-size:.95rem">–</div>
+                </div>
+              </div>
+            </div>
+            <div class="table-card" style="margin-top:18px">
+              <div class="table-header"><span class="table-title">📥 Últimos formulários recebidos</span></div>
+              <div id="cmsUltimosFormularios" style="overflow-x:auto;padding:0 8px 12px">
+                <p style="color:var(--muted);padding:12px;font-size:.84rem">Carregando...</p>
+              </div>
+            </div>
+          </div><!-- /cmsPanel-dashboard -->
+
+          <!-- PAINEL: LEADS & SATISFAÇÃO -->
+          <div class="adm-panel" id="cmsPanel-leads">
+            <div class="form-card">
+              <h3>📋 Cadastro de Lead (Admin)</h3>
+              <div class="form-grid">
+                <div class="field-group"><label>Data</label><input type="date" id="admlead_data"></div>
+                <div class="field-group"><label>Nome</label><input type="text" id="admlead_nome" placeholder="Nome"></div>
+                <div class="field-group"><label>WhatsApp</label><input type="text" id="admlead_whatsapp" placeholder="WhatsApp"></div>
+                <div class="field-group"><label>Interesse</label><input type="text" id="admlead_interesse" placeholder="Interesse"></div>
+                <div class="field-group"><label>Indicação</label><input type="text" id="admlead_indicacao" placeholder="Indicação"></div>
+                <div class="field-group"><label>Convênio</label><input type="text" id="admlead_convenio" placeholder="Convênio"></div>
+                <div class="field-group"><label>Matriculou?</label>
+                  <select id="admlead_matriculou"><option value="Não">Não matriculou</option><option value="Sim">Matriculou</option></select>
+                </div>
+                <div class="field-group"><label>Motivo</label><input type="text" id="admlead_motivo" placeholder="Motivo da não matrícula"></div>
+                <div class="form-full"><button class="btn-save" onclick="salvarLeadAdmin()">💾 Salvar Lead</button></div>
+              </div>
+            </div>
+            <div class="form-card">
+              <h3>⭐ Pesquisa de Satisfação (Admin)</h3>
+              <div class="form-grid">
+                <div class="field-group"><label>Nome</label><input type="text" id="admsurvey_nome" placeholder="Nome (opcional)"></div>
+                <div class="field-group"><label>Nota (1-5)</label><input type="number" id="admsurvey_nota" min="1" max="5" placeholder="5"></div>
+                <div class="field-group form-full"><label>Comentário</label><input type="text" id="admsurvey_comentario" placeholder="Comentário"></div>
+                <div class="form-full"><button class="btn-save" onclick="salvarSurveyAdmin()">💾 Salvar Resposta</button></div>
+              </div>
+            </div>
+            <div class="table-card">
+              <div class="table-header">
+                <span class="table-title">📊 Leads Cadastrados</span>
+                <button class="btn btn-primary" onclick="exportarLeadsCSV()" style="margin-left:auto">📥 Exportar CSV</button>
+              </div>
+              <div id="siteLeadTableWrap" style="overflow-x:auto;padding:0 8px 12px">
+                <p style="color:var(--muted);padding:12px;font-size:.84rem">Carregando leads...</p>
+              </div>
+            </div>
+            <div class="form-card">
+              <h3>📈 Dashboard de Leads</h3>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:8px">
+                <div class="table-card" style="padding:16px"><canvas id="leadsChart"></canvas></div>
+                <div class="table-card" style="padding:16px"><canvas id="conversionChart"></canvas></div>
+                <div class="table-card" style="padding:16px"><canvas id="interestChart"></canvas></div>
+                <div class="table-card" style="padding:16px"><canvas id="satisfactionChart"></canvas></div>
+              </div>
+            </div>
+          </div><!-- /cmsPanel-leads -->
+
+          <!-- PAINEL: HORÁRIOS -->
+          <div class="adm-panel" id="cmsPanel-horarios">
+            <div class="form-card">
+              <h3 style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+                🕐 Gerenciar Horários
+                <button class="btn-save" style="margin-top:0;font-size:.8rem;padding:9px 20px" onclick="admHorariosAddBloco()">➕ Novo Bloco</button>
+              </h3>
+              <p style="color:var(--muted);font-size:.83rem;margin-bottom:16px">Edite os blocos de horários exibidos na seção "Horários" do site. As alterações são salvas automaticamente no Firebase.</p>
+              <div id="admHorariosLista">
+                <p style="color:var(--muted);font-size:.84rem">Carregando...</p>
+              </div>
+              <button class="btn-save" style="margin-top:16px" onclick="admSalvarHorarios()">💾 Salvar Todos os Horários</button>
+            </div>
+          </div><!-- /cmsPanel-horarios -->
+
+          <!-- PAINEL: MODALIDADES -->
+          <div class="adm-panel" id="cmsPanel-modalidades">
+            <div class="form-card">
+              <h3 style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+                🏃 Gerenciar Modalidades
+                <button class="btn-save" style="margin-top:0;font-size:.8rem;padding:9px 20px" onclick="admModalidadesAdd()">➕ Nova Modalidade</button>
+              </h3>
+              <p style="color:var(--muted);font-size:.83rem;margin-bottom:16px">Edite nome, descrição e ordem das modalidades exibidas no site.</p>
+              <div id="admModalidadesLista">
+                <p style="color:var(--muted);font-size:.84rem">Carregando...</p>
+              </div>
+              <button class="btn-save" style="margin-top:16px" onclick="admSalvarModalidades()">💾 Salvar Modalidades</button>
+            </div>
+          </div><!-- /cmsPanel-modalidades -->
+
+          <!-- PAINEL: NOSSO ESPAÇO -->
+          <div class="adm-panel" id="cmsPanel-espaco">
+            <div class="form-card">
+              <h3 style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+                📸 Gerenciar Nosso Espaço
+                <button class="btn-save" style="margin-top:0;font-size:.8rem;padding:9px 20px" onclick="admEspacoAdd()">➕ Novo Card</button>
+              </h3>
+              <p style="color:var(--muted);font-size:.83rem;margin-bottom:16px">Gerencie os cards da seção "Nosso Espaço". Clique em "Escolher imagem" para enviar a foto do seu computador.</p>
+              <div id="admEspacoGrid" class="galeria-adm-grid">
+                <p style="color:var(--muted);font-size:.84rem">Carregando...</p>
+              </div>
+            </div>
+          </div><!-- /cmsPanel-espaco -->
+
+          <!-- PAINEL: INFORMAÇÕES DO SITE -->
+          <div class="adm-panel" id="cmsPanel-infos">
+            <div class="form-card">
+              <h3>ℹ️ Informações do Site</h3>
+              <p style="color:var(--muted);font-size:.83rem;margin-bottom:16px">Edite os textos e dados de contato exibidos no site institucional.</p>
+              <div class="form-grid">
+                <div class="field-group form-full"><label>Título Principal (Hero)</label><input type="text" id="siteInfo_titulo" placeholder="Mov om Espaço De Saúde e Bem Estar"></div>
+                <div class="field-group form-full"><label>Subtítulo / Tag Hero</label><input type="text" id="siteInfo_subtitulo" placeholder="Fisioterapia • Pilates • Yoga"></div>
+                <div class="field-group form-full"><label>Texto Hero</label><textarea id="siteInfo_textoHero" style="min-height:70px;resize:vertical;width:100%;padding:10px 14px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:.84rem;color:var(--text);background:var(--surface);outline:none" placeholder="Um espaço dedicado ao cuidado integral..."></textarea></div>
+                <div class="field-group form-full"><label>Texto Bem-vindo (Home)</label><textarea id="siteInfo_textoBemVindo" style="min-height:80px;resize:vertical;width:100%;padding:10px 14px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:.84rem;color:var(--text);background:var(--surface);outline:none" placeholder="A Mov om Espaço De Saúde..."></textarea></div>
+                <div class="field-group form-full"><label>Texto Introdutório – Nosso Espaço</label><textarea id="siteInfo_textoEspaco" style="min-height:70px;resize:vertical;width:100%;padding:10px 14px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:.84rem;color:var(--text);background:var(--surface);outline:none" placeholder="Conheça a estrutura da nossa clínica..."></textarea></div>
+                <div class="field-group"><label>Telefone</label><input type="text" id="siteInfo_telefone" placeholder="(21) 99968-1425"></div>
+                <div class="field-group"><label>WhatsApp (número sem formatação)</label><input type="text" id="siteInfo_whatsapp" placeholder="5521999681425"></div>
+                <div class="field-group"><label>E-mail</label><input type="email" id="siteInfo_email" placeholder="movom.zenyoga@gmail.com"></div>
+                <div class="field-group form-full"><label>Endereço</label><input type="text" id="siteInfo_endereco" placeholder="Rua Marechal Deodoro, 577..."></div>
+                <div class="field-group"><label>Instagram (URL completa)</label><input type="url" id="siteInfo_instagram" placeholder="https://www.instagram.com/..."></div>
+                <div class="field-group"><label>Link Google Maps (URL completa)</label><input type="url" id="siteInfo_maps" placeholder="https://www.google.com/maps/..."></div>
+                <div class="form-full"><button class="btn-save" onclick="admSalvarInfos()">💾 Salvar Informações</button></div>
+              </div>
+            </div>
+          </div><!-- /cmsPanel-infos -->
 
         </div>
       </div>
@@ -2938,6 +2986,7 @@ const MENUS = {
     {id:"avaliacoes",    icon:"📋", label:"Avaliações"},
     {id:"agenda",        icon:"🗓", label:"Agenda"},
     {id:"site",          icon:"🌐", label:"Site MOVOM"},
+    {id:"gerenciar-site",icon:"🛠️", label:"Gerenciar Site"},
     {id:"usuarios",      icon:"🔑", label:"Usuários"},
   ],
   colab: [
@@ -2955,6 +3004,7 @@ const TOP_META = {
   avaliacoes:   {title:"Avaliações",         badge:"Fichas",     cls:"badge-red"},
   agenda:       {title:"Agenda MOVOM",       badge:"Agendamento",cls:"badge-green"},
   site:         {title:"Site Institucional", badge:"MOVOM",      cls:"badge-lilas"},
+  "gerenciar-site":{title:"Gerenciar Site",  badge:"CMS Admin",  cls:"badge-orange"},
   usuarios:     {title:"Usuários",           badge:"Admin",      cls:"badge-orange"},
 };
 
@@ -2975,6 +3025,13 @@ function montarMenu(){
 function navigate(el){
   if(!el) return;
   const pg = el.dataset.page;
+
+  // ── BARREIRA DE SEGURANÇA: bloqueia acesso de colaboradores ao CMS ──
+  if(pg === "gerenciar-site" && (!usuarioAtual || usuarioAtual.role !== "adm")){
+    alert("Acesso restrito. Apenas administradores podem acessar o Gerenciar Site.");
+    return;
+  }
+
   document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));
   el.classList.add("active");
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
@@ -2983,7 +3040,7 @@ function navigate(el){
   document.getElementById("topTitle").textContent = m.title;
   const b = document.getElementById("topBadge");
   b.textContent = m.badge; b.className = "top-badge "+m.cls;
-  document.getElementById("topBtn").style.display = ["agenda","site","usuarios"].includes(pg)?"none":"";
+  document.getElementById("topBtn").style.display = ["agenda","site","usuarios","gerenciar-site"].includes(pg)?"none":"";
   
   // Carrega dados apenas quando a página é aberta (lazy loading)
   setTimeout(()=>{
@@ -2993,6 +3050,7 @@ function navigate(el){
     if(pg==="agenda") {if(!document.getElementById("agTabela").innerHTML) initAgenda();}
     if(pg==="avaliacoes") carregarAvaliacoes();
     if(pg==="usuarios") admCarregarColaboradores();
+    if(pg==="gerenciar-site") initGerenciarSite();
   }, 50);
 }
 
@@ -3012,8 +3070,6 @@ function siteNav(id, btn){
   if(target) target.classList.add("active-s");
   document.querySelectorAll(".site-nav-links a").forEach(b=>b.classList.remove("active-snav"));
   if(btn) btn.classList.add("active-snav");
-  // Inicia Firebase do site quando admin é aberto
-  if(id==="s-admin") initSiteFirebase();
   // Garante que o conteúdo dinâmico (horários, modalidades, espaço, infos) esteja carregado
   if(["s-nosso-espaco","s-horarios","s-modalidades","s-home","s-contato"].includes(id) && typeof window.carregarConteudoPublico==="function"){
     window.carregarConteudoPublico();
@@ -4650,8 +4706,11 @@ function getSiteFirebase(){
 }
 
 // Expor para uso global via window
+let _siteListenersAtivos = false;
 window.initSiteFirebase = function(){
   const { siteDB } = getSiteFirebase();
+  if(_siteListenersAtivos) return; // evita registrar listeners duplicados a cada navegação
+  _siteListenersAtivos = true;
   const leadsPath   = siteRef(siteDB, "leads");
   const surveyPath  = siteRef(siteDB, "survey");
 
@@ -4788,6 +4847,133 @@ import {
   push as sitePush2
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
 
+import {
+  getStorage,
+  ref as storageRef,
+  uploadBytesResumable,
+  getDownloadURL
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
+
+/* ══════════════════════════════════════════════════════════════
+   MÓDULO: UPLOAD DE IMAGENS (Firebase Storage + fallback Base64)
+   ──────────────────────────────────────────────────────────────
+   - Tenta enviar para o Firebase Storage (sem custo de banco,
+     ideal para produção).
+   - Se o Storage não estiver disponível (plano Spark sem billing,
+     CORS, regra negada, etc.), cai automaticamente para Base64
+     comprimido e segue salvando normalmente — nada quebra.
+   - Toda imagem passa por compressão/redimensionamento antes do
+     envio, reduzindo tamanho e tempo de upload.
+══════════════════════════════════════════════════════════════ */
+let _storageInstance = null;
+let _storageDisponivel = null; // null = ainda não testado, true/false = resultado do teste
+
+function getStorageInstance(){
+  if(!_storageInstance){
+    _storageInstance = getStorage(siteApp);
+  }
+  return _storageInstance;
+}
+
+/* Comprime e redimensiona uma imagem (File) usando canvas.
+   Retorna um Blob JPEG otimizado. */
+function comprimirImagem(file, maxLargura=1280, qualidade=0.78){
+  return new Promise((resolve, reject)=>{
+    const leitor = new FileReader();
+    leitor.onload = (e)=>{
+      const img = new Image();
+      img.onload = ()=>{
+        let { width, height } = img;
+        if(width > maxLargura){
+          height = Math.round(height * (maxLargura/width));
+          width = maxLargura;
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width; canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        canvas.toBlob(blob=>{
+          if(blob) resolve(blob); else reject(new Error('Falha ao comprimir imagem'));
+        }, 'image/jpeg', qualidade);
+      };
+      img.onerror = ()=>reject(new Error('Arquivo de imagem inválido'));
+      img.src = e.target.result;
+    };
+    leitor.onerror = ()=>reject(new Error('Falha ao ler arquivo'));
+    leitor.readAsDataURL(file);
+  });
+}
+
+/* Converte um Blob em Base64 (data URL) */
+function blobParaBase64(blob){
+  return new Promise((resolve, reject)=>{
+    const reader = new FileReader();
+    reader.onload = ()=>resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+
+/**
+ * Faz upload de uma imagem com fallback automático.
+ * @param {File} file - arquivo selecionado pelo usuário
+ * @param {string} caminho - caminho dentro do Storage, ex: "espaco/foto1.jpg"
+ * @param {function} onProgresso - callback(percentual) chamado durante o upload
+ * @returns {Promise<{url:string, modo:'storage'|'base64'}>}
+ */
+async function uploadImagemMovom(file, caminho, onProgresso){
+  if(!file) throw new Error('Nenhum arquivo selecionado.');
+  if(!file.type.startsWith('image/')) throw new Error('Selecione um arquivo de imagem válido.');
+  if(file.size > 15*1024*1024) throw new Error('Imagem muito grande (máximo 15MB).');
+
+  if(onProgresso) onProgresso(5);
+  const blobComprimido = await comprimirImagem(file);
+  if(onProgresso) onProgresso(20);
+
+  // Se já sabemos que o Storage não funciona, pula direto pro fallback
+  if(_storageDisponivel === false){
+    const b64 = await blobParaBase64(blobComprimido);
+    if(onProgresso) onProgresso(100);
+    return { url: b64, modo: 'base64' };
+  }
+
+  try{
+    const storage = getStorageInstance();
+    const ref = storageRef(storage, caminho);
+    const task = uploadBytesResumable(ref, blobComprimido, { contentType:'image/jpeg' });
+
+    const url = await new Promise((resolve, reject)=>{
+      task.on('state_changed',
+        (snap)=>{
+          const pct = 20 + Math.round((snap.bytesTransferred/snap.totalBytes)*70);
+          if(onProgresso) onProgresso(pct);
+        },
+        (err)=>reject(err),
+        async ()=>{
+          try{
+            const downloadUrl = await getDownloadURL(task.snapshot.ref);
+            resolve(downloadUrl);
+          }catch(e){ reject(e); }
+        }
+      );
+    });
+
+    _storageDisponivel = true;
+    if(onProgresso) onProgresso(100);
+    return { url, modo: 'storage' };
+
+  }catch(erroStorage){
+    // Storage indisponível (sem billing, CORS, regra negada) → fallback automático
+    console.warn('[Upload] Firebase Storage indisponível, usando fallback Base64:', erroStorage?.message||erroStorage);
+    _storageDisponivel = false;
+    const b64 = await blobParaBase64(blobComprimido);
+    if(onProgresso) onProgresso(100);
+    return { url: b64, modo: 'base64' };
+  }
+}
+
+window.uploadImagemMovom = uploadImagemMovom;
+
 /* ── TOAST ── */
 function showToast(msg, cor){
   let t = document.getElementById('movomToast');
@@ -4805,19 +4991,108 @@ function showToast(msg, cor){
 }
 
 /* ── TABS ADMIN SITE ── */
-window.admSiteTab = function(id, btn){
-  document.querySelectorAll('.adm-panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.adm-tab').forEach(b=>b.classList.remove('active'));
-  const panel = document.getElementById('admPanel-'+id);
+window.cmsTab = function(id, btn){
+  // Segunda barreira: nunca executa se não for admin
+  if(!usuarioAtual || usuarioAtual.role !== 'adm') return;
+  document.querySelectorAll('#page-gerenciar-site .adm-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('#page-gerenciar-site .adm-tab').forEach(b=>b.classList.remove('active'));
+  const panel = document.getElementById('cmsPanel-'+id);
   if(panel) panel.classList.add('active');
   if(btn) btn.classList.add('active');
   // Carrega dados ao abrir cada aba
   const { siteDB: db } = getSiteFirebase();
+  if(id==='dashboard')   carregarDashboardCMS(db);
+  if(id==='leads')       initSiteFirebase();
   if(id==='horarios')    admCarregarHorarios(db);
   if(id==='modalidades') admCarregarModalidades(db);
   if(id==='espaco')      admCarregarEspaco(db);
   if(id==='infos')       admCarregarInfos(db);
 };
+
+// Inicialização da página "Gerenciar Site" (chamado pelo navigate() interno)
+window.initGerenciarSite = function(){
+  if(!usuarioAtual || usuarioAtual.role !== 'adm') return; // barreira de segurança
+  const activeBtn = document.querySelector('#cmsTabs .adm-tab.active') || document.querySelector('#cmsTabs .adm-tab');
+  const activePanel = document.querySelector('#page-gerenciar-site .adm-panel.active');
+  const activeId = activePanel ? activePanel.id.replace('cmsPanel-','') : 'dashboard';
+  const { siteDB: db } = getSiteFirebase();
+  carregarDashboardCMS(db);
+  // Pré-carrega tudo em paralelo para que trocar de aba seja instantâneo
+  initSiteFirebase();
+  admCarregarHorarios(db);
+  admCarregarModalidades(db);
+  admCarregarEspaco(db);
+  admCarregarInfos(db);
+};
+
+/* ══════════════════════════════
+   DASHBOARD DO CMS
+══════════════════════════════ */
+let _dashboardListenersAtivos = false;
+function carregarDashboardCMS(db){
+  const elLeads = document.getElementById('kpiLeads');
+  const elAval  = document.getElementById('kpiAvaliacoes');
+  const elModal = document.getElementById('kpiModalidades');
+  const elImg   = document.getElementById('kpiImagens');
+  const elAtt   = document.getElementById('kpiUltimaAtt');
+  const elForm  = document.getElementById('cmsUltimosFormularios');
+
+  if(_dashboardListenersAtivos){
+    // Já há listeners ativos atualizando os KPIs continuamente; apenas atualiza os estáticos
+    atualizarKpisEstaticos(db, elModal, elImg, elAtt);
+    return;
+  }
+  _dashboardListenersAtivos = true;
+
+  // Leads + Survey via siteDB (mesmo banco do site)
+  siteOnValue(siteRef(db,'leads'), snap=>{
+    const arr = Object.values(snap.val()||{});
+    if(elLeads) elLeads.textContent = arr.length;
+    if(elForm){
+      const ultimos = arr.slice(-5).reverse();
+      if(!ultimos.length){
+        elForm.innerHTML = '<p style="color:var(--muted);padding:12px;font-size:.84rem">Nenhum formulário recebido ainda.</p>';
+      } else {
+        const rows = ultimos.map(l=>`<tr><td>${l.data||''}</td><td>${l.nome||''}</td><td>${l.whatsapp||''}</td><td>${l.interesse||''}</td></tr>`).join('');
+        elForm.innerHTML = `<table class="data-table"><thead><tr><th>Data</th><th>Nome</th><th>WhatsApp</th><th>Interesse</th></tr></thead><tbody>${rows}</tbody></table>`;
+      }
+    }
+  });
+  siteOnValue(siteRef(db,'survey'), snap=>{
+    const arr = Object.values(snap.val()||{});
+    if(elAval) elAval.textContent = arr.length;
+  });
+  atualizarKpisEstaticos(db, elModal, elImg, elAtt);
+}
+
+function atualizarKpisEstaticos(db, elModal, elImg, elAtt){
+  // Modalidades
+  siteGet(siteRef2(db,'siteConteudo/modalidades')).then(snap=>{
+    const arr = snap.exists() ? Object.values(snap.val()) : [];
+    if(elModal) elModal.textContent = arr.length;
+  }).catch(()=>{ if(elModal) elModal.textContent='0'; });
+  // Imagens (conta fotos cadastradas em Nosso Espaço)
+  siteGet(siteRef2(db,'siteConteudo/espaco')).then(snap=>{
+    const arr = snap.exists() ? Object.values(snap.val()) : [];
+    const comFoto = arr.filter(c=>c && c.foto).length;
+    if(elImg) elImg.textContent = comFoto;
+  }).catch(()=>{ if(elImg) elImg.textContent='0'; });
+  // Última atualização
+  siteGet(siteRef2(db,'siteConteudo/_meta/ultimaAtualizacao')).then(snap=>{
+    if(elAtt) elAtt.textContent = snap.exists() ? formatarDataHora(snap.val()) : 'Nunca';
+  }).catch(()=>{ if(elAtt) elAtt.textContent='—'; });
+}
+
+function formatarDataHora(iso){
+  try{
+    const d = new Date(iso);
+    return d.toLocaleString('pt-BR', {day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  }catch(e){ return iso; }
+}
+
+async function registrarAtualizacaoCMS(db){
+  try{ await siteSet(siteRef2(db,'siteConteudo/_meta/ultimaAtualizacao'), new Date().toISOString()); }catch(e){}
+}
 
 /* ══════════════════════════════
    HORÁRIOS
@@ -4905,6 +5180,7 @@ window.admSalvarHorarios = async function(){
   const { siteDB: db } = getSiteFirebase();
   try{
     await siteSet(siteRef2(db,'siteConteudo/horarios'), _horariosData);
+    await registrarAtualizacaoCMS(db);
     renderPublicHorarios();
     showToast('✅ Horários salvos com sucesso!','#166534');
   } catch(e){ showToast('⚠️ Erro ao salvar horários.','#b91c1c'); }
@@ -5013,6 +5289,7 @@ window.admSalvarModalidades = async function(){
   const { siteDB: db } = getSiteFirebase();
   try{
     await siteSet(siteRef2(db,'siteConteudo/modalidades'), _modalidadesData);
+    await registrarAtualizacaoCMS(db);
     renderPublicModalidades();
     showToast('✅ Modalidades salvas!','#166534');
   } catch(e){ showToast('⚠️ Erro ao salvar modalidades.','#b91c1c'); }
@@ -5135,6 +5412,7 @@ window.admSalvarEspaco = async function(){
   const { siteDB: db } = getSiteFirebase();
   try{
     await siteSet(siteRef2(db,'siteConteudo/espaco'), _espacoData);
+    await registrarAtualizacaoCMS(db);
     renderPublicEspaco();
     showToast('✅ Galeria salva com sucesso!','#166534');
   } catch(e){ showToast('⚠️ Erro ao salvar galeria.','#b91c1c'); }
@@ -5199,6 +5477,7 @@ window.admSalvarInfos = async function(){
   });
   try{
     await siteSet(siteRef2(db,'siteConteudo/infos'), dados);
+    await registrarAtualizacaoCMS(db);
     _infosData = dados;
     aplicarInfosSite(dados);
     showToast('✅ Informações salvas e aplicadas ao site!','#166534');
