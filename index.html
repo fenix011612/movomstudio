@@ -491,6 +491,106 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 .galeria-foto p{padding:12px;font-size:.82rem;color:var(--muted);}
 
 /* ══════════════════════════════
+   NOSSO ESPAÇO – GALERIA PÚBLICA
+══════════════════════════════ */
+.espaco-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;margin-top:8px;}
+.espaco-card{
+  background:var(--white);border-radius:18px;overflow:hidden;
+  border:2px solid var(--border);box-shadow:var(--shadow-sm);
+  transition:transform .28s,box-shadow .28s;
+}
+.espaco-card:hover{transform:translateY(-5px);box-shadow:0 14px 36px rgba(123,92,255,.17);}
+.espaco-card-img{width:100%;height:210px;object-fit:cover;display:block;transition:transform .35s;}
+.espaco-card:hover .espaco-card-img{transform:scale(1.05);}
+.espaco-card-img-wrap{overflow:hidden;height:210px;position:relative;}
+.espaco-placeholder{
+  width:100%;height:210px;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:12px;
+  background:linear-gradient(135deg,var(--lilas-light),var(--ciano-light));
+  color:var(--lilas);
+}
+.espaco-placeholder i{font-size:3rem;opacity:.45;}
+.espaco-placeholder span{font-size:.75rem;color:var(--muted);font-weight:600;letter-spacing:.5px;}
+.espaco-card-body{padding:16px 18px 20px;}
+.espaco-card-body h4{
+  font-family:'Nunito',sans-serif;font-size:1rem;font-weight:800;
+  color:var(--text);margin-bottom:6px;
+}
+.espaco-card-body p{font-size:.83rem;color:var(--muted);line-height:1.6;}
+
+/* ══════════════════════════════
+   ADMIN CONTEÚDO – TABS E PAINÉIS
+══════════════════════════════ */
+.adm-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:22px;flex-wrap:wrap;overflow-x:auto;}
+.adm-tab{
+  padding:10px 16px;border:none;background:transparent;cursor:pointer;
+  font-family:'Poppins',sans-serif;font-size:.82rem;font-weight:700;
+  color:var(--muted);border-bottom:3px solid transparent;
+  transition:all .2s;margin-bottom:-2px;white-space:nowrap;
+}
+.adm-tab:hover{color:var(--lilas);}
+.adm-tab.active{color:var(--lilas);border-bottom-color:var(--lilas);}
+.adm-panel{display:none;}
+.adm-panel.active{display:block;animation:fadeIn .25s ease;}
+
+/* Galeria Admin */
+.galeria-adm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px;margin-top:4px;}
+.galeria-adm-card{
+  background:var(--surface);border:2px solid var(--border);border-radius:14px;
+  padding:16px;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow-sm);
+}
+.galeria-adm-preview{
+  width:100%;height:150px;border-radius:10px;overflow:hidden;border:2px solid var(--border);
+  background:var(--lilas-light);display:flex;align-items:center;justify-content:center;
+  color:var(--lilas);font-size:2.5rem;
+}
+.galeria-adm-preview img{width:100%;height:100%;object-fit:cover;}
+.galeria-adm-ordem{display:flex;gap:6px;justify-content:flex-end;margin-top:2px;}
+.btn-ord{
+  padding:5px 10px;border:2px solid var(--border);border-radius:8px;
+  background:var(--white);color:var(--muted);cursor:pointer;font-size:.78rem;
+  font-family:'Poppins',sans-serif;transition:all .18s;
+}
+.btn-ord:hover{border-color:var(--lilas);color:var(--lilas);background:var(--lilas-light);}
+.btn-save-sm{
+  padding:8px 16px;border:none;border-radius:10px;font-family:'Poppins',sans-serif;
+  font-size:.8rem;font-weight:700;cursor:pointer;
+  background:linear-gradient(135deg,var(--lilas),var(--ciano));color:#fff;
+  box-shadow:0 3px 10px rgba(123,92,255,.22);transition:all .18s;
+}
+.btn-save-sm:hover{transform:translateY(-1px);}
+.btn-del-sm{
+  padding:7px 14px;border:2px solid #fecaca;border-radius:10px;
+  background:#fee2e2;color:#b91c1c;font-family:'Poppins',sans-serif;
+  font-size:.8rem;font-weight:700;cursor:pointer;transition:all .18s;
+}
+/* Horários admin */
+.hor-bloco{background:var(--surface);border:2px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:12px;}
+.hor-bloco-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px;}
+.hor-bloco-header strong{font-family:'Nunito',sans-serif;font-weight:800;color:var(--text);}
+.hor-card-row{display:grid;grid-template-columns:160px 1fr auto;gap:8px;align-items:center;margin-bottom:6px;}
+/* Modalidades admin */
+.modal-adm-row{
+  display:grid;grid-template-columns:auto 1fr 2fr auto;gap:10px;align-items:center;
+  padding:10px 0;border-bottom:1px solid var(--border);
+}
+.modal-adm-row:last-child{border-bottom:none;}
+.modal-ordem-badge{
+  width:28px;height:28px;border-radius:50%;background:var(--lilas-light);
+  color:var(--lilas);font-weight:800;font-size:.8rem;
+  display:grid;place-items:center;flex-shrink:0;
+}
+/* Toast */
+.movom-toast{
+  position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--text);color:#fff;padding:12px 26px;border-radius:14px;
+  font-size:.85rem;font-weight:600;z-index:9999;opacity:0;pointer-events:none;
+  transition:opacity .3s,transform .3s;box-shadow:0 6px 24px rgba(0,0,0,.22);
+  white-space:nowrap;
+}
+.movom-toast.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto;}
+
+/* ══════════════════════════════
    FINANCEIRO UNIFICADO – TABS
 ══════════════════════════════ */
 .fin-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:20px;flex-wrap:wrap;}
@@ -565,6 +665,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
               <a href="#" onclick="siteNav('s-horarios',this);return false">Horários</a>
               <a href="#" onclick="siteNav('s-agendar',this);return false">Agendar</a>
               <a href="#" onclick="siteNav('s-satisfacao',this);return false">Satisfação</a>
+              <a href="#" onclick="siteNav('s-nosso-espaco',this);return false">Nosso Espaço</a>
               <a href="#" onclick="siteNav('s-contato',this);return false">Contato</a>
 
             </div>
@@ -672,6 +773,18 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
             </div>
           </div>
 
+
+          <!-- NOSSO ESPAÇO -->
+          <div class="site-section" id="s-nosso-espaco">
+            <div class="site-container">
+              <h2 class="site-h2">Nosso Espaço</h2>
+              <p id="siteEspacoIntro" style="color:var(--muted);margin-bottom:28px;line-height:1.7">Conheça a estrutura da nossa clínica! Nossos ambientes foram pensados para oferecer conforto, bem-estar e um cuidado verdadeiramente humanizado.</p>
+              <div id="galeriaEspaco" class="espaco-grid">
+                <!-- Preenchido pelo JS após carregar do Firebase -->
+              </div>
+            </div>
+          </div>
+
           <!-- CONTATO -->
           <div class="site-section" id="s-contato">
             <div class="site-container">
@@ -689,56 +802,127 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
             <div class="site-container">
               <h2 class="site-h2">Área Administrativa – Site</h2>
 
-              <!-- Leads -->
-              <div class="form-card">
-                <h3>📋 Cadastro de Lead (Admin)</h3>
-                <div class="form-grid">
-                  <div class="field-group"><label>Data</label><input type="date" id="admlead_data"></div>
-                  <div class="field-group"><label>Nome</label><input type="text" id="admlead_nome" placeholder="Nome"></div>
-                  <div class="field-group"><label>WhatsApp</label><input type="text" id="admlead_whatsapp" placeholder="WhatsApp"></div>
-                  <div class="field-group"><label>Interesse</label><input type="text" id="admlead_interesse" placeholder="Interesse"></div>
-                  <div class="field-group"><label>Indicação</label><input type="text" id="admlead_indicacao" placeholder="Indicação"></div>
-                  <div class="field-group"><label>Convênio</label><input type="text" id="admlead_convenio" placeholder="Convênio"></div>
-                  <div class="field-group"><label>Matriculou?</label>
-                    <select id="admlead_matriculou"><option value="Não">Não matriculou</option><option value="Sim">Matriculou</option></select>
+              <!-- ABAS ADMIN -->
+              <div class="adm-tabs">
+                <button class="adm-tab active" onclick="admSiteTab('leads',this)">📋 Leads & Satisfação</button>
+                <button class="adm-tab" onclick="admSiteTab('horarios',this)">🕐 Horários</button>
+                <button class="adm-tab" onclick="admSiteTab('modalidades',this)">🏃 Modalidades</button>
+                <button class="adm-tab" onclick="admSiteTab('espaco',this)">📸 Nosso Espaço</button>
+                <button class="adm-tab" onclick="admSiteTab('infos',this)">ℹ️ Informações</button>
+              </div>
+
+              <!-- PAINEL: LEADS & SATISFAÇÃO -->
+              <div class="adm-panel active" id="admPanel-leads">
+                <div class="form-card">
+                  <h3>📋 Cadastro de Lead (Admin)</h3>
+                  <div class="form-grid">
+                    <div class="field-group"><label>Data</label><input type="date" id="admlead_data"></div>
+                    <div class="field-group"><label>Nome</label><input type="text" id="admlead_nome" placeholder="Nome"></div>
+                    <div class="field-group"><label>WhatsApp</label><input type="text" id="admlead_whatsapp" placeholder="WhatsApp"></div>
+                    <div class="field-group"><label>Interesse</label><input type="text" id="admlead_interesse" placeholder="Interesse"></div>
+                    <div class="field-group"><label>Indicação</label><input type="text" id="admlead_indicacao" placeholder="Indicação"></div>
+                    <div class="field-group"><label>Convênio</label><input type="text" id="admlead_convenio" placeholder="Convênio"></div>
+                    <div class="field-group"><label>Matriculou?</label>
+                      <select id="admlead_matriculou"><option value="Não">Não matriculou</option><option value="Sim">Matriculou</option></select>
+                    </div>
+                    <div class="field-group"><label>Motivo</label><input type="text" id="admlead_motivo" placeholder="Motivo da não matrícula"></div>
+                    <div class="form-full"><button class="btn-save" onclick="salvarLeadAdmin()">💾 Salvar Lead</button></div>
                   </div>
-                  <div class="field-group"><label>Motivo</label><input type="text" id="admlead_motivo" placeholder="Motivo da não matrícula"></div>
-                  <div class="form-full"><button class="btn-save" onclick="salvarLeadAdmin()">💾 Salvar Lead</button></div>
                 </div>
-              </div>
+                <div class="form-card">
+                  <h3>⭐ Pesquisa de Satisfação (Admin)</h3>
+                  <div class="form-grid">
+                    <div class="field-group"><label>Nome</label><input type="text" id="admsurvey_nome" placeholder="Nome (opcional)"></div>
+                    <div class="field-group"><label>Nota (1-5)</label><input type="number" id="admsurvey_nota" min="1" max="5" placeholder="5"></div>
+                    <div class="field-group form-full"><label>Comentário</label><input type="text" id="admsurvey_comentario" placeholder="Comentário"></div>
+                    <div class="form-full"><button class="btn-save" onclick="salvarSurveyAdmin()">💾 Salvar Resposta</button></div>
+                  </div>
+                </div>
+                <div class="table-card">
+                  <div class="table-header">
+                    <span class="table-title">📊 Leads Cadastrados</span>
+                    <button class="btn btn-primary" onclick="exportarLeadsCSV()" style="margin-left:auto">📥 Exportar CSV</button>
+                  </div>
+                  <div id="siteLeadTableWrap" style="overflow-x:auto;padding:0 8px 12px">
+                    <p style="color:var(--muted);padding:12px;font-size:.84rem">Carregando leads...</p>
+                  </div>
+                </div>
+                <div class="form-card">
+                  <h3>📈 Dashboard</h3>
+                  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:8px">
+                    <div class="table-card" style="padding:16px"><canvas id="leadsChart"></canvas></div>
+                    <div class="table-card" style="padding:16px"><canvas id="conversionChart"></canvas></div>
+                    <div class="table-card" style="padding:16px"><canvas id="interestChart"></canvas></div>
+                    <div class="table-card" style="padding:16px"><canvas id="satisfactionChart"></canvas></div>
+                  </div>
+                </div>
+              </div><!-- /admPanel-leads -->
 
-              <!-- Pesquisa de satisfação admin -->
-              <div class="form-card">
-                <h3>⭐ Pesquisa de Satisfação (Admin)</h3>
-                <div class="form-grid">
-                  <div class="field-group"><label>Nome</label><input type="text" id="admsurvey_nome" placeholder="Nome (opcional)"></div>
-                  <div class="field-group"><label>Nota (1-5)</label><input type="number" id="admsurvey_nota" min="1" max="5" placeholder="5"></div>
-                  <div class="field-group form-full"><label>Comentário</label><input type="text" id="admsurvey_comentario" placeholder="Comentário"></div>
-                  <div class="form-full"><button class="btn-save" onclick="salvarSurveyAdmin()">💾 Salvar Resposta</button></div>
+              <!-- PAINEL: HORÁRIOS -->
+              <div class="adm-panel" id="admPanel-horarios">
+                <div class="form-card">
+                  <h3 style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+                    🕐 Gerenciar Horários
+                    <button class="btn-save" style="margin-top:0;font-size:.8rem;padding:9px 20px" onclick="admHorariosAddBloco()">➕ Novo Bloco</button>
+                  </h3>
+                  <p style="color:var(--muted);font-size:.83rem;margin-bottom:16px">Edite os blocos de horários exibidos na seção "Horários" do site. As alterações são salvas automaticamente no Firebase.</p>
+                  <div id="admHorariosLista">
+                    <p style="color:var(--muted);font-size:.84rem">Carregando...</p>
+                  </div>
+                  <button class="btn-save" style="margin-top:16px" onclick="admSalvarHorarios()">💾 Salvar Todos os Horários</button>
                 </div>
-              </div>
+              </div><!-- /admPanel-horarios -->
 
-              <!-- Tabela de Leads -->
-              <div class="table-card">
-                <div class="table-header">
-                  <span class="table-title">📊 Leads Cadastrados</span>
-                  <button class="btn btn-primary" onclick="exportarLeadsCSV()" style="margin-left:auto">📥 Exportar CSV</button>
+              <!-- PAINEL: MODALIDADES -->
+              <div class="adm-panel" id="admPanel-modalidades">
+                <div class="form-card">
+                  <h3 style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+                    🏃 Gerenciar Modalidades
+                    <button class="btn-save" style="margin-top:0;font-size:.8rem;padding:9px 20px" onclick="admModalidadesAdd()">➕ Nova Modalidade</button>
+                  </h3>
+                  <p style="color:var(--muted);font-size:.83rem;margin-bottom:16px">Edite nome, descrição e ordem das modalidades exibidas no site.</p>
+                  <div id="admModalidadesLista">
+                    <p style="color:var(--muted);font-size:.84rem">Carregando...</p>
+                  </div>
+                  <button class="btn-save" style="margin-top:16px" onclick="admSalvarModalidades()">💾 Salvar Modalidades</button>
                 </div>
-                <div id="siteLeadTableWrap" style="overflow-x:auto;padding:0 8px 12px">
-                  <p style="color:var(--muted);padding:12px;font-size:.84rem">Carregando leads...</p>
-                </div>
-              </div>
+              </div><!-- /admPanel-modalidades -->
 
-              <!-- Dashboard Charts -->
-              <div class="form-card">
-                <h3>📈 Dashboard</h3>
-                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:8px">
-                  <div class="table-card" style="padding:16px"><canvas id="leadsChart"></canvas></div>
-                  <div class="table-card" style="padding:16px"><canvas id="conversionChart"></canvas></div>
-                  <div class="table-card" style="padding:16px"><canvas id="interestChart"></canvas></div>
-                  <div class="table-card" style="padding:16px"><canvas id="satisfactionChart"></canvas></div>
+              <!-- PAINEL: NOSSO ESPAÇO -->
+              <div class="adm-panel" id="admPanel-espaco">
+                <div class="form-card">
+                  <h3 style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+                    📸 Gerenciar Nosso Espaço
+                    <button class="btn-save" style="margin-top:0;font-size:.8rem;padding:9px 20px" onclick="admEspacoAdd()">➕ Novo Card</button>
+                  </h3>
+                  <p style="color:var(--muted);font-size:.83rem;margin-bottom:16px">Gerencie os cards da seção "Nosso Espaço". Adicione foto (URL ou base64), título e legenda de cada espaço da clínica.</p>
+                  <div id="admEspacoGrid" class="galeria-adm-grid">
+                    <p style="color:var(--muted);font-size:.84rem">Carregando...</p>
+                  </div>
                 </div>
-              </div>
+              </div><!-- /admPanel-espaco -->
+
+              <!-- PAINEL: INFORMAÇÕES DO SITE -->
+              <div class="adm-panel" id="admPanel-infos">
+                <div class="form-card">
+                  <h3>ℹ️ Informações do Site</h3>
+                  <p style="color:var(--muted);font-size:.83rem;margin-bottom:16px">Edite os textos e dados de contato exibidos no site institucional.</p>
+                  <div class="form-grid">
+                    <div class="field-group form-full"><label>Título Principal (Hero)</label><input type="text" id="siteInfo_titulo" placeholder="Mov om Espaço De Saúde e Bem Estar"></div>
+                    <div class="field-group form-full"><label>Subtítulo / Tag Hero</label><input type="text" id="siteInfo_subtitulo" placeholder="Fisioterapia • Pilates • Yoga"></div>
+                    <div class="field-group form-full"><label>Texto Hero</label><textarea id="siteInfo_textoHero" style="min-height:70px;resize:vertical;width:100%;padding:10px 14px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:.84rem;color:var(--text);background:var(--surface);outline:none" placeholder="Um espaço dedicado ao cuidado integral..."></textarea></div>
+                    <div class="field-group form-full"><label>Texto Bem-vindo (Home)</label><textarea id="siteInfo_textoBemVindo" style="min-height:80px;resize:vertical;width:100%;padding:10px 14px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:.84rem;color:var(--text);background:var(--surface);outline:none" placeholder="A Mov om Espaço De Saúde..."></textarea></div>
+                    <div class="field-group form-full"><label>Texto Introdutório – Nosso Espaço</label><textarea id="siteInfo_textoEspaco" style="min-height:70px;resize:vertical;width:100%;padding:10px 14px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:.84rem;color:var(--text);background:var(--surface);outline:none" placeholder="Conheça a estrutura da nossa clínica..."></textarea></div>
+                    <div class="field-group"><label>Telefone</label><input type="text" id="siteInfo_telefone" placeholder="(21) 99968-1425"></div>
+                    <div class="field-group"><label>WhatsApp (número sem formatação)</label><input type="text" id="siteInfo_whatsapp" placeholder="5521999681425"></div>
+                    <div class="field-group"><label>E-mail</label><input type="email" id="siteInfo_email" placeholder="movom.zenyoga@gmail.com"></div>
+                    <div class="field-group form-full"><label>Endereço</label><input type="text" id="siteInfo_endereco" placeholder="Rua Marechal Deodoro, 577..."></div>
+                    <div class="field-group"><label>Instagram (URL completa)</label><input type="url" id="siteInfo_instagram" placeholder="https://www.instagram.com/..."></div>
+                    <div class="field-group"><label>Link Google Maps (URL completa)</label><input type="url" id="siteInfo_maps" placeholder="https://www.google.com/maps/..."></div>
+                    <div class="form-full"><button class="btn-save" onclick="admSalvarInfos()">💾 Salvar Informações</button></div>
+                  </div>
+                </div>
+              </div><!-- /admPanel-infos -->
 
             </div>
           </div>
@@ -2830,6 +3014,10 @@ function siteNav(id, btn){
   if(btn) btn.classList.add("active-snav");
   // Inicia Firebase do site quando admin é aberto
   if(id==="s-admin") initSiteFirebase();
+  // Garante que o conteúdo dinâmico (horários, modalidades, espaço, infos) esteja carregado
+  if(["s-nosso-espaco","s-horarios","s-modalidades","s-home","s-contato"].includes(id) && typeof window.carregarConteudoPublico==="function"){
+    window.carregarConteudoPublico();
+  }
 }
 
 /* ══════════════════════════════
@@ -4584,6 +4772,514 @@ window.exportarLeadsCSV = function(){
   const url=URL.createObjectURL(blob);
   const a=document.createElement("a");a.href=url;a.download="movom-leads.csv";a.click();URL.revokeObjectURL(url);
 };
+
+
+/* ══════════════════════════════════════════════════════════════
+   MÓDULO: GERENCIAMENTO DE CONTEÚDO DO SITE (Firebase v10)
+   Usa o mesmo siteDB (movomsite-default-rtdb) já inicializado
+══════════════════════════════════════════════════════════════ */
+
+import {
+  ref as siteRef2,
+  set as siteSet,
+  get as siteGet,
+  onValue as siteOnValue2,
+  remove as siteRemove,
+  push as sitePush2
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+
+/* ── TOAST ── */
+function showToast(msg, cor){
+  let t = document.getElementById('movomToast');
+  if(!t){
+    t = document.createElement('div');
+    t.id = 'movomToast';
+    t.className = 'movom-toast';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.background = cor||'var(--text)';
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(()=>t.classList.remove('show'), 3000);
+}
+
+/* ── TABS ADMIN SITE ── */
+window.admSiteTab = function(id, btn){
+  document.querySelectorAll('.adm-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.adm-tab').forEach(b=>b.classList.remove('active'));
+  const panel = document.getElementById('admPanel-'+id);
+  if(panel) panel.classList.add('active');
+  if(btn) btn.classList.add('active');
+  // Carrega dados ao abrir cada aba
+  const { siteDB: db } = getSiteFirebase();
+  if(id==='horarios')    admCarregarHorarios(db);
+  if(id==='modalidades') admCarregarModalidades(db);
+  if(id==='espaco')      admCarregarEspaco(db);
+  if(id==='infos')       admCarregarInfos(db);
+};
+
+/* ══════════════════════════════
+   HORÁRIOS
+══════════════════════════════ */
+let _horariosData = [];
+
+function admCarregarHorarios(db){
+  const lista = document.getElementById('admHorariosLista');
+  if(!lista) return;
+  lista.innerHTML = '<p style="color:var(--muted);font-size:.84rem">Carregando...</p>';
+  siteGet(siteRef2(db,'siteConteudo/horarios')).then(snap=>{
+    if(snap.exists()){
+      _horariosData = snap.val();
+    } else {
+      // Defaults
+      _horariosData = [
+        {titulo:'Pilates', cards:[
+          {dia:'Segunda a Sexta', horario:'07:00 às 19:00', obs:'Intervalo: 12:00 às 13:00'},
+          {dia:'Sábado', horario:'07:00 às 12:00', obs:''},
+          {dia:'Domingo', horario:'Fechado', obs:''}
+        ]},
+        {titulo:'Yoga', cards:[
+          {dia:'Segunda', horario:'09:30 Integrativa, 10:30 Meditação, 17:20 Integrativa, 18:30 Integrativa', obs:''},
+          {dia:'Terça', horario:'07:00 Integrativa, 09:30 Sutil, 17:00 Teens, 18:10 Kids', obs:''},
+          {dia:'Quarta', horario:'08:00 Aéreo, 09:30 Integrativa, 17:20 Integrativa, 18:30 Integrativa', obs:''},
+          {dia:'Quinta', horario:'07:00 Integrativa, 09:30 Sutil, 17:20 Integrativa, 18:30 Integrativa', obs:''},
+          {dia:'Sexta', horario:'07:00 Aéreo, 08:15 Hatha, 09:30 Chair, 10:40 Restaurativa, 17:20/18:30 Yin', obs:''},
+          {dia:'Sábado', horario:'08:00 Acroyoga, 09:15 Hatha, 10:30 Aéreo, 11:45 Restaurativa', obs:''}
+        ]}
+      ];
+    }
+    renderAdmHorarios();
+    // Também renderiza no site público
+    renderPublicHorarios();
+  }).catch(()=>{ lista.innerHTML='<p style="color:#b91c1c;font-size:.84rem">⚠️ Erro ao carregar.</p>'; });
+}
+
+function renderAdmHorarios(){
+  const lista = document.getElementById('admHorariosLista');
+  if(!lista) return;
+  lista.innerHTML = '';
+  _horariosData.forEach((bloco, bi)=>{
+    const div = document.createElement('div');
+    div.className = 'hor-bloco';
+    let cardsHtml = (bloco.cards||[]).map((c,ci)=>`
+      <div class="hor-card-row">
+        <input class="field-group input" value="${escHtml(c.dia||'')}" placeholder="Dia" style="padding:8px 12px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:.82rem;color:var(--text);background:var(--surface);outline:none" oninput="_horariosData[${bi}].cards[${ci}].dia=this.value">
+        <input class="field-group input" value="${escHtml(c.horario||'')}" placeholder="Horário / Descrição" style="padding:8px 12px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:.82rem;color:var(--text);background:var(--surface);outline:none;width:100%" oninput="_horariosData[${bi}].cards[${ci}].horario=this.value">
+        <button class="btn-del-sm" onclick="admHorariosRemCard(${bi},${ci})" title="Remover card">🗑</button>
+      </div>
+    `).join('');
+    div.innerHTML = `
+      <div class="hor-bloco-header">
+        <input value="${escHtml(bloco.titulo||'')}" placeholder="Título do bloco (ex: Pilates)" style="padding:8px 14px;border:2px solid var(--lilas-mid);border-radius:10px;font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:800;color:var(--text);background:var(--white);outline:none;flex:1;margin-right:10px" oninput="_horariosData[${bi}].titulo=this.value">
+        <div style="display:flex;gap:6px">
+          <button class="btn-save-sm" onclick="admHorariosAddCard(${bi})" style="font-size:.75rem;padding:6px 14px">➕ Card</button>
+          <button class="btn-del-sm" onclick="admHorariosRemBloco(${bi})">🗑 Bloco</button>
+        </div>
+      </div>
+      <div id="horCards-${bi}">${cardsHtml}</div>
+    `;
+    lista.appendChild(div);
+  });
+}
+
+window.admHorariosAddBloco = function(){
+  _horariosData.push({titulo:'Novo Bloco', cards:[{dia:'', horario:'', obs:''}]});
+  renderAdmHorarios();
+};
+window.admHorariosRemBloco = function(bi){
+  if(!confirm('Remover este bloco de horário?')) return;
+  _horariosData.splice(bi,1);
+  renderAdmHorarios();
+};
+window.admHorariosAddCard = function(bi){
+  if(!_horariosData[bi].cards) _horariosData[bi].cards=[];
+  _horariosData[bi].cards.push({dia:'', horario:'', obs:''});
+  renderAdmHorarios();
+};
+window.admHorariosRemCard = function(bi,ci){
+  _horariosData[bi].cards.splice(ci,1);
+  renderAdmHorarios();
+};
+window.admSalvarHorarios = async function(){
+  const { siteDB: db } = getSiteFirebase();
+  try{
+    await siteSet(siteRef2(db,'siteConteudo/horarios'), _horariosData);
+    renderPublicHorarios();
+    showToast('✅ Horários salvos com sucesso!','#166534');
+  } catch(e){ showToast('⚠️ Erro ao salvar horários.','#b91c1c'); }
+};
+
+/* Renderiza horários no site público */
+function renderPublicHorarios(){
+  const sec = document.getElementById('s-horarios');
+  if(!sec) return;
+  const container = sec.querySelector('.site-container');
+  if(!container) return;
+  // Remove conteúdo antigo exceto o h2
+  const h2 = container.querySelector('.site-h2');
+  container.innerHTML = '';
+  if(h2) container.appendChild(h2);
+  else { const t=document.createElement('h2'); t.className='site-h2'; t.textContent='Horários'; container.appendChild(t); }
+  if(!_horariosData || !_horariosData.length){
+    container.innerHTML += '<p style="color:var(--muted)">Nenhum horário cadastrado.</p>'; return;
+  }
+  _horariosData.forEach(bloco=>{
+    const h3 = document.createElement('h3');
+    h3.style.cssText='color:var(--lilas);font-family:\'Nunito\',sans-serif;font-weight:800;margin:24px 0 12px';
+    h3.textContent = bloco.titulo||'';
+    container.appendChild(h3);
+    const grid = document.createElement('div');
+    grid.className = 'site-cards';
+    (bloco.cards||[]).forEach(c=>{
+      const card = document.createElement('div');
+      card.className = 'site-card';
+      card.innerHTML = `<h3>${escHtml(c.dia||'')}</h3><p style="color:var(--muted);font-size:.84rem">${escHtml(c.horario||'')}</p>`;
+      grid.appendChild(card);
+    });
+    container.appendChild(grid);
+  });
+}
+
+/* ══════════════════════════════
+   MODALIDADES
+══════════════════════════════ */
+let _modalidadesData = [];
+
+function admCarregarModalidades(db){
+  const lista = document.getElementById('admModalidadesLista');
+  if(!lista) return;
+  lista.innerHTML='<p style="color:var(--muted);font-size:.84rem">Carregando...</p>';
+  siteGet(siteRef2(db,'siteConteudo/modalidades')).then(snap=>{
+    if(snap.exists()){
+      _modalidadesData = snap.val();
+    } else {
+      _modalidadesData = [
+        {nome:'🦵 Fisioterapia', descricao:'Atendimento individualizado com profissionais qualificados para reabilitação, prevenção e promoção da saúde.', ordem:1},
+        {nome:'🧘 Pilates', descricao:'Método de exercícios com foco no fortalecimento do core, equilíbrio, flexibilidade e reabilitação.', ordem:2},
+        {nome:'☮️ Yoga', descricao:'Diversas modalidades: Integrativa, Aéreo, Hatha, Chair, Restaurativa, Yin, Acroyoga, Meditação, Teens e Kids.', ordem:3},
+        {nome:'🏃 Recovery', descricao:'Programa especializado em recuperação muscular e performance para atletas profissionais e amadores.', ordem:4}
+      ];
+    }
+    _modalidadesData.sort((a,b)=>(a.ordem||0)-(b.ordem||0));
+    renderAdmModalidades();
+    renderPublicModalidades();
+  }).catch(()=>{ lista.innerHTML='<p style="color:#b91c1c;font-size:.84rem">⚠️ Erro ao carregar.</p>'; });
+}
+
+function renderAdmModalidades(){
+  const lista = document.getElementById('admModalidadesLista');
+  if(!lista) return;
+  if(!_modalidadesData.length){
+    lista.innerHTML='<p style="color:var(--muted);font-size:.84rem;padding:8px 0">Nenhuma modalidade. Clique em Nova Modalidade.</p>';
+    return;
+  }
+  lista.innerHTML='';
+  _modalidadesData.forEach((m,i)=>{
+    const row = document.createElement('div');
+    row.className = 'modal-adm-row';
+    row.innerHTML = `
+      <div class="modal-ordem-badge">${i+1}</div>
+      <input value="${escHtml(m.nome||'')}" placeholder="Nome (ex: 🦵 Fisioterapia)" style="padding:8px 12px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:.82rem;color:var(--text);background:var(--surface);outline:none;width:100%" oninput="_modalidadesData[${i}].nome=this.value">
+      <input value="${escHtml(m.descricao||'')}" placeholder="Descrição da modalidade" style="padding:8px 12px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:.82rem;color:var(--text);background:var(--surface);outline:none;width:100%" oninput="_modalidadesData[${i}].descricao=this.value">
+      <div style="display:flex;gap:5px;flex-shrink:0">
+        <button class="btn-ord" onclick="admModalidadesMover(${i},-1)" ${i===0?'disabled':''} title="Subir">▲</button>
+        <button class="btn-ord" onclick="admModalidadesMover(${i},1)" ${i===_modalidadesData.length-1?'disabled':''} title="Descer">▼</button>
+        <button class="btn-del-sm" onclick="admModalidadesRem(${i})" title="Remover">🗑</button>
+      </div>
+    `;
+    lista.appendChild(row);
+  });
+}
+
+window.admModalidadesAdd = function(){
+  _modalidadesData.push({nome:'', descricao:'', ordem:_modalidadesData.length+1});
+  renderAdmModalidades();
+};
+window.admModalidadesRem = function(i){
+  if(!confirm('Remover esta modalidade?')) return;
+  _modalidadesData.splice(i,1);
+  _modalidadesData.forEach((m,j)=>m.ordem=j+1);
+  renderAdmModalidades();
+};
+window.admModalidadesMover = function(i, dir){
+  const j = i+dir;
+  if(j<0||j>=_modalidadesData.length) return;
+  [_modalidadesData[i],_modalidadesData[j]] = [_modalidadesData[j],_modalidadesData[i]];
+  _modalidadesData.forEach((m,k)=>m.ordem=k+1);
+  renderAdmModalidades();
+};
+window.admSalvarModalidades = async function(){
+  const { siteDB: db } = getSiteFirebase();
+  try{
+    await siteSet(siteRef2(db,'siteConteudo/modalidades'), _modalidadesData);
+    renderPublicModalidades();
+    showToast('✅ Modalidades salvas!','#166534');
+  } catch(e){ showToast('⚠️ Erro ao salvar modalidades.','#b91c1c'); }
+};
+
+function renderPublicModalidades(){
+  const sec = document.getElementById('s-modalidades');
+  if(!sec) return;
+  const container = sec.querySelector('.site-container');
+  if(!container) return;
+  const h2 = container.querySelector('.site-h2');
+  container.innerHTML='';
+  if(h2) container.appendChild(h2);
+  else { const t=document.createElement('h2'); t.className='site-h2'; t.textContent='Nossas Modalidades'; container.appendChild(t); }
+  if(!_modalidadesData||!_modalidadesData.length){
+    container.innerHTML+='<p style="color:var(--muted)">Nenhuma modalidade cadastrada.</p>'; return;
+  }
+  const grid=document.createElement('div');
+  grid.className='site-cards';
+  grid.style.marginTop='16px';
+  _modalidadesData.forEach(m=>{
+    const card=document.createElement('div');
+    card.className='site-card';
+    card.innerHTML=`<h3>${escHtml(m.nome||'')}</h3><p style="color:var(--muted);font-size:.84rem">${escHtml(m.descricao||'')}</p>`;
+    grid.appendChild(card);
+  });
+  container.appendChild(grid);
+}
+
+/* ══════════════════════════════
+   NOSSO ESPAÇO
+══════════════════════════════ */
+let _espacoData = [];
+
+function admCarregarEspaco(db){
+  const grid = document.getElementById('admEspacoGrid');
+  if(!grid) return;
+  grid.innerHTML='<p style="color:var(--muted);font-size:.84rem">Carregando...</p>';
+  siteGet(siteRef2(db,'siteConteudo/espaco')).then(snap=>{
+    if(snap.exists()){
+      _espacoData = snap.val();
+    } else {
+      _espacoData = [
+        {titulo:'Sala de Pilates', legenda:'Ambiente equipado com aparelhos de alta qualidade para suas aulas de Pilates.', foto:'', ordem:1},
+        {titulo:'Sala de Yoga', legenda:'Espaço amplo e tranquilo, ideal para suas práticas de yoga e meditação.', foto:'', ordem:2},
+        {titulo:'Sala de Fisioterapia', legenda:'Consultório equipado com tecnologia moderna para o seu tratamento.', foto:'', ordem:3},
+        {titulo:'Recepção', legenda:'Recepção acolhedora onde nossa equipe está pronta para te receber com carinho.', foto:'', ordem:4}
+      ];
+    }
+    _espacoData.sort((a,b)=>(a.ordem||0)-(b.ordem||0));
+    renderAdmEspaco();
+    renderPublicEspaco();
+  }).catch(()=>{ grid.innerHTML='<p style="color:#b91c1c;font-size:.84rem">⚠️ Erro ao carregar.</p>'; });
+}
+
+function renderAdmEspaco(){
+  const grid = document.getElementById('admEspacoGrid');
+  if(!grid) return;
+  if(!_espacoData.length){
+    grid.innerHTML='<p style="color:var(--muted);font-size:.84rem;padding:8px 0">Nenhum card. Clique em Novo Card.</p>';
+    return;
+  }
+  grid.innerHTML='';
+  _espacoData.forEach((c,i)=>{
+    const card = document.createElement('div');
+    card.className='galeria-adm-card';
+    const previewHtml = c.foto
+      ? `<img src="${escHtml(c.foto)}" style="width:100%;height:100%;object-fit:cover;border-radius:8px" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+      : '';
+    card.innerHTML=`
+      <div class="galeria-adm-preview">
+        ${previewHtml}
+        <div style="${c.foto?'display:none;':''}align-items:center;justify-content:center;flex-direction:column;gap:8px;width:100%;height:100%">
+          <i class="fas fa-image" style="font-size:2.5rem;opacity:.4;color:var(--lilas)"></i>
+          <span style="font-size:.72rem;color:var(--muted)">Sem foto</span>
+        </div>
+      </div>
+      <div>
+        <label style="font-size:.72rem;font-weight:700;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;display:block;margin-bottom:4px">URL da Foto</label>
+        <input type="url" value="${escHtml(c.foto||'')}" placeholder="https://... ou data:image/..." style="width:100%;padding:8px 12px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:.78rem;color:var(--text);background:var(--surface);outline:none" oninput="_espacoData[${i}].foto=this.value;renderAdmEspaco()">
+      </div>
+      <div>
+        <label style="font-size:.72rem;font-weight:700;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;display:block;margin-bottom:4px">Título</label>
+        <input type="text" value="${escHtml(c.titulo||'')}" placeholder="Ex: Sala de Pilates" style="width:100%;padding:8px 12px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:.82rem;color:var(--text);background:var(--surface);outline:none" oninput="_espacoData[${i}].titulo=this.value">
+      </div>
+      <div>
+        <label style="font-size:.72rem;font-weight:700;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;display:block;margin-bottom:4px">Legenda</label>
+        <textarea placeholder="Descrição do espaço..." style="width:100%;padding:8px 12px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:.82rem;color:var(--text);background:var(--surface);outline:none;min-height:60px;resize:vertical" oninput="_espacoData[${i}].legenda=this.value">${escHtml(c.legenda||'')}</textarea>
+      </div>
+      <div class="galeria-adm-ordem">
+        <button class="btn-ord" onclick="admEspacoMover(${i},-1)" ${i===0?'disabled':''} title="Mover para cima">▲</button>
+        <button class="btn-ord" onclick="admEspacoMover(${i},1)" ${i===_espacoData.length-1?'disabled':''} title="Mover para baixo">▼</button>
+        <button class="btn-del-sm" onclick="admEspacoRem(${i})" title="Remover card">🗑 Remover</button>
+        <button class="btn-save-sm" onclick="admSalvarEspaco()" title="Salvar">💾 Salvar</button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+window.admEspacoAdd = function(){
+  _espacoData.push({titulo:'Novo Espaço', legenda:'', foto:'', ordem:_espacoData.length+1});
+  renderAdmEspaco();
+};
+window.admEspacoRem = function(i){
+  if(!confirm('Remover este card?')) return;
+  _espacoData.splice(i,1);
+  _espacoData.forEach((c,j)=>c.ordem=j+1);
+  renderAdmEspaco();
+  admSalvarEspaco();
+};
+window.admEspacoMover = function(i, dir){
+  const j=i+dir;
+  if(j<0||j>=_espacoData.length) return;
+  [_espacoData[i],_espacoData[j]]=[_espacoData[j],_espacoData[i]];
+  _espacoData.forEach((c,k)=>c.ordem=k+1);
+  renderAdmEspaco();
+};
+window.admSalvarEspaco = async function(){
+  const { siteDB: db } = getSiteFirebase();
+  try{
+    await siteSet(siteRef2(db,'siteConteudo/espaco'), _espacoData);
+    renderPublicEspaco();
+    showToast('✅ Galeria salva com sucesso!','#166534');
+  } catch(e){ showToast('⚠️ Erro ao salvar galeria.','#b91c1c'); }
+};
+
+function renderPublicEspaco(){
+  const galeria = document.getElementById('galeriaEspaco');
+  if(!galeria) return;
+  galeria.innerHTML='';
+  if(!_espacoData||!_espacoData.length){
+    galeria.innerHTML='<p style="color:var(--muted)">Em breve novidades!</p>';
+    return;
+  }
+  _espacoData.forEach(c=>{
+    const card=document.createElement('div');
+    card.className='espaco-card';
+    const imgHtml = c.foto
+      ? `<div class="espaco-card-img-wrap"><img src="${escHtml(c.foto)}" alt="${escHtml(c.titulo||'')}" class="espaco-card-img" loading="lazy" onerror="this.parentElement.innerHTML='<div class=espaco-placeholder><i class=\\'fas fa-image\\'></i><span>Foto indisponível</span></div>'"></div>`
+      : `<div class="espaco-placeholder"><i class="fas fa-image"></i><span>Foto em breve</span></div>`;
+    card.innerHTML=`${imgHtml}<div class="espaco-card-body"><h4>${escHtml(c.titulo||'')}</h4><p>${escHtml(c.legenda||'')}</p></div>`;
+    galeria.appendChild(card);
+  });
+}
+
+/* ══════════════════════════════
+   INFORMAÇÕES DO SITE
+══════════════════════════════ */
+let _infosData = {};
+
+function admCarregarInfos(db){
+  siteGet(siteRef2(db,'siteConteudo/infos')).then(snap=>{
+    _infosData = snap.exists() ? snap.val() : {};
+    const campos = {
+      siteInfo_titulo:'titulo', siteInfo_subtitulo:'subtitulo',
+      siteInfo_textoHero:'textoHero', siteInfo_textoBemVindo:'textoBemVindo',
+      siteInfo_textoEspaco:'textoEspaco',
+      siteInfo_telefone:'telefone', siteInfo_whatsapp:'whatsapp',
+      siteInfo_email:'email', siteInfo_endereco:'endereco',
+      siteInfo_instagram:'instagram', siteInfo_maps:'maps'
+    };
+    Object.entries(campos).forEach(([elId, key])=>{
+      const el=document.getElementById(elId);
+      if(el && _infosData[key]) el.value=_infosData[key];
+    });
+  }).catch(console.error);
+}
+
+window.admSalvarInfos = async function(){
+  const { siteDB: db } = getSiteFirebase();
+  const campos = {
+    siteInfo_titulo:'titulo', siteInfo_subtitulo:'subtitulo',
+    siteInfo_textoHero:'textoHero', siteInfo_textoBemVindo:'textoBemVindo',
+    siteInfo_textoEspaco:'textoEspaco',
+    siteInfo_telefone:'telefone', siteInfo_whatsapp:'whatsapp',
+    siteInfo_email:'email', siteInfo_endereco:'endereco',
+    siteInfo_instagram:'instagram', siteInfo_maps:'maps'
+  };
+  const dados={};
+  Object.entries(campos).forEach(([elId,key])=>{
+    const el=document.getElementById(elId);
+    if(el) dados[key]=el.value;
+  });
+  try{
+    await siteSet(siteRef2(db,'siteConteudo/infos'), dados);
+    _infosData = dados;
+    aplicarInfosSite(dados);
+    showToast('✅ Informações salvas e aplicadas ao site!','#166534');
+  } catch(e){ showToast('⚠️ Erro ao salvar informações.','#b91c1c'); }
+};
+
+function aplicarInfosSite(d){
+  if(!d) return;
+  // Hero título
+  const h1 = document.querySelector('.site-hero-content h1');
+  if(h1 && d.titulo) h1.textContent = d.titulo;
+  // Tag/subtítulo
+  const tag = document.querySelector('.site-tag');
+  if(tag && d.subtitulo) tag.textContent = d.subtitulo;
+  // Texto hero
+  const heroP = document.querySelector('.site-hero-content > p:not(.site-tag)');
+  if(heroP && d.textoHero) heroP.textContent = d.textoHero;
+  // Bem-vindo
+  const bemvP = document.querySelector('#s-home .site-container > p');
+  if(bemvP && d.textoBemVindo) bemvP.textContent = d.textoBemVindo;
+  // Intro Nosso Espaço
+  const espacoP = document.getElementById('siteEspacoIntro');
+  if(espacoP && d.textoEspaco) espacoP.textContent = d.textoEspaco;
+  // Contato – email
+  const emailEl = document.querySelector('#s-contato .site-card p:first-child');
+  if(emailEl && d.email) emailEl.innerHTML = `<i class="fas fa-envelope" style="color:var(--lilas);margin-right:8px"></i> ${escHtml(d.email)}`;
+  // Contato – telefone/whatsapp
+  const telEl = document.querySelector('#s-contato .site-card p:nth-child(2)');
+  if(telEl && (d.telefone||d.whatsapp)) telEl.innerHTML = `<i class="fab fa-whatsapp" style="color:var(--ciano);margin-right:8px"></i> ${escHtml(d.telefone||d.whatsapp)}`;
+  // Links WhatsApp
+  if(d.whatsapp){
+    document.querySelectorAll('a[href*="wa.me"]').forEach(a=>{
+      a.href=`https://wa.me/${d.whatsapp}`;
+    });
+  }
+  // Instagram
+  if(d.instagram){
+    document.querySelectorAll('a[href*="instagram.com"]').forEach(a=>{ a.href=d.instagram; });
+  }
+  // Google Maps
+  if(d.maps){
+    document.querySelectorAll('a[href*="google.com/maps"]').forEach(a=>{ a.href=d.maps; });
+  }
+}
+
+/* ══════════════════════════════
+   CARREGAMENTO AUTOMÁTICO DO SITE
+══════════════════════════════ */
+function carregarConteudoPublico(){
+  const { siteDB: db } = getSiteFirebase();
+  // Horários públicos
+  siteGet(siteRef2(db,'siteConteudo/horarios')).then(snap=>{
+    if(snap.exists()){ _horariosData=snap.val(); renderPublicHorarios(); }
+  }).catch(()=>{});
+  // Modalidades públicas
+  siteGet(siteRef2(db,'siteConteudo/modalidades')).then(snap=>{
+    if(snap.exists()){ _modalidadesData=snap.val().sort((a,b)=>(a.ordem||0)-(b.ordem||0)); renderPublicModalidades(); }
+  }).catch(()=>{});
+  // Galeria pública
+  siteGet(siteRef2(db,'siteConteudo/espaco')).then(snap=>{
+    if(snap.exists()){ _espacoData=snap.val().sort((a,b)=>(a.ordem||0)-(b.ordem||0)); renderPublicEspaco(); }
+  }).catch(()=>{});
+  // Informações
+  siteGet(siteRef2(db,'siteConteudo/infos')).then(snap=>{
+    if(snap.exists()){ _infosData=snap.val(); aplicarInfosSite(_infosData); }
+  }).catch(()=>{});
+}
+
+/* Utilitário: sanitiza HTML */
+function escHtml(str){
+  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+/* Chama carregamento quando DOM estiver pronto */
+window.carregarConteudoPublico = carregarConteudoPublico;
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded', carregarConteudoPublico);
+} else {
+  setTimeout(carregarConteudoPublico, 500);
+}
+
 </script>
 
 <!-- AVALIAÇÕES + RESTANTE DOS SCRIPTS (compat) -->
