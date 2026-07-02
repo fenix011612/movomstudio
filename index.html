@@ -359,8 +359,6 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 .fin-insight-item strong{color:var(--lilas);}
 .fin-chart-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:16px;}
 .fin-period-group{display:flex;gap:6px;flex-wrap:wrap;}
-.btn-chart-period{padding:6px 14px;border:2px solid var(--border);border-radius:20px;font-family:'Poppins',sans-serif;font-size:.76rem;font-weight:700;cursor:pointer;background:transparent;color:var(--muted);transition:all .18s;}
-.btn-chart-period:hover{border-color:var(--lilas);color:var(--lilas);}
 .active-period{background:var(--lilas)!important;color:#fff!important;border-color:var(--lilas)!important;}
 
 /* ══════════════════════════════
@@ -761,7 +759,6 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 /* Botões de período do gráfico financeiro */
 .btn-chart-period{background:var(--surface);color:var(--muted);border:2px solid var(--border);border-radius:8px;padding:5px 14px;cursor:pointer;font-family:'Poppins',sans-serif;font-size:.78rem;font-weight:600;transition:all .2s;}
 .btn-chart-period:hover{color:var(--lilas);border-color:var(--lilas);}
-.btn-chart-period.active-period{background:linear-gradient(135deg,var(--lilas),var(--ciano));color:#fff;border-color:transparent;}
 .fin-subpage{display:none;}
 .fin-subpage.active{display:block;}
 
@@ -3501,16 +3498,6 @@ const dbAgenda = fbAgenda.database();
 const dbIns    = fbIns.database();
 const fsYoga   = fbYoga.firestore();
 
-window.inicializarFirebases = function(){ 
-  // Carrega apenas o que está visível no momento
-  const activePageId = document.querySelector(".page.active")?.id;
-  
-  if(activePageId==="page-colaboradores") initColab();
-  if(activePageId==="page-financeiro") initFinanceiro();
-  if(activePageId==="page-grade") initGrade();
-  if(activePageId==="page-agenda") initAgenda();
-};
-
 /* ══════════════════════
    COLABORADORES
 ══════════════════════ */
@@ -3943,13 +3930,6 @@ function agruparPorData(tipo){
     });
   });
   return resultado;
-}
-
-/* Soma total de um tipo */
-function somaTotal(tipo){
-  let t = 0;
-  Object.values(finDashCache[tipo]).forEach(itens=>itens.forEach(i=>t+=i.valor));
-  return t;
 }
 
 /* Soma total de um tipo no período selecionado */
