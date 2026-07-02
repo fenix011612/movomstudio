@@ -423,6 +423,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 /* ══════════════════════════════
    SITE INSTITUCIONAL (MOV OM)
 ══════════════════════════════ */
+:root{ --site-max: 1200px; }
 /* Hero */
 .site-hero{
   background:linear-gradient(130deg,#161d2e,#243a61 58%,#28526a);
@@ -432,6 +433,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
   display:flex;align-items:center;justify-content:space-between;
   padding:14px 24px;background:rgba(0,0,0,.25);
   border-bottom:1px solid rgba(255,255,255,.13);flex-wrap:wrap;gap:10px;
+  max-width:var(--site-max);margin:0 auto;
 }
 .site-brand .mark{
   font-family:'Nunito',sans-serif;font-weight:900;font-size:1.2rem;
@@ -448,7 +450,8 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
   background:rgba(255,255,255,.15);color:#fff;
   border-color:rgba(255,255,255,.25);
 }
-.site-hero-content{padding:60px 28px 56px;max-width:760px;}
+.site-hero-content{padding:60px 28px 56px;max-width:var(--site-max);margin:0 auto;}
+.site-hero-content h1,.site-hero-content > p,.site-hero-content .site-btns{max-width:760px;}
 .site-tag{text-transform:uppercase;letter-spacing:.1em;color:#9fd9d6;font-weight:700;font-size:.8rem;margin-bottom:8px;}
 .site-hero-content h1{font-family:'Nunito',sans-serif;font-size:clamp(1.6rem,4vw,2.6rem);font-weight:900;margin:0 0 12px;}
 .site-hero-content p{color:rgba(255,255,255,.82);margin-bottom:24px;line-height:1.7;}
@@ -456,7 +459,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 .site-body{background:var(--bg);}
 .site-section{display:none;padding:40px 24px;}
 .site-section.active-s{display:block;}
-.site-container{max-width:1060px;margin:auto;}
+.site-container{max-width:var(--site-max);margin:0 auto;width:100%;box-sizing:border-box;}
 .site-h2{font-family:'Nunito',sans-serif;font-weight:900;color:var(--lilas);font-size:1.5rem;margin-bottom:6px;}
 /* Cards */
 .site-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;margin-top:16px;}
@@ -5041,6 +5044,20 @@ function getSiteFirebase(){
   return { siteDB };
 }
 
+/* ── UTILITÁRIO DE BLINDAGEM ──
+   O Firebase Realtime Database converte listas em OBJETO (em vez de Array)
+   sempre que as chaves numéricas não são sequenciais a partir de 0 (o que
+   acontece com frequência após remover um item do meio de uma lista).
+   Sem essa normalização, chamadas como `.sort()` ou `.forEach()` quebram
+   silenciosamente (o erro fica preso dentro do .then() e é engolido pelo
+   .catch()), fazendo a seção inteira (ex: Nosso Espaço) parecer vazia,
+   mesmo com dados salvos corretamente no banco. */
+function normalizarLista(val){
+  if(Array.isArray(val)) return val.filter(item=>item!=null);
+  if(val && typeof val==='object') return Object.values(val).filter(item=>item!=null);
+  return [];
+}
+
 // Expor para uso global via window
 let _siteListenersAtivos = false;
 window.initSiteFirebase = function(){
@@ -5472,7 +5489,10 @@ function admCarregarHorarios(db){
   lista.innerHTML = '<p style="color:var(--muted);font-size:.84rem">Carregando...</p>';
   siteGet(siteRef2(db,'siteConteudo/horarios')).then(snap=>{
     if(snap.exists()){
-      _horariosData = snap.val();
+      _horariosData = normalizarLista(snap.val()).map(bloco=>({
+        ...bloco,
+        cards: normalizarLista(bloco && bloco.cards)
+      }));
     } else {
       // Defaults
       _horariosData = [
@@ -5494,7 +5514,10 @@ function admCarregarHorarios(db){
     renderAdmHorarios();
     // Também renderiza no site público
     renderPublicHorarios();
-  }).catch(()=>{ lista.innerHTML='<p style="color:#b91c1c;font-size:.84rem">⚠️ Erro ao carregar.</p>'; });
+  }).catch(err=>{
+    console.error('[MOVOM CMS] Erro ao carregar horários:', err);
+    lista.innerHTML='<p style="color:#b91c1c;font-size:.84rem">⚠️ Erro ao carregar.</p>';
+  });
 }
 
 function renderAdmHorarios(){
@@ -5615,7 +5638,7 @@ function admCarregarModalidades(db){
   lista.innerHTML='<p style="color:var(--muted);font-size:.84rem">Carregando...</p>';
   siteGet(siteRef2(db,'siteConteudo/modalidades')).then(snap=>{
     if(snap.exists()){
-      _modalidadesData = snap.val();
+      _modalidadesData = normalizarLista(snap.val());
     } else {
       _modalidadesData = [
         {nome:'🦵 Fisioterapia', descricao:'Atendimento individualizado com profissionais qualificados para reabilitação, prevenção e promoção da saúde.', ordem:1},
@@ -5627,7 +5650,10 @@ function admCarregarModalidades(db){
     _modalidadesData.sort((a,b)=>(a.ordem||0)-(b.ordem||0));
     renderAdmModalidades();
     renderPublicModalidades();
-  }).catch(()=>{ lista.innerHTML='<p style="color:#b91c1c;font-size:.84rem">⚠️ Erro ao carregar.</p>'; });
+  }).catch(err=>{
+    console.error('[MOVOM CMS] Erro ao carregar modalidades:', err);
+    lista.innerHTML='<p style="color:#b91c1c;font-size:.84rem">⚠️ Erro ao carregar.</p>';
+  });
 }
 
 let _modalidadesEditing = new Set();
@@ -5763,7 +5789,11 @@ function admCarregarEspaco(db){
   grid.innerHTML='<p style="color:var(--muted);font-size:.84rem">Carregando...</p>';
   siteGet(siteRef2(db,'siteConteudo/espaco')).then(snap=>{
     if(snap.exists()){
-      _espacoData = snap.val();
+      // normalizarLista corrige o caso em que o Firebase RTDB devolve OBJETO
+      // em vez de ARRAY (acontece quando um item do meio da lista é removido),
+      // que antes quebrava .sort()/.forEach() silenciosamente e deixava a
+      // galeria "Nosso Espaço" vazia sem nenhum erro visível.
+      _espacoData = normalizarLista(snap.val());
     } else {
       _espacoData = [
         {titulo:'Sala de Pilates', legenda:'Ambiente equipado com aparelhos de alta qualidade para suas aulas de Pilates.', foto:'', ordem:1},
@@ -5775,7 +5805,10 @@ function admCarregarEspaco(db){
     _espacoData.sort((a,b)=>(a.ordem||0)-(b.ordem||0));
     renderAdmEspaco();
     renderPublicEspaco();
-  }).catch(()=>{ grid.innerHTML='<p style="color:#b91c1c;font-size:.84rem">⚠️ Erro ao carregar.</p>'; });
+  }).catch(err=>{
+    console.error('[MOVOM CMS] Erro ao carregar Nosso Espaço:', err);
+    grid.innerHTML='<p style="color:#b91c1c;font-size:.84rem">⚠️ Erro ao carregar. Veja o console para detalhes.</p>';
+  });
 }
 
 let _espacoEditing = new Set();
@@ -5897,6 +5930,20 @@ window.admSalvarEspaco = async function(){
   } catch(e){ showToast('⚠️ Erro ao salvar galeria.','#b91c1c'); }
 };
 
+/* Cria o bloco de placeholder (imagem indisponível / em breve) via DOM real,
+   evitando strings HTML com aspas aninhadas frágeis */
+function cmsCriarPlaceholderEspaco(texto){
+  const div = document.createElement('div');
+  div.className = 'espaco-placeholder';
+  const icon = document.createElement('i');
+  icon.className = 'fas fa-image';
+  const span = document.createElement('span');
+  span.textContent = texto;
+  div.appendChild(icon);
+  div.appendChild(span);
+  return div;
+}
+
 function renderPublicEspaco(){
   const galeria = document.getElementById('galeriaEspaco');
   if(!galeria) return;
@@ -5905,14 +5952,46 @@ function renderPublicEspaco(){
     galeria.innerHTML='<p style="color:var(--muted)">Em breve novidades!</p>';
     return;
   }
-  _espacoData.forEach(c=>{
-    const card=document.createElement('div');
-    card.className='espaco-card';
-    const imgHtml = c.foto
-      ? `<div class="espaco-card-img-wrap"><img src="${escHtml(c.foto)}" alt="${escHtml(c.titulo||'')}" class="espaco-card-img" loading="lazy" onerror="this.parentElement.innerHTML='<div class=espaco-placeholder><i class=\\'fas fa-image\\'></i><span>Foto indisponível</span></div>'"></div>`
-      : `<div class="espaco-placeholder"><i class="fas fa-image"></i><span>Foto em breve</span></div>`;
-    card.innerHTML=`${imgHtml}<div class="espaco-card-body"><h4>${escHtml(c.titulo||'')}</h4><p>${escHtml(c.legenda||'')}</p></div>`;
-    galeria.appendChild(card);
+  _espacoData.forEach((c,i)=>{
+    try{
+      const card=document.createElement('div');
+      card.className='espaco-card';
+
+      if(c && c.foto){
+        const wrap = document.createElement('div');
+        wrap.className = 'espaco-card-img-wrap';
+        const img = document.createElement('img');
+        img.src = c.foto;
+        img.alt = c.titulo || '';
+        img.className = 'espaco-card-img';
+        img.loading = 'lazy';
+        // Se a URL não carregar (Storage indisponível, permissão negada,
+        // imagem apagada etc.), troca por um placeholder sem quebrar o layout
+        img.addEventListener('error', ()=>{
+          console.warn('[MOVOM Site] Falha ao carregar imagem de "Nosso Espaço":', c.foto);
+          wrap.replaceWith(cmsCriarPlaceholderEspaco('Foto indisponível'));
+        }, { once:true });
+        wrap.appendChild(img);
+        card.appendChild(wrap);
+      } else {
+        card.appendChild(cmsCriarPlaceholderEspaco('Foto em breve'));
+      }
+
+      const body = document.createElement('div');
+      body.className = 'espaco-card-body';
+      const h4 = document.createElement('h4');
+      h4.textContent = (c && c.titulo) || '';
+      const p = document.createElement('p');
+      p.textContent = (c && c.legenda) || '';
+      body.appendChild(h4);
+      body.appendChild(p);
+      card.appendChild(body);
+
+      galeria.appendChild(card);
+    }catch(err){
+      // Um item malformado não deve derrubar a galeria inteira
+      console.error(`[MOVOM Site] Item ${i} de "Nosso Espaço" inválido, ignorado:`, c, err);
+    }
   });
 }
 
@@ -6025,20 +6104,32 @@ function carregarConteudoPublico(){
   const { siteDB: db } = getSiteFirebase();
   // Horários públicos
   siteGet(siteRef2(db,'siteConteudo/horarios')).then(snap=>{
-    if(snap.exists()){ _horariosData=snap.val(); renderPublicHorarios(); }
-  }).catch(()=>{});
+    if(snap.exists()){
+      _horariosData = normalizarLista(snap.val()).map(bloco=>({
+        ...bloco,
+        cards: normalizarLista(bloco && bloco.cards)
+      }));
+      renderPublicHorarios();
+    }
+  }).catch(err=>console.error('[MOVOM Site] Erro ao carregar horários:', err));
   // Modalidades públicas
   siteGet(siteRef2(db,'siteConteudo/modalidades')).then(snap=>{
-    if(snap.exists()){ _modalidadesData=snap.val().sort((a,b)=>(a.ordem||0)-(b.ordem||0)); renderPublicModalidades(); }
-  }).catch(()=>{});
-  // Galeria pública
+    if(snap.exists()){
+      _modalidadesData = normalizarLista(snap.val()).sort((a,b)=>(a.ordem||0)-(b.ordem||0));
+      renderPublicModalidades();
+    }
+  }).catch(err=>console.error('[MOVOM Site] Erro ao carregar modalidades:', err));
+  // Galeria pública (Nosso Espaço)
   siteGet(siteRef2(db,'siteConteudo/espaco')).then(snap=>{
-    if(snap.exists()){ _espacoData=snap.val().sort((a,b)=>(a.ordem||0)-(b.ordem||0)); renderPublicEspaco(); }
-  }).catch(()=>{});
+    if(snap.exists()){
+      _espacoData = normalizarLista(snap.val()).sort((a,b)=>(a.ordem||0)-(b.ordem||0));
+      renderPublicEspaco();
+    }
+  }).catch(err=>console.error('[MOVOM Site] Erro ao carregar Nosso Espaço:', err));
   // Informações
   siteGet(siteRef2(db,'siteConteudo/infos')).then(snap=>{
     if(snap.exists()){ _infosData=snap.val(); aplicarInfosSite(_infosData); }
-  }).catch(()=>{});
+  }).catch(err=>console.error('[MOVOM Site] Erro ao carregar informações:', err));
 }
 
 /* Utilitário: sanitiza HTML */
