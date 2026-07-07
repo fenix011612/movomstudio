@@ -3,7 +3,12 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>MOVOM – Sistema</title>
+<title>MovOm Espaço de Saúde e Bem Estar — Fisioterapia, Pilates e Yoga em Duque de Caxias</title>
+<meta name="description" content="MovOm Espaço de Saúde e Bem Estar: fisioterapia, pilates e yoga com atendimento humanizado e equipe especializada em Duque de Caxias, RJ. Agende sua avaliação pelo WhatsApp."/>
+<meta property="og:title" content="MovOm Espaço de Saúde e Bem Estar"/>
+<meta property="og:description" content="Cuidado integral com fisioterapia, pilates e yoga. Atendimento humanizado e equipe especializada desde 2019."/>
+<meta property="og:type" content="business.business"/>
+<meta property="og:locale" content="pt_BR"/>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
@@ -699,10 +704,8 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
               <a href="#" onclick="siteNav('s-home',this);return false">Início</a>
               <a href="#" onclick="siteNav('s-sobre',this);return false">Quem Somos</a>
               <a href="#" onclick="siteNav('s-modalidades',this);return false">Serviços</a>
-              <a href="#" onclick="siteNav('s-horarios',this);return false">Horários</a>
-              <a href="#" onclick="siteNav('s-equipe',this);return false">Equipe</a>
-              <a href="#" onclick="siteNav('s-galeria',this);return false">Galeria</a>
-              <a href="#" onclick="siteNav('s-depoimentos',this);return false">Depoimentos</a>
+              <a href="#" onclick="siteNav('s-equipe',this);return false">Equipe &amp; Espaço</a>
+              <a href="#" onclick="siteNav('s-horarios',this);return false">Horários &amp; Avaliações</a>
               <a href="#" onclick="siteNav('s-parceiros',this);return false">Parceiros</a>
               <a href="#" onclick="siteNav('s-agendar',this);return false">Agendar</a>
               <a href="#" onclick="siteNav('s-satisfacao',this);return false">Satisfação</a>
@@ -718,9 +721,10 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
             <h1>Mov om Espaço De Saúde e Bem Estar</h1>
             <p>Um espaço dedicado ao cuidado integral de forma humanizada e especializada.</p>
             <div class="hero-badges">
+              <span class="hero-badge"><i class="fas fa-star" style="color:#ffd166"></i> Excelente avaliação no Google</span>
               <span class="hero-badge"><i class="fas fa-heart"></i> Atendimento Humanizado</span>
-              <span class="hero-badge"><i class="fas fa-calendar-check"></i> Desde 2019</span>
               <span class="hero-badge"><i class="fas fa-user-md"></i> Equipe Especializada</span>
+              <span class="hero-badge"><i class="fas fa-leaf"></i> Ambiente Acolhedor</span>
             </div>
             <div class="site-btns">
               <a class="site-btn primary" href="#" onclick="siteNav('s-agendar',null);return false">Agende sua avaliação</a>
@@ -735,40 +739,12 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
           <div class="site-section active-s" id="s-home">
             <div class="site-container">
               <h2 class="site-h2">Bem-vindo(a)</h2>
-              <p style="color:var(--muted);margin-bottom:24px;line-height:1.7">A Mov om Espaço De Saúde e Bem Estar é um ambiente dedicado ao cuidado integral do corpo e da mente, oferecendo fisioterapia, pilates e yoga com acompanhamento profissional e humanizado.</p>
-              <div class="site-btns" style="margin-bottom:32px">
+              <p style="color:var(--muted);margin-bottom:24px;line-height:1.7;max-width:640px">A Mov om Espaço De Saúde e Bem Estar é um ambiente dedicado ao cuidado integral do corpo e da mente, oferecendo fisioterapia, pilates e yoga com acompanhamento profissional e humanizado.</p>
+              <div class="site-btns">
+                <a class="site-btn primary" href="#" onclick="siteNav('s-modalidades',null);return false"><i class="fas fa-heart-pulse"></i> Conheça nossos serviços</a>
                 <a class="site-btn ig" href="https://www.instagram.com/movomzenyogaepilates/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
                 <a class="site-btn wa" href="https://wa.me/5521999681425" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-                <a class="site-btn loc" href="https://www.google.com/maps/search/?api=1&query=Rua+Marechal+Deodoro%2C+577%2C+salas+605%2C+805+e+808+-+25+de+Agosto%2C+Duque+de+Caxias+-+RJ" target="_blank"><i class="fas fa-map-marker-alt"></i> Localização</a>
-                <a class="site-btn" style="background:#fff;color:var(--text);border:1px solid var(--border)" href="https://www.google.com/search?q=movom+espaco+de+saude+e+bem+estar+avaliacoes" target="_blank"><i class="fab fa-google"></i> Avaliações no Google</a>
-              </div>
-
-              <h2 class="site-h2">O que você precisa?</h2>
-              <div class="site-cards" style="margin-top:16px">
-                <div class="site-card">
-                  <div style="font-size:2rem;line-height:1;margin-bottom:8px">🦵</div>
-                  <h3>Fisioterapia</h3>
-                  <p style="color:var(--muted);font-size:.84rem;margin-bottom:12px">Avaliação, sessões e reabilitação funcional individualizadas, com equipe qualificada.</p>
-                  <a href="#" onclick="siteNav('s-modalidades',null);return false" style="color:var(--lilas);font-weight:700;font-size:.84rem;text-decoration:none">Saiba mais →</a>
-                </div>
-                <div class="site-card">
-                  <div style="font-size:2rem;line-height:1;margin-bottom:8px">🧘</div>
-                  <h3>Pilates</h3>
-                  <p style="color:var(--muted);font-size:.84rem;margin-bottom:12px">Fortalecimento do core, equilíbrio, flexibilidade e reabilitação em turmas e horários variados.</p>
-                  <a href="#" onclick="siteNav('s-modalidades',null);return false" style="color:var(--lilas);font-weight:700;font-size:.84rem;text-decoration:none">Saiba mais →</a>
-                </div>
-                <div class="site-card">
-                  <div style="font-size:2rem;line-height:1;margin-bottom:8px">☮️</div>
-                  <h3>Yoga</h3>
-                  <p style="color:var(--muted);font-size:.84rem;margin-bottom:12px">Diversas modalidades para todas as idades, com foco em respiração, equilíbrio e bem-estar.</p>
-                  <a href="#" onclick="siteNav('s-modalidades',null);return false" style="color:var(--lilas);font-weight:700;font-size:.84rem;text-decoration:none">Saiba mais →</a>
-                </div>
-              </div>
-
-              <h2 class="site-h2" style="margin-top:32px">Nossas Atividades</h2>
-              <div class="site-cards" style="margin-top:16px">
-                <div class="site-card"><h3>Serviços</h3><p style="color:var(--muted);font-size:.84rem">Fisioterapia, Pilates, Método Suspensus, Elastic Training, treino cardiorrespiratório, funcional, yoga/aéreo yoga, meditação, massagens e drenagem linfática.</p></div>
-                <div class="site-card"><h3>Programas</h3><p style="color:var(--muted);font-size:.84rem"><strong>Mov Zen:</strong> yoga e meditação para pacientes oncológicos.<br><br><strong>Mov Recovery:</strong> recuperação muscular para atletas profissionais e amadores.</p></div>
+                <a class="site-btn" style="background:#fff;color:var(--text);border:1px solid var(--border)" href="https://g.page/r/Ce_1CnuNaIRlEBM/review" target="_blank"><i class="fab fa-google"></i> Avaliações no Google</a>
               </div>
             </div>
           </div>
@@ -779,6 +755,15 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
               <span class="hero-badge" style="background:var(--lilas-light);border-color:var(--lilas-mid);color:var(--lilas);margin-bottom:10px"><i class="fas fa-calendar-check"></i> Desde 2019</span>
               <h2 class="site-h2">Conheça a MovOm</h2>
               <p style="color:var(--muted);margin-bottom:24px;line-height:1.7;max-width:760px">Idealizada em 2019, a MovOm tem como proposta promover a saúde integral com um olhar individualizado para cada paciente, sempre priorizando um atendimento humanizado, personalizado e realizado por uma equipe de excelência.</p>
+              <h3 style="color:var(--lilas);font-family:'Nunito',sans-serif;font-weight:800;margin-bottom:12px;font-size:.95rem">Nossos diferenciais</h3>
+              <div class="site-cards" style="margin-bottom:24px">
+                <div class="site-card" style="text-align:center;padding:16px"><div style="font-size:1.4rem;margin-bottom:6px">💜</div><p style="font-size:.8rem;font-weight:700">Atendimento Humanizado</p></div>
+                <div class="site-card" style="text-align:center;padding:16px"><div style="font-size:1.4rem;margin-bottom:6px">🎓</div><p style="font-size:.8rem;font-weight:700">Profissionais Especializados</p></div>
+                <div class="site-card" style="text-align:center;padding:16px"><div style="font-size:1.4rem;margin-bottom:6px">🎯</div><p style="font-size:.8rem;font-weight:700">Atendimento Individualizado</p></div>
+                <div class="site-card" style="text-align:center;padding:16px"><div style="font-size:1.4rem;margin-bottom:6px">🌿</div><p style="font-size:.8rem;font-weight:700">Ambiente Acolhedor</p></div>
+                <div class="site-card" style="text-align:center;padding:16px"><div style="font-size:1.4rem;margin-bottom:6px">⚙️</div><p style="font-size:.8rem;font-weight:700">Equipamentos Modernos</p></div>
+              </div>
+              <h3 style="color:var(--lilas);font-family:'Nunito',sans-serif;font-weight:800;margin-bottom:12px;font-size:.95rem">Missão, Visão e Valores</h3>
               <div class="site-cards" style="margin-top:16px">
                 <div class="site-card"><h3>🎯 Missão</h3><p style="color:var(--muted);font-size:.84rem">Promover saúde integral por meio de um atendimento humanizado, personalizado e tecnicamente qualificado.</p></div>
                 <div class="site-card"><h3>🔭 Visão</h3><p style="color:var(--muted);font-size:.84rem">Ser referência em cuidado integral à saúde e bem-estar em Duque de Caxias e região.</p></div>
@@ -866,19 +851,43 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
           <!-- HORÁRIOS -->
           <div class="site-section" id="s-horarios">
             <div class="site-container">
-              <h2 class="site-h2">Horários</h2>
-              <h3 style="color:var(--lilas);font-family:'Nunito',sans-serif;font-weight:800;margin:24px 0 12px">Pilates</h3>
-              <div class="site-cards">
-                <div class="site-card"><h3>Segunda a Sexta</h3><p style="color:var(--muted)">07:00 às 19:00</p></div>
-                <div class="site-card"><h3>Sábado</h3><p style="color:var(--muted)">07:00 às 11:00</p></div>
-                <div class="site-card"><h3>Domingo e feriados</h3><p style="color:var(--muted)">Fechado</p></div>
-              </div>
-              <h3 style="color:var(--lilas);font-family:'Nunito',sans-serif;font-weight:800;margin:28px 0 12px">Yoga</h3>
-              <div class="site-card" style="max-width:640px">
-                <p style="color:var(--muted);font-size:.9rem;line-height:1.7">Aulas de segunda a sábado, nos períodos da manhã e da noite.<br>Consulte os horários pelo WhatsApp.</p>
-              </div>
-              <div class="site-btns" style="margin-top:16px">
-                <a class="site-btn wa" href="https://wa.me/5521999681425?text=Ol%C3%A1!%20Gostaria%20de%20consultar%20os%20hor%C3%A1rios%20de%20Yoga." target="_blank"><i class="fab fa-whatsapp"></i> Consultar pelo WhatsApp</a>
+              <h2 class="site-h2">Horários &amp; Avaliações</h2>
+              <div class="contato-grid" style="align-items:start">
+                <div>
+                  <h3 style="color:var(--lilas);font-family:'Nunito',sans-serif;font-weight:800;margin:8px 0 12px">Pilates</h3>
+                  <div class="site-cards">
+                    <div class="site-card"><h3>Segunda a Sexta</h3><p style="color:var(--muted)">07:00 às 19:00</p></div>
+                    <div class="site-card"><h3>Sábado</h3><p style="color:var(--muted)">07:00 às 11:00</p></div>
+                    <div class="site-card"><h3>Domingo e feriados</h3><p style="color:var(--muted)">Fechado</p></div>
+                  </div>
+                  <h3 style="color:var(--lilas);font-family:'Nunito',sans-serif;font-weight:800;margin:24px 0 12px">Yoga</h3>
+                  <div class="site-card">
+                    <p style="color:var(--muted);font-size:.9rem;line-height:1.7">Aulas de segunda a sábado, nos períodos da manhã e da noite.<br>Consulte os horários pelo WhatsApp.</p>
+                  </div>
+                  <div class="site-btns" style="margin-top:16px">
+                    <a class="site-btn wa" href="https://wa.me/5521999681425?text=Ol%C3%A1!%20Gostaria%20de%20consultar%20os%20hor%C3%A1rios%20de%20Yoga." target="_blank"><i class="fab fa-whatsapp"></i> Consultar pelo WhatsApp</a>
+                  </div>
+                </div>
+                <div>
+                  <h3 style="color:var(--lilas);font-family:'Nunito',sans-serif;font-weight:800;margin:8px 0 12px">O que dizem nossos clientes</h3>
+                  <div class="reputacao-resumo" style="padding:18px 20px">
+                    <div class="reputacao-nota" id="repNotaMedia" style="font-size:2rem">4.9</div>
+                    <div>
+                      <div class="reputacao-estrelas" id="repEstrelas" style="font-size:.95rem">★★★★★</div>
+                      <div style="color:var(--muted);font-size:.78rem;margin-top:2px" id="repContagem">com base nas avaliações de nossos pacientes</div>
+                    </div>
+                  </div>
+                  <div class="depo-carousel-wrap" style="position:relative;margin-top:12px">
+                    <div id="depoTrack" class="site-card" style="min-height:150px;display:flex;flex-direction:column;justify-content:center">
+                      <p style="color:var(--muted);padding:12px;font-size:.84rem">Carregando depoimentos...</p>
+                    </div>
+                    <div style="display:flex;justify-content:center;gap:16px;margin-top:16px;flex-wrap:wrap">
+                      <button class="btn btn-primary" onclick="depoAnterior()">‹ Anterior</button>
+                      <button class="btn btn-primary" onclick="depoProximo()">Próximo ›</button>
+                      <a class="site-btn" style="background:#fff;color:var(--text);border:1px solid var(--border)" href="https://g.page/r/Ce_1CnuNaIRlEBM/review" target="_blank"><i class="fab fa-google"></i> Ver todas as avaliações no Google</a>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -954,7 +963,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
             </div>
           </div>
 
-          <!-- EQUIPE -->
+          <!-- EQUIPE + ESPAÇO -->
           <div class="site-section" id="s-equipe">
             <div class="site-container">
               <h2 class="site-h2">Nossa Equipe</h2>
@@ -962,40 +971,11 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
               <div class="site-cards" id="equipeCardsWrap" style="margin-top:8px">
                 <p style="color:var(--muted);padding:12px;font-size:.84rem">Carregando equipe...</p>
               </div>
-            </div>
-          </div>
 
-          <!-- GALERIA -->
-          <div class="site-section" id="s-galeria">
-            <div class="site-container">
-              <h2 class="site-h2">Galeria</h2>
-              <p style="color:var(--muted);margin-bottom:6px">Conheça um pouco do nosso espaço.</p>
+              <h2 class="site-h2" style="margin-top:40px">Conheça nosso espaço</h2>
+              <p style="color:var(--muted);margin-bottom:6px">Recepção, salas de atendimento e ambiente pensado para o seu bem-estar.</p>
               <div class="galeria-premium" id="galeriaPremiumWrap">
                 <p style="color:var(--muted);padding:12px;font-size:.84rem">Em breve, fotos do espaço.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- DEPOIMENTOS -->
-          <div class="site-section" id="s-depoimentos">
-            <div class="site-container">
-              <h2 class="site-h2">O que dizem nossos clientes</h2>
-              <div class="reputacao-resumo">
-                <div class="reputacao-nota" id="repNotaMedia">4.9</div>
-                <div>
-                  <div class="reputacao-estrelas" id="repEstrelas">★★★★★</div>
-                  <div style="color:var(--muted);font-size:.84rem;margin-top:4px" id="repContagem">com base nas avaliações de nossos pacientes</div>
-                </div>
-                <a class="site-btn" style="background:#fff;color:var(--text);border:1px solid var(--border);margin-left:auto" href="https://g.page/r/Ce_1CnuNaIRlEBM/review" target="_blank"><i class="fab fa-google"></i> Ver todas as avaliações no Google</a>
-              </div>
-              <div class="depo-carousel-wrap" style="position:relative;max-width:640px;margin:16px auto 0">
-                <div id="depoTrack" class="site-card" style="min-height:150px;display:flex;flex-direction:column;justify-content:center">
-                  <p style="color:var(--muted);padding:12px;font-size:.84rem">Carregando depoimentos...</p>
-                </div>
-                <div style="display:flex;justify-content:center;gap:16px;margin-top:16px">
-                  <button class="btn btn-primary" onclick="depoAnterior()">‹ Anterior</button>
-                  <button class="btn btn-primary" onclick="depoProximo()">Próximo ›</button>
-                </div>
               </div>
             </div>
           </div>
