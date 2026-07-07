@@ -488,6 +488,141 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 .galeria-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:20px;}
 .galeria-foto{background:var(--white);border-radius:14px;overflow:hidden;border:2px solid var(--border);box-shadow:var(--shadow-sm);}
 .galeria-foto img{width:100%;height:220px;object-fit:cover;}
+
+/* ══════════════════════════════
+   SITE PREMIUM — REDESIGN 2026
+   (mantém identidade lilás/ciano/branco, eleva acabamento visual)
+══════════════════════════════ */
+
+/* ---- Navbar fixa com efeito de scroll ---- */
+.site-topnav{
+  position:sticky;top:0;z-index:150;
+  transition:background .35s ease, box-shadow .35s ease, padding .25s ease;
+}
+.site-topnav.nav-scrolled{
+  background:rgba(22,29,46,.92)!important;
+  backdrop-filter:blur(10px);
+  box-shadow:0 4px 24px rgba(0,0,0,.18);
+  padding:10px 24px;
+}
+.site-nav-toggle{display:none;background:none;border:none;color:#fff;font-size:1.4rem;cursor:pointer;}
+@media(max-width:820px){
+  .site-nav-toggle{display:block;}
+  .site-nav-links{
+    display:none;position:absolute;top:100%;left:0;right:0;
+    background:rgba(22,29,46,.98);backdrop-filter:blur(10px);
+    flex-direction:column;padding:14px;gap:4px;
+    box-shadow:0 12px 24px rgba(0,0,0,.25);
+  }
+  .site-nav-links.nav-open{display:flex;}
+  .site-nav-links a{padding:12px 16px;border-radius:10px;}
+}
+
+/* ---- Hero premium ---- */
+.site-hero{
+  background:radial-gradient(circle at 15% 20%,rgba(123,92,255,.55),transparent 55%),
+             radial-gradient(circle at 85% 0%,rgba(62,198,193,.4),transparent 50%),
+             linear-gradient(135deg,#141a2b 0%,#1e2745 45%,#1c3b52 100%);
+  position:relative;overflow:hidden;
+}
+.hero-shape{position:absolute;border-radius:50%;filter:blur(2px);opacity:.5;pointer-events:none;}
+.hero-shape.s1{width:220px;height:220px;background:radial-gradient(circle,var(--ciano-mid),transparent 70%);top:-60px;right:8%;animation:heroFloat 7s ease-in-out infinite;}
+.hero-shape.s2{width:140px;height:140px;background:radial-gradient(circle,var(--lilas-mid),transparent 70%);bottom:-30px;left:6%;animation:heroFloat 9s ease-in-out infinite reverse;}
+.hero-shape.s3{width:90px;height:90px;border:2px solid rgba(255,255,255,.15);top:30%;right:22%;border-radius:24px;transform:rotate(18deg);animation:heroFloat 8s ease-in-out infinite;}
+@keyframes heroFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+.site-hero-content{padding:88px 28px 76px;max-width:820px;position:relative;z-index:2;animation:heroIn .8s ease both;}
+@keyframes heroIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.site-hero-content h1{font-size:clamp(1.9rem,4.6vw,3.1rem);letter-spacing:-.01em;}
+.hero-badges{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 28px;}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:30px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
+  color:#fff;font-size:.78rem;font-weight:600;backdrop-filter:blur(4px);
+}
+.hero-badge i{color:var(--ciano-mid);}
+
+/* ---- Cards com leve elevação e hover ---- */
+.site-card{transition:transform .25s ease, box-shadow .25s ease;}
+.site-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(123,92,255,.16);}
+.site-btn{box-shadow:0 4px 14px rgba(123,92,255,.22);}
+.site-btn.primary{box-shadow:0 6px 18px rgba(123,92,255,.35);}
+
+/* ---- Serviços em accordion premium ---- */
+.servico-acc{background:var(--white);border:2px solid var(--border);border-radius:18px;margin-bottom:16px;overflow:hidden;box-shadow:var(--shadow-sm);transition:box-shadow .25s;}
+.servico-acc.aberto{box-shadow:var(--shadow);border-color:var(--lilas-mid);}
+.servico-acc-head{display:flex;align-items:center;gap:16px;padding:20px 22px;cursor:pointer;user-select:none;}
+.servico-acc-icon{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--lilas),var(--ciano));display:grid;place-items:center;font-size:1.4rem;flex-shrink:0;}
+.servico-acc-head h3{margin:0 0 4px;font-size:1.05rem;}
+.servico-acc-head p{margin:0;color:var(--muted);font-size:.82rem;}
+.servico-acc-chevron{margin-left:auto;color:var(--lilas);transition:transform .3s ease;font-size:1.1rem;flex-shrink:0;}
+.servico-acc.aberto .servico-acc-chevron{transform:rotate(180deg);}
+.servico-acc-body{max-height:0;overflow:hidden;transition:max-height .4s ease;}
+.servico-acc.aberto .servico-acc-body{max-height:600px;}
+.servico-acc-inner{padding:0 22px 24px;}
+.servico-lista{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px 16px;margin:14px 0;list-style:none;}
+.servico-lista li{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.86rem;}
+.servico-lista li::before{content:"✓";color:var(--ciano);font-weight:900;}
+
+/* ---- Equipe premium ---- */
+.equipe-card{position:relative;overflow:hidden;}
+.equipe-card:hover .equipe-foto{transform:scale(1.06);}
+.equipe-foto-wrap{width:96px;height:96px;border-radius:50%;overflow:hidden;margin:0 auto 14px;border:3px solid var(--lilas-light);}
+.equipe-foto{width:100%;height:100%;object-fit:cover;transition:transform .35s ease;display:block;}
+
+/* ---- Parceiros premium ---- */
+.parceiros-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-top:18px;}
+.parceiro-card{background:var(--white);border:2px solid var(--border);border-radius:16px;padding:20px 12px;display:flex;align-items:center;justify-content:center;min-height:88px;transition:all .25s;filter:grayscale(.15);}
+.parceiro-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--ciano-mid);filter:grayscale(0);}
+.parceiro-card p{font-weight:700;font-size:.85rem;color:var(--text);text-align:center;margin:0;}
+
+/* ---- Galeria premium com lightbox ---- */
+.galeria-premium{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-top:18px;}
+.galeria-item{position:relative;border-radius:16px;overflow:hidden;cursor:pointer;aspect-ratio:1/1;border:2px solid var(--border);box-shadow:var(--shadow-sm);}
+.galeria-item img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease;}
+.galeria-item:hover img{transform:scale(1.1);}
+.galeria-item-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(30,27,75,.55),transparent 55%);opacity:0;transition:opacity .25s;display:flex;align-items:flex-end;padding:12px;color:#fff;font-size:.78rem;font-weight:600;}
+.galeria-item:hover .galeria-item-overlay{opacity:1;}
+.lightbox-overlay{position:fixed;inset:0;background:rgba(10,8,30,.92);z-index:400;display:flex;align-items:center;justify-content:center;padding:24px;}
+.lightbox-overlay img{max-width:90vw;max-height:82vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);}
+.lightbox-close{position:absolute;top:22px;right:26px;color:#fff;font-size:2rem;background:none;border:none;cursor:pointer;line-height:1;}
+
+/* ---- Depoimentos / prova social premium ---- */
+.reputacao-resumo{
+  display:flex;flex-wrap:wrap;align-items:center;gap:22px;
+  background:linear-gradient(135deg,var(--lilas-light),var(--ciano-light));
+  border-radius:20px;padding:24px 28px;margin-bottom:24px;border:1px solid var(--border);
+}
+.reputacao-nota{font-family:'Nunito',sans-serif;font-weight:900;font-size:2.6rem;color:var(--lilas);line-height:1;}
+.reputacao-estrelas{color:#f5b301;font-size:1.15rem;letter-spacing:2px;}
+.depo-carousel-wrap .site-card{min-height:150px;}
+
+/* ---- Contato premium ---- */
+.contato-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:22px;margin-top:18px;}
+@media(max-width:760px){.contato-grid{grid-template-columns:1fr;}}
+.contato-info-item{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--border);}
+.contato-info-item:last-child{border-bottom:none;}
+.contato-info-item i{color:var(--lilas);font-size:1.05rem;width:22px;text-align:center;margin-top:2px;}
+.contato-mapa{border-radius:18px;overflow:hidden;border:2px solid var(--border);box-shadow:var(--shadow-sm);min-height:280px;}
+.contato-mapa iframe{width:100%;height:100%;min-height:280px;border:0;display:block;}
+
+/* ---- Footer premium ---- */
+.site-footer-premium{
+  background:linear-gradient(135deg,#141a2b,#1e2745);color:rgba(255,255,255,.85);padding:52px 24px 20px;
+}
+.footer-grid{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:36px;}
+@media(max-width:760px){.footer-grid{grid-template-columns:1fr;gap:28px;text-align:center;}}
+.footer-grid h4{color:#fff;font-family:'Nunito',sans-serif;font-weight:800;font-size:.95rem;margin-bottom:14px;}
+.footer-grid a{display:block;color:rgba(255,255,255,.68);text-decoration:none;font-size:.85rem;margin-bottom:9px;transition:color .2s;}
+.footer-grid a:hover{color:var(--ciano-mid);}
+.footer-social{display:flex;gap:10px;margin-top:6px;justify-content:flex-start;}
+@media(max-width:760px){.footer-social{justify-content:center;}}
+.footer-social a{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.08);display:grid;place-items:center;color:#fff;margin:0;}
+.footer-social a:hover{background:var(--lilas);}
+.footer-bottom{max-width:1060px;margin:36px auto 0;padding-top:18px;border-top:1px solid rgba(255,255,255,.12);text-align:center;font-size:.78rem;color:rgba(255,255,255,.5);}
+
+/* ---- Animação de entrada por scroll ---- */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.revealed{opacity:1;transform:translateY(0);}
 .galeria-foto p{padding:12px;font-size:.82rem;color:var(--muted);}
 
 /* ══════════════════════════════
@@ -559,12 +694,14 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
         <div class="site-hero">
           <nav class="site-topnav" id="siteTopNav">
             <div class="site-brand"><span class="mark">⬡ Mov om</span></div>
+            <button class="site-nav-toggle" id="siteNavToggle" onclick="toggleSiteNav()" aria-label="Menu"><i class="fas fa-bars"></i></button>
             <div class="site-nav-links" id="siteNavLinks">
               <a href="#" onclick="siteNav('s-home',this);return false">Início</a>
               <a href="#" onclick="siteNav('s-sobre',this);return false">Quem Somos</a>
               <a href="#" onclick="siteNav('s-modalidades',this);return false">Serviços</a>
               <a href="#" onclick="siteNav('s-horarios',this);return false">Horários</a>
               <a href="#" onclick="siteNav('s-equipe',this);return false">Equipe</a>
+              <a href="#" onclick="siteNav('s-galeria',this);return false">Galeria</a>
               <a href="#" onclick="siteNav('s-depoimentos',this);return false">Depoimentos</a>
               <a href="#" onclick="siteNav('s-parceiros',this);return false">Parceiros</a>
               <a href="#" onclick="siteNav('s-agendar',this);return false">Agendar</a>
@@ -573,10 +710,18 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 
             </div>
           </nav>
+          <div class="hero-shape s1"></div>
+          <div class="hero-shape s2"></div>
+          <div class="hero-shape s3"></div>
           <div class="site-hero-content">
             <p class="site-tag">Fisioterapia • Pilates • Yoga</p>
             <h1>Mov om Espaço De Saúde e Bem Estar</h1>
             <p>Um espaço dedicado ao cuidado integral de forma humanizada e especializada.</p>
+            <div class="hero-badges">
+              <span class="hero-badge"><i class="fas fa-heart"></i> Atendimento Humanizado</span>
+              <span class="hero-badge"><i class="fas fa-calendar-check"></i> Desde 2019</span>
+              <span class="hero-badge"><i class="fas fa-user-md"></i> Equipe Especializada</span>
+            </div>
             <div class="site-btns">
               <a class="site-btn primary" href="#" onclick="siteNav('s-agendar',null);return false">Agende sua avaliação</a>
               <a class="site-btn wa" href="https://wa.me/5521999681425" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
@@ -631,6 +776,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
           <!-- QUEM SOMOS -->
           <div class="site-section" id="s-sobre">
             <div class="site-container">
+              <span class="hero-badge" style="background:var(--lilas-light);border-color:var(--lilas-mid);color:var(--lilas);margin-bottom:10px"><i class="fas fa-calendar-check"></i> Desde 2019</span>
               <h2 class="site-h2">Conheça a MovOm</h2>
               <p style="color:var(--muted);margin-bottom:24px;line-height:1.7;max-width:760px">Idealizada em 2019, a MovOm tem como proposta promover a saúde integral com um olhar individualizado para cada paciente, sempre priorizando um atendimento humanizado, personalizado e realizado por uma equipe de excelência.</p>
               <div class="site-cards" style="margin-top:16px">
@@ -648,36 +794,72 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
           <div class="site-section" id="s-modalidades">
             <div class="site-container">
               <h2 class="site-h2">Serviços</h2>
+              <p style="color:var(--muted);margin-bottom:22px">Clique em cada serviço para ver os detalhes.</p>
 
-              <h3 style="color:var(--lilas);font-family:'Nunito',sans-serif;font-weight:800;margin:8px 0 12px">🦵 1. Fisioterapia</h3>
-              <p style="color:var(--muted);font-size:.9rem;margin-bottom:10px">Atendimento com horário agendado, incluindo:</p>
-              <div class="site-cards" style="margin-bottom:8px">
-                <div class="site-card" style="font-size:.84rem;color:var(--muted)">
-                  <ul style="padding-left:18px;line-height:1.8;margin:0">
-                    <li>Avaliação</li><li>Sessões</li><li>Eletroterapia</li><li>Terapia Manual</li>
-                    <li>Cinesioterapia</li><li>Liberação Miofascial</li><li>Dry Needling</li>
-                    <li>Reabilitação Funcional</li><li>Recuperação Muscular</li>
-                  </ul>
+              <div class="servico-acc aberto" id="acc-fisio">
+                <div class="servico-acc-head" onclick="toggleServicoAcc('acc-fisio')">
+                  <div class="servico-acc-icon">🦵</div>
+                  <div><h3>Fisioterapia</h3><p>Avaliação individualizada e reabilitação funcional completa</p></div>
+                  <i class="fas fa-chevron-down servico-acc-chevron"></i>
+                </div>
+                <div class="servico-acc-body">
+                  <div class="servico-acc-inner">
+                    <ul class="servico-lista">
+                      <li>Avaliação</li><li>Sessões</li><li>Eletroterapia</li><li>Terapia Manual</li>
+                      <li>Cinesioterapia</li><li>Liberação Miofascial</li><li>Dry Needling</li>
+                      <li>Reabilitação Funcional</li><li>Recuperação Muscular</li>
+                    </ul>
+                    <div class="site-btns">
+                      <a class="site-btn wa" href="https://wa.me/5521999681425?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20sess%C3%A3o%20de%20Fisioterapia." target="_blank"><i class="fab fa-whatsapp"></i> Agendar pelo WhatsApp</a>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="site-btns" style="margin-bottom:32px">
-                <a class="site-btn wa" href="https://wa.me/5521999681425?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20sess%C3%A3o%20de%20Fisioterapia." target="_blank"><i class="fab fa-whatsapp"></i> Agendar pelo WhatsApp</a>
+
+              <div class="servico-acc" id="acc-pilates">
+                <div class="servico-acc-head" onclick="toggleServicoAcc('acc-pilates')">
+                  <div class="servico-acc-icon">🧘</div>
+                  <div><h3>Pilates</h3><p>Fortalecimento, equilíbrio e reabilitação para todos os níveis</p></div>
+                  <i class="fas fa-chevron-down servico-acc-chevron"></i>
+                </div>
+                <div class="servico-acc-body">
+                  <div class="servico-acc-inner">
+                    <ul class="servico-lista">
+                      <li>Fortalecimento do core</li><li>Alongamento e flexibilidade</li>
+                      <li>Reabilitação postural</li><li>Melhora do equilíbrio</li><li>Turmas reduzidas</li>
+                    </ul>
+                    <div class="site-cards" style="margin:14px 0">
+                      <div class="site-card"><h3>Segunda a Sexta</h3><p style="color:var(--muted)">07:00 às 19:00</p></div>
+                      <div class="site-card"><h3>Sábado</h3><p style="color:var(--muted)">07:00 às 11:00</p></div>
+                      <div class="site-card"><h3>Domingo e feriados</h3><p style="color:var(--muted)">Fechado</p></div>
+                    </div>
+                    <div class="site-btns">
+                      <a class="site-btn wa" href="https://wa.me/5521999681425?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20aula%20de%20Pilates." target="_blank"><i class="fab fa-whatsapp"></i> Agendar pelo WhatsApp</a>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <h3 style="color:var(--lilas);font-family:'Nunito',sans-serif;font-weight:800;margin:8px 0 12px">🧘 2. Pilates</h3>
-              <div class="site-cards" style="margin-bottom:32px">
-                <div class="site-card"><h3>Segunda a Sexta</h3><p style="color:var(--muted)">07:00 às 19:00</p></div>
-                <div class="site-card"><h3>Sábado</h3><p style="color:var(--muted)">07:00 às 11:00</p></div>
-                <div class="site-card"><h3>Domingo e feriados</h3><p style="color:var(--muted)">Fechado</p></div>
+              <div class="servico-acc" id="acc-yoga">
+                <div class="servico-acc-head" onclick="toggleServicoAcc('acc-yoga')">
+                  <div class="servico-acc-icon">☮️</div>
+                  <div><h3>Yoga</h3><p>Respiração, meditação e bem-estar para corpo e mente</p></div>
+                  <i class="fas fa-chevron-down servico-acc-chevron"></i>
+                </div>
+                <div class="servico-acc-body">
+                  <div class="servico-acc-inner">
+                    <ul class="servico-lista">
+                      <li>Diversas modalidades</li><li>Trabalho de respiração</li>
+                      <li>Meditação guiada</li><li>Redução de estresse</li><li>Relaxamento profundo</li>
+                    </ul>
+                    <p style="color:var(--muted);font-size:.9rem;line-height:1.7;margin-bottom:14px">Aulas de segunda a sábado, nos períodos da manhã e da noite.<br>Consulte os horários pelo WhatsApp.</p>
+                    <div class="site-btns">
+                      <a class="site-btn wa" href="https://wa.me/5521999681425?text=Ol%C3%A1!%20Gostaria%20de%20consultar%20os%20hor%C3%A1rios%20de%20Yoga." target="_blank"><i class="fab fa-whatsapp"></i> Agendar pelo WhatsApp</a>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <h3 style="color:var(--lilas);font-family:'Nunito',sans-serif;font-weight:800;margin:8px 0 12px">☮️ 3. Yoga</h3>
-              <div class="site-card" style="max-width:640px;margin-bottom:16px">
-                <p style="color:var(--muted);font-size:.9rem;line-height:1.7">Aulas de segunda a sábado, nos períodos da manhã e da noite.<br>Consulte os horários pelo WhatsApp.</p>
-              </div>
-              <div class="site-btns">
-                <a class="site-btn wa" href="https://wa.me/5521999681425?text=Ol%C3%A1!%20Gostaria%20de%20consultar%20os%20hor%C3%A1rios%20de%20Yoga." target="_blank"><i class="fab fa-whatsapp"></i> Agendar pelo WhatsApp</a>
-              </div>
             </div>
           </div>
 
@@ -742,11 +924,32 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
           <div class="site-section" id="s-contato">
             <div class="site-container">
               <h2 class="site-h2">Contato</h2>
-              <div class="site-card" style="max-width:440px">
-                <p style="margin-bottom:12px"><i class="fas fa-envelope" style="color:var(--lilas);margin-right:8px"></i> <a href="mailto:movom.zenyoga@gmail.com" style="color:inherit;text-decoration:none">movom.zenyoga@gmail.com</a></p>
-                <p style="margin-bottom:12px"><i class="fas fa-envelope" style="color:var(--lilas);margin-right:8px"></i> <a href="mailto:movom.fisio@gmail.com" style="color:inherit;text-decoration:none">movom.fisio@gmail.com</a></p>
-                <p style="margin-bottom:12px"><i class="fab fa-whatsapp" style="color:var(--ciano);margin-right:8px"></i> (21) 99968-1425</p>
-                <a class="site-btn loc" style="margin-top:12px;display:inline-flex" href="https://www.google.com/maps/search/?api=1&query=Rua+Marechal+Deodoro%2C+577%2C+salas+605%2C+805+e+808+-+25+de+Agosto%2C+Duque+de+Caxias+-+RJ%2C+Centro+Empresarial+Jomasa" target="_blank" rel="noopener"><i class="fas fa-map-marker-alt"></i> Localização no Mapa</a>
+              <p style="color:var(--muted);margin-bottom:6px">Estamos prontos para te atender. Fale com a gente!</p>
+              <div class="contato-grid">
+                <div class="site-card">
+                  <div class="contato-info-item">
+                    <i class="fab fa-whatsapp"></i>
+                    <div><strong>WhatsApp</strong><br><a href="https://wa.me/5521999681425" target="_blank" style="color:var(--muted);text-decoration:none">(21) 99968-1425</a></div>
+                  </div>
+                  <div class="contato-info-item">
+                    <i class="fas fa-envelope"></i>
+                    <div><strong>E-mail</strong><br><a href="mailto:movom.zenyoga@gmail.com" style="color:var(--muted);text-decoration:none">movom.zenyoga@gmail.com</a><br><a href="mailto:movom.fisio@gmail.com" style="color:var(--muted);text-decoration:none">movom.fisio@gmail.com</a></div>
+                  </div>
+                  <div class="contato-info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div><strong>Endereço</strong><br><span style="color:var(--muted)">Rua Marechal Deodoro, 577, salas 605, 805 e 808 — 25 de Agosto, Duque de Caxias - RJ</span></div>
+                  </div>
+                  <div class="contato-info-item">
+                    <i class="fas fa-clock"></i>
+                    <div><strong>Horário de atendimento</strong><br><span style="color:var(--muted)">Segunda a sexta: 07h às 19h · Sábado: 07h às 11h</span></div>
+                  </div>
+                  <div class="site-btns" style="margin-top:16px">
+                    <a class="site-btn loc" href="https://www.google.com/maps/search/?api=1&query=Rua+Marechal+Deodoro%2C+577%2C+salas+605%2C+805+e+808+-+25+de+Agosto%2C+Duque+de+Caxias+-+RJ%2C+Centro+Empresarial+Jomasa" target="_blank" rel="noopener"><i class="fas fa-map-marker-alt"></i> Ver no Mapa</a>
+                  </div>
+                </div>
+                <div class="contato-mapa">
+                  <iframe src="https://www.google.com/maps?q=Rua+Marechal+Deodoro%2C+577%2C+Duque+de+Caxias+-+RJ&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa MovOm"></iframe>
+                </div>
               </div>
             </div>
           </div>
@@ -762,10 +965,29 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
             </div>
           </div>
 
+          <!-- GALERIA -->
+          <div class="site-section" id="s-galeria">
+            <div class="site-container">
+              <h2 class="site-h2">Galeria</h2>
+              <p style="color:var(--muted);margin-bottom:6px">Conheça um pouco do nosso espaço.</p>
+              <div class="galeria-premium" id="galeriaPremiumWrap">
+                <p style="color:var(--muted);padding:12px;font-size:.84rem">Em breve, fotos do espaço.</p>
+              </div>
+            </div>
+          </div>
+
           <!-- DEPOIMENTOS -->
           <div class="site-section" id="s-depoimentos">
             <div class="site-container">
               <h2 class="site-h2">O que dizem nossos clientes</h2>
+              <div class="reputacao-resumo">
+                <div class="reputacao-nota" id="repNotaMedia">4.9</div>
+                <div>
+                  <div class="reputacao-estrelas" id="repEstrelas">★★★★★</div>
+                  <div style="color:var(--muted);font-size:.84rem;margin-top:4px" id="repContagem">com base nas avaliações de nossos pacientes</div>
+                </div>
+                <a class="site-btn" style="background:#fff;color:var(--text);border:1px solid var(--border);margin-left:auto" href="https://g.page/r/Ce_1CnuNaIRlEBM/review" target="_blank"><i class="fab fa-google"></i> Ver todas as avaliações no Google</a>
+              </div>
               <div class="depo-carousel-wrap" style="position:relative;max-width:640px;margin:16px auto 0">
                 <div id="depoTrack" class="site-card" style="min-height:150px;display:flex;flex-direction:column;justify-content:center">
                   <p style="color:var(--muted);padding:12px;font-size:.84rem">Carregando depoimentos...</p>
@@ -783,7 +1005,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
             <div class="site-container">
               <h2 class="site-h2">Parceiros</h2>
               <p style="color:var(--muted);margin-bottom:20px">Empresas e convênios parceiros da MovOm.</p>
-              <div class="site-cards" id="parceirosCardsWrap" style="margin-top:8px;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))">
+              <div class="parceiros-grid" id="parceirosCardsWrap">
                 <p style="color:var(--muted);padding:12px;font-size:.84rem">Carregando parceiros...</p>
               </div>
             </div>
@@ -875,6 +1097,18 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                 <div id="parceirosAdminLista" style="margin-top:12px"></div>
               </div>
 
+              <!-- Galeria -->
+              <div class="form-card">
+                <h3>🖼️ Galeria (Site Público)</h3>
+                <div class="form-grid">
+                  <div class="field-group form-full"><label>URL da foto</label><input type="text" id="gl_url" placeholder="https://..."></div>
+                  <div class="field-group form-full"><label>Legenda (opcional)</label><input type="text" id="gl_legenda" placeholder="Ex: Sala de Pilates"></div>
+                  <div class="form-full"><button class="btn-save" onclick="salvarGaleriaFoto()">💾 Adicionar Foto</button></div>
+                </div>
+                <p style="color:var(--muted);font-size:.78rem;margin-top:8px">Cole a URL de uma imagem já hospedada (ex.: Firebase Storage, Google Drive público, etc.).</p>
+                <div id="galeriaAdminLista" style="margin-top:12px"></div>
+              </div>
+
               <!-- Tabela de Leads -->
               <div class="table-card">
                 <div class="table-header">
@@ -903,10 +1137,38 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 
         <!-- WhatsApp flutuante (apenas na página site) -->
         <a class="site-wa-float" href="https://wa.me/5521999681425" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-        <div class="site-footer">© 2026 Mov om Espaço De Saúde e Bem Estar
-          &nbsp;·&nbsp;
-          <a href="#" onclick="abrirLoginInterno();return false;" style="color:rgba(255,255,255,.35);text-decoration:none;font-size:.75rem" title="Acesso restrito">🔒</a>
-        </div>
+
+        <footer class="site-footer-premium">
+          <div class="footer-grid">
+            <div>
+              <div class="site-brand" style="margin-bottom:12px"><span class="mark">⬡ Mov om</span></div>
+              <p style="font-size:.84rem;color:rgba(255,255,255,.6);line-height:1.7;max-width:280px">Espaço dedicado ao cuidado integral de forma humanizada e especializada. Fisioterapia, Pilates e Yoga desde 2019.</p>
+              <div class="footer-social">
+                <a href="https://www.instagram.com/movomzenyogaepilates/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/5521999681425" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://g.page/r/Ce_1CnuNaIRlEBM/review" target="_blank" aria-label="Google"><i class="fab fa-google"></i></a>
+              </div>
+            </div>
+            <div>
+              <h4>Links Rápidos</h4>
+              <a href="#" onclick="siteNav('s-sobre',null);return false">Quem Somos</a>
+              <a href="#" onclick="siteNav('s-modalidades',null);return false">Serviços</a>
+              <a href="#" onclick="siteNav('s-equipe',null);return false">Equipe</a>
+              <a href="#" onclick="siteNav('s-agendar',null);return false">Agendar</a>
+            </div>
+            <div>
+              <h4>Contato</h4>
+              <a href="https://wa.me/5521999681425" target="_blank">(21) 99968-1425</a>
+              <a href="mailto:movom.zenyoga@gmail.com">movom.zenyoga@gmail.com</a>
+              <a href="#" onclick="siteNav('s-contato',null);return false">Rua Marechal Deodoro, 577 — Duque de Caxias, RJ</a>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            © 2026 Mov om Espaço De Saúde e Bem Estar · Todos os direitos reservados
+            &nbsp;·&nbsp;
+            <a href="#" onclick="abrirLoginInterno();return false;" style="color:rgba(255,255,255,.35);text-decoration:none" title="Acesso restrito">🔒</a>
+          </div>
+        </footer>
 </div>
 </div><!-- /pageSitePublico -->
 
@@ -2985,9 +3247,33 @@ function siteNav(id, btn){
   if(target) target.classList.add("active-s");
   document.querySelectorAll(".site-nav-links a").forEach(b=>b.classList.remove("active-snav"));
   if(btn) btn.classList.add("active-snav");
+  // Fecha o menu mobile ao navegar
+  const navLinks = document.getElementById("siteNavLinks");
+  if(navLinks) navLinks.classList.remove("nav-open");
   // Inicia Firebase do site quando admin é aberto
   if(id==="s-admin") initSiteFirebase();
+  window.scrollTo({top:0,behavior:"smooth"});
 }
+
+window.toggleSiteNav = function(){
+  document.getElementById("siteNavLinks")?.classList.toggle("nav-open");
+};
+
+window.toggleServicoAcc = function(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  const jaAberto = el.classList.contains("aberto");
+  document.querySelectorAll(".servico-acc").forEach(a=>a.classList.remove("aberto"));
+  if(!jaAberto) el.classList.add("aberto");
+};
+
+// Navbar muda de aparência ao rolar a página
+window.addEventListener("scroll", function(){
+  const nav = document.getElementById("siteTopNav");
+  if(!nav) return;
+  if(window.scrollY > 40) nav.classList.add("nav-scrolled");
+  else nav.classList.remove("nav-scrolled");
+}, {passive:true});
 
 /* ══════════════════════════════
    CONTROLE DE TELAS (Site Público ↔ Login ↔ App)
@@ -4730,7 +5016,7 @@ window.exportarLeadsCSV = function(){
    EQUIPE / DEPOIMENTOS / PARCEIROS / TEXTOS
    (item 7, 8, 9 e 10 do escopo - Gerenciar Site)
 ══════════════════════════════ */
-let siteEquipe = {}, siteDepoimentos = {}, siteParceiros = {}, siteTextos = {}, depoIndex = 0;
+let siteEquipe = {}, siteDepoimentos = {}, siteParceiros = {}, siteGaleria = {}, siteTextos = {}, depoIndex = 0;
 
 const EQUIPE_SEED = {
   seed1: { nome:"Alessandra Peres", cargo:"Fisioterapeuta Responsável",
@@ -4766,7 +5052,44 @@ window.initSitePublicContent = function(){
   dbSite.ref("equipe").on("value", snap=>{ siteEquipe = snap.val()||{}; renderEquipe(); });
   dbSite.ref("depoimentos").on("value", snap=>{ siteDepoimentos = snap.val()||{}; renderDepoimentos(); });
   dbSite.ref("parceiros").on("value", snap=>{ siteParceiros = snap.val()||{}; renderParceiros(); });
+  dbSite.ref("galeria").on("value", snap=>{ siteGaleria = snap.val()||{}; renderGaleria(); });
   dbSite.ref("textos").on("value", snap=>{ siteTextos = snap.val()||{}; aplicarTextosSite(); });
+};
+
+function renderGaleria(){
+  const wrap = document.getElementById("galeriaPremiumWrap");
+  const adminList = document.getElementById("galeriaAdminLista");
+  const lista = Object.entries(siteGaleria);
+  if(wrap){
+    wrap.innerHTML = lista.length ? lista.map(([id,g])=>`
+      <div class="galeria-item" onclick="abrirLightbox('${(g.url||"").replace(/'/g,"\\'")}')">
+        <img src="${g.url}" alt="${g.legenda||'Foto MovOm'}" loading="lazy">
+        <div class="galeria-item-overlay">${g.legenda||""}</div>
+      </div>`).join("") : "<p style='color:var(--muted);padding:12px;font-size:.84rem'>Em breve, fotos do espaço.</p>";
+  }
+  if(adminList){
+    adminList.innerHTML = lista.length ? `<div class="table-card"><div style="overflow-x:auto"><table class="data-table"><thead><tr><th>Legenda</th><th></th></tr></thead><tbody>${
+      lista.map(([id,g])=>`<tr><td>${g.legenda||""}</td><td><button class="btn-icon-sm del" onclick="removerGaleriaFoto('${id}')">🗑️</button></td></tr>`).join("")
+    }</tbody></table></div></div>` : "";
+  }
+}
+window.salvarGaleriaFoto = function(){
+  const url = document.getElementById("gl_url")?.value.trim();
+  const legenda = document.getElementById("gl_legenda")?.value.trim();
+  if(!url){ alert("Informe a URL da foto."); return; }
+  dbSite.ref("galeria").push({url,legenda});
+  ["gl_url","gl_legenda"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
+};
+window.removerGaleriaFoto = function(id){
+  if(confirm("Remover esta foto da galeria?")) dbSite.ref("galeria/"+id).remove();
+};
+window.abrirLightbox = function(url){
+  if(!url) return;
+  const ov = document.createElement("div");
+  ov.className = "lightbox-overlay";
+  ov.onclick = ()=>ov.remove();
+  ov.innerHTML = `<button class="lightbox-close" onclick="this.parentElement.remove()">&times;</button><img src="${url}" alt="Foto MovOm">`;
+  document.body.appendChild(ov);
 };
 
 function renderEquipe(){
@@ -4775,9 +5098,11 @@ function renderEquipe(){
   const membros = Object.entries(siteEquipe).sort((a,b)=>a[1].nome.localeCompare(b[1].nome,"pt-BR"));
   if(wrap){
     wrap.innerHTML = membros.length ? membros.map(([id,m])=>`
-      <div class="site-card" style="text-align:center">
-        ${m.foto ? `<img src="${m.foto}" alt="${m.nome}" style="width:88px;height:88px;border-radius:50%;object-fit:cover;margin:0 auto 12px;display:block">`
-                 : `<div style="width:88px;height:88px;border-radius:50%;background:var(--lilas);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.4rem;margin:0 auto 12px">${(m.nome||"?").split(" ").slice(0,2).map(s=>s[0]).join("")}</div>`}
+      <div class="site-card equipe-card" style="text-align:center">
+        <div class="equipe-foto-wrap">
+        ${m.foto ? `<img class="equipe-foto" src="${m.foto}" alt="${m.nome}">`
+                 : `<div class="equipe-foto" style="background:var(--lilas);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.4rem">${(m.nome||"?").split(" ").slice(0,2).map(s=>s[0]).join("")}</div>`}
+        </div>
         <h3>${m.nome||""}</h3>
         <p style="color:var(--muted);font-size:.84rem">${m.cargo||""}</p>
         <p style="color:var(--muted);font-size:.76rem;margin-top:6px">${(m.credenciais||"").split(";").filter(Boolean).join("<br>")}</p>
@@ -4819,6 +5144,21 @@ function renderDepoimentos(){
         <p style="color:var(--muted);font-size:.74rem;margin-top:4px">${depoIndex+1} / ${lista.length}</p>`;
     }
   }
+  // Resumo de reputação (nota média + contagem)
+  const notaEl = document.getElementById("repNotaMedia");
+  const estrelasEl = document.getElementById("repEstrelas");
+  const contagemEl = document.getElementById("repContagem");
+  if(notaEl){
+    if(lista.length){
+      const media = lista.reduce((s,[,d])=>s+(Number(d.nota)||0),0) / lista.length;
+      notaEl.textContent = media.toFixed(1).replace(".",",");
+      const cheias = Math.round(media);
+      estrelasEl.textContent = "★".repeat(cheias) + "☆".repeat(5-cheias);
+      contagemEl.textContent = `com base em ${lista.length} avaliações de pacientes`;
+    }else{
+      notaEl.textContent = "—"; estrelasEl.textContent=""; contagemEl.textContent="Ainda sem avaliações cadastradas";
+    }
+  }
   if(adminList){
     adminList.innerHTML = lista.length ? `<div class="table-card"><div style="overflow-x:auto"><table class="data-table"><thead><tr><th>Nome</th><th>Nota</th><th>Depoimento</th><th></th></tr></thead><tbody>${
       lista.map(([id,d])=>`<tr><td>${d.nome||""}</td><td>${d.nota||""}</td><td>${d.texto||""}</td><td><button class="btn-icon-sm del" onclick="removerDepoimento('${id}')">🗑️</button></td></tr>`).join("")
@@ -4846,9 +5186,8 @@ function renderParceiros(){
   const lista = Object.entries(siteParceiros);
   if(wrap){
     wrap.innerHTML = lista.length ? lista.map(([id,p])=>`
-      <div class="site-card" style="text-align:center;padding:16px">
-        ${p.logo ? `<img src="${p.logo}" alt="${p.nome}" style="max-height:48px;max-width:100%;margin:0 auto 8px;display:block">` : ""}
-        <p style="font-weight:700;font-size:.86rem">${p.nome||""}</p>
+      <div class="parceiro-card">
+        ${p.logo ? `<img src="${p.logo}" alt="${p.nome}" style="max-height:44px;max-width:100%;display:block">` : `<p>${p.nome||""}</p>`}
       </div>`).join("") : "<p style='color:var(--muted);padding:12px;font-size:.84rem'>Nenhum parceiro cadastrado.</p>";
   }
   if(adminList){
