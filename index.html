@@ -579,6 +579,8 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 .parceiro-card{background:var(--white);border:2px solid var(--border);border-radius:16px;padding:20px 12px;display:flex;align-items:center;justify-content:center;min-height:88px;transition:all .25s;filter:grayscale(.15);}
 .parceiro-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--ciano-mid);filter:grayscale(0);}
 .parceiro-card p{font-weight:700;font-size:.85rem;color:var(--text);text-align:center;margin:0;}
+.parceiro-placeholder{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.parceiro-placeholder span{font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;background:var(--lilas-light);padding:2px 8px;border-radius:20px;}
 
 /* ---- Galeria premium com lightbox ---- */
 .galeria-premium{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-top:18px;}
@@ -1069,6 +1071,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
               <!-- Parceiros -->
               <div class="form-card">
                 <h3>🤝 Parceiros (Site Público)</h3>
+                <p style="color:var(--muted);font-size:.78rem;margin-bottom:10px">Use preferencialmente logos oficiais em alta resolução, com fundo transparente (PNG ou SVG), sem distorcer a proporção. Parceiros sem logo cadastrado aparecem com um selo "logo pendente" no site até que a URL seja adicionada.</p>
                 <div class="form-grid">
                   <div class="field-group"><label>Nome do parceiro</label><input type="text" id="pc_nome" placeholder="Ex: TotalPass"></div>
                   <div class="field-group"><label>URL do logo (opcional)</label><input type="text" id="pc_logo" placeholder="https://..."></div>
@@ -5167,15 +5170,22 @@ function renderParceiros(){
   if(wrap){
     wrap.innerHTML = lista.length ? lista.map(([id,p])=>`
       <div class="parceiro-card">
-        ${p.logo ? `<img src="${p.logo}" alt="${p.nome}" style="max-height:44px;max-width:100%;display:block">` : `<p>${p.nome||""}</p>`}
+        ${p.logo
+          ? `<img src="${p.logo}" alt="Logo do parceiro ${p.nome||""}" loading="lazy" style="max-height:44px;max-width:100%;width:auto;height:auto;object-fit:contain;display:block">`
+          : `<div class="parceiro-placeholder" title="Logo oficial pendente de cadastro"><p>${p.nome||""}</p><span>logo pendente</span></div>`}
       </div>`).join("") : "<p style='color:var(--muted);padding:12px;font-size:.84rem'>Nenhum parceiro cadastrado.</p>";
   }
   if(adminList){
-    adminList.innerHTML = lista.length ? `<div class="table-card"><div style="overflow-x:auto"><table class="data-table"><thead><tr><th>Nome</th><th></th></tr></thead><tbody>${
-      lista.map(([id,p])=>`<tr><td>${p.nome||""}</td><td><button class="btn-icon-sm del" onclick="removerParceiro('${id}')">🗑️</button></td></tr>`).join("")
+    adminList.innerHTML = lista.length ? `<div class="table-card"><div style="overflow-x:auto"><table class="data-table"><thead><tr><th>Nome</th><th>Logo</th><th></th></tr></thead><tbody>${
+      lista.map(([id,p])=>`<tr><td>${p.nome||""}</td><td>${p.logo?"✅ cadastrado":"⚠️ pendente"}</td><td><button class="btn-icon-sm" onclick="editarLogoParceiro('${id}','${(p.nome||"").replace(/'/g,"\\'")}')">✏️</button> <button class="btn-icon-sm del" onclick="removerParceiro('${id}')">🗑️</button></td></tr>`).join("")
     }</tbody></table></div></div>` : "";
   }
 }
+window.editarLogoParceiro = function(id, nome){
+  const url = prompt(`URL do logo oficial de "${nome}" (PNG/SVG, fundo transparente):`);
+  if(url===null) return;
+  dbSite.ref("parceiros/"+id).update({logo:url.trim()});
+};
 window.salvarParceiro = function(){
   const nome = document.getElementById("pc_nome")?.value.trim();
   const logo = document.getElementById("pc_logo")?.value.trim();
