@@ -299,6 +299,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 }
 .btn-icon-sm.add{background:var(--ciano-light);color:var(--ciano);}
 .btn-icon-sm.del{background:#fee2e2;color:#b91c1c;}
+.btn-icon-sm.edit{background:var(--lilas-light);color:var(--lilas);}
 .wrapper-scroll{overflow-x:auto;border-radius:14px;border:2px solid var(--border);box-shadow:var(--shadow-sm);}
 .colab-table{width:100%;border-collapse:collapse;background:var(--white);}
 .colab-table thead th{
@@ -573,6 +574,10 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 .equipe-card:hover .equipe-foto{transform:scale(1.06);}
 .equipe-foto-wrap{width:96px;height:96px;border-radius:50%;overflow:hidden;margin:0 auto 14px;border:3px solid var(--lilas-light);}
 .equipe-foto{width:100%;height:100%;object-fit:cover;transition:transform .35s ease;display:block;}
+.eq-foto-preview-wrap{width:72px;height:72px;border-radius:50%;overflow:hidden;border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;background:var(--bg-soft,#f6f5fb);flex-shrink:0;}
+.eq-foto-preview-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+.eq-foto-preview-wrap .eq-foto-empty{font-size:.62rem;color:var(--muted);text-align:center;padding:4px;}
+.eq-form-editing{border-color:var(--lilas)!important;box-shadow:0 0 0 3px var(--lilas-light);}
 
 /* ---- Parceiros premium ---- */
 .parceiros-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-top:18px;}
@@ -1046,12 +1051,23 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
               <!-- Equipe -->
               <div class="form-card">
                 <h3>🧑‍⚕️ Equipe (Site Público)</h3>
+                <p id="eq_editando_aviso" style="display:none;color:var(--lilas);font-size:.8rem;font-weight:700;margin:-8px 0 12px">✏️ Editando colaborador existente — as alterações vão sobrescrever o cadastro selecionado.</p>
                 <div class="form-grid">
                   <div class="field-group"><label>Nome</label><input type="text" id="eq_nome" placeholder="Nome completo"></div>
-                  <div class="field-group"><label>Cargo</label><input type="text" id="eq_cargo" placeholder="Ex: Fisioterapeuta Responsável"></div>
-                  <div class="field-group form-full"><label>Credenciais / formação (uma por linha)</label><input type="text" id="eq_credenciais" placeholder="CREFITO-2: 386055-F; Pós-graduanda em Fisioterapia; ..."></div>
-                  <div class="field-group form-full"><label>URL da foto (opcional)</label><input type="text" id="eq_foto" placeholder="https://..."></div>
-                  <div class="form-full"><button class="btn-save" onclick="salvarEquipeMembro()">💾 Adicionar / Salvar Colaborador</button></div>
+                  <div class="field-group"><label>Cargo / Profissão</label><input type="text" id="eq_cargo" placeholder="Ex: Fisioterapeuta Responsável"></div>
+                  <div class="field-group form-full"><label>Credenciais / registro profissional / especializações (separe por ; )</label><input type="text" id="eq_credenciais" placeholder="CREFITO-2: 386055-F; Pós-graduanda em Fisioterapia; ..."></div>
+                  <div class="field-group form-full"><label>Descrição breve (opcional)</label><textarea id="eq_descricao" placeholder="2 a 4 linhas sobre a atuação do profissional"></textarea></div>
+                  <div class="field-group form-full">
+                    <label>URL da foto ou imagem em Base64 (opcional)</label>
+                    <div style="display:flex;gap:12px;align-items:flex-start">
+                      <div class="eq-foto-preview-wrap" id="eq_foto_preview_wrap"><span class="eq-foto-empty">sem foto</span></div>
+                      <input type="text" id="eq_foto" placeholder="https://... ou data:image/jpeg;base64,..." oninput="atualizarPreviewFotoEquipe()" style="flex:1">
+                    </div>
+                  </div>
+                  <div class="form-full" style="display:flex;gap:10px;flex-wrap:wrap">
+                    <button class="btn-save" id="eq_btn_salvar" onclick="salvarEquipeMembro()">💾 Adicionar Colaborador</button>
+                    <button class="btn-save" id="eq_btn_cancelar" onclick="cancelarEdicaoEquipe()" style="display:none;background:var(--muted)">✖️ Cancelar edição</button>
+                  </div>
                 </div>
                 <div id="equipeAdminLista" style="margin-top:12px"></div>
               </div>
@@ -5000,6 +5016,7 @@ window.exportarLeadsCSV = function(){
    (item 7, 8, 9 e 10 do escopo - Gerenciar Site)
 ══════════════════════════════ */
 let siteEquipe = {}, siteDepoimentos = {}, siteParceiros = {}, siteGaleria = {}, siteTextos = {}, depoIndex = 0;
+let equipeEditId = null;
 
 const EQUIPE_SEED = {
   seed1: { nome:"Alessandra Peres", cargo:"Fisioterapeuta Responsável",
@@ -5089,27 +5106,86 @@ function renderEquipe(){
         <h3>${m.nome||""}</h3>
         <p style="color:var(--muted);font-size:.84rem">${m.cargo||""}</p>
         <p style="color:var(--muted);font-size:.76rem;margin-top:6px">${(m.credenciais||"").split(";").filter(Boolean).join("<br>")}</p>
+        ${m.descricao ? `<p style="color:var(--muted);font-size:.78rem;margin-top:8px;line-height:1.5">${m.descricao}</p>` : ""}
       </div>`).join("")
       : "<p style='color:var(--muted);padding:12px;font-size:.84rem'>Equipe em cadastro.</p>";
   }
   if(adminList){
-    adminList.innerHTML = membros.length ? `<div class="table-card"><div style="overflow-x:auto"><table class="data-table"><thead><tr><th>Nome</th><th>Cargo</th><th></th></tr></thead><tbody>${
-      membros.map(([id,m])=>`<tr><td>${m.nome||""}</td><td>${m.cargo||""}</td><td><button class="btn-icon-sm del" onclick="removerEquipeMembro('${id}')">🗑️</button></td></tr>`).join("")
+    adminList.innerHTML = membros.length ? `<div class="table-card"><div style="overflow-x:auto"><table class="data-table"><thead><tr><th></th><th>Nome</th><th>Cargo</th><th></th></tr></thead><tbody>${
+      membros.map(([id,m])=>`<tr>
+        <td>${m.foto ? `<img src="${m.foto}" alt="${m.nome||''}" style="width:34px;height:34px;border-radius:50%;object-fit:cover;display:block">` : `<span style="font-size:.7rem;color:var(--muted)">—</span>`}</td>
+        <td>${m.nome||""}</td>
+        <td>${m.cargo||""}</td>
+        <td style="white-space:nowrap">
+          <button class="btn-icon-sm edit" onclick="editarEquipeMembro('${id}')">✏️</button>
+          <button class="btn-icon-sm del" onclick="removerEquipeMembro('${id}')">🗑️</button>
+        </td>
+      </tr>`).join("")
     }</tbody></table></div></div>` : "";
   }
 }
+
+window.atualizarPreviewFotoEquipe = function(){
+  const val = document.getElementById("eq_foto")?.value.trim();
+  const wrap = document.getElementById("eq_foto_preview_wrap");
+  if(!wrap) return;
+  wrap.innerHTML = val ? `<img src="${val}" alt="Pré-visualização" onerror="this.parentElement.innerHTML='<span class=&quot;eq-foto-empty&quot;>URL inválida</span>'">` : `<span class="eq-foto-empty">sem foto</span>`;
+};
+
+window.editarEquipeMembro = function(id){
+  const m = siteEquipe[id];
+  if(!m) return;
+  equipeEditId = id;
+  const setVal = (fid,v)=>{const el=document.getElementById(fid); if(el) el.value = v||"";};
+  setVal("eq_nome", m.nome);
+  setVal("eq_cargo", m.cargo);
+  setVal("eq_credenciais", m.credenciais);
+  setVal("eq_descricao", m.descricao);
+  setVal("eq_foto", m.foto);
+  atualizarPreviewFotoEquipe();
+  const btn = document.getElementById("eq_btn_salvar");
+  if(btn) btn.textContent = "💾 Salvar Alterações";
+  const cancelBtn = document.getElementById("eq_btn_cancelar");
+  if(cancelBtn) cancelBtn.style.display = "inline-flex";
+  const aviso = document.getElementById("eq_editando_aviso");
+  if(aviso) aviso.style.display = "block";
+  const card = document.getElementById("eq_nome")?.closest(".form-card");
+  if(card) card.scrollIntoView({behavior:"smooth", block:"start"});
+};
+
+window.cancelarEdicaoEquipe = function(){
+  equipeEditId = null;
+  ["eq_nome","eq_cargo","eq_credenciais","eq_descricao","eq_foto"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
+  atualizarPreviewFotoEquipe();
+  const btn = document.getElementById("eq_btn_salvar");
+  if(btn) btn.textContent = "💾 Adicionar Colaborador";
+  const cancelBtn = document.getElementById("eq_btn_cancelar");
+  if(cancelBtn) cancelBtn.style.display = "none";
+  const aviso = document.getElementById("eq_editando_aviso");
+  if(aviso) aviso.style.display = "none";
+};
 
 window.salvarEquipeMembro = function(){
   const nome = document.getElementById("eq_nome")?.value.trim();
   const cargo = document.getElementById("eq_cargo")?.value.trim();
   const credenciais = document.getElementById("eq_credenciais")?.value.trim();
+  const descricao = document.getElementById("eq_descricao")?.value.trim();
   const foto = document.getElementById("eq_foto")?.value.trim();
   if(!nome){ alert("Informe o nome do colaborador."); return; }
-  dbSite.ref("equipe").push({nome,cargo,credenciais,foto});
-  ["eq_nome","eq_cargo","eq_credenciais","eq_foto"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
+  const dados = {nome,cargo,credenciais,foto};
+  if(descricao) dados.descricao = descricao;
+  if(equipeEditId){
+    dbSite.ref("equipe/"+equipeEditId).update(dados);
+  } else {
+    dbSite.ref("equipe").push(dados);
+  }
+  cancelarEdicaoEquipe();
 };
 window.removerEquipeMembro = function(id){
-  if(confirm("Remover este colaborador da equipe do site?")) dbSite.ref("equipe/"+id).remove();
+  if(confirm("Remover este colaborador da equipe do site?")){
+    dbSite.ref("equipe/"+id).remove();
+    if(equipeEditId===id) cancelarEdicaoEquipe();
+  }
 };
 
 function renderDepoimentos(){
