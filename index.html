@@ -3,12 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>MovOm Espaço de Saúde e Bem Estar — Fisioterapia, Pilates e Yoga em Duque de Caxias</title>
-<meta name="description" content="MovOm Espaço de Saúde e Bem Estar: fisioterapia, pilates e yoga com atendimento humanizado e equipe especializada em Duque de Caxias, RJ. Agende sua avaliação pelo WhatsApp."/>
-<meta property="og:title" content="MovOm Espaço de Saúde e Bem Estar"/>
-<meta property="og:description" content="Cuidado integral com fisioterapia, pilates e yoga. Atendimento humanizado e equipe especializada desde 2019."/>
-<meta property="og:type" content="business.business"/>
-<meta property="og:locale" content="pt_BR"/>
+<title>MOVOM – Sistema</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
@@ -184,11 +179,6 @@ nav.sb-nav{padding:16px 14px;flex:1;overflow-y:auto;}
 .content{flex:1;overflow-y:auto;}
 .page{display:none;animation:fadeIn .3s ease;}
 .page.active{display:block;}
-/* O site público (#page-site) não participa do sistema de troca de páginas
-   interno (.page.active); sua visibilidade é controlada apenas pelo wrapper
-   #pageSitePublico. A regra abaixo evita que ele fique oculto quando
-   navigate() remove a classe "active" de todos os .page ao trocar de aba. */
-#page-site{display:block;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
 .inner{padding:28px 32px;}
 
@@ -340,35 +330,6 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 .fin-total{font-family:'Nunito',sans-serif;font-size:1.2rem;font-weight:900;color:var(--lilas);margin:16px 0 10px;}
 
 /* ══════════════════════════════
-   DASHBOARD FINANCEIRO PROFISSIONAL
-══════════════════════════════ */
-.fin-kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:18px;}
-.fin-kpi-card{background:var(--white);border:2px solid var(--border);border-radius:16px;padding:18px 20px;display:flex;align-items:flex-start;gap:14px;box-shadow:var(--shadow-sm);transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden;}
-.fin-kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:3px 3px 0 0;}
-.fin-kpi-card:hover{transform:translateY(-2px);box-shadow:var(--shadow);}
-.fin-kpi-entrada::before{background:linear-gradient(90deg,#22c55e,#16a34a);}
-.fin-kpi-despesa::before{background:linear-gradient(90deg,#ef4444,#dc2626);}
-.fin-kpi-lucro::before{background:linear-gradient(90deg,var(--lilas),var(--ciano));}
-.fin-kpi-ticket::before{background:linear-gradient(90deg,#f59e0b,#d97706);}
-.fin-kpi-count::before{background:linear-gradient(90deg,var(--ciano),#38bdf8);}
-.fin-kpi-crescimento::before{background:linear-gradient(90deg,#a78bfa,var(--lilas));}
-.fin-kpi-icon{font-size:1.6rem;line-height:1;flex-shrink:0;margin-top:2px;}
-.fin-kpi-content{min-width:0;}
-.fin-kpi-label{font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
-.fin-kpi-value{font-family:'Nunito',sans-serif;font-size:1.5rem;font-weight:900;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.1;}
-.fin-kpi-sub{font-size:.7rem;color:var(--muted);margin-top:3px;display:flex;align-items:center;gap:4px;}
-.fin-kpi-lucro.negativo .fin-kpi-value{color:#ef4444;}
-.fin-kpi-lucro.positivo .fin-kpi-value{color:#16a34a;}
-.fin-insights{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px;}
-.fin-insight-item{background:var(--white);border:2px solid var(--border);border-radius:12px;padding:12px 16px;font-size:.8rem;color:var(--text);box-shadow:var(--shadow-sm);display:flex;align-items:center;gap:8px;}
-.fin-insight-item strong{color:var(--lilas);}
-.fin-chart-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:16px;}
-.fin-period-group{display:flex;gap:6px;flex-wrap:wrap;}
-.btn-chart-period{padding:6px 14px;border:2px solid var(--border);border-radius:20px;font-family:'Poppins',sans-serif;font-size:.76rem;font-weight:700;cursor:pointer;background:transparent;color:var(--muted);transition:all .18s;}
-.btn-chart-period:hover{border-color:var(--lilas);color:var(--lilas);}
-.active-period{background:var(--lilas)!important;color:#fff!important;border-color:var(--lilas)!important;}
-
-/* ══════════════════════════════
    GRADE DE HORÁRIOS
 ══════════════════════════════ */
 .grade-section{margin-bottom:24px;}
@@ -493,143 +454,6 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 .galeria-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:20px;}
 .galeria-foto{background:var(--white);border-radius:14px;overflow:hidden;border:2px solid var(--border);box-shadow:var(--shadow-sm);}
 .galeria-foto img{width:100%;height:220px;object-fit:cover;}
-
-/* ══════════════════════════════
-   SITE PREMIUM — REDESIGN 2026
-   (mantém identidade lilás/ciano/branco, eleva acabamento visual)
-══════════════════════════════ */
-
-/* ---- Navbar fixa com efeito de scroll ---- */
-.site-topnav{
-  position:sticky;top:0;z-index:150;
-  transition:background .35s ease, box-shadow .35s ease, padding .25s ease;
-}
-.site-topnav.nav-scrolled{
-  background:rgba(22,29,46,.92)!important;
-  backdrop-filter:blur(10px);
-  box-shadow:0 4px 24px rgba(0,0,0,.18);
-  padding:10px 24px;
-}
-.site-nav-toggle{display:none;background:none;border:none;color:#fff;font-size:1.4rem;cursor:pointer;}
-@media(max-width:820px){
-  .site-nav-toggle{display:block;}
-  .site-nav-links{
-    display:none;position:absolute;top:100%;left:0;right:0;
-    background:rgba(22,29,46,.98);backdrop-filter:blur(10px);
-    flex-direction:column;padding:14px;gap:4px;
-    box-shadow:0 12px 24px rgba(0,0,0,.25);
-  }
-  .site-nav-links.nav-open{display:flex;}
-  .site-nav-links a{padding:12px 16px;border-radius:10px;}
-}
-
-/* ---- Hero premium ---- */
-.site-hero{
-  background:radial-gradient(circle at 15% 20%,rgba(123,92,255,.55),transparent 55%),
-             radial-gradient(circle at 85% 0%,rgba(62,198,193,.4),transparent 50%),
-             linear-gradient(135deg,#141a2b 0%,#1e2745 45%,#1c3b52 100%);
-  position:relative;overflow:hidden;
-}
-.hero-shape{position:absolute;border-radius:50%;filter:blur(2px);opacity:.5;pointer-events:none;}
-.hero-shape.s1{width:220px;height:220px;background:radial-gradient(circle,var(--ciano-mid),transparent 70%);top:-60px;right:8%;animation:heroFloat 7s ease-in-out infinite;}
-.hero-shape.s2{width:140px;height:140px;background:radial-gradient(circle,var(--lilas-mid),transparent 70%);bottom:-30px;left:6%;animation:heroFloat 9s ease-in-out infinite reverse;}
-.hero-shape.s3{width:90px;height:90px;border:2px solid rgba(255,255,255,.15);top:30%;right:22%;border-radius:24px;transform:rotate(18deg);animation:heroFloat 8s ease-in-out infinite;}
-@keyframes heroFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
-.site-hero-content{padding:88px 28px 76px;max-width:820px;position:relative;z-index:2;animation:heroIn .8s ease both;}
-@keyframes heroIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-.site-hero-content h1{font-size:clamp(1.9rem,4.6vw,3.1rem);letter-spacing:-.01em;}
-.hero-badges{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 28px;}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:30px;
-  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
-  color:#fff;font-size:.78rem;font-weight:600;backdrop-filter:blur(4px);
-}
-.hero-badge i{color:var(--ciano-mid);}
-
-/* ---- Cards com leve elevação e hover ---- */
-.site-card{transition:transform .25s ease, box-shadow .25s ease;}
-.site-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(123,92,255,.16);}
-.site-btn{box-shadow:0 4px 14px rgba(123,92,255,.22);}
-.site-btn.primary{box-shadow:0 6px 18px rgba(123,92,255,.35);}
-
-/* ---- Serviços em accordion premium ---- */
-.servico-acc{background:var(--white);border:2px solid var(--border);border-radius:18px;margin-bottom:16px;overflow:hidden;box-shadow:var(--shadow-sm);transition:box-shadow .25s;}
-.servico-acc.aberto{box-shadow:var(--shadow);border-color:var(--lilas-mid);}
-.servico-acc-head{display:flex;align-items:center;gap:16px;padding:20px 22px;cursor:pointer;user-select:none;}
-.servico-acc-icon{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--lilas),var(--ciano));display:grid;place-items:center;font-size:1.4rem;flex-shrink:0;}
-.servico-acc-head h3{margin:0 0 4px;font-size:1.05rem;}
-.servico-acc-head p{margin:0;color:var(--muted);font-size:.82rem;}
-.servico-acc-chevron{margin-left:auto;color:var(--lilas);transition:transform .3s ease;font-size:1.1rem;flex-shrink:0;}
-.servico-acc.aberto .servico-acc-chevron{transform:rotate(180deg);}
-.servico-acc-body{max-height:0;overflow:hidden;transition:max-height .4s ease;}
-.servico-acc.aberto .servico-acc-body{max-height:600px;}
-.servico-acc-inner{padding:0 22px 24px;}
-.servico-lista{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px 16px;margin:14px 0;list-style:none;}
-.servico-lista li{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.86rem;}
-.servico-lista li::before{content:"✓";color:var(--ciano);font-weight:900;}
-
-/* ---- Equipe premium ---- */
-.equipe-card{position:relative;overflow:hidden;}
-.equipe-card:hover .equipe-foto{transform:scale(1.06);}
-.equipe-foto-wrap{width:96px;height:96px;border-radius:50%;overflow:hidden;margin:0 auto 14px;border:3px solid var(--lilas-light);}
-.equipe-foto{width:100%;height:100%;object-fit:cover;transition:transform .35s ease;display:block;}
-
-/* ---- Parceiros premium ---- */
-.parceiros-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-top:18px;}
-.parceiro-card{background:var(--white);border:2px solid var(--border);border-radius:16px;padding:20px 12px;display:flex;align-items:center;justify-content:center;min-height:88px;transition:all .25s;filter:grayscale(.15);}
-.parceiro-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--ciano-mid);filter:grayscale(0);}
-.parceiro-card p{font-weight:700;font-size:.85rem;color:var(--text);text-align:center;margin:0;}
-.parceiro-placeholder{display:flex;flex-direction:column;align-items:center;gap:4px;}
-.parceiro-placeholder span{font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;background:var(--lilas-light);padding:2px 8px;border-radius:20px;}
-
-/* ---- Galeria premium com lightbox ---- */
-.galeria-premium{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-top:18px;}
-.galeria-item{position:relative;border-radius:16px;overflow:hidden;cursor:pointer;aspect-ratio:1/1;border:2px solid var(--border);box-shadow:var(--shadow-sm);}
-.galeria-item img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease;}
-.galeria-item:hover img{transform:scale(1.1);}
-.galeria-item-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(30,27,75,.55),transparent 55%);opacity:0;transition:opacity .25s;display:flex;align-items:flex-end;padding:12px;color:#fff;font-size:.78rem;font-weight:600;}
-.galeria-item:hover .galeria-item-overlay{opacity:1;}
-.lightbox-overlay{position:fixed;inset:0;background:rgba(10,8,30,.92);z-index:400;display:flex;align-items:center;justify-content:center;padding:24px;}
-.lightbox-overlay img{max-width:90vw;max-height:82vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);}
-.lightbox-close{position:absolute;top:22px;right:26px;color:#fff;font-size:2rem;background:none;border:none;cursor:pointer;line-height:1;}
-
-/* ---- Depoimentos / prova social premium ---- */
-.reputacao-resumo{
-  display:flex;flex-wrap:wrap;align-items:center;gap:22px;
-  background:linear-gradient(135deg,var(--lilas-light),var(--ciano-light));
-  border-radius:20px;padding:24px 28px;margin-bottom:24px;border:1px solid var(--border);
-}
-.reputacao-nota{font-family:'Nunito',sans-serif;font-weight:900;font-size:2.6rem;color:var(--lilas);line-height:1;}
-.reputacao-estrelas{color:#f5b301;font-size:1.15rem;letter-spacing:2px;}
-.depo-carousel-wrap .site-card{min-height:150px;}
-
-/* ---- Contato premium ---- */
-.contato-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:22px;margin-top:18px;}
-@media(max-width:760px){.contato-grid{grid-template-columns:1fr;}}
-.contato-info-item{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--border);}
-.contato-info-item:last-child{border-bottom:none;}
-.contato-info-item i{color:var(--lilas);font-size:1.05rem;width:22px;text-align:center;margin-top:2px;}
-.contato-mapa{border-radius:18px;overflow:hidden;border:2px solid var(--border);box-shadow:var(--shadow-sm);min-height:280px;}
-.contato-mapa iframe{width:100%;height:100%;min-height:280px;border:0;display:block;}
-
-/* ---- Footer premium ---- */
-.site-footer-premium{
-  background:linear-gradient(135deg,#141a2b,#1e2745);color:rgba(255,255,255,.85);padding:52px 24px 20px;
-}
-.footer-grid{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:36px;}
-@media(max-width:760px){.footer-grid{grid-template-columns:1fr;gap:28px;text-align:center;}}
-.footer-grid h4{color:#fff;font-family:'Nunito',sans-serif;font-weight:800;font-size:.95rem;margin-bottom:14px;}
-.footer-grid a{display:block;color:rgba(255,255,255,.68);text-decoration:none;font-size:.85rem;margin-bottom:9px;transition:color .2s;}
-.footer-grid a:hover{color:var(--ciano-mid);}
-.footer-social{display:flex;gap:10px;margin-top:6px;justify-content:flex-start;}
-@media(max-width:760px){.footer-social{justify-content:center;}}
-.footer-social a{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.08);display:grid;place-items:center;color:#fff;margin:0;}
-.footer-social a:hover{background:var(--lilas);}
-.footer-bottom{max-width:1060px;margin:36px auto 0;padding-top:18px;border-top:1px solid rgba(255,255,255,.12);text-align:center;font-size:.78rem;color:rgba(255,255,255,.5);}
-
-/* ---- Animação de entrada por scroll ---- */
-.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease;}
-.reveal.revealed{opacity:1;transform:translateY(0);}
 .galeria-foto p{padding:12px;font-size:.82rem;color:var(--muted);}
 
 /* ══════════════════════════════
@@ -644,12 +468,6 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 }
 .fin-tab:hover{color:var(--lilas);}
 .fin-tab.active{color:var(--lilas);border-bottom-color:var(--lilas);}
-/* Oculto via JS para colaboradores */
-.fin-total-admin.colab-hidden{display:none!important;}
-/* Botões de período do gráfico financeiro */
-.btn-chart-period{background:var(--surface);color:var(--muted);border:2px solid var(--border);border-radius:8px;padding:5px 14px;cursor:pointer;font-family:'Poppins',sans-serif;font-size:.78rem;font-weight:600;transition:all .2s;}
-.btn-chart-period:hover{color:var(--lilas);border-color:var(--lilas);}
-.btn-chart-period.active-period{background:linear-gradient(135deg,var(--lilas),var(--ciano));color:#fff;border-color:transparent;}
 .fin-subpage{display:none;}
 .fin-subpage.active{display:block;}
 
@@ -687,478 +505,270 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 .user-info{flex:1;}
 .user-info .uname{font-weight:700;font-size:.88rem;}
 .user-info .urole{font-size:.72rem;color:var(--muted);}
+
+/* ===== NOSSA EQUIPE ===== */
+.secao-equipe {
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #f4f2ff 0%, #ffffff 100%);
+  min-height: 100vh;
+}
+
+.secao-equipe-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.secao-equipe-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.secao-equipe-header h2 {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #1e1b4b;
+  margin-bottom: 16px;
+  font-family: 'Nunito', sans-serif;
+}
+
+.secao-equipe-header p {
+  font-size: 1.1rem;
+  color: #6b7280;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+  font-family: 'Poppins', sans-serif;
+}
+
+.equipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 40px;
+  margin-top: 40px;
+}
+
+@media (max-width: 1024px) {
+  .equipe-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .equipe-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .secao-equipe-header h2 {
+    font-size: 2rem;
+  }
+}
+
+/* Card de Profissional */
+.card-profissional {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(123, 92, 255, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid rgba(123, 92, 255, 0.1);
+}
+
+.card-profissional:hover {
+  box-shadow: 0 12px 40px rgba(123, 92, 255, 0.15);
+  transform: translateY(-8px);
+  border-color: rgba(123, 92, 255, 0.3);
+}
+
+.card-profissional-header {
+  position: relative;
+  padding: 30px 20px;
+  background: linear-gradient(135deg, #ede9ff 0%, #e0faf9 100%);
+  text-align: center;
+}
+
+.card-profissional-foto {
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid white;
+  box-shadow: 0 4px 16px rgba(123, 92, 255, 0.2);
+  background: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-profissional-foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-profissional-foto.placeholder {
+  background: linear-gradient(135deg, #7b5cff 0%, #3ec6c1 100%);
+  color: white;
+  font-size: 3rem;
+}
+
+.card-profissional-nome {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #1e1b4b;
+  margin: 12px 0 8px;
+  font-family: 'Nunito', sans-serif;
+}
+
+.card-profissional-profissao {
+  font-size: 0.95rem;
+  color: #7b5cff;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.card-profissional-registro {
+  font-size: 0.85rem;
+  color: #6b7280;
+  background: rgba(123, 92, 255, 0.08);
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: inline-block;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.card-profissional-body {
+  padding: 0 20px 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-profissional-especializacoes {
+  margin-bottom: 20px;
+}
+
+.card-profissional-especializacoes-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1e1b4b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.card-profissional-especializacoes-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.card-profissional-badge {
+  background: linear-gradient(135deg, #ede9ff 0%, #e0faf9 100%);
+  color: #7b5cff;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid rgba(123, 92, 255, 0.2);
+}
+
+.card-profissional-biografia {
+  font-size: 0.95rem;
+  color: #4b5563;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  flex: 1;
+  font-family: 'Poppins', sans-serif;
+}
+
+.card-profissional-footer {
+  display: flex;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.btn-agendar {
+  flex: 1;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #7b5cff, #3ec6c1);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.btn-agendar:hover {
+  box-shadow: 0 6px 20px rgba(123, 92, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn-contato {
+  flex: 1;
+  padding: 12px 20px;
+  background: white;
+  color: #7b5cff;
+  border: 2px solid #7b5cff;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.btn-contato:hover {
+  background: #7b5cff;
+  color: white;
+}
+
+/* Animação de entrada */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-profissional {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.card-profissional:nth-child(1) { animation-delay: 0.1s; }
+.card-profissional:nth-child(2) { animation-delay: 0.2s; }
+.card-profissional:nth-child(3) { animation-delay: 0.3s; }
+.card-profissional:nth-child(4) { animation-delay: 0.4s; }
+.card-profissional:nth-child(5) { animation-delay: 0.5s; }
+.card-profissional:nth-child(6) { animation-delay: 0.6s; }
+
 </style>
 </head>
 <body>
 
 <!-- ══════════════════════════════
-     SITE INSTITUCIONAL PÚBLICO (tela inicial)
-══════════════════════════════ -->
-<div id="pageSitePublico">
-
-      <div class="page active" id="page-site">
-        <!-- HERO DO SITE -->
-        <div class="site-hero">
-          <nav class="site-topnav" id="siteTopNav">
-            <div class="site-brand"><span class="mark">⬡ Mov om</span></div>
-            <button class="site-nav-toggle" id="siteNavToggle" onclick="toggleSiteNav()" aria-label="Menu"><i class="fas fa-bars"></i></button>
-            <div class="site-nav-links" id="siteNavLinks">
-              <a href="#" onclick="siteNav('s-home',this);return false">Início</a>
-              <a href="#" onclick="siteNav('s-sobre',this);return false">Quem Somos</a>
-              <a href="#" onclick="siteNav('s-modalidades',this);return false">Serviços</a>
-              <a href="#" onclick="siteNav('s-equipe',this);return false">Equipe &amp; Espaço</a>
-              <a href="#" onclick="siteNav('s-horarios',this);return false">Horários &amp; Avaliações</a>
-              <a href="#" onclick="siteNav('s-parceiros',this);return false">Parceiros</a>
-              <a href="#" onclick="siteNav('s-agendar',this);return false">Agendar</a>
-              <a href="#" onclick="siteNav('s-satisfacao',this);return false">Satisfação</a>
-              <a href="#" onclick="siteNav('s-contato',this);return false">Contato</a>
-
-            </div>
-          </nav>
-          <div class="hero-shape s1"></div>
-          <div class="hero-shape s2"></div>
-          <div class="hero-shape s3"></div>
-          <div class="site-hero-content">
-            <p class="site-tag">Fisioterapia • Pilates • Yoga</p>
-            <h1>Mov om Espaço De Saúde e Bem Estar</h1>
-            <p>Um espaço dedicado ao cuidado integral de forma humanizada e especializada.</p>
-            <div class="hero-badges">
-              <span class="hero-badge"><i class="fas fa-star" style="color:#ffd166"></i> Excelente avaliação no Google</span>
-              <span class="hero-badge"><i class="fas fa-heart"></i> Atendimento Humanizado</span>
-              <span class="hero-badge"><i class="fas fa-user-md"></i> Equipe Especializada</span>
-              <span class="hero-badge"><i class="fas fa-leaf"></i> Ambiente Acolhedor</span>
-            </div>
-            <div class="site-btns">
-              <a class="site-btn primary" href="#" onclick="siteNav('s-agendar',null);return false">Agende sua avaliação</a>
-              <a class="site-btn wa" href="https://wa.me/5521999681425" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- SEÇÕES DO SITE -->
-        <div class="site-body">
-          <!-- HOME -->
-          <div class="site-section active-s" id="s-home">
-            <div class="site-container">
-              <h2 class="site-h2">Bem-vindo(a)</h2>
-              <p style="color:var(--muted);margin-bottom:24px;line-height:1.7;max-width:640px">A Mov om Espaço De Saúde e Bem Estar é um ambiente dedicado ao cuidado integral do corpo e da mente, oferecendo fisioterapia, pilates e yoga com acompanhamento profissional e humanizado.</p>
-              <div class="site-btns">
-                <a class="site-btn primary" href="#" onclick="siteNav('s-modalidades',null);return false"><i class="fas fa-heart-pulse"></i> Conheça nossos serviços</a>
-                <a class="site-btn ig" href="https://www.instagram.com/movomzenyogaepilates/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-                <a class="site-btn wa" href="https://wa.me/5521999681425" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-                <a class="site-btn" style="background:#fff;color:var(--text);border:1px solid var(--border)" href="https://g.page/r/Ce_1CnuNaIRlEBM/review" target="_blank"><i class="fab fa-google"></i> Avaliações no Google</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- QUEM SOMOS -->
-          <div class="site-section" id="s-sobre">
-            <div class="site-container">
-              <span class="hero-badge" style="background:var(--lilas-light);border-color:var(--lilas-mid);color:var(--lilas);margin-bottom:10px"><i class="fas fa-calendar-check"></i> Desde 2019</span>
-              <h2 class="site-h2">Conheça a MovOm</h2>
-              <p style="color:var(--muted);margin-bottom:24px;line-height:1.7;max-width:760px">Idealizada em 2019, a MovOm tem como proposta promover a saúde integral com um olhar individualizado para cada paciente, sempre priorizando um atendimento humanizado, personalizado e realizado por uma equipe de excelência.</p>
-              <h3 style="color:var(--lilas);font-family:'Nunito',sans-serif;font-weight:800;margin-bottom:12px;font-size:.95rem">Nossos diferenciais</h3>
-              <div class="site-cards" style="margin-bottom:24px">
-                <div class="site-card" style="text-align:center;padding:16px"><div style="font-size:1.4rem;margin-bottom:6px">💜</div><p style="font-size:.8rem;font-weight:700">Atendimento Humanizado</p></div>
-                <div class="site-card" style="text-align:center;padding:16px"><div style="font-size:1.4rem;margin-bottom:6px">🎓</div><p style="font-size:.8rem;font-weight:700">Profissionais Especializados</p></div>
-                <div class="site-card" style="text-align:center;padding:16px"><div style="font-size:1.4rem;margin-bottom:6px">🎯</div><p style="font-size:.8rem;font-weight:700">Atendimento Individualizado</p></div>
-                <div class="site-card" style="text-align:center;padding:16px"><div style="font-size:1.4rem;margin-bottom:6px">🌿</div><p style="font-size:.8rem;font-weight:700">Ambiente Acolhedor</p></div>
-                <div class="site-card" style="text-align:center;padding:16px"><div style="font-size:1.4rem;margin-bottom:6px">⚙️</div><p style="font-size:.8rem;font-weight:700">Equipamentos Modernos</p></div>
-              </div>
-              <h3 style="color:var(--lilas);font-family:'Nunito',sans-serif;font-weight:800;margin-bottom:12px;font-size:.95rem">Missão, Visão e Valores</h3>
-              <div class="site-cards" style="margin-top:16px">
-                <div class="site-card"><h3>🎯 Missão</h3><p style="color:var(--muted);font-size:.84rem">Promover saúde integral por meio de um atendimento humanizado, personalizado e tecnicamente qualificado.</p></div>
-                <div class="site-card"><h3>🔭 Visão</h3><p style="color:var(--muted);font-size:.84rem">Ser referência em cuidado integral à saúde e bem-estar em Duque de Caxias e região.</p></div>
-                <div class="site-card"><h3>💜 Valores</h3><p style="color:var(--muted);font-size:.84rem">Humanização, excelência técnica, ética, individualidade no cuidado e compromisso com resultados.</p></div>
-              </div>
-              <div class="site-btns" style="margin-top:24px">
-                <a class="site-btn primary" href="#" onclick="siteNav('s-equipe',null);return false">Saiba mais sobre a MovOm</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- SERVIÇOS -->
-          <div class="site-section" id="s-modalidades">
-            <div class="site-container">
-              <h2 class="site-h2">Serviços</h2>
-              <p style="color:var(--muted);margin-bottom:22px">Clique em cada serviço para ver os detalhes.</p>
-
-              <div class="servico-acc aberto" id="acc-fisio">
-                <div class="servico-acc-head" onclick="toggleServicoAcc('acc-fisio')">
-                  <div class="servico-acc-icon">🦵</div>
-                  <div><h3>Fisioterapia</h3><p>Avaliação individualizada e reabilitação funcional completa</p></div>
-                  <i class="fas fa-chevron-down servico-acc-chevron"></i>
-                </div>
-                <div class="servico-acc-body">
-                  <div class="servico-acc-inner">
-                    <ul class="servico-lista">
-                      <li>Avaliação</li><li>Sessões</li><li>Eletroterapia</li><li>Terapia Manual</li>
-                      <li>Cinesioterapia</li><li>Liberação Miofascial</li><li>Dry Needling</li>
-                      <li>Reabilitação Funcional</li><li>Recuperação Muscular</li>
-                    </ul>
-                    <div class="site-btns">
-                      <a class="site-btn wa" href="https://wa.me/5521999681425?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20sess%C3%A3o%20de%20Fisioterapia." target="_blank"><i class="fab fa-whatsapp"></i> Agendar pelo WhatsApp</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="servico-acc" id="acc-pilates">
-                <div class="servico-acc-head" onclick="toggleServicoAcc('acc-pilates')">
-                  <div class="servico-acc-icon">🧘</div>
-                  <div><h3>Pilates</h3><p>Fortalecimento, equilíbrio e reabilitação para todos os níveis</p></div>
-                  <i class="fas fa-chevron-down servico-acc-chevron"></i>
-                </div>
-                <div class="servico-acc-body">
-                  <div class="servico-acc-inner">
-                    <ul class="servico-lista">
-                      <li>Fortalecimento do core</li><li>Alongamento e flexibilidade</li>
-                      <li>Reabilitação postural</li><li>Melhora do equilíbrio</li><li>Turmas reduzidas</li>
-                    </ul>
-                    <div class="site-cards" style="margin:14px 0">
-                      <div class="site-card"><h3>Segunda a Sexta</h3><p style="color:var(--muted)">07:00 às 19:00</p></div>
-                      <div class="site-card"><h3>Sábado</h3><p style="color:var(--muted)">07:00 às 11:00</p></div>
-                      <div class="site-card"><h3>Domingo e feriados</h3><p style="color:var(--muted)">Fechado</p></div>
-                    </div>
-                    <div class="site-btns">
-                      <a class="site-btn wa" href="https://wa.me/5521999681425?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20aula%20de%20Pilates." target="_blank"><i class="fab fa-whatsapp"></i> Agendar pelo WhatsApp</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="servico-acc" id="acc-yoga">
-                <div class="servico-acc-head" onclick="toggleServicoAcc('acc-yoga')">
-                  <div class="servico-acc-icon">☮️</div>
-                  <div><h3>Yoga</h3><p>Respiração, meditação e bem-estar para corpo e mente</p></div>
-                  <i class="fas fa-chevron-down servico-acc-chevron"></i>
-                </div>
-                <div class="servico-acc-body">
-                  <div class="servico-acc-inner">
-                    <ul class="servico-lista">
-                      <li>Diversas modalidades</li><li>Trabalho de respiração</li>
-                      <li>Meditação guiada</li><li>Redução de estresse</li><li>Relaxamento profundo</li>
-                    </ul>
-                    <p style="color:var(--muted);font-size:.9rem;line-height:1.7;margin-bottom:14px">Aulas de segunda a sábado, nos períodos da manhã e da noite.<br>Consulte os horários pelo WhatsApp.</p>
-                    <div class="site-btns">
-                      <a class="site-btn wa" href="https://wa.me/5521999681425?text=Ol%C3%A1!%20Gostaria%20de%20consultar%20os%20hor%C3%A1rios%20de%20Yoga." target="_blank"><i class="fab fa-whatsapp"></i> Agendar pelo WhatsApp</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-          <!-- HORÁRIOS -->
-          <div class="site-section" id="s-horarios">
-            <div class="site-container">
-              <h2 class="site-h2">Horários &amp; Avaliações</h2>
-              <div class="contato-grid" style="align-items:start">
-                <div>
-                  <h3 style="color:var(--lilas);font-family:'Nunito',sans-serif;font-weight:800;margin:8px 0 12px">Pilates</h3>
-                  <div class="site-cards">
-                    <div class="site-card"><h3>Segunda a Sexta</h3><p style="color:var(--muted)">07:00 às 19:00</p></div>
-                    <div class="site-card"><h3>Sábado</h3><p style="color:var(--muted)">07:00 às 11:00</p></div>
-                    <div class="site-card"><h3>Domingo e feriados</h3><p style="color:var(--muted)">Fechado</p></div>
-                  </div>
-                  <h3 style="color:var(--lilas);font-family:'Nunito',sans-serif;font-weight:800;margin:24px 0 12px">Yoga</h3>
-                  <div class="site-card">
-                    <p style="color:var(--muted);font-size:.9rem;line-height:1.7">Aulas de segunda a sábado, nos períodos da manhã e da noite.<br>Consulte os horários pelo WhatsApp.</p>
-                  </div>
-                  <div class="site-btns" style="margin-top:16px">
-                    <a class="site-btn wa" href="https://wa.me/5521999681425?text=Ol%C3%A1!%20Gostaria%20de%20consultar%20os%20hor%C3%A1rios%20de%20Yoga." target="_blank"><i class="fab fa-whatsapp"></i> Consultar pelo WhatsApp</a>
-                  </div>
-                </div>
-                <div>
-                  <h3 style="color:var(--lilas);font-family:'Nunito',sans-serif;font-weight:800;margin:8px 0 12px">O que dizem nossos clientes</h3>
-                  <div class="reputacao-resumo" style="padding:18px 20px">
-                    <div class="reputacao-nota" id="repNotaMedia" style="font-size:2rem">4.9</div>
-                    <div>
-                      <div class="reputacao-estrelas" id="repEstrelas" style="font-size:.95rem">★★★★★</div>
-                      <div style="color:var(--muted);font-size:.78rem;margin-top:2px" id="repContagem">com base nas avaliações de nossos pacientes</div>
-                    </div>
-                  </div>
-                  <div class="depo-carousel-wrap" style="position:relative;margin-top:12px">
-                    <div id="depoTrack" class="site-card" style="min-height:150px;display:flex;flex-direction:column;justify-content:center">
-                      <p style="color:var(--muted);padding:12px;font-size:.84rem">Carregando depoimentos...</p>
-                    </div>
-                    <div style="display:flex;justify-content:center;gap:16px;margin-top:16px;flex-wrap:wrap">
-                      <button class="btn btn-primary" onclick="depoAnterior()">‹ Anterior</button>
-                      <button class="btn btn-primary" onclick="depoProximo()">Próximo ›</button>
-                      <a class="site-btn" style="background:#fff;color:var(--text);border:1px solid var(--border)" href="https://g.page/r/Ce_1CnuNaIRlEBM/review" target="_blank"><i class="fab fa-google"></i> Ver todas as avaliações no Google</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- AGENDAMENTO -->
-          <div class="site-section" id="s-agendar">
-            <div class="site-container">
-              <h2 class="site-h2">Agende sua avaliação</h2>
-              <p style="color:var(--muted);margin-bottom:20px">Preencha o formulário e entraremos em contato pelo WhatsApp.</p>
-              <div class="form-card">
-                <div class="form-grid">
-                  <div class="field-group"><label>Data</label><input type="date" id="lead_data"></div>
-                  <div class="field-group"><label>Nome</label><input type="text" id="lead_nome" placeholder="Seu nome completo"></div>
-                  <div class="field-group"><label>WhatsApp</label><input type="text" id="lead_whatsapp" placeholder="(21) 99999-9999"></div>
-                  <div class="field-group"><label>Interesse</label><input type="text" id="lead_interesse" placeholder="Pilates, Yoga, Fisioterapia..."></div>
-                  <div class="field-group"><label>Indicação</label><input type="text" id="lead_indicacao" placeholder="Quem te indicou?"></div>
-                  <div class="field-group"><label>Convênio</label><input type="text" id="lead_convenio" placeholder="TotalPass, Gympass..."></div>
-                  <div class="form-full"><button class="btn-save" onclick="enviarLead()">📤 Enviar</button></div>
-                </div>
-                <p id="leadMsg" style="margin-top:12px;font-weight:600;color:var(--ciano);display:none"></p>
-              </div>
-            </div>
-          </div>
-
-          <!-- SATISFAÇÃO PÚBLICA -->
-          <div class="site-section" id="s-satisfacao">
-            <div class="site-container">
-              <h2 class="site-h2">Pesquisa de Satisfação</h2>
-              <p style="color:var(--muted);margin-bottom:20px">Sua opinião é muito importante para nós!</p>
-              <div class="form-card">
-                <div class="form-grid">
-                  <div class="field-group"><label>Nome (opcional)</label><input type="text" id="survey_nome" placeholder="Seu nome"></div>
-                  <div class="field-group"><label>Nota (1 a 5)</label><input type="number" id="survey_nota" min="1" max="5" placeholder="5"></div>
-                  <div class="field-group form-full"><label>Comentário</label><input type="text" id="survey_comentario" placeholder="Conte sua experiência..."></div>
-                  <div class="form-full"><button class="btn-save" onclick="enviarSurvey()">⭐ Enviar Avaliação</button></div>
-                </div>
-                <p id="surveyMsg" style="margin-top:12px;font-weight:600;color:var(--ciano);display:none"></p>
-              </div>
-            </div>
-          </div>
-
-          <!-- CONTATO -->
-          <div class="site-section" id="s-contato">
-            <div class="site-container">
-              <h2 class="site-h2">Contato</h2>
-              <p style="color:var(--muted);margin-bottom:6px">Estamos prontos para te atender. Fale com a gente!</p>
-              <div class="contato-grid">
-                <div class="site-card">
-                  <div class="contato-info-item">
-                    <i class="fab fa-whatsapp"></i>
-                    <div><strong>WhatsApp</strong><br><a href="https://wa.me/5521999681425" target="_blank" style="color:var(--muted);text-decoration:none">(21) 99968-1425</a></div>
-                  </div>
-                  <div class="contato-info-item">
-                    <i class="fas fa-envelope"></i>
-                    <div><strong>E-mail</strong><br><a href="mailto:movom.zenyoga@gmail.com" style="color:var(--muted);text-decoration:none">movom.zenyoga@gmail.com</a><br><a href="mailto:movom.fisio@gmail.com" style="color:var(--muted);text-decoration:none">movom.fisio@gmail.com</a></div>
-                  </div>
-                  <div class="contato-info-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <div><strong>Endereço</strong><br><span style="color:var(--muted)">Rua Marechal Deodoro, 577, salas 605, 805 e 808 — 25 de Agosto, Duque de Caxias - RJ</span></div>
-                  </div>
-                  <div class="contato-info-item">
-                    <i class="fas fa-clock"></i>
-                    <div><strong>Horário de atendimento</strong><br><span style="color:var(--muted)">Segunda a sexta: 07h às 19h · Sábado: 07h às 11h</span></div>
-                  </div>
-                  <div class="site-btns" style="margin-top:16px">
-                    <a class="site-btn loc" href="https://www.google.com/maps/search/?api=1&query=Rua+Marechal+Deodoro%2C+577%2C+salas+605%2C+805+e+808+-+25+de+Agosto%2C+Duque+de+Caxias+-+RJ%2C+Centro+Empresarial+Jomasa" target="_blank" rel="noopener"><i class="fas fa-map-marker-alt"></i> Ver no Mapa</a>
-                  </div>
-                </div>
-                <div class="contato-mapa">
-                  <iframe src="https://www.google.com/maps?q=Rua+Marechal+Deodoro%2C+577%2C+Duque+de+Caxias+-+RJ&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa MovOm"></iframe>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- EQUIPE + ESPAÇO -->
-          <div class="site-section" id="s-equipe">
-            <div class="site-container">
-              <h2 class="site-h2">Nossa Equipe</h2>
-              <p style="color:var(--muted);margin-bottom:20px">Profissionais qualificados e dedicados ao seu cuidado.</p>
-              <div class="site-cards" id="equipeCardsWrap" style="margin-top:8px">
-                <p style="color:var(--muted);padding:12px;font-size:.84rem">Carregando equipe...</p>
-              </div>
-
-              <h2 class="site-h2" style="margin-top:40px">Conheça nosso espaço</h2>
-              <p style="color:var(--muted);margin-bottom:6px">Recepção, salas de atendimento e ambiente pensado para o seu bem-estar.</p>
-              <div class="galeria-premium" id="galeriaPremiumWrap">
-                <p style="color:var(--muted);padding:12px;font-size:.84rem">Em breve, fotos do espaço.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- PARCEIROS -->
-          <div class="site-section" id="s-parceiros">
-            <div class="site-container">
-              <h2 class="site-h2">Parceiros</h2>
-              <p style="color:var(--muted);margin-bottom:20px">Empresas e convênios parceiros da MovOm.</p>
-              <div class="parceiros-grid" id="parceirosCardsWrap">
-                <p style="color:var(--muted);padding:12px;font-size:.84rem">Carregando parceiros...</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- ADMIN DO SITE -->
-          <div class="site-section" id="s-admin">
-            <div class="site-container">
-              <h2 class="site-h2">Área Administrativa – Site</h2>
-
-              <!-- Leads -->
-              <div class="form-card">
-                <h3>📋 Cadastro de Lead (Admin)</h3>
-                <div class="form-grid">
-                  <div class="field-group"><label>Data</label><input type="date" id="admlead_data"></div>
-                  <div class="field-group"><label>Nome</label><input type="text" id="admlead_nome" placeholder="Nome"></div>
-                  <div class="field-group"><label>WhatsApp</label><input type="text" id="admlead_whatsapp" placeholder="WhatsApp"></div>
-                  <div class="field-group"><label>Interesse</label><input type="text" id="admlead_interesse" placeholder="Interesse"></div>
-                  <div class="field-group"><label>Indicação</label><input type="text" id="admlead_indicacao" placeholder="Indicação"></div>
-                  <div class="field-group"><label>Convênio</label><input type="text" id="admlead_convenio" placeholder="Convênio"></div>
-                  <div class="field-group"><label>Matriculou?</label>
-                    <select id="admlead_matriculou"><option value="Não">Não matriculou</option><option value="Sim">Matriculou</option></select>
-                  </div>
-                  <div class="field-group"><label>Motivo</label><input type="text" id="admlead_motivo" placeholder="Motivo da não matrícula"></div>
-                  <div class="form-full"><button class="btn-save" onclick="salvarLeadAdmin()">💾 Salvar Lead</button></div>
-                </div>
-              </div>
-
-              <!-- Pesquisa de satisfação admin -->
-              <div class="form-card">
-                <h3>⭐ Pesquisa de Satisfação (Admin)</h3>
-                <div class="form-grid">
-                  <div class="field-group"><label>Nome</label><input type="text" id="admsurvey_nome" placeholder="Nome (opcional)"></div>
-                  <div class="field-group"><label>Nota (1-5)</label><input type="number" id="admsurvey_nota" min="1" max="5" placeholder="5"></div>
-                  <div class="field-group form-full"><label>Comentário</label><input type="text" id="admsurvey_comentario" placeholder="Comentário"></div>
-                  <div class="form-full"><button class="btn-save" onclick="salvarSurveyAdmin()">💾 Salvar Resposta</button></div>
-                </div>
-              </div>
-
-              <!-- Textos institucionais -->
-              <div class="form-card">
-                <h3>📝 Textos Institucionais e Contato</h3>
-                <div class="form-grid">
-                  <div class="field-group form-full"><label>Texto principal (Hero)</label><input type="text" id="gs_hero_texto" placeholder="Um espaço dedicado ao cuidado integral..."></div>
-                  <div class="field-group form-full"><label>Texto "Quem Somos"</label><input type="text" id="gs_sobre_texto" placeholder="Idealizada em 2019..."></div>
-                  <div class="field-group"><label>WhatsApp (só números, com DDI)</label><input type="text" id="gs_whatsapp" placeholder="5521999681425"></div>
-                  <div class="field-group"><label>Instagram (URL)</label><input type="text" id="gs_instagram" placeholder="https://instagram.com/..."></div>
-                  <div class="field-group"><label>E-mail 1</label><input type="text" id="gs_email1" placeholder="movom.zenyoga@gmail.com"></div>
-                  <div class="field-group"><label>E-mail 2</label><input type="text" id="gs_email2" placeholder="movom.fisio@gmail.com"></div>
-                  <div class="field-group form-full"><label>Endereço / link do mapa</label><input type="text" id="gs_endereco" placeholder="URL do Google Maps"></div>
-                  <div class="form-full"><button class="btn-save" onclick="salvarTextosSite()">💾 Salvar Textos e Contato</button></div>
-                </div>
-                <p style="color:var(--muted);font-size:.78rem;margin-top:8px">Estes campos sobrescrevem os textos e links exibidos no site público. Deixe em branco para manter o padrão atual.</p>
-              </div>
-
-              <!-- Equipe -->
-              <div class="form-card">
-                <h3>🧑‍⚕️ Equipe (Site Público)</h3>
-                <div class="form-grid">
-                  <div class="field-group"><label>Nome</label><input type="text" id="eq_nome" placeholder="Nome completo"></div>
-                  <div class="field-group"><label>Cargo</label><input type="text" id="eq_cargo" placeholder="Ex: Fisioterapeuta Responsável"></div>
-                  <div class="field-group form-full"><label>Credenciais / formação (uma por linha)</label><input type="text" id="eq_credenciais" placeholder="CREFITO-2: 386055-F; Pós-graduanda em Fisioterapia; ..."></div>
-                  <div class="field-group form-full"><label>URL da foto (opcional)</label><input type="text" id="eq_foto" placeholder="https://..."></div>
-                  <div class="form-full"><button class="btn-save" onclick="salvarEquipeMembro()">💾 Adicionar / Salvar Colaborador</button></div>
-                </div>
-                <div id="equipeAdminLista" style="margin-top:12px"></div>
-              </div>
-
-              <!-- Depoimentos -->
-              <div class="form-card">
-                <h3>💬 Depoimentos (Site Público)</h3>
-                <div class="form-grid">
-                  <div class="field-group"><label>Nome</label><input type="text" id="dp_nome" placeholder="Nome do cliente"></div>
-                  <div class="field-group"><label>Nota (1-5)</label><input type="number" id="dp_nota" min="1" max="5" placeholder="5"></div>
-                  <div class="field-group form-full"><label>Depoimento</label><input type="text" id="dp_texto" placeholder="Texto do depoimento"></div>
-                  <div class="form-full"><button class="btn-save" onclick="salvarDepoimento()">💾 Adicionar Depoimento</button></div>
-                </div>
-                <div id="depoAdminLista" style="margin-top:12px"></div>
-              </div>
-
-              <!-- Parceiros -->
-              <div class="form-card">
-                <h3>🤝 Parceiros (Site Público)</h3>
-                <p style="color:var(--muted);font-size:.78rem;margin-bottom:10px">Use preferencialmente logos oficiais em alta resolução, com fundo transparente (PNG ou SVG), sem distorcer a proporção. Parceiros sem logo cadastrado aparecem com um selo "logo pendente" no site até que a URL seja adicionada.</p>
-                <div class="form-grid">
-                  <div class="field-group"><label>Nome do parceiro</label><input type="text" id="pc_nome" placeholder="Ex: TotalPass"></div>
-                  <div class="field-group"><label>URL do logo (opcional)</label><input type="text" id="pc_logo" placeholder="https://..."></div>
-                  <div class="form-full"><button class="btn-save" onclick="salvarParceiro()">💾 Adicionar Parceiro</button></div>
-                </div>
-                <div id="parceirosAdminLista" style="margin-top:12px"></div>
-              </div>
-
-              <!-- Galeria -->
-              <div class="form-card">
-                <h3>🖼️ Galeria (Site Público)</h3>
-                <div class="form-grid">
-                  <div class="field-group form-full"><label>URL da foto</label><input type="text" id="gl_url" placeholder="https://..."></div>
-                  <div class="field-group form-full"><label>Legenda (opcional)</label><input type="text" id="gl_legenda" placeholder="Ex: Sala de Pilates"></div>
-                  <div class="form-full"><button class="btn-save" onclick="salvarGaleriaFoto()">💾 Adicionar Foto</button></div>
-                </div>
-                <p style="color:var(--muted);font-size:.78rem;margin-top:8px">Cole a URL de uma imagem já hospedada (ex.: Firebase Storage, Google Drive público, etc.).</p>
-                <div id="galeriaAdminLista" style="margin-top:12px"></div>
-              </div>
-
-              <!-- Tabela de Leads -->
-              <div class="table-card">
-                <div class="table-header">
-                  <span class="table-title">📊 Leads Cadastrados</span>
-                  <button class="btn btn-primary" onclick="exportarLeadsCSV()" style="margin-left:auto">📥 Exportar CSV</button>
-                </div>
-                <div id="siteLeadTableWrap" style="overflow-x:auto;padding:0 8px 12px">
-                  <p style="color:var(--muted);padding:12px;font-size:.84rem">Carregando leads...</p>
-                </div>
-              </div>
-
-              <!-- Dashboard Charts -->
-              <div class="form-card">
-                <h3>📈 Dashboard</h3>
-                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:8px">
-                  <div class="table-card" style="padding:16px"><canvas id="leadsChart"></canvas></div>
-                  <div class="table-card" style="padding:16px"><canvas id="conversionChart"></canvas></div>
-                  <div class="table-card" style="padding:16px"><canvas id="interestChart"></canvas></div>
-                  <div class="table-card" style="padding:16px"><canvas id="satisfactionChart"></canvas></div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div><!-- /site-body -->
-
-        <!-- WhatsApp flutuante (apenas na página site) -->
-        <a class="site-wa-float" href="https://wa.me/5521999681425" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-
-        <footer class="site-footer-premium">
-          <div class="footer-grid">
-            <div>
-              <div class="site-brand" style="margin-bottom:12px"><span class="mark">⬡ Mov om</span></div>
-              <p style="font-size:.84rem;color:rgba(255,255,255,.6);line-height:1.7;max-width:280px">Espaço dedicado ao cuidado integral de forma humanizada e especializada. Fisioterapia, Pilates e Yoga desde 2019.</p>
-              <div class="footer-social">
-                <a href="https://www.instagram.com/movomzenyogaepilates/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://wa.me/5521999681425" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                <a href="https://g.page/r/Ce_1CnuNaIRlEBM/review" target="_blank" aria-label="Google"><i class="fab fa-google"></i></a>
-              </div>
-            </div>
-            <div>
-              <h4>Links Rápidos</h4>
-              <a href="#" onclick="siteNav('s-sobre',null);return false">Quem Somos</a>
-              <a href="#" onclick="siteNav('s-modalidades',null);return false">Serviços</a>
-              <a href="#" onclick="siteNav('s-equipe',null);return false">Equipe</a>
-              <a href="#" onclick="siteNav('s-agendar',null);return false">Agendar</a>
-            </div>
-            <div>
-              <h4>Contato</h4>
-              <a href="https://wa.me/5521999681425" target="_blank">(21) 99968-1425</a>
-              <a href="mailto:movom.zenyoga@gmail.com">movom.zenyoga@gmail.com</a>
-              <a href="#" onclick="siteNav('s-contato',null);return false">Rua Marechal Deodoro, 577 — Duque de Caxias, RJ</a>
-            </div>
-          </div>
-          <div class="footer-bottom">
-            © 2026 Mov om Espaço De Saúde e Bem Estar · Todos os direitos reservados
-            &nbsp;·&nbsp;
-            <a href="#" onclick="abrirLoginInterno();return false;" style="color:rgba(255,255,255,.35);text-decoration:none" title="Acesso restrito">🔒</a>
-          </div>
-        </footer>
-</div>
-</div><!-- /pageSitePublico -->
-
-<!-- ══════════════════════════════
      TELA DE LOGIN
 ══════════════════════════════ -->
-<div id="telaLogin" class="hidden">
+<div id="telaLogin">
   <div class="login-card">
     <div class="login-logo">
       <div class="mark">⬡ MOVOM</div>
@@ -1278,11 +888,9 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
           <!-- ABAS INTERNAS DO FINANCEIRO -->
           <div class="fin-tabs">
             <button class="fin-tab active" onclick="finTab('entradas',this)">💰 Entradas</button>
-            <!-- Aba Financeiro Yoga oculta na UI – dados preservados no Firebase -->
-            <button class="fin-tab fin-tab-admin" onclick="finTab('yoga',this)" style="display:none">🧘 Financeiro Yoga</button>
-            <button class="fin-tab fin-tab-admin" onclick="finTab('despesas',this)">📉 Despesas</button>
-            <!-- Aba Insumos oculta na UI – dados preservados no Firebase -->
-            <button class="fin-tab fin-tab-admin" onclick="finTab('insumos',this)" style="display:none">📦 Insumos</button>
+            <button class="fin-tab" onclick="finTab('yoga',this)">🧘 Financeiro Yoga</button>
+            <button class="fin-tab" onclick="finTab('despesas',this)">📉 Despesas Totais</button>
+            <button class="fin-tab" onclick="finTab('insumos',this)">📦 Insumos</button>
           </div>
 
           <!-- ──── SUB-ABA: ENTRADAS ──── -->
@@ -1310,7 +918,9 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                   <label>Atividade</label>
                   <select id="fin_atividade">
                     <option>Pilates</option><option>Yoga</option>
-                    <option>Pilates/Yoga</option><option>Fisioterapia</option><option>Outros</option>
+                    <option>Pilates/Yoga</option><option>Fisioterapia</option><option>Gympass
+              </option>
+              <option value="Outros">Outros</option>
                   </select>
                 </div>
                 <div class="field-group">
@@ -1332,100 +942,8 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                 </div>
               </div>
             </div>
-            <p class="fin-total fin-total-admin" id="fin_totalMes">Total do mês: R$ 0,00</p>
-
-            <!-- ── DASHBOARD FINANCEIRO PROFISSIONAL ── -->
-            <div class="fin-total-admin" id="finDashboardSection">
-
-              <!-- KPI CARDS -->
-              <div class="fin-kpi-grid" id="finKpiGrid">
-                <div class="fin-kpi-card fin-kpi-entrada">
-                  <div class="fin-kpi-icon">💰</div>
-                  <div class="fin-kpi-content">
-                    <div class="fin-kpi-label">Total de Entradas</div>
-                    <div class="fin-kpi-value" id="kpi_entradas">R$ 0,00</div>
-                    <div class="fin-kpi-sub" id="kpi_entradas_sub">–</div>
-                  </div>
-                </div>
-                <div class="fin-kpi-card fin-kpi-despesa">
-                  <div class="fin-kpi-icon">📉</div>
-                  <div class="fin-kpi-content">
-                    <div class="fin-kpi-label">Total de Despesas</div>
-                    <div class="fin-kpi-value" id="kpi_despesas">R$ 0,00</div>
-                    <div class="fin-kpi-sub" id="kpi_despesas_sub">–</div>
-                  </div>
-                </div>
-                <div class="fin-kpi-card fin-kpi-lucro" id="finKpiLucroCard">
-                  <div class="fin-kpi-icon">📈</div>
-                  <div class="fin-kpi-content">
-                    <div class="fin-kpi-label">Lucro Líquido</div>
-                    <div class="fin-kpi-value" id="kpi_lucro">R$ 0,00</div>
-                    <div class="fin-kpi-sub" id="kpi_lucro_sub">–</div>
-                  </div>
-                </div>
-                <div class="fin-kpi-card fin-kpi-ticket">
-                  <div class="fin-kpi-icon">💳</div>
-                  <div class="fin-kpi-content">
-                    <div class="fin-kpi-label">Ticket Médio</div>
-                    <div class="fin-kpi-value" id="kpi_ticket">R$ 0,00</div>
-                    <div class="fin-kpi-sub" id="kpi_ticket_sub">–</div>
-                  </div>
-                </div>
-                <div class="fin-kpi-card fin-kpi-count">
-                  <div class="fin-kpi-icon">👥</div>
-                  <div class="fin-kpi-content">
-                    <div class="fin-kpi-label">Pagamentos</div>
-                    <div class="fin-kpi-value" id="kpi_pagamentos">0</div>
-                    <div class="fin-kpi-sub" id="kpi_pagamentos_sub">–</div>
-                  </div>
-                </div>
-                <div class="fin-kpi-card fin-kpi-crescimento">
-                  <div class="fin-kpi-icon">📊</div>
-                  <div class="fin-kpi-content">
-                    <div class="fin-kpi-label">Crescimento</div>
-                    <div class="fin-kpi-value" id="kpi_crescimento">–</div>
-                    <div class="fin-kpi-sub" id="kpi_crescimento_sub">vs período anterior</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- INDICADORES DE INTELIGÊNCIA -->
-              <div class="fin-insights" id="finInsights" style="display:none">
-                <div class="fin-insight-item" id="insight_melhor"></div>
-                <div class="fin-insight-item" id="insight_pior"></div>
-                <div class="fin-insight-item" id="insight_maior"></div>
-                <div class="fin-insight-item" id="insight_menor"></div>
-              </div>
-
-              <!-- GRÁFICO MISTO -->
-              <div class="table-card" id="finChartCard" style="padding:24px;margin-bottom:16px">
-                <div class="fin-chart-header">
-                  <div>
-                    <h3 style="font-family:'Nunito',sans-serif;font-weight:800;color:var(--text);margin:0 0 2px">📈 Desempenho Financeiro</h3>
-                    <p style="font-size:.75rem;color:var(--muted);margin:0" id="finChartSubtitle">Entradas · Despesas · Lucro</p>
-                  </div>
-                  <div class="fin-period-group">
-                    <button id="finChartBtnDia"  class="btn-chart-period" onclick="finChartPeriodo('dia')">Diário</button>
-                    <button id="finChartBtnSem"  class="btn-chart-period" onclick="finChartPeriodo('semana')">Semanal</button>
-                    <button id="finChartBtnMes"  class="btn-chart-period active-period" onclick="finChartPeriodo('mes')">Mensal</button>
-                    <button id="finChartBtnAno"  class="btn-chart-period" onclick="finChartPeriodo('ano')">Anual</button>
-                    <button id="finChartBtnCustom" class="btn-chart-period" onclick="finChartPeriodo('custom')">Período</button>
-                  </div>
-                </div>
-                <!-- Filtro de período personalizado -->
-                <div id="finCustomPeriod" style="display:none;margin:10px 0;display:none;gap:10px;flex-wrap:wrap;align-items:center">
-                  <label style="font-size:.78rem;font-weight:700;color:var(--muted)">De:</label>
-                  <input type="date" id="finCustomDe" style="padding:7px 12px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none">
-                  <label style="font-size:.78rem;font-weight:700;color:var(--muted)">Até:</label>
-                  <input type="date" id="finCustomAte" style="padding:7px 12px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none">
-                  <button class="btn btn-primary" style="padding:7px 16px;font-size:.8rem" onclick="renderFinChart()">Aplicar</button>
-                </div>
-                <div style="position:relative;height:320px">
-                  <canvas id="finDesempenhoChart"></canvas>
-                </div>
-              </div>
-
-            </div>
+            <p class="fin-total" id="fin_totalMes">Total do mês: R$ 0,00</p>
+            <div class="table-card">
               <table class="data-table">
                 <thead><tr><th>Nome</th><th>Gmail</th><th>CPF/CNPJ</th><th>Atividade</th><th>Pagamento</th><th>Valor</th><th>Data</th><th>NF</th><th></th></tr></thead>
                 <tbody id="fin_tabela"></tbody>
@@ -1476,19 +994,17 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                 <div class="field-group"><label>Mês</label><select id="desp_mes"></select></div>
                 <div class="field-group"><label>Data</label><input type="date" id="desp_data"></div>
                 <div class="field-group"><label>Nome da despesa</label><input type="text" id="desp_nome" placeholder="Ex: Aluguel, Energia..."></div>
-                <div class="field-group"><label>Categoria</label>
+                <div class="field-group"><label>Centro de custo</label>
                   <select id="desp_centro">
                     <option value="">Selecione...</option>
-                    <option>Pilates/Yoga</option>
-                    <option>Fisioterapia</option>
-                    <option>Outros</option>
-                    <option>Contas</option>
+                    <option>Administrativo</option><option>Operacional</option>
+                    <option>Marketing</option><option>RH / Pessoal</option>
+                    <option>Equipamentos</option><option>Gympass
+              </option>
+              <option value="Outros">Outros</option>
                   </select>
                 </div>
-                <div class="field-group form-full"><label>Descrição</label><input type="text" id="desp_descricao" placeholder="Descrição detalhada da despesa"></div>
                 <div class="field-group"><label>Observação</label><input type="text" id="desp_obs" placeholder="Observações adicionais"></div>
-                <div class="field-group"><label>Nota Fiscal (NF)</label><input type="text" id="desp_nf" placeholder="Nº NF ou referência"></div>
-                <div class="field-group"><label>Anexar NF (arquivo)</label><input type="file" id="desp_nf_arquivo" accept=".pdf,.jpg,.jpeg,.png" style="padding:6px 0"></div>
                 <div class="field-group"><label>Valor R$</label><input type="number" id="desp_valor" placeholder="0,00" step="0.01"></div>
                 <div class="form-full">
                   <button class="btn-save" onclick="addDespesa()">Adicionar Despesa</button>
@@ -1515,7 +1031,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
               </div>
               <div style="overflow-x:auto">
                 <table class="data-table">
-                  <thead><tr><th>Data</th><th>Nome</th><th>Categoria</th><th>Descrição</th><th>Observação</th><th>NF</th><th>Valor</th><th></th></tr></thead>
+                  <thead><tr><th>Data</th><th>Nome</th><th>Centro de Custo</th><th>Observação</th><th>Valor</th><th></th></tr></thead>
                   <tbody id="desp_tabela"></tbody>
                 </table>
               </div>
@@ -1552,56 +1068,16 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
       <!-- ════ GRADE DE HORÁRIOS ════ -->
       <div class="page" id="page-grade">
         <div class="inner">
-
-          <!-- ABAS DA GRADE -->
-          <div class="fin-tabs" style="margin-bottom:20px">
-            <button class="fin-tab active" onclick="gradeTab('geral',this)" id="gradeTabGeral">📅 Grade de Horários</button>
-            <button class="fin-tab" onclick="gradeTab('yoga',this)" id="gradeTabYoga">🧘 Yoga</button>
-            <button class="fin-tab" onclick="gradeTab('fisioterapia',this)" id="gradeTabFisio">🦵 Fisioterapia</button>
+          <div class="colab-controls">
+            <label>Filtrar dia:</label>
+            <select id="filtroDia">
+              <option value="Todos">Todos os dias</option>
+              <option>Segunda-feira</option><option>Terça-feira</option>
+              <option>Quarta-feira</option><option>Quinta-feira</option>
+              <option>Sexta-feira</option><option>Sábado</option>
+            </select>
           </div>
-
-          <!-- ABA GRADE GERAL (original) -->
-          <div id="grade-geral-content">
-            <div class="colab-controls">
-              <label>Filtrar dia:</label>
-              <select id="filtroDia">
-                <option value="Todos">Todos os dias</option>
-                <option>Segunda-feira</option><option>Terça-feira</option>
-                <option>Quarta-feira</option><option>Quinta-feira</option>
-                <option>Sexta-feira</option><option>Sábado</option>
-              </select>
-            </div>
-            <div id="grade_container"></div>
-          </div>
-
-          <!-- ABA YOGA -->
-          <div id="grade-yoga-content" style="display:none">
-            <div class="colab-controls">
-              <label>Filtrar dia:</label>
-              <select id="filtroDiaYoga">
-                <option value="Todos">Todos os dias</option>
-                <option>Segunda-feira</option><option>Terça-feira</option>
-                <option>Quarta-feira</option><option>Quinta-feira</option>
-                <option>Sexta-feira</option><option>Sábado</option>
-              </select>
-            </div>
-            <div id="grade_yoga_container"></div>
-          </div>
-
-          <!-- ABA FISIOTERAPIA -->
-          <div id="grade-fisio-content" style="display:none">
-            <div class="colab-controls">
-              <label>Filtrar dia:</label>
-              <select id="filtroDiaFisio">
-                <option value="Todos">Todos os dias</option>
-                <option>Segunda-feira</option><option>Terça-feira</option>
-                <option>Quarta-feira</option><option>Quinta-feira</option>
-                <option>Sexta-feira</option><option>Sábado</option>
-              </select>
-            </div>
-            <div id="grade_fisio_container"></div>
-          </div>
-
+          <div id="grade_container"></div>
         </div>
       </div>
 
@@ -1682,32 +1158,11 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                 <button class="btn-del" onclick="apagarAvaliacaoAtual()">🗑️ Apagar</button>
               </div>
               <div id="evolucoes" style="margin-top:20px"></div>
-              <div class="form-card" style="margin-top:14px;border:2px solid var(--lilas-mid)">
-                <h3 style="font-size:.95rem">📝 Nova Evolução</h3>
-                <div class="form-grid">
-                  <div class="field-group">
-                    <label>Data</label>
-                    <input type="date" id="evoData">
-                  </div>
-                  <div class="field-group">
-                    <label>Profissional / Registro Conselho</label>
-                    <input type="text" id="evoProfissional" placeholder="Nome e registro">
-                  </div>
-                  <div class="field-group form-full">
-                    <label>Procedimento (Proced)</label>
-                    <textarea id="evoProcedimento" rows="2" placeholder="Procedimentos realizados..."></textarea>
-                  </div>
-                  <div class="field-group form-full">
-                    <label>Intercorrência (Interc)</label>
-                    <textarea id="evoIntercorrencia" rows="2" placeholder="Intercorrências..."></textarea>
-                  </div>
-                  <div class="field-group form-full">
-                    <label>Evolução (Evol)</label>
-                    <textarea id="evoEvolucao" rows="3" placeholder="Evolução do estado de saúde..."></textarea>
-                  </div>
-                </div>
-                <button class="btn-save" onclick="salvarEvolucao()">Salvar Evolução</button>
+              <div class="field-group" style="margin-top:14px">
+                <label>Nova Evolução</label>
+                <textarea id="textoEvolucao" rows="7" style="font-family:monospace;font-size:.84rem" placeholder="DATA: &#10;PROCEDIMENTOS: &#10;INTERCORRÊNCIA: &#10;EVOLUÇÃO DO ESTADO DE SAÚDE: &#10;PROFISSIONAL/REGISTRO CONSELHO: "></textarea>
               </div>
+              <button class="btn-save" onclick="salvarEvolucao()">Salvar Evolução</button>
             </div>
           </div>
         </div>
@@ -1746,11 +1201,216 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 
       <!-- yoga integrado ao Financeiro -->
 
-      <!-- ════ SITE INSTITUCIONAL (stub – abre tela pública) ════ -->
-      <div class="page" id="page-site-interno">
-        <div class="inner" style="text-align:center;padding:80px 32px">
-          <p style="color:var(--muted);font-size:.9rem">Abrindo site institucional…</p>
+      <!-- ════ SITE INSTITUCIONAL ════ -->
+      <div class="page" id="page-site">
+        <!-- HERO DO SITE -->
+        <div class="site-hero">
+          <nav class="site-topnav" id="siteTopNav">
+            <div class="site-brand"><span class="mark">⬡ Mov om</span></div>
+            <div class="site-nav-links" id="siteNavLinks">
+              <a href="#" onclick="siteNav('s-home',this);return false">Início</a>
+              <a href="#" onclick="siteNav('s-modalidades',this);return false">Modalidades</a>
+              <a href="#" onclick="siteNav('s-horarios',this);return false">Horários</a>
+              <a href="#" onclick="siteNav('s-agendar',this);return false">Agendar</a>
+              <a href="#" onclick="siteNav('s-satisfacao',this);return false">Satisfação</a>
+              <a href="#" onclick="siteNav('s-contato',this);return false">Contato</a>
+              <a href="#" onclick="siteNav('s-admin',this);return false">Admin</a>
+            </div>
+          </nav>
+          <div class="site-hero-content">
+            <p class="site-tag">Fisioterapia • Pilates • Yoga</p>
+            <h1>Mov om Espaço De Saúde e Bem Estar</h1>
+            <p>Um espaço dedicado ao cuidado integral do corpo e da mente com atendimento profissional e humanizado.</p>
+            <div class="site-btns">
+              <a class="site-btn primary" href="#" onclick="siteNav('s-agendar',null);return false">Agende sua avaliação</a>
+              <a class="site-btn wa" href="https://wa.me/5521999681425" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            </div>
+          </div>
         </div>
+
+        <!-- SEÇÕES DO SITE -->
+        <div class="site-body">
+          <!-- HOME -->
+          <div class="site-section active-s" id="s-home">
+            <div class="site-container">
+              <h2 class="site-h2">Bem-vindo(a)</h2>
+              <p style="color:var(--muted);margin-bottom:24px;line-height:1.7">A Mov om Espaço De Saúde e Bem Estar é um ambiente dedicado ao cuidado integral do corpo e da mente, oferecendo fisioterapia, pilates e yoga com acompanhamento profissional e humanizado.</p>
+              <div class="site-btns" style="margin-bottom:32px">
+                <a class="site-btn ig" href="https://www.instagram.com/movomzenyogaepilates/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                <a class="site-btn wa" href="https://wa.me/5521999681425" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                <a class="site-btn loc" href="https://www.google.com/maps/search/?api=1&query=Rua+Marechal+Deodoro%2C+577%2C+salas+605%2C+805+e+808+-+25+de+Agosto%2C+Duque+de+Caxias+-+RJ" target="_blank"><i class="fas fa-map-marker-alt"></i> Localização</a>
+              </div>
+              <h2 class="site-h2">Nossas Atividades</h2>
+              <div class="site-cards" style="margin-top:16px">
+                <div class="site-card"><h3>Serviços</h3><p style="color:var(--muted);font-size:.84rem">Fisioterapia, Pilates, Método Suspensus, Elastic Training, treino cardiorrespiratório, funcional, yoga/aéreo yoga, meditação, massagens e drenagem linfática.</p></div>
+                <div class="site-card"><h3>Programas</h3><p style="color:var(--muted);font-size:.84rem"><strong>Mov Zen:</strong> yoga e meditação para pacientes oncológicos.<br><br><strong>Mov Recovery:</strong> recuperação muscular para atletas profissionais e amadores.</p></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MODALIDADES -->
+          <div class="site-section" id="s-modalidades">
+            <div class="site-container">
+              <h2 class="site-h2">Nossas Modalidades</h2>
+              <div class="site-cards" style="margin-top:16px">
+                <div class="site-card"><h3>🦵 Fisioterapia</h3><p style="color:var(--muted);font-size:.84rem">Atendimento individualizado com profissionais qualificados para reabilitação, prevenção e promoção da saúde.</p></div>
+                <div class="site-card"><h3>🧘 Pilates</h3><p style="color:var(--muted);font-size:.84rem">Método de exercícios com foco no fortalecimento do core, equilíbrio, flexibilidade e reabilitação.</p></div>
+                <div class="site-card"><h3>☮️ Yoga</h3><p style="color:var(--muted);font-size:.84rem">Diversas modalidades: Integrativa, Aéreo, Hatha, Chair, Restaurativa, Yin, Acroyoga, Meditação, Teens e Kids.</p></div>
+                <div class="site-card"><h3>🏃 Recovery</h3><p style="color:var(--muted);font-size:.84rem">Programa especializado em recuperação muscular e performance para atletas profissionais e amadores.</p></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- HORÁRIOS -->
+          <div class="site-section" id="s-horarios">
+            <div class="site-container">
+              <h2 class="site-h2">Horários</h2>
+              <h3 style="color:var(--lilas);font-family:'Nunito',sans-serif;font-weight:800;margin:24px 0 12px">Pilates</h3>
+              <div class="site-cards">
+                <div class="site-card"><h3>Segunda a Sexta</h3><p style="color:var(--muted)">07:00 às 19:00<br><small>Intervalo: 12:00 às 13:00</small></p></div>
+                <div class="site-card"><h3>Sábado</h3><p style="color:var(--muted)">07:00 às 12:00</p></div>
+                <div class="site-card"><h3>Domingo</h3><p style="color:var(--muted)">Fechado</p></div>
+              </div>
+              <h3 style="color:var(--lilas);font-family:'Nunito',sans-serif;font-weight:800;margin:28px 0 12px">Yoga</h3>
+              <div class="site-cards">
+                <div class="site-card"><h3>Segunda</h3><p style="color:var(--muted);font-size:.84rem">09:30 Integrativa<br>10:30 Meditação<br>17:20 Integrativa<br>18:30 Integrativa</p></div>
+                <div class="site-card"><h3>Terça</h3><p style="color:var(--muted);font-size:.84rem">07:00 Integrativa<br>09:30 Sutil<br>17:00 Teens<br>18:10 Kids</p></div>
+                <div class="site-card"><h3>Quarta</h3><p style="color:var(--muted);font-size:.84rem">08:00 Aéreo<br>09:30 Integrativa<br>17:20 Integrativa<br>18:30 Integrativa</p></div>
+                <div class="site-card"><h3>Quinta</h3><p style="color:var(--muted);font-size:.84rem">07:00 Integrativa<br>09:30 Sutil<br>17:20 Integrativa<br>18:30 Integrativa</p></div>
+                <div class="site-card"><h3>Sexta</h3><p style="color:var(--muted);font-size:.84rem">07:00 Aéreo<br>08:15 Hatha<br>09:30 Chair<br>10:40 Restaurativa<br>17:20 / 18:30 Yin</p></div>
+                <div class="site-card"><h3>Sábado</h3><p style="color:var(--muted);font-size:.84rem">08:00 Acroyoga<br>09:15 Hatha<br>10:30 Aéreo<br>11:45 Restaurativa</p></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- AGENDAMENTO -->
+          <div class="site-section" id="s-agendar">
+            <div class="site-container">
+              <h2 class="site-h2">Agende sua avaliação</h2>
+              <p style="color:var(--muted);margin-bottom:20px">Preencha o formulário e entraremos em contato pelo WhatsApp.</p>
+              <div class="form-card">
+                <div class="form-grid">
+                  <div class="field-group"><label>Data</label><input type="date" id="lead_data"></div>
+                  <div class="field-group"><label>Nome</label><input type="text" id="lead_nome" placeholder="Seu nome completo"></div>
+                  <div class="field-group"><label>WhatsApp</label><input type="text" id="lead_whatsapp" placeholder="(21) 99999-9999"></div>
+                  <div class="field-group"><label>Interesse</label><input type="text" id="lead_interesse" placeholder="Pilates, Yoga, Fisioterapia..."></div>
+                  <div class="field-group"><label>Indicação</label><input type="text" id="lead_indicacao" placeholder="Quem te indicou?"></div>
+                  <div class="field-group"><label>Convênio</label><input type="text" id="lead_convenio" placeholder="TotalPass, Gympass..."></div>
+                  <div class="form-full"><button class="btn-save" onclick="enviarLead()">📤 Enviar</button></div>
+                </div>
+                <p id="leadMsg" style="margin-top:12px;font-weight:600;color:var(--ciano);display:none"></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- SATISFAÇÃO PÚBLICA -->
+          <div class="site-section" id="s-satisfacao">
+            <div class="site-container">
+              <h2 class="site-h2">Pesquisa de Satisfação</h2>
+              <p style="color:var(--muted);margin-bottom:20px">Sua opinião é muito importante para nós!</p>
+              <div class="form-card">
+                <div class="form-grid">
+                  <div class="field-group"><label>Nome (opcional)</label><input type="text" id="survey_nome" placeholder="Seu nome"></div>
+                  <div class="field-group"><label>Nota (1 a 5)</label><input type="number" id="survey_nota" min="1" max="5" placeholder="5"></div>
+                  <div class="field-group form-full"><label>Comentário</label><input type="text" id="survey_comentario" placeholder="Conte sua experiência..."></div>
+                  <div class="form-full"><button class="btn-save" onclick="enviarSurvey()">⭐ Enviar Avaliação</button></div>
+                </div>
+                <p id="surveyMsg" style="margin-top:12px;font-weight:600;color:var(--ciano);display:none"></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════ NOSSA EQUIPE ════ -->
+<div class="secao-equipe" id="equipe">
+  <div class="secao-equipe-container">
+    <div class="secao-equipe-header">
+      <h2>🌟 Nossa Equipe</h2>
+      <p>Conheça os profissionais dedicados que compõem o MovOm. Cada membro traz experiência, paixão e compromisso com a sua saúde e bem-estar.</p>
+    </div>
+
+    <div class="equipe-grid" id="gridProfissionais">
+      <!-- Cards serão gerados via JavaScript -->
+    </div>
+  </div>
+</div>
+<!-- ════ /NOSSA EQUIPE ════ -->
+
+
+    <!-- CONTATO -->
+          <div class="site-section" id="s-contato">
+            <div class="site-container">
+              <h2 class="site-h2">Contato</h2>
+              <div class="site-card" style="max-width:440px">
+                <p style="margin-bottom:12px"><i class="fas fa-envelope" style="color:var(--lilas);margin-right:8px"></i> movom.zenyoga@gmail.com</p>
+                <p style="margin-bottom:12px"><i class="fab fa-whatsapp" style="color:var(--ciano);margin-right:8px"></i> (21) 99968-1425</p>
+                <a class="site-btn loc" style="margin-top:12px;display:inline-flex" href="https://www.google.com/maps/search/?api=1&query=Rua+Marechal+Deodoro%2C+577%2C+salas+605%2C+805+e+808+-+25+de+Agosto%2C+Duque+de+Caxias+-+RJ%2C+Centro+Empresarial+Jomasa" target="_blank" rel="noopener"><i class="fas fa-map-marker-alt"></i> Localização no Mapa</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- ADMIN DO SITE -->
+          <div class="site-section" id="s-admin">
+            <div class="site-container">
+              <h2 class="site-h2">Área Administrativa – Site</h2>
+
+              <!-- Leads -->
+              <div class="form-card">
+                <h3>📋 Cadastro de Lead (Admin)</h3>
+                <div class="form-grid">
+                  <div class="field-group"><label>Data</label><input type="date" id="admlead_data"></div>
+                  <div class="field-group"><label>Nome</label><input type="text" id="admlead_nome" placeholder="Nome"></div>
+                  <div class="field-group"><label>WhatsApp</label><input type="text" id="admlead_whatsapp" placeholder="WhatsApp"></div>
+                  <div class="field-group"><label>Interesse</label><input type="text" id="admlead_interesse" placeholder="Interesse"></div>
+                  <div class="field-group"><label>Indicação</label><input type="text" id="admlead_indicacao" placeholder="Indicação"></div>
+                  <div class="field-group"><label>Convênio</label><input type="text" id="admlead_convenio" placeholder="Convênio"></div>
+                  <div class="field-group"><label>Matriculou?</label>
+                    <select id="admlead_matriculou"><option value="Não">Não matriculou</option><option value="Sim">Matriculou</option></select>
+                  </div>
+                  <div class="field-group"><label>Motivo</label><input type="text" id="admlead_motivo" placeholder="Motivo da não matrícula"></div>
+                  <div class="form-full"><button class="btn-save" onclick="salvarLeadAdmin()">💾 Salvar Lead</button></div>
+                </div>
+              </div>
+
+              <!-- Pesquisa de satisfação admin -->
+              <div class="form-card">
+                <h3>⭐ Pesquisa de Satisfação (Admin)</h3>
+                <div class="form-grid">
+                  <div class="field-group"><label>Nome</label><input type="text" id="admsurvey_nome" placeholder="Nome (opcional)"></div>
+                  <div class="field-group"><label>Nota (1-5)</label><input type="number" id="admsurvey_nota" min="1" max="5" placeholder="5"></div>
+                  <div class="field-group form-full"><label>Comentário</label><input type="text" id="admsurvey_comentario" placeholder="Comentário"></div>
+                  <div class="form-full"><button class="btn-save" onclick="salvarSurveyAdmin()">💾 Salvar Resposta</button></div>
+                </div>
+              </div>
+
+              <!-- Tabela de Leads -->
+              <div class="table-card">
+                <div class="table-header">
+                  <span class="table-title">📊 Leads Cadastrados</span>
+                  <button class="btn btn-primary" onclick="exportarLeadsCSV()" style="margin-left:auto">📥 Exportar CSV</button>
+                </div>
+                <div id="siteLeadTableWrap" style="overflow-x:auto;padding:0 8px 12px">
+                  <p style="color:var(--muted);padding:12px;font-size:.84rem">Carregando leads...</p>
+                </div>
+              </div>
+
+              <!-- Dashboard Charts -->
+              <div class="form-card">
+                <h3>📈 Dashboard</h3>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:8px">
+                  <div class="table-card" style="padding:16px"><canvas id="leadsChart"></canvas></div>
+                  <div class="table-card" style="padding:16px"><canvas id="conversionChart"></canvas></div>
+                  <div class="table-card" style="padding:16px"><canvas id="interestChart"></canvas></div>
+                  <div class="table-card" style="padding:16px"><canvas id="satisfactionChart"></canvas></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div><!-- /site-body -->
+
+        <!-- WhatsApp flutuante (apenas na página site) -->
+        <a class="site-wa-float" href="https://wa.me/5521999681425" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <div class="site-footer">© 2026 Mov om Espaço De Saúde e Bem Estar</div>
       </div>
 
       <!-- ════ GESTÃO DE USUÁRIOS (ADM) ════ -->
@@ -1845,10 +1505,13 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
     <div class="opcoes-grid">
       <label><input type="checkbox" id="fisio_totalpass"> Totalpass</label>
       <label><input type="checkbox" id="fisio_mensalidade"> Mensalidade</label>
-      <label><input type="checkbox" id="fisio_gympass_id"> Gympass</label>
-      <label><input type="checkbox" id="fisio_outros_identificacao"> Outros</label>
+      <label><input type="checkbox" id="fisio_outros_identificacao"> Gympass
+              </option>
+              <option value="Outros">Outros</label>
     </div>
-    <input type="text" id="fisio_outros_identificacao_texto" placeholder="Descreva Outros">
+    <input type="text" id="fisio_outros_identificacao_texto" placeholder="Descreva Gympass
+              </option>
+              <option value="Outros">Outros">
     <input type="text" id="fisio_nomeCompleto" placeholder="Nome completo">
     <input type="date" id="fisio_dataNascimento" placeholder="Data de nascimento">
     <input type="text" id="fisio_cpf" placeholder="CPF">
@@ -1943,7 +1606,9 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
       <label><input type="checkbox" id="fisio_edema"> Edema</label>
       <label><input type="checkbox" id="fisio_cicatriz"> Cicatrização incompleta</label>
       <label><input type="checkbox" id="fisio_eritema"> Eritemas</label>
-      <label><input type="checkbox" id="fisio_outros"> Outros</label>
+      <label><input type="checkbox" id="fisio_outros"> Gympass
+              </option>
+              <option value="Outros">Outros</label>
     </div>
     <label>Detalhes adicionais da inspeção/palpação:</label>
     <textarea id="fisio_inspecaoDetalhes"></textarea>
@@ -2056,10 +1721,13 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
     <div class="opcoes-grid">
       <label><input type="checkbox" id="pilates_totalpass"> Totalpass</label>
       <label><input type="checkbox" id="pilates_mensalidade"> Mensalidade</label>
-      <label><input type="checkbox" id="pilates_gympass_id"> Gympass</label>
-      <label><input type="checkbox" id="pilates_outros_identificacao"> Outros</label>
+      <label><input type="checkbox" id="pilates_outros_identificacao"> Gympass
+              </option>
+              <option value="Outros">Outros</label>
     </div>
-    <input type="text" id="pilates_outros_identificacao_texto" placeholder="Descreva Outros">
+    <input type="text" id="pilates_outros_identificacao_texto" placeholder="Descreva Gympass
+              </option>
+              <option value="Outros">Outros">
 
     <label>Parceria? Se sim qual?</label>
     <input type="text" id="pilates_parceria">
@@ -2214,7 +1882,9 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
       <label><input type="checkbox" id="pilates_edema"> Edema</label>
       <label><input type="checkbox" id="pilates_cicatriz"> Cicatrização incompleta</label>
       <label><input type="checkbox" id="pilates_eritema"> Eritemas</label>
-      <label><input type="checkbox" id="pilates_outros"> Outros</label>
+      <label><input type="checkbox" id="pilates_outros"> Gympass
+              </option>
+              <option value="Outros">Outros</label>
     </div>
 
     <!-- Novo campo para detalhes adicionais de inspeção -->
@@ -2349,6 +2019,8 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
     <input type="number" id="pilates_td2_subidas">
     <label>Teste de Marcha Estacionária (TME2): número de elevações do joelho:</label>
     <input type="number" id="pilates_tme2_elevacoes">
+    <label>Escala de Borg (Dispneia):</label>
+    <input type="text" id="pilates_borg_dispneia">
 
     <!-- ================= FOTOS DA AVALIAÇÃO ================= -->
     <h4>📷 Fotos na Avaliação</h4>
@@ -2423,24 +2095,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
         <label>Região:</label>
         <input type="text" id="pilates_regiao1">
       </div>
-      <div>
-        <label>EVA 2:</label>
-        <input type="text" id="pilates_eva2">
-        <label>Região 2:</label>
-        <input type="text" id="pilates_regiao2">
-      </div>
-      <div>
-        <label>EVA 3:</label>
-        <input type="text" id="pilates_eva3">
-        <label>Região 3:</label>
-        <input type="text" id="pilates_regiao3">
-      </div>
-      <div>
-        <label>EVA 4:</label>
-        <input type="text" id="pilates_eva4">
-        <label>Região 4:</label>
-        <input type="text" id="pilates_regiao4">
-      </div>
+
     </div>
 
     <!-- ================= ESCALA DE BORG ================= -->
@@ -2998,7 +2653,9 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 <label><input type="checkbox"> Perde fezes</label>
 </div>
 
-<label>Outro:</label>
+<label>Gympass
+              </option>
+              <option value="Outros">Outro:</label>
 <input type="text">
 </div>
 
@@ -3126,17 +2783,8 @@ function iniciarSessao(u){
   document.getElementById("sbNome").textContent = u.nome;
   document.getElementById("sbRole").textContent = u.role==="adm" ? "Administrador" : "Colaborador";
 
-  // Permissão colaborador: ocultar abas financeiras restritas
-  // Permissão colaborador: ocultar abas financeiras restritas e total mensal
-  if(u.role === "colab"){
-    setTimeout(()=>{
-      document.querySelectorAll(".fin-tab-admin").forEach(el=>el.style.display="none");
-      // Ocultar total mensal de entradas para colaboradores
-      document.querySelectorAll(".fin-total-admin").forEach(el=>el.classList.add("colab-hidden"));
-    }, 100);
-  }
-
   montarMenu();
+  // Dados serão carregados via lazy loading quando a página for aberta
   navigate(document.querySelector(".nav-item"));
 }
 
@@ -3230,96 +2878,9 @@ function siteNav(id, btn){
   if(target) target.classList.add("active-s");
   document.querySelectorAll(".site-nav-links a").forEach(b=>b.classList.remove("active-snav"));
   if(btn) btn.classList.add("active-snav");
-  // Fecha o menu mobile ao navegar
-  const navLinks = document.getElementById("siteNavLinks");
-  if(navLinks) navLinks.classList.remove("nav-open");
   // Inicia Firebase do site quando admin é aberto
   if(id==="s-admin") initSiteFirebase();
-  window.scrollTo({top:0,behavior:"smooth"});
 }
-
-window.toggleSiteNav = function(){
-  document.getElementById("siteNavLinks")?.classList.toggle("nav-open");
-};
-
-window.toggleServicoAcc = function(id){
-  const el = document.getElementById(id);
-  if(!el) return;
-  const jaAberto = el.classList.contains("aberto");
-  document.querySelectorAll(".servico-acc").forEach(a=>a.classList.remove("aberto"));
-  if(!jaAberto) el.classList.add("aberto");
-};
-
-// Navbar muda de aparência ao rolar a página
-window.addEventListener("scroll", function(){
-  const nav = document.getElementById("siteTopNav");
-  if(!nav) return;
-  if(window.scrollY > 40) nav.classList.add("nav-scrolled");
-  else nav.classList.remove("nav-scrolled");
-}, {passive:true});
-
-/* ══════════════════════════════
-   CONTROLE DE TELAS (Site Público ↔ Login ↔ App)
-══════════════════════════════ */
-
-function mostrarSitePublico(){
-  document.getElementById('pageSitePublico').style.display = '';
-  document.getElementById('telaLogin').classList.add('hidden');
-  document.getElementById('app').classList.add('hidden');
-  siteNav('s-home', document.querySelector('#siteNavLinks a'));
-  if(typeof initSitePublicContent === "function") initSitePublicContent();
-}
-
-function mostrarLogin(){
-  document.getElementById('pageSitePublico').style.display = 'none';
-  document.getElementById('telaLogin').classList.remove('hidden');
-  document.getElementById('app').classList.add('hidden');
-}
-
-function abrirLoginInterno(){
-  mostrarLogin();
-}
-
-// Patch: oculta site público ao entrar no sistema
-const _iniciarSessaoBase = window.iniciarSessao || iniciarSessao;
-window.iniciarSessao = function(u){
-  document.getElementById('pageSitePublico').style.display = 'none';
-  _iniciarSessaoBase(u);
-};
-
-// Patch: ao fazer logout volta para o site público
-window.logout = function(){
-  usuarioAtual = null;
-  document.getElementById('app').classList.add('hidden');
-  document.getElementById('telaLogin').classList.add('hidden');
-  document.getElementById('pageSitePublico').style.display = '';
-  siteNav('s-home', document.querySelector('#siteNavLinks a'));
-};
-
-// Patch: clique em "Site MOVOM" no menu interno mostra o site sem sair da sessão
-const _navigateBase = window.navigate || navigate;
-window.navigate = function(el){
-  if(!el) return;
-  if(el.dataset && el.dataset.page === 'site'){
-    document.getElementById('pageSitePublico').style.display = '';
-    document.getElementById('app').classList.add('hidden');
-    siteNav('s-home', document.querySelector('#siteNavLinks a'));
-    if(typeof initSitePublicContent === "function") initSitePublicContent();
-    return;
-  }
-  _navigateBase(el);
-};
-
-// Inicialização segura após DOM pronto
-document.addEventListener('DOMContentLoaded', function(){
-  const url = window.location.search + window.location.hash;
-  if(url.includes('admin') || url.includes('login')){
-    mostrarLogin();
-  } else {
-    mostrarSitePublico();
-  }
-});
-
 </script>
 
 <!-- FIREBASE INIT + MÓDULOS -->
@@ -3337,7 +2898,6 @@ const fbAval   = firebase.initializeApp({apiKey:"AIzaSyAFNuEzaEvvpBKBGNG7NUf3zt7
 const fbAgenda = firebase.initializeApp({apiKey:"AIzaSyDQvA6XiiwiyMrh0xjdy5s4QNjXwIgQoh4",authDomain:"agendamovom.firebaseapp.com",databaseURL:"https://agendamovom-default-rtdb.firebaseio.com",projectId:"agendamovom"},"agenda");
 const fbIns    = firebase.initializeApp({apiKey:"AIzaSyByv8SN7FXTKG9kc2jJCeYGMa86R0ZVf9g",databaseURL:"https://insumos-41ece-default-rtdb.firebaseio.com",projectId:"insumos-41ece"},"ins");
 const fbYoga   = firebase.initializeApp({apiKey:"AIzaSyDyD1PIfduFrLl-vXlBVisZFirQ3iKi2vI",authDomain:"yoga-4abef.firebaseapp.com",projectId:"yoga-4abef",storageBucket:"yoga-4abef.firebasestorage.app",messagingSenderId:"217283131263",appId:"1:217283131263:web:0431c954294ce56d7ecc4a"},"yoga");
-const fbSite   = firebase.initializeApp({apiKey:"AIzaSyBUHtONEQOLOiP7mtr3dRaP2_-pDqIEQxg",authDomain:"movomsite.firebaseapp.com",projectId:"movomsite",storageBucket:"movomsite.firebasestorage.app",messagingSenderId:"655604185413",appId:"1:655604185413:web:61e1dbbcdc15cd7184a62c",databaseURL:"https://movomsite-default-rtdb.firebaseio.com"},"site");
 
 const dbColab  = fbColab.database();
 const dbFin    = fbFin.database();
@@ -3346,7 +2906,6 @@ const dbAval   = fbAval.database();
 const dbAgenda = fbAgenda.database();
 const dbIns    = fbIns.database();
 const fsYoga   = fbYoga.firestore();
-const dbSite   = fbSite.database();
 
 window.inicializarFirebases = function(){ 
   // Carrega apenas o que está visível no momento
@@ -3595,17 +3154,15 @@ window.removerColaborador=function(){ if(confirm("Remover?")){ dbColab.ref("cola
    INICIALIZAÇÃO – injeta fichas no DOM
 ══════════════════════════════ */
 document.addEventListener("DOMContentLoaded", function(){
+  // Move fichas do container oculto para dentro da page de avaliações
   const container = document.getElementById("fichasContainer");
   const target    = document.getElementById("fichasAval");
   if(container && target){
-    while(container.firstChild){ target.appendChild(container.firstChild); }
+    while(container.firstChild){
+      target.appendChild(container.firstChild);
+    }
     container.remove();
   }
-  // Pesquisa em tempo real nas avaliações
-  setTimeout(()=>{
-    const pesqEl=document.getElementById("pesquisaAvaliacao");
-    if(pesqEl) pesqEl.addEventListener("input",()=>{ if(typeof carregarAvaliacoes==="function") carregarAvaliacoes(); });
-  }, 1500);
 });
 
 /* ══════════════════════════════
@@ -3614,11 +3171,6 @@ document.addEventListener("DOMContentLoaded", function(){
 let _finInit = {entradas:false, yoga:false, despesas:false, insumos:false};
 
 function finTab(id, btn){
-  // Colaboradores só podem ver Entradas
-  if(usuarioAtual && usuarioAtual.role === "colab" && id !== "entradas"){
-    alert("Acesso restrito. Colaboradores visualizam apenas a aba Entradas.");
-    return;
-  }
   document.querySelectorAll(".fin-subpage").forEach(p=>p.classList.remove("active"));
   document.getElementById("fin-"+id).classList.add("active");
   document.querySelectorAll(".fin-tab").forEach(b=>b.classList.remove("active"));
@@ -3642,14 +3194,10 @@ let finCurrentRef=null;
 function initFin(){
   const meses=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
   const sel=document.getElementById("fin_mesSelect");
-  if(!sel.options.length){
-    meses.forEach(m=>{const o=document.createElement("option");o.value=o.textContent=m;sel.appendChild(o);});
-    sel.value=meses[new Date().getMonth()];
-    sel.addEventListener("change",carregarFinanceiro);
-  }
+  meses.forEach(m=>{const o=document.createElement("option");o.value=o.textContent=m;sel.appendChild(o);});
+  sel.value=meses[new Date().getMonth()];
+  sel.addEventListener("change",carregarFinanceiro);
   carregarFinanceiro();
-  // Inicia listeners em tempo real do dashboard profissional
-  initFinDashListeners();
 }
 
 window.addEntrada=function(){
@@ -3678,483 +3226,11 @@ function carregarFinanceiro(){
       tabela.appendChild(tr);
     });
     totalEl.innerText=`Total do mês: R$ ${tot.toFixed(2)}`;
-    // Atualiza gráfico após carregar entradas
-    carregarDadosParaGrafico();
   });
 }
 window.updateNF=(mes,id,v)=>dbFin.ref(`entradas/${mes}/${id}`).update({nf:v});
 window.updateCPF=(mes,id,v)=>dbFin.ref(`entradas/${mes}/${id}`).update({cpf:v});
 window.delEntrada=(mes,id)=>dbFin.ref(`entradas/${mes}/${id}`).remove();
-
-/* ══════════════════════════════
-   DASHBOARD FINANCEIRO PROFISSIONAL
-══════════════════════════════ */
-let finChartInstance = null;
-let finChartPeriodoAtual = 'mes';
-
-// Cache real: { entradas: {mesKey: [{valor, data}, ...]}, despesas: {mesKey: [{valor, data}, ...]} }
-let finDashCache = { entradas: {}, despesas: {} };
-let finDashListeners = { entradas: null, despesas: null };
-
-/* Formato de moeda */
-function fmtBRL(v){ return 'R$ '+Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
-
-/* Converte string de data de entrada para YYYY-MM-DD */
-function parseDateEntry(str){
-  if(!str) return null;
-  // Ex: "22/01/2025, 10:30:00" ou "2025-01-22"
-  if(/^\d{4}-\d{2}-\d{2}/.test(str)) return str.slice(0,10);
-  const m = str.match(/(\d{2})\/(\d{2})\/(\d{4})/);
-  if(m) return `${m[3]}-${m[2]}-${m[1]}`;
-  return null;
-}
-
-/* Inicializa listeners em tempo real para dashboard */
-function initFinDashListeners(){
-  const MESES_NOME = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
-
-  // Listener para TODAS as entradas (todos os meses)
-  if(finDashListeners.entradas) finDashListeners.entradas.off();
-  finDashListeners.entradas = dbFin.ref("entradas");
-  finDashListeners.entradas.on("value", snap=>{
-    finDashCache.entradas = {};
-    snap.forEach(mesSnap=>{
-      const mesKey = mesSnap.key; // ex: "Janeiro", ou "2025-01"
-      if(!finDashCache.entradas[mesKey]) finDashCache.entradas[mesKey] = [];
-      mesSnap.forEach(item=>{
-        const e = item.val();
-        if(e && (e.valor||0) > 0){
-          finDashCache.entradas[mesKey].push({
-            valor: Number(e.valor||0),
-            data: parseDateEntry(e.data) || mesKey
-          });
-        }
-      });
-    });
-    atualizarDashboard();
-    renderFinChart();
-  });
-
-  // Listener para TODAS as despesas (todos os meses)
-  if(finDashListeners.despesas) finDashListeners.despesas.off();
-  finDashListeners.despesas = dbFin.ref("despesas");
-  finDashListeners.despesas.on("value", snap=>{
-    finDashCache.despesas = {};
-    snap.forEach(mesSnap=>{
-      const mesKey = mesSnap.key;
-      if(!finDashCache.despesas[mesKey]) finDashCache.despesas[mesKey] = [];
-      mesSnap.forEach(item=>{
-        const e = item.val();
-        if(e && (e.valor||0) > 0){
-          finDashCache.despesas[mesKey].push({
-            valor: Number(e.valor||0),
-            data: e.data || null // YYYY-MM-DD
-          });
-        }
-      });
-    });
-    atualizarDashboard();
-    renderFinChart();
-  });
-}
-
-/* Normaliza chave de mês para YYYY-MM */
-function normalizaMesKey(key){
-  if(!key) return null;
-  if(/^\d{4}-\d{2}$/.test(key)) return key; // já é YYYY-MM
-  // Converte nome do mês
-  const MESES = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
-  const idx = MESES.indexOf(key);
-  if(idx>=0){
-    const ano = new Date().getFullYear();
-    return `${ano}-${String(idx+1).padStart(2,"0")}`;
-  }
-  return null;
-}
-
-/* Agrupa todos os registros em { "YYYY-MM-DD": valor } por tipo */
-function agruparPorData(tipo){
-  const cache = finDashCache[tipo];
-  const resultado = {};
-  Object.entries(cache).forEach(([mesKey, itens])=>{
-    itens.forEach(item=>{
-      let dataISO = item.data;
-      // Se a data já é YYYY-MM-DD
-      if(!dataISO || !/^\d{4}-\d{2}-\d{2}$/.test(dataISO)){
-        // Tenta normalizar pelo mês
-        const mk = normalizaMesKey(mesKey);
-        dataISO = mk ? mk+"-01" : null;
-      }
-      if(!dataISO) return;
-      resultado[dataISO] = (resultado[dataISO]||0) + item.valor;
-    });
-  });
-  return resultado;
-}
-
-/* Soma total de um tipo */
-function somaTotal(tipo){
-  let t = 0;
-  Object.values(finDashCache[tipo]).forEach(itens=>itens.forEach(i=>t+=i.valor));
-  return t;
-}
-
-/* Soma total de um tipo no período selecionado */
-function somaPeriodo(tipo, de, ate){
-  let t = 0;
-  const por_data = agruparPorData(tipo);
-  Object.entries(por_data).forEach(([d,v])=>{
-    if(d >= de && d <= ate) t+=v;
-  });
-  return t;
-}
-
-/* Contagem de entradas no período */
-function contarPagamentos(de, ate){
-  let c = 0;
-  Object.entries(finDashCache.entradas).forEach(([mesKey, itens])=>{
-    itens.forEach(item=>{
-      let dataISO = item.data;
-      if(!dataISO || !/^\d{4}-\d{2}-\d{2}$/.test(dataISO)){
-        const mk = normalizaMesKey(mesKey); dataISO = mk ? mk+"-01" : null;
-      }
-      if(dataISO && dataISO >= de && dataISO <= ate) c++;
-    });
-  });
-  return c;
-}
-
-/* Calcula o período atual e anterior conforme filtro */
-function calcularPeriodos(){
-  const hoje = new Date();
-  const p = finChartPeriodoAtual;
-  let de, ate, deAnt, ateAnt;
-  if(p==='dia'){
-    const d = hoje.toISOString().slice(0,10);
-    const ant = new Date(hoje); ant.setDate(ant.getDate()-1);
-    de=ate=d; deAnt=ateAnt=ant.toISOString().slice(0,10);
-  } else if(p==='semana'){
-    const dow = hoje.getDay();
-    const ini = new Date(hoje); ini.setDate(hoje.getDate()-dow);
-    const fim = new Date(ini); fim.setDate(ini.getDate()+6);
-    de=ini.toISOString().slice(0,10); ate=fim.toISOString().slice(0,10);
-    const iniAnt = new Date(ini); iniAnt.setDate(ini.getDate()-7);
-    const fimAnt = new Date(fim); fimAnt.setDate(fim.getDate()-7);
-    deAnt=iniAnt.toISOString().slice(0,10); ateAnt=fimAnt.toISOString().slice(0,10);
-  } else if(p==='mes'){
-    de=`${hoje.getFullYear()}-${String(hoje.getMonth()+1).padStart(2,"0")}-01`;
-    const fimMes = new Date(hoje.getFullYear(), hoje.getMonth()+1, 0);
-    ate=fimMes.toISOString().slice(0,10);
-    const antMes = new Date(hoje.getFullYear(), hoje.getMonth()-1, 1);
-    const antFim = new Date(hoje.getFullYear(), hoje.getMonth(), 0);
-    deAnt=antMes.toISOString().slice(0,10); ateAnt=antFim.toISOString().slice(0,10);
-  } else if(p==='ano'){
-    de=`${hoje.getFullYear()}-01-01`; ate=`${hoje.getFullYear()}-12-31`;
-    deAnt=`${hoje.getFullYear()-1}-01-01`; ateAnt=`${hoje.getFullYear()-1}-12-31`;
-  } else if(p==='custom'){
-    de=document.getElementById("finCustomDe")?.value||`${hoje.getFullYear()}-01-01`;
-    ate=document.getElementById("finCustomAte")?.value||hoje.toISOString().slice(0,10);
-    deAnt=de; ateAnt=ate; // período anterior não calculado para custom
-  } else {
-    de=`${hoje.getFullYear()}-${String(hoje.getMonth()+1).padStart(2,"0")}-01`;
-    ate=hoje.toISOString().slice(0,10);
-    deAnt=de; ateAnt=ate;
-  }
-  return {de,ate,deAnt,ateAnt};
-}
-
-/* Atualiza KPI cards */
-function atualizarDashboard(){
-  const {de,ate,deAnt,ateAnt} = calcularPeriodos();
-
-  const ent = somaPeriodo('entradas',de,ate);
-  const desp = somaPeriodo('despesas',de,ate);
-  const lucro = ent - desp;
-  const pags = contarPagamentos(de,ate);
-  const ticket = pags > 0 ? ent/pags : 0;
-
-  const entAnt = somaPeriodo('entradas',deAnt,ateAnt);
-  const crescimento = entAnt > 0 ? ((ent - entAnt)/entAnt*100) : (ent>0?100:0);
-
-  // KPI Values
-  setText("kpi_entradas", fmtBRL(ent));
-  setText("kpi_despesas", fmtBRL(desp));
-  setText("kpi_lucro", fmtBRL(lucro));
-  setText("kpi_ticket", fmtBRL(ticket));
-  setText("kpi_pagamentos", pags);
-  const cres = crescimento.toFixed(1);
-  const arrow = crescimento>=0?"⬆":"⬇";
-  const cor = crescimento>=0?"color:#16a34a":"color:#ef4444";
-  const kpiCresc = document.getElementById("kpi_crescimento");
-  if(kpiCresc) kpiCresc.innerHTML=`<span style="${cor}">${arrow} ${Math.abs(cres)}%</span>`;
-
-  // Lucro card color
-  const lCard = document.getElementById("finKpiLucroCard");
-  if(lCard){
-    lCard.classList.remove("positivo","negativo");
-    lCard.classList.add(lucro>=0?"positivo":"negativo");
-  }
-
-  // Sub texts
-  setText("kpi_entradas_sub", `${pags} pagamento${pags!==1?"s":""}`);
-  setText("kpi_despesas_sub", `${de.slice(0,7)} → ${ate.slice(0,7)}`);
-  setText("kpi_lucro_sub", lucro>=0?"▲ Resultado positivo":"▼ Resultado negativo");
-  setText("kpi_ticket_sub", pags>0?`Média de ${pags} pag.`:"Nenhum pagamento");
-  setText("kpi_pagamentos_sub", `${de} → ${ate}`);
-
-  // Insights
-  atualizarInsights(de, ate);
-}
-
-function setText(id,val){const el=document.getElementById(id);if(el)el.textContent=val;}
-
-function atualizarInsights(de,ate){
-  const porData = agruparPorData('entradas');
-  const entradasPeriodo = Object.entries(porData).filter(([d])=>d>=de&&d<=ate);
-  const ins = document.getElementById("finInsights");
-  if(!ins||!entradasPeriodo.length){if(ins)ins.style.display="none";return;}
-  ins.style.display="grid";
-
-  // Melhor e pior dia/período
-  const sorted = [...entradasPeriodo].sort((a,b)=>b[1]-a[1]);
-  const melhor = sorted[0];
-  const pior   = sorted[sorted.length-1];
-
-  const fmtD2 = d=>{ const p=d.split("-"); return p[2]+"/"+p[1]+"/"+p[0]; };
-
-  setInsight("insight_melhor","🏆","Maior faturamento",`${fmtD2(melhor[0])}: <strong>${fmtBRL(melhor[1])}</strong>`);
-  setInsight("insight_pior","⚠️","Menor faturamento",`${fmtD2(pior[0])}: <strong>${fmtBRL(pior[1])}</strong>`);
-
-  // Mês com maior e menor faturamento
-  const porMes = {};
-  entradasPeriodo.forEach(([d,v])=>{ const m=d.slice(0,7); porMes[m]=(porMes[m]||0)+v; });
-  const meses = Object.entries(porMes).sort((a,b)=>b[1]-a[1]);
-  if(meses.length>0){
-    const NOME_MES=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
-    const fmtMes=m=>{ const p=m.split("-"); return NOME_MES[parseInt(p[1])-1]+"/"+p[0].slice(2); };
-    setInsight("insight_maior","📈","Melhor mês",`${fmtMes(meses[0][0])}: <strong>${fmtBRL(meses[0][1])}</strong>`);
-    if(meses.length>1)
-      setInsight("insight_menor","📉","Pior mês",`${fmtMes(meses[meses.length-1][0])}: <strong>${fmtBRL(meses[meses.length-1][1])}</strong>`);
-  }
-}
-
-function setInsight(id,icon,label,html){
-  const el=document.getElementById(id);
-  if(el) el.innerHTML=`<span style="font-size:1.1rem">${icon}</span><span><span style="font-size:.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">${label}</span><br>${html}</span>`;
-}
-
-window.finChartPeriodo = function(periodo){
-  finChartPeriodoAtual = periodo;
-  document.querySelectorAll(".btn-chart-period").forEach(b=>b.classList.remove("active-period"));
-  const map = {dia:"finChartBtnDia",semana:"finChartBtnSem",mes:"finChartBtnMes",ano:"finChartBtnAno",custom:"finChartBtnCustom"};
-  const el = document.getElementById(map[periodo]);
-  if(el) el.classList.add("active-period");
-
-  // Mostra/oculta filtro custom
-  const cp = document.getElementById("finCustomPeriod");
-  if(cp) cp.style.display = periodo==="custom"?"flex":"none";
-
-  atualizarDashboard();
-  renderFinChart();
-};
-
-/* Agrupa entradas e despesas para o gráfico conforme período */
-function agruparParaGrafico(){
-  const {de,ate} = calcularPeriodos();
-  const p = finChartPeriodoAtual;
-  const NOME_MES=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
-
-  const entPorData  = agruparPorData('entradas');
-  const despPorData = agruparPorData('despesas');
-
-  // Filtra dentro do intervalo
-  const entr = Object.entries(entPorData).filter(([d])=>d>=de&&d<=ate);
-  const desp = Object.entries(despPorData).filter(([d])=>d>=de&&d<=ate);
-
-  // Combina todas as datas relevantes
-  const todasDatas = [...new Set([...entr.map(([d])=>d),...desp.map(([d])=>d)])].sort();
-
-  if(!todasDatas.length) return {labels:[], entradas:[], despesas:[], lucros:[]};
-
-  let grupos = {};
-
-  const getGrupo = d=>{
-    if(p==='dia') return d;
-    if(p==='semana'){
-      const dt=new Date(d); const dow=dt.getDay();
-      const ini=new Date(dt); ini.setDate(dt.getDate()-dow);
-      return ini.toISOString().slice(0,10);
-    }
-    if(p==='mes'||p==='custom') return d.slice(0,7);
-    if(p==='ano') return d.slice(0,4);
-    return d.slice(0,7);
-  };
-
-  todasDatas.forEach(d=>{
-    const g = getGrupo(d);
-    if(!grupos[g]) grupos[g]={entradas:0,despesas:0};
-    grupos[g].entradas  += entPorData[d]||0;
-    grupos[g].despesas  += despPorData[d]||0;
-  });
-
-  const sortedGrupos = Object.entries(grupos).sort((a,b)=>a[0].localeCompare(b[0]));
-
-  const fmtLabel = k=>{
-    if(p==='dia'){ const p2=k.split("-"); return p2[2]+"/"+p2[1]; }
-    if(p==='semana'){ const p2=k.split("-"); return p2[2]+"/"+p2[1]; }
-    if(p==='mes'||p==='custom'){ const p2=k.split("-"); return NOME_MES[parseInt(p2[1])-1]+"/"+p2[0].slice(2); }
-    if(p==='ano') return k;
-    return k;
-  };
-
-  const labels=[], entradas=[], despesas=[], lucros=[];
-  sortedGrupos.forEach(([k,v])=>{
-    if(v.entradas===0&&v.despesas===0) return; // ignora vazios
-    labels.push(fmtLabel(k));
-    entradas.push(v.entradas);
-    despesas.push(v.despesas);
-    lucros.push(v.entradas-v.despesas);
-  });
-
-  return {labels,entradas,despesas,lucros};
-}
-
-/* Renderiza o gráfico misto (bar+line) */
-function renderFinChart(){
-  const ctx = document.getElementById("finDesempenhoChart");
-  if(!ctx) return;
-
-  const {labels,entradas,despesas,lucros} = agruparParaGrafico();
-
-  if(finChartInstance){ finChartInstance.destroy(); finChartInstance=null; }
-
-  if(!labels.length){
-    // Sem dados – mostra mensagem no canvas
-    const c2 = ctx.getContext("2d");
-    c2.clearRect(0,0,ctx.width,ctx.height);
-    c2.fillStyle="#9ca3af";c2.font="14px Poppins,sans-serif";c2.textAlign="center";
-    c2.fillText("Nenhum dado disponível para o período selecionado.", ctx.width/2, 60);
-    return;
-  }
-
-  // Gradientes
-  const c2 = ctx.getContext("2d");
-  const gEnt = c2.createLinearGradient(0,0,0,280);
-  gEnt.addColorStop(0,"rgba(123,92,255,0.7)");
-  gEnt.addColorStop(1,"rgba(123,92,255,0.08)");
-  const gDesp = c2.createLinearGradient(0,0,0,280);
-  gDesp.addColorStop(0,"rgba(239,68,68,0.65)");
-  gDesp.addColorStop(1,"rgba(239,68,68,0.05)");
-
-  finChartInstance = new Chart(ctx, {
-    type: "bar",
-    data:{
-      labels,
-      datasets:[
-        {
-          label:"Entradas",
-          data: entradas,
-          backgroundColor: gEnt,
-          borderColor:"rgba(123,92,255,0.9)",
-          borderWidth:2,
-          borderRadius:8,
-          borderSkipped:false,
-          order:2
-        },
-        {
-          label:"Despesas",
-          data: despesas,
-          backgroundColor: gDesp,
-          borderColor:"rgba(239,68,68,0.9)",
-          borderWidth:2,
-          borderRadius:8,
-          borderSkipped:false,
-          order:3
-        },
-        {
-          label:"Lucro Líquido",
-          data: lucros,
-          type:"line",
-          borderColor:"rgba(62,198,193,1)",
-          backgroundColor:"rgba(62,198,193,0.15)",
-          borderWidth:3,
-          pointBackgroundColor:"rgba(62,198,193,1)",
-          pointBorderColor:"#fff",
-          pointBorderWidth:2,
-          pointRadius:5,
-          pointHoverRadius:7,
-          tension:0.45,
-          fill:false,
-          order:1
-        }
-      ]
-    },
-    options:{
-      responsive:true,
-      maintainAspectRatio:false,
-      interaction:{mode:"index",intersect:false},
-      plugins:{
-        legend:{
-          display:true,
-          position:"bottom",
-          labels:{
-            usePointStyle:true,
-            font:{family:"'Poppins',sans-serif",size:11},
-            color:"#6b7280",
-            padding:16
-          }
-        },
-        tooltip:{
-          backgroundColor:"rgba(30,27,75,0.92)",
-          titleColor:"#fff",
-          bodyColor:"#d1d5db",
-          borderColor:"rgba(123,92,255,0.3)",
-          borderWidth:1,
-          padding:12,
-          cornerRadius:10,
-          callbacks:{
-            label: ctx=>{
-              const v=Number(ctx.parsed.y||0);
-              const label=ctx.dataset.label||"";
-              return ` ${label}: ${fmtBRL(v)}`;
-            }
-          }
-        }
-      },
-      scales:{
-        y:{
-          beginAtZero:true,
-          grid:{color:"rgba(0,0,0,0.05)",drawBorder:false},
-          border:{display:false},
-          ticks:{
-            callback:v=>{
-              if(v>=1000) return "R$"+Math.round(v/1000)+"k";
-              return "R$"+v;
-            },
-            color:"#9ca3af",
-            font:{family:"'Poppins',sans-serif",size:10}
-          }
-        },
-        x:{
-          grid:{display:false},
-          border:{display:false},
-          ticks:{color:"#9ca3af",font:{family:"'Poppins',sans-serif",size:10}}
-        }
-      }
-    }
-  });
-
-  // Atualiza subtítulo
-  const periodos={dia:"Visualização diária",semana:"Visualização semanal",mes:"Visualização mensal",ano:"Visualização anual",custom:"Período personalizado"};
-  const sub = document.getElementById("finChartSubtitle");
-  if(sub) sub.textContent=`Entradas · Despesas · Lucro — ${periodos[finChartPeriodoAtual]||""}`;
-}
-
-/* Alias para retrocompatibilidade – chamado por carregarFinanceiro */
-async function carregarDadosParaGrafico(){
-  // Dados já chegam via listeners em tempo real; apenas força re-render
-  renderFinChart();
-}
 
 /* ══════════════════════
    DESPESAS TOTAIS
@@ -4180,15 +3256,13 @@ window.addDespesa=function(){
     data:document.getElementById("desp_data").value,
     nome:document.getElementById("desp_nome").value,
     centro:document.getElementById("desp_centro").value,
-    descricao:document.getElementById("desp_descricao").value,
     obs:document.getElementById("desp_obs").value,
-    nf:document.getElementById("desp_nf").value,
     valor:Number(document.getElementById("desp_valor").value||0),
     criadoEm:new Date().toLocaleString("pt-BR")
   };
   if(!dados.nome||!dados.valor){alert("Preencha nome e valor.");return;}
   dbFin.ref("despesas/"+mes).push(dados);
-  ["desp_nome","desp_descricao","desp_obs","desp_nf","desp_valor"].forEach(id=>document.getElementById(id).value="");
+  ["desp_nome","desp_obs","desp_valor"].forEach(id=>document.getElementById(id).value="");
   document.getElementById("desp_centro").value="";
 };
 
@@ -4201,20 +3275,12 @@ function carregarDespesas(){
   despCurrentRef=dbFin.ref("despesas/"+mes);
   despCurrentRef.on("value",snap=>{
     tabela.innerHTML=""; let tot=0;
-    const itens=[];
-    snap.forEach(item=>{ const e=item.val(); itens.push({key:item.key,...e}); tot+=Number(e.valor||0); });
-    // Ordenar por data
-    itens.sort((a,b)=>{
-      const da=a.data?new Date(a.data):new Date(0);
-      const db=b.data?new Date(b.data):new Date(0);
-      return db-da;
-    });
-    itens.forEach(e=>{
-      const dataFmt=e.data?e.data.split('-').reverse().join('/'):"—";
+    snap.forEach(item=>{
+      const e=item.val(); tot+=Number(e.valor||0);
       const tr=document.createElement("tr");
-      tr.innerHTML=`<td>${dataFmt}</td><td>${e.nome||""}</td><td>${e.centro||""}</td><td>${e.descricao||""}</td><td>${e.obs||""}</td><td>${e.nf||"—"}</td>
+      tr.innerHTML=`<td>${e.data||""}</td><td>${e.nome||""}</td><td>${e.centro||""}</td><td>${e.obs||""}</td>
         <td>R$ ${Number(e.valor||0).toFixed(2)}</td>
-        <td><button class="btn-excluir-sm" onclick="delDespesa('${mes}','${e.key}')">🗑</button></td>`;
+        <td><button class="btn-excluir-sm" onclick="delDespesa('${mes}','${item.key}')">🗑</button></td>`;
       tabela.appendChild(tr);
     });
     totalEl.innerText=`Total de Despesas do mês: R$ ${tot.toFixed(2)}`;
@@ -4273,47 +3339,16 @@ function recalcularLucro(){
 /* ══════════════════════
    GRADE DE HORÁRIOS
 ══════════════════════ */
-let gradeTyping=false, gradeYogaTyping=false, gradeFisioTyping=false;
+let gradeTyping=false;
 const semana=[{dia:"Segunda-feira",h:[7,19]},{dia:"Terça-feira",h:[7,19]},{dia:"Quarta-feira",h:[7,19]},{dia:"Quinta-feira",h:[7,19]},{dia:"Sexta-feira",h:[7,18]},{dia:"Sábado",h:[7,10]}];
-
-window.gradeTab=function(id,btn){
-  document.getElementById("grade-geral-content").style.display = id==="geral" ? "" : "none";
-  document.getElementById("grade-yoga-content").style.display  = id==="yoga"  ? "" : "none";
-  document.getElementById("grade-fisio-content").style.display = id==="fisioterapia" ? "" : "none";
-  document.querySelectorAll("#page-grade .fin-tab").forEach(b=>b.classList.remove("active"));
-  btn.classList.add("active");
-  if(id==="yoga" && !document.getElementById("grade_yoga_container").children.length) initGradeYoga();
-  if(id==="fisioterapia" && !document.getElementById("grade_fisio_container").children.length) initGradeFisio();
-};
 
 function initGrade(){
   document.getElementById("filtroDia").onchange=filtrarGrade;
   dbGrade.ref("gradeHorarios").on("value",s=>renderGrade(s.val()));
 }
 
-function initGradeYoga(){
-  document.getElementById("filtroDiaYoga").onchange=filtrarGradeYoga;
-  dbGrade.ref("gradeYoga").on("value",s=>renderGradeYoga(s.val()));
-}
-
-function initGradeFisio(){
-  document.getElementById("filtroDiaFisio").onchange=filtrarGradeFisio;
-  dbGrade.ref("gradeFisioterapia").on("value",s=>renderGradeFisio(s.val()));
-}
-
 function gerarHs(a,b){const r=[];for(let h=a;h<=b;h++)r.push(String(h).padStart(2,"0")+":00");return r;}
 
-/* Gera horários de 30 em 30 minutos para a grade de Yoga */
-function gerarHsMeia(a,b){
-  const r=[];
-  for(let h=a;h<=b;h++){
-    r.push(String(h).padStart(2,"0")+":00");
-    if(h<b) r.push(String(h).padStart(2,"0")+":30");
-  }
-  return r;
-}
-
-/* ── GRADE GERAL (original) ── */
 function salvarGrade(){
   const data={};
   document.querySelectorAll("table.grade-tbl[data-dia]").forEach(t=>{
@@ -4339,7 +3374,7 @@ function criarLinhaGrade(l){
     <td><input class="instr-inp i1" placeholder="Instrutor 1"><div class="alunos-box a1"></div><button class="btn-add-a">+ Aluno</button></td>
     <td><input class="instr-inp i2" placeholder="Instrutor 2"><div class="alunos-box a2"></div><button class="btn-add-a">+ Aluno</button></td>
     <td><input class="instr-inp i3" placeholder="Instrutor 3"><div class="alunos-box a3"></div><button class="btn-add-a">+ Aluno</button></td>`;
-  tr.querySelector(".i1").value=l.instr1||"";
+  tr.querySelector(".i1").value=l.instr1||""; 
   tr.querySelector(".i2").value=l.instr2||"";
   tr.querySelector(".i3").value=l.instr3||"";
   tr.querySelectorAll(".instr-inp").forEach(i=>{i.onfocus=()=>gradeTyping=true;i.onblur=()=>{gradeTyping=false;salvarGrade();};});
@@ -4376,110 +3411,6 @@ function filtrarGrade(){
   });
 }
 
-/* ── GRADE YOGA ── */
-function salvarGradeYoga(){
-  const data={};
-  document.querySelectorAll("table.grade-yoga-tbl[data-dia]").forEach(t=>{
-    const dia=t.dataset.dia; data[dia]=[];
-    t.querySelectorAll("tbody tr").forEach(tr=>{
-      data[dia].push({
-        horario:tr.querySelector(".horario-lbl").textContent,
-        instrutor:tr.querySelector(".yoga-instrutor").value,
-        modalidade:tr.querySelector(".yoga-modalidade").value
-      });
-    });
-  });
-  dbGrade.ref("gradeYoga").set(data);
-}
-
-function criarLinhaGradeYoga(l){
-  const iSt="border:2px solid var(--border);border-radius:8px;padding:6px 10px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none;width:100%";
-  const tr=document.createElement("tr");
-  tr.innerHTML=`<td class="horario-lbl">${l.horario}</td>
-    <td><input class="instr-inp yoga-instrutor" placeholder="Instrutor" style="${iSt}" value="${l.instrutor||""}"></td>
-    <td><input class="instr-inp yoga-modalidade" placeholder="Modalidade" style="${iSt}" value="${l.modalidade||""}"></td>`;
-  tr.querySelectorAll(".instr-inp").forEach(i=>{
-    i.onfocus=()=>gradeYogaTyping=true;
-    i.onblur=()=>{gradeYogaTyping=false;salvarGradeYoga();};
-  });
-  return tr;
-}
-
-function renderGradeYoga(data){
-  if(gradeYogaTyping) return;
-  const c=document.getElementById("grade_yoga_container"); c.innerHTML="";
-  semana.forEach(d=>{
-    const sec=document.createElement("div"); sec.className="grade-section";
-    const h3=document.createElement("h3"); h3.textContent=d.dia; h3.dataset.dia=d.dia;
-    const tbl=document.createElement("table"); tbl.className="grade-tbl grade-yoga-tbl"; tbl.dataset.dia=d.dia;
-    tbl.innerHTML="<thead><tr><th>Horário</th><th>Instrutor</th><th>Modalidade</th></tr></thead>";
-    const tb=document.createElement("tbody");
-    const salvos=data?.[d.dia]||[];
-    gerarHsMeia(d.h[0],d.h[1]).forEach(h=>{const e=salvos.find(l=>l.horario===h);tb.appendChild(criarLinhaGradeYoga(e||{horario:h,instrutor:"",modalidade:""}));});
-    tbl.appendChild(tb); sec.append(h3,tbl); c.appendChild(sec);
-  });
-  filtrarGradeYoga();
-}
-
-function filtrarGradeYoga(){
-  const v=document.getElementById("filtroDiaYoga").value;
-  document.querySelectorAll("#grade_yoga_container .grade-section").forEach(sec=>{
-    sec.style.display=(v==="Todos"||sec.querySelector("h3").dataset.dia===v)?"":"none";
-  });
-}
-
-/* ── GRADE FISIOTERAPIA ── */
-function salvarGradeFisio(){
-  const data={};
-  document.querySelectorAll("table.grade-fisio-tbl[data-dia]").forEach(t=>{
-    const dia=t.dataset.dia; data[dia]=[];
-    t.querySelectorAll("tbody tr").forEach(tr=>{
-      data[dia].push({
-        horario:tr.querySelector(".horario-lbl").textContent,
-        fisioterapeuta:tr.querySelector(".fis-nome").value,
-        indicacaoClinica:tr.querySelector(".fis-indicacao").value
-      });
-    });
-  });
-  dbGrade.ref("gradeFisioterapia").set(data);
-}
-
-function criarLinhaGradeFisio(l){
-  const iSt="border:2px solid var(--border);border-radius:8px;padding:6px 10px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none;width:100%";
-  const tr=document.createElement("tr");
-  tr.innerHTML=`<td class="horario-lbl">${l.horario}</td>
-    <td><input class="instr-inp fis-nome" placeholder="Fisioterapeuta" style="${iSt}" value="${l.fisioterapeuta||""}"></td>
-    <td><input class="instr-inp fis-indicacao" placeholder="Indicação Clínica" style="${iSt}" value="${l.indicacaoClinica||""}"></td>`;
-  tr.querySelectorAll(".instr-inp").forEach(i=>{
-    i.onfocus=()=>gradeFisioTyping=true;
-    i.onblur=()=>{gradeFisioTyping=false;salvarGradeFisio();};
-  });
-  return tr;
-}
-
-function renderGradeFisio(data){
-  if(gradeFisioTyping) return;
-  const c=document.getElementById("grade_fisio_container"); c.innerHTML="";
-  semana.forEach(d=>{
-    const sec=document.createElement("div"); sec.className="grade-section";
-    const h3=document.createElement("h3"); h3.textContent=d.dia; h3.dataset.dia=d.dia;
-    const tbl=document.createElement("table"); tbl.className="grade-tbl grade-fisio-tbl"; tbl.dataset.dia=d.dia;
-    tbl.innerHTML="<thead><tr><th>Horário</th><th>Fisioterapeuta</th><th>Indicação Clínica</th></tr></thead>";
-    const tb=document.createElement("tbody");
-    const salvos=data?.[d.dia]||[];
-    gerarHs(d.h[0],d.h[1]).forEach(h=>{const e=salvos.find(l=>l.horario===h);tb.appendChild(criarLinhaGradeFisio(e||{horario:h,fisioterapeuta:"",indicacaoClinica:""}));});
-    tbl.appendChild(tb); sec.append(h3,tbl); c.appendChild(sec);
-  });
-  filtrarGradeFisio();
-}
-
-function filtrarGradeFisio(){
-  const v=document.getElementById("filtroDiaFisio").value;
-  document.querySelectorAll("#grade_fisio_container .grade-section").forEach(sec=>{
-    sec.style.display=(v==="Todos"||sec.querySelector("h3").dataset.dia===v)?"":"none";
-  });
-}
-
 /* ══════════════════════
    AVALIAÇÕES
 ══════════════════════ */
@@ -4488,8 +3419,12 @@ const cv=id=>{const e=document.getElementById(id);return e?e.value:"";};
 const cm=id=>{const e=document.getElementById(id);return e?e.checked:false;};
 const fmtD=v=>{if(!v)return"-";if(/^\d{4}-\d{2}-\d{2}$/.test(v)){const[a,m,d]=v.split("-");return`${d}/${m}/${a}`;}return v;};
 
-const ROTULOS_FISIO=[["sessao","Sessão"],["pacote","Pacote"],["qtdSessoes","Qtd sessões"],["pix","Pix"],["parcelado","Parcelado"],["parcelas","Parcelas"],["parceria","Parceria"],["nomeCompleto","Nome completo"],["dataNascimento","Data de nascimento"],["cpf","CPF"],["masculino","Masculino"],["feminino","Feminino"],["responsavel","Responsável"],["parentesco","Grau de parentesco"],["cpfResponsavel","CPF Responsável"],["profissao","Profissão/Ocupação"],["endereco","Endereço"],["telefone","Telefone"],["email","E-mail"],["dataAvaliacao","Data da Avaliação"],["diagClinico","Diagnóstico Clínico"],["diagFisio","Diagnóstico Fisioterapêutico"],["cbdf","CBDF"],["queixaPrincipal","Queixa Principal"],["hpp","HDA"],["antecedentesPessoais","HPP"],["antecedentesFamiliares","Antecedentes Familiares"],["tratamentos","Tratamentos Realizados"],["habitos","Hábitos de vida"],["acompanhamentoSim","Acompanhamento – Sim"],["acompanhamentoNao","Acompanhamento – Não"],["especialidade","Especialidade"],["examesSim","Exames – Sim"],["examesNao","Exames – Não"],["examesQuais","Exames – Quais"],["medicamentoSim","Medicamentos – Sim"],["medicamentoNao","Medicamentos – Não"],["medicamentosQuais","Medicamentos – Quais"],["orientado","Deambulando e orientado"],["apoio","Deambulando com apoio"],["confuso","Confuso"],["desorientado","Desorientado"],["cirurgiaSim","Cirurgia – Sim"],["cirurgiaNao","Cirurgia – Não"],["cirurgias","Cirurgias – Quais"],["normal","Inspeção Normal"],["edema","Edema"],["cicatriz","Cicatrização incompleta"],["eritema","Eritemas"],["outros","Outros"],["inspecaoDetalhes","Detalhes Inspeção/Palpação"],["peso","Peso"],["altura","Altura"],["joelhoYSim","Y Teste – Sim"],["joelhoYNao","Y Teste – Não"],["rombergPos","Romberg – Positivo"],["rombergNeg","Romberg – Negativo"],["tugNormal","TUG – Normal"],["tugBaixo","TUG – Baixo risco"],["tugMedio","TUG – Médio risco"],["tugAlto","TUG – Alto risco"],["laseguePos","Lasegue – Positivo"],["lasegueNeg","Lasegue – Negativo"],["g0","Grau 0"],["g1","Grau 1"],["g2","Grau 2"],["g3","Grau 3"],["g4","Grau 4"],["g5","Grau 5"],["objetivos","Objetivos do Tratamento"],["recursos","Recursos Terapêuticos"],["planoTratamento","Plano do Tratamento"],["profissional","Profissional / Registro Conselho"]];
-const ROTULOS_PILATES=[["totalpass","Totalpass"],["gympass","Gympass"],["gurupass","Gurupass"],["mensalidade","Mensalidade"],["parceria","Parceria"],["nomeCompleto","Nome completo"],["dataNascimento","Data de nascimento"],["cpf","CPF"],["masculino","Masculino"],["feminino","Feminino"],["responsavel","Responsável"],["parentesco","Grau de parentesco"],["cpfResponsavel","CPF Responsável"],["profissao","Profissão/Ocupação"],["endereco","Endereço"],["telefone","Telefone"],["email","E-mail"],["dataAvaliacao","Data da Avaliação"],["diagClinico","Diagnóstico Clínico"],["diagFisio","Diagnóstico Fisioterapêutico"],["cbdf","CBDF"],["queixaPrincipal","Queixa Principal"],["hpp","HPP"],["antecedentesPessoais","Antecedentes Pessoais"],["antecedentesFamiliares","Antecedentes Familiares"],["tratamentos","Tratamentos Realizados"],["habitos","Hábitos de vida"],["acompanhamentoSim","Acompanhamento – Sim"],["especialidade","Especialidade"],["tipoApoio","Se apoio, qual"],["examesSim","Exames – Sim"],["quaisExames","Exames – Quais"],["medicamentoSim","Medicamentos – Sim"],["quaisMedicamentos","Medicamentos – Quais"],["cirurgiaSim","Cirurgia – Sim"],["cirurgias","Cirurgias – Quais"],["normal","Inspeção Normal"],["edema","Edema"],["cicatriz","Cicatrização incompleta"],["eritema","Eritemas"],["outros","Outros"],["inspecaoDetalhes","Detalhes Inspeção/Palpação"],["semiologia","Semiologia"],["pressao","Pressão Arterial"],["peso","Peso"],["altura","Altura"],["adipometroPeitoralToracica","Adipômetro – Peitoral/Torácica"],["adipometroSubescapular","Adipômetro – Subescapular"],["adipometroSuprailiaca","Adipômetro – Suprailiaca"],["adipometroAxilarMedia","Adipômetro – Axilar média"],["adipometroTriceps","Adipômetro – Tríceps"],["adipometroBiceps","Adipômetro – Bíceps"],["adipometroAbdominal","Adipômetro – Abdominal"],["adipometroCoxa","Adipômetro – Coxa"],["escalaBorg","Escala de Borg"],["objetivos","Objetivos do Tratamento"],["recursos","Recursos Terapêuticos"],["planoTratamento","Plano do Tratamento"],["profissional","Profissional / Registro Conselho"]];
+const ROTULOS_FISIO=[["sessao","Sessão"],["pacote","Pacote"],["qtdSessoes","Qtd sessões"],["pix","Pix"],["parcelado","Parcelado"],["parcelas","Parcelas"],["parceria","Parceria"],["nomeCompleto","Nome completo"],["dataNascimento","Data de nascimento"],["cpf","CPF"],["masculino","Masculino"],["feminino","Feminino"],["responsavel","Responsável"],["parentesco","Grau de parentesco"],["cpfResponsavel","CPF Responsável"],["profissao","Profissão/Ocupação"],["endereco","Endereço"],["telefone","Telefone"],["email","E-mail"],["dataAvaliacao","Data da Avaliação"],["diagClinico","Diagnóstico Clínico"],["diagFisio","Diagnóstico Fisioterapêutico"],["cbdf","CBDF"],["queixaPrincipal","Queixa Principal"],["hpp","HDA"],["antecedentesPessoais","HPP"],["antecedentesFamiliares","Antecedentes Familiares"],["tratamentos","Tratamentos Realizados"],["habitos","Hábitos de vida"],["acompanhamentoSim","Acompanhamento – Sim"],["acompanhamentoNao","Acompanhamento – Não"],["especialidade","Especialidade"],["examesSim","Exames – Sim"],["examesNao","Exames – Não"],["examesQuais","Exames – Quais"],["medicamentoSim","Medicamentos – Sim"],["medicamentoNao","Medicamentos – Não"],["medicamentosQuais","Medicamentos – Quais"],["orientado","Deambulando e orientado"],["apoio","Deambulando com apoio"],["confuso","Confuso"],["desorientado","Desorientado"],["cirurgiaSim","Cirurgia – Sim"],["cirurgiaNao","Cirurgia – Não"],["cirurgias","Cirurgias – Quais"],["normal","Inspeção Normal"],["edema","Edema"],["cicatriz","Cicatrização incompleta"],["eritema","Eritemas"],["outros","Gympass
+              </option>
+              <option value="Outros">Outros"],["inspecaoDetalhes","Detalhes Inspeção/Palpação"],["peso","Peso"],["altura","Altura"],["joelhoYSim","Y Teste – Sim"],["joelhoYNao","Y Teste – Não"],["rombergPos","Romberg – Positivo"],["rombergNeg","Romberg – Negativo"],["tugNormal","TUG – Normal"],["tugBaixo","TUG – Baixo risco"],["tugMedio","TUG – Médio risco"],["tugAlto","TUG – Alto risco"],["laseguePos","Lasegue – Positivo"],["lasegueNeg","Lasegue – Negativo"],["g0","Grau 0"],["g1","Grau 1"],["g2","Grau 2"],["g3","Grau 3"],["g4","Grau 4"],["g5","Grau 5"],["objetivos","Objetivos do Tratamento"],["recursos","Recursos Terapêuticos"],["planoTratamento","Plano do Tratamento"],["profissional","Profissional / Registro Conselho"]];
+const ROTULOS_PILATES=[["totalpass","Totalpass"],["gympass","Gympass"],["gurupass","Gurupass"],["mensalidade","Mensalidade"],["parceria","Parceria"],["nomeCompleto","Nome completo"],["dataNascimento","Data de nascimento"],["cpf","CPF"],["masculino","Masculino"],["feminino","Feminino"],["responsavel","Responsável"],["parentesco","Grau de parentesco"],["cpfResponsavel","CPF Responsável"],["profissao","Profissão/Ocupação"],["endereco","Endereço"],["telefone","Telefone"],["email","E-mail"],["dataAvaliacao","Data da Avaliação"],["diagClinico","Diagnóstico Clínico"],["diagFisio","Diagnóstico Fisioterapêutico"],["cbdf","CBDF"],["queixaPrincipal","Queixa Principal"],["hpp","HPP"],["antecedentesPessoais","Antecedentes Pessoais"],["antecedentesFamiliares","Antecedentes Familiares"],["tratamentos","Tratamentos Realizados"],["habitos","Hábitos de vida"],["acompanhamentoSim","Acompanhamento – Sim"],["especialidade","Especialidade"],["tipoApoio","Se apoio, qual"],["examesSim","Exames – Sim"],["quaisExames","Exames – Quais"],["medicamentoSim","Medicamentos – Sim"],["quaisMedicamentos","Medicamentos – Quais"],["cirurgiaSim","Cirurgia – Sim"],["cirurgias","Cirurgias – Quais"],["normal","Inspeção Normal"],["edema","Edema"],["cicatriz","Cicatrização incompleta"],["eritema","Eritemas"],["outros","Gympass
+              </option>
+              <option value="Outros">Outros"],["inspecaoDetalhes","Detalhes Inspeção/Palpação"],["semiologia","Semiologia"],["pressao","Pressão Arterial"],["peso","Peso"],["altura","Altura"],["adipometroPeitoralToracica","Adipômetro – Peitoral/Torácica"],["adipometroSubescapular","Adipômetro – Subescapular"],["adipometroSuprailiaca","Adipômetro – Suprailiaca"],["adipometroAxilarMedia","Adipômetro – Axilar média"],["adipometroTriceps","Adipômetro – Tríceps"],["adipometroBiceps","Adipômetro – Bíceps"],["adipometroAbdominal","Adipômetro – Abdominal"],["adipometroCoxa","Adipômetro – Coxa"],["escalaBorg","Escala de Borg"],["objetivos","Objetivos do Tratamento"],["recursos","Recursos Terapêuticos"],["planoTratamento","Plano do Tratamento"],["profissional","Profissional / Registro Conselho"]];
 const ROTULOS_RECOVERY=[["mov_nome","Nome"],["mov_nascimento","Data de Nascimento"],["mov_telefone","Telefone"],["mov_sexo_fem","Sexo Feminino"],["mov_sexo_masc","Sexo Masculino"],["mov_endereco","Endereço"],["mov_fisioterapeuta","Fisioterapeuta"],["mov_atleta_amador","Atleta – Amador"],["mov_atleta_profissional","Atleta – Profissional"],["mov_esporte","Esporte / Há quanto tempo"],["mov_pratica_sim","Pratica atividade – Sim"],["mov_frequencia","Frequência semanal"],["mov_objetivos","Objetivos no programa"],["mov_tabagismo_sim","Tabagismo – Sim"],["mov_cardiaco_sim","Alterações cardíacas – Sim"],["mov_diabetes_sim","Diabetes – Sim"],["mov_hipertensao_sim","Hipertensão – Sim"],["mov_medicamento_sim","Medicamentos – Sim"],["mov_medicamento_desc","Medicamentos – Quais"],["mov_lesao_sim","Lesão – Sim"],["mov_lesao_desc","Lesão – Qual"],["mov_cirurgia_sim","Cirurgia – Sim"],["mov_cirurgia_desc","Cirurgia – Qual"],["mov_alergia_sim","Alergia – Sim"],["mov_alergia_desc","Alergia – Qual"],["mov_tontura_sim","Tontura – Sim"],["mov_dieta_sim","Dieta – Sim"],["mov_profissao","Profissão"],["mov_prog_esporte","Esporte (Programa)"],["mov_prog_inicio","Início"],["mov_prog_queixaPrincipal","Queixa principal"],["mov_prog_diagnosticoCinetico","Diagnóstico Cinético Funcional"],["mov_prog_objetivos","Objetivos"],["mov_prog_conduta","Conduta Fisioterapêutica"],["mov_prog_fisioterapeuta","Fisioterapeuta responsável"]];
 const ROTULOS_COND=[["totalpass","Totalpass"],["gympass","Gympass"],["mensalidade","Mensalidade"],["nomeCompleto","Nome completo"],["dataNascimento","Data de nascimento"],["cpf","CPF"],["sexoMasculino","Sexo Masculino"],["sexoFeminino","Sexo Feminino"],["responsavelNome","Responsável – Nome"],["responsavelParentesco","Responsável – Parentesco"],["responsavelCpf","Responsável – CPF"],["profissaoOcupacao","Profissão/Ocupação"],["enderecoResidencial","Endereço"],["telefone","Telefone"],["email","E-mail"],["dataAvaliacao","Data da Avaliação"],["diagnosticoClinico","Diagnóstico Clínico"],["diagnosticoFisio","Diagnóstico Fisioterapêutico"],["cbdf","CBDF"],["queixaPrincipal","Queixa Principal"],["hda","HDA"],["historicoLesoes","Histórico de Lesões"],["acompanhamentoSim","Acompanhamento – Sim"],["acompanhamentoQuais","Acompanhamento – Quais"],["medicamentosSim","Medicamentos – Sim"],["medicamentosQuais","Medicamentos – Quais"],["peso","Peso (kg)"],["altura","Altura (cm)"],["habitosVida","Hábitos de Vida"],["metasPessoais","Metas Pessoais"],["evaRegiao","EVA / Região"],["ativo","Ativo"],["moderadamenteAtivo","Moderadamente Ativo"],["sedentario","Sedentário"],["atividadeSim","Atividade Física – Sim"],["atividadeQuais","Atividade Física – Quais"],["borg","Escala de Borg"],["desviosSim","Desvios Posturais – Sim"],["desviosQuais","Desvios – Quais"],["movimentosComDor","Movimentos Com Dor"],["movimentosSemDor","Movimentos Sem Dor"],["movimentosQuais","Movimentos – Quais"],["movimentosFuncionais","Movimentos Funcionais"],["mobilidade","Mobilidade"],["flexibilidade","Flexibilidade"],["resistenciaMuscularCardio","Resistência Muscular/Cardiovascular"],["planoTerapeutico","Plano Terapêutico"],["profissional","Profissional / Registro Conselho"]];
 
@@ -4651,103 +3586,17 @@ function carregarEvolucoes(){
   dbAval.ref(`avaliacoes/${avalAtualId}/evolucoes`).once("value").then(snap=>{
     evo.innerHTML="<strong style='color:var(--lilas);font-size:.9rem'>📋 Evoluções</strong>";
     if(!snap.exists()){evo.innerHTML+="<p style='color:var(--muted);font-size:.82rem;margin-top:6px'>Nenhuma evolução registrada.</p>";return;}
-    const items=[]; snap.forEach(c=>items.push({id:c.key,...c.val()}));
+    const items=[]; snap.forEach(c=>items.push(c.val()));
     items.reverse().forEach(e=>{
-      const iSt="border:2px solid var(--border);border-radius:8px;padding:6px 10px;font-family:'Poppins',sans-serif;font-size:.82rem;outline:none;width:100%;margin-top:4px";
-      const dataIso=e.data?e.data.split('/').reverse().join('-'):"";
-      const card=document.createElement("div");
-      card.className="evo-item";
-      card.style.cssText="border-left:4px solid var(--lilas);padding:12px 14px;margin:8px 0;background:var(--lilas-light);border-radius:0 10px 10px 0;";
-      card.innerHTML=`
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <strong style="color:var(--lilas);font-size:.85rem">📅 ${e.data||"—"}</strong>
-          <div style="display:flex;gap:6px">
-            <button onclick="editarEvolucao('${e.id}','${avalAtualId}',this)" style="background:var(--lilas-light);color:var(--lilas);border:2px solid var(--lilas-mid);border-radius:8px;padding:3px 10px;cursor:pointer;font-size:.75rem;font-weight:700">✏️ Editar</button>
-            <button onclick="apagarEvolucao('${e.id}','${avalAtualId}')" style="background:#fee2e2;color:#b91c1c;border:2px solid #fecaca;border-radius:8px;padding:3px 10px;cursor:pointer;font-size:.75rem;font-weight:700">🗑</button>
-          </div>
-        </div>
-        <div class="evo-campos-view" style="font-size:.82rem;line-height:1.7;white-space:pre-line;background:var(--white);padding:8px 12px;border-radius:8px">${e.texto||""}</div>
-        <div class="evo-campos-edit" style="display:none">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
-            <div><label style="font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase">Data</label><input type="date" class="evo-edit-data" value="${dataIso}" style="${iSt}"></div>
-            <div><label style="font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase">Profissional</label><input type="text" class="evo-edit-prof" value="${(e.profissional||"").replace(/"/g,"&quot;")}" placeholder="Nome e registro" style="${iSt}"></div>
-            <div style="grid-column:1/-1"><label style="font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase">Procedimento (Proced)</label><textarea class="evo-edit-proc" rows="2" style="${iSt}">${e.procedimento||""}</textarea></div>
-            <div style="grid-column:1/-1"><label style="font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase">Intercorrência (Interc)</label><textarea class="evo-edit-interc" rows="2" style="${iSt}">${e.intercorrencia||""}</textarea></div>
-            <div style="grid-column:1/-1"><label style="font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase">Evolução (Evol)</label><textarea class="evo-edit-evol" rows="3" style="${iSt}">${e.evolucao||e.texto||""}</textarea></div>
-          </div>
-          <div style="display:flex;gap:8px;margin-top:8px">
-            <button onclick="salvarEdicaoEvolucao('${e.id}','${avalAtualId}',this.closest('.evo-item'))" style="padding:7px 16px;background:linear-gradient(135deg,var(--lilas),var(--ciano));color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:700;font-size:.82rem">💾 Salvar</button>
-            <button onclick="cancelarEdicaoEvolucao(this.closest('.evo-item'))" style="padding:7px 16px;background:var(--surface);color:var(--muted);border:2px solid var(--border);border-radius:10px;cursor:pointer;font-weight:700;font-size:.82rem">Cancelar</button>
-          </div>
-        </div>`;
-      evo.appendChild(card);
+      evo.innerHTML+=`<div class="evo-item"><strong>${e.data}</strong><p style="white-space:pre-line;margin-top:4px">${e.texto}</p></div>`;
     });
   });
 }
 
 window.salvarEvolucao=function(){
-  const dataEl=document.getElementById("evoData");
-  const procEl=document.getElementById("evoProcedimento");
-  const intercEl=document.getElementById("evoIntercorrencia");
-  const evolEl=document.getElementById("evoEvolucao");
-  const profEl=document.getElementById("evoProfissional");
-  if(!evolEl||(!evolEl.value.trim()&&!procEl.value.trim())){alert("Preencha ao menos Evolução ou Procedimento.");return;}
-  const dataFmt=dataEl.value?dataEl.value.split('-').reverse().join('/'):new Date().toLocaleDateString("pt-BR");
-  const texto=[
-    dataEl.value?"DATA: "+dataFmt:"",
-    procEl.value?"PROCEDIMENTOS: "+procEl.value:"",
-    intercEl.value?"INTERCORRÊNCIA: "+intercEl.value:"",
-    evolEl.value?"EVOLUÇÃO DO ESTADO DE SAÚDE: "+evolEl.value:"",
-    profEl.value?"PROFISSIONAL/REGISTRO CONSELHO: "+profEl.value:""
-  ].filter(Boolean).join("\n");
-  dbAval.ref(`avaliacoes/${avalAtualId}/evolucoes`).push({
-    texto,data:dataFmt,
-    procedimento:procEl.value,intercorrencia:intercEl.value,
-    evolucao:evolEl.value,profissional:profEl.value,
-    criadoEm:new Date().toLocaleString("pt-BR")
-  });
-  dataEl.value="";procEl.value="";intercEl.value="";evolEl.value="";profEl.value="";
-  carregarEvolucoes();
-};
-
-window.editarEvolucao=function(evoId,avalId,btn){
-  const card=btn.closest(".evo-item");
-  card.querySelector(".evo-campos-view").style.display="none";
-  card.querySelector(".evo-campos-edit").style.display="block";
-  btn.style.display="none";
-};
-
-window.cancelarEdicaoEvolucao=function(card){
-  card.querySelector(".evo-campos-view").style.display="";
-  card.querySelector(".evo-campos-edit").style.display="none";
-  const editBtn=card.querySelector("button[onclick*='editarEvolucao']");
-  if(editBtn)editBtn.style.display="";
-};
-
-window.salvarEdicaoEvolucao=function(evoId,avalId,card){
-  const dataVal=card.querySelector(".evo-edit-data").value;
-  const profVal=card.querySelector(".evo-edit-prof").value;
-  const procVal=card.querySelector(".evo-edit-proc").value;
-  const intercVal=card.querySelector(".evo-edit-interc").value;
-  const evolVal=card.querySelector(".evo-edit-evol").value;
-  const dataFmt=dataVal?dataVal.split('-').reverse().join('/'):"";
-  const texto=[
-    dataFmt?"DATA: "+dataFmt:"",
-    procVal?"PROCEDIMENTOS: "+procVal:"",
-    intercVal?"INTERCORRÊNCIA: "+intercVal:"",
-    evolVal?"EVOLUÇÃO DO ESTADO DE SAÚDE: "+evolVal:"",
-    profVal?"PROFISSIONAL/REGISTRO CONSELHO: "+profVal:""
-  ].filter(Boolean).join("\n");
-  dbAval.ref(`avaliacoes/${avalId}/evolucoes/${evoId}`).update({
-    data:dataFmt,procedimento:procVal,intercorrencia:intercVal,
-    evolucao:evolVal,profissional:profVal,texto,
-    editadoEm:new Date().toLocaleString("pt-BR")
-  }).then(()=>carregarEvolucoes());
-};
-
-window.apagarEvolucao=function(evoId,avalId){
-  if(!confirm("Apagar esta evolução?"))return;
-  dbAval.ref(`avaliacoes/${avalId}/evolucoes/${evoId}`).remove().then(()=>carregarEvolucoes());
+  const t=document.getElementById("textoEvolucao"); if(!t.value.trim())return;
+  dbAval.ref(`avaliacoes/${avalAtualId}/evolucoes`).push({texto:t.value,data:new Date().toLocaleDateString("pt-BR")});
+  t.value=""; carregarEvolucoes();
 };
 
 
@@ -4782,12 +3631,7 @@ function renderAgenda(){
   const listV=document.getElementById("agListaVencidas");
   tabela.innerHTML="";listV.innerHTML="";alerta.style.display="none";
   const hoje=hojeISO();
-  // Ordenar: alfabético por nome, depois por data de avaliação
-  const entradas=Object.entries(agCache).sort((a,b)=>{
-    const n=(a[1].nome||"").localeCompare(b[1].nome||"","pt-BR");
-    if(n!==0) return n;
-    return (a[1].dataAvaliacao||"").localeCompare(b[1].dataAvaliacao||"");
-  });
+  const entradas=Object.entries(agCache).reverse(); // mais recente primeiro
   entradas.forEach(([id,d])=>{
     const pendente=!d.realizada;
     const vencida=d.dataReavaliacao<hoje&&pendente;
@@ -4864,33 +3708,53 @@ function carregarInsumos(){
 <!-- CHART.JS para o dashboard do site -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<!-- FIREBASE SITE (mesmo padrão compat do restante do app) -->
-<script>
-let siteLeads = [], siteSurveys = [], siteInitialized = false, siteCharts = [];
+<!-- FIREBASE SITE (módulo v10 separado) -->
+<script type="module">
+import { initializeApp as initSiteApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getDatabase as getSiteDB, ref as siteRef, push as sitePush, onValue as siteOnValue, serverTimestamp as siteST } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
 
-// BUG CORRIGIDO: este bloco usava o SDK modular v10 via <script type="module">
-// (import ... from ".../firebase-app.js"), enquanto todo o resto do sistema usa
-// o SDK compat v9.22 já carregado no <head>. Scripts type="module" são bloqueados
-// por CORS quando o arquivo é aberto localmente (file://) e o padrão divergente
-// tornava a manutenção mais difícil. Isso fazia enviarLead()/enviarSurvey()
-// falharem silenciosamente (o módulo nunca terminava de carregar, então
-// window.enviarLead/window.enviarSurvey nunca eram definidos). Agora usa dbSite
-// (firebase.initializeApp(...,"site").database()), igual aos outros módulos.
+const siteFirebaseConfig = {
+  apiKey: "AIzaSyBUHtONEQOLOiP7mtr3dRaP2_-pDqIEQxg",
+  authDomain: "movomsite.firebaseapp.com",
+  projectId: "movomsite",
+  storageBucket: "movomsite.firebasestorage.app",
+  messagingSenderId: "655604185413",
+  appId: "1:655604185413:web:61e1dbbcdc15cd7184a62c",
+  databaseURL: "https://movomsite-default-rtdb.firebaseio.com"
+};
+
+let siteApp, siteDB, siteInitialized = false;
+let siteLeads = [], siteSurveys = [], siteCharts = [];
+
+function getSiteFirebase(){
+  if(!siteInitialized){
+    siteApp = initSiteApp(siteFirebaseConfig, "site");
+    siteDB  = getSiteDB(siteApp);
+    siteInitialized = true;
+  }
+  return { siteDB };
+}
+
+// Expor para uso global via window
 window.initSiteFirebase = function(){
-  if(siteInitialized) return;
-  siteInitialized = true;
-  dbSite.ref("leads").on("value", snap => {
+  const { siteDB } = getSiteFirebase();
+  const leadsPath   = siteRef(siteDB, "leads");
+  const surveyPath  = siteRef(siteDB, "survey");
+
+  siteOnValue(leadsPath, snap => {
     siteLeads = Object.values(snap.val() || {});
     renderSiteLeadsTable();
     renderSiteCharts();
   });
-  dbSite.ref("survey").on("value", snap => {
+
+  siteOnValue(surveyPath, snap => {
     siteSurveys = Object.values(snap.val() || {});
     renderSiteCharts();
   });
 };
 
 window.enviarLead = async function(){
+  const { siteDB } = getSiteFirebase();
   const data     = document.getElementById("lead_data")?.value || "";
   const nome     = document.getElementById("lead_nome")?.value || "";
   const whatsapp = document.getElementById("lead_whatsapp")?.value || "";
@@ -4901,17 +3765,15 @@ window.enviarLead = async function(){
 
   if(!nome || !whatsapp || !interesse){ alert("Preencha nome, WhatsApp e interesse."); return; }
   try{
-    await dbSite.ref("leads").push({data,nome,whatsapp,interesse,indicacao,convenio,matriculou:"Não",motivo:"",createdAt:firebase.database.ServerValue.TIMESTAMP,source:"site"});
+    await sitePush(siteRef(siteDB,"leads"),{data,nome,whatsapp,interesse,indicacao,convenio,matriculou:"Não",motivo:"",createdAt:siteST(),source:"site"});
     ["lead_data","lead_nome","lead_whatsapp","lead_interesse","lead_indicacao","lead_convenio"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
     if(msg){msg.textContent="✅ Recebemos seus dados! Em breve entraremos em contato.";msg.style.display="block";}
     setTimeout(()=>{if(msg)msg.style.display="none";},5000);
-    // Também tenta abrir o WhatsApp com os dados preenchidos (item 4 do escopo)
-    const textoWA = encodeURIComponent(`Olá! Meu nome é ${nome}. Tenho interesse em ${interesse} e gostaria de agendar uma avaliação.`);
-    window.open(`https://wa.me/5521999681425?text=${textoWA}`,"_blank");
-  }catch(e){ console.error(e); alert("Erro ao enviar. Tente novamente."); }
+  }catch(e){ alert("Erro ao enviar. Tente novamente."); }
 };
 
 window.enviarSurvey = async function(){
+  const { siteDB } = getSiteFirebase();
   const nome      = document.getElementById("survey_nome")?.value || "";
   const nota      = document.getElementById("survey_nota")?.value || "";
   const comentario= document.getElementById("survey_comentario")?.value || "";
@@ -4919,29 +3781,31 @@ window.enviarSurvey = async function(){
 
   if(!nota){ alert("Informe uma nota."); return; }
   try{
-    await dbSite.ref("survey").push({nome,nota,comentario,createdAt:firebase.database.ServerValue.TIMESTAMP,source:"site"});
+    await sitePush(siteRef(siteDB,"survey"),{nome,nota,comentario,createdAt:siteST(),source:"site"});
     ["survey_nome","survey_nota","survey_comentario"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
     if(msg){msg.textContent="⭐ Obrigado! Sua avaliação foi enviada.";msg.style.display="block";}
     setTimeout(()=>{if(msg)msg.style.display="none";},5000);
-  }catch(e){ console.error(e); alert("Erro ao enviar. Tente novamente."); }
+  }catch(e){ alert("Erro ao enviar. Tente novamente."); }
 };
 
 window.salvarLeadAdmin = async function(){
+  const { siteDB } = getSiteFirebase();
   const campos={data:"admlead_data",nome:"admlead_nome",whatsapp:"admlead_whatsapp",interesse:"admlead_interesse",indicacao:"admlead_indicacao",convenio:"admlead_convenio",matriculou:"admlead_matriculou",motivo:"admlead_motivo"};
   const lead={};
   for(const[k,id] of Object.entries(campos)){ const el=document.getElementById(id); lead[k]=el?el.value:""; }
   if(!lead.nome||!lead.whatsapp){ alert("Preencha nome e WhatsApp."); return; }
-  lead.createdAt=firebase.database.ServerValue.TIMESTAMP; lead.source="admin";
-  await dbSite.ref("leads").push(lead);
+  lead.createdAt=siteST(); lead.source="admin";
+  await sitePush(siteRef(siteDB,"leads"),lead);
   alert("Lead salvo!");
 };
 
 window.salvarSurveyAdmin = async function(){
+  const { siteDB } = getSiteFirebase();
   const nome      = document.getElementById("admsurvey_nome")?.value||"";
   const nota      = document.getElementById("admsurvey_nota")?.value||"";
   const comentario= document.getElementById("admsurvey_comentario")?.value||"";
   if(!nota){ alert("Informe uma nota."); return; }
-  await dbSite.ref("survey").push({nome,nota,comentario,createdAt:firebase.database.ServerValue.TIMESTAMP,source:"admin"});
+  await sitePush(siteRef(siteDB,"survey"),{nome,nota,comentario,createdAt:siteST(),source:"admin"});
   alert("Resposta salva!");
 };
 
@@ -4994,254 +3858,6 @@ window.exportarLeadsCSV = function(){
   const url=URL.createObjectURL(blob);
   const a=document.createElement("a");a.href=url;a.download="movom-leads.csv";a.click();URL.revokeObjectURL(url);
 };
-
-/* ══════════════════════════════
-   EQUIPE / DEPOIMENTOS / PARCEIROS / TEXTOS
-   (item 7, 8, 9 e 10 do escopo - Gerenciar Site)
-══════════════════════════════ */
-let siteEquipe = {}, siteDepoimentos = {}, siteParceiros = {}, siteGaleria = {}, siteTextos = {}, depoIndex = 0;
-
-const EQUIPE_SEED = {
-  seed1: { nome:"Alessandra Peres", cargo:"Fisioterapeuta Responsável",
-    credenciais:"CREFITO-2: 386055-F; Pós-graduanda em Fisioterapia; Professora de Pilates; Professora de Yoga", foto:"" }
-};
-const DEPOIMENTOS_SEED = {
-  d1:{nome:"Juliana R.",nota:5,texto:"Atendimento excelente, equipe muito atenciosa e profissional."},
-  d2:{nome:"Marcos T.",nota:5,texto:"O Pilates mudou minha postura e minha qualidade de vida."},
-  d3:{nome:"Fernanda A.",nota:5,texto:"Fisioterapia humanizada, sinto que realmente se importam comigo."},
-  d4:{nome:"Rodrigo S.",nota:4,texto:"Ótima estrutura e horários flexíveis para quem trabalha."},
-  d5:{nome:"Camila V.",nota:5,texto:"As aulas de Yoga são um momento de paz na minha semana."},
-  d6:{nome:"Patrícia L.",nota:5,texto:"Profissionais muito capacitados, recomendo de olhos fechados."},
-  d7:{nome:"André M.",nota:4,texto:"Recuperei minha mobilidade depois de meses de acompanhamento."},
-  d8:{nome:"Beatriz N.",nota:5,texto:"Ambiente acolhedor e equipe sempre disponível para tirar dúvidas."}
-};
-const PARCEIROS_SEED = ["OAB","Empório Naval","Oceano","YouHuul","Universidade Cândido Mendes","CIEE","Wellhub","TotalPass","NamuPass","GuruPass"]
-  .reduce((acc,nome,i)=>{acc["p"+i]={nome,logo:""};return acc;},{});
-
-function seedIfEmpty(path, seedData){
-  dbSite.ref(path).once("value").then(snap=>{
-    if(!snap.exists()) dbSite.ref(path).set(seedData);
-  });
-}
-
-let sitePublicContentInitialized = false;
-window.initSitePublicContent = function(){
-  if(sitePublicContentInitialized) return;
-  sitePublicContentInitialized = true;
-  seedIfEmpty("equipe", EQUIPE_SEED);
-  seedIfEmpty("depoimentos", DEPOIMENTOS_SEED);
-  seedIfEmpty("parceiros", PARCEIROS_SEED);
-
-  dbSite.ref("equipe").on("value", snap=>{ siteEquipe = snap.val()||{}; renderEquipe(); });
-  dbSite.ref("depoimentos").on("value", snap=>{ siteDepoimentos = snap.val()||{}; renderDepoimentos(); });
-  dbSite.ref("parceiros").on("value", snap=>{ siteParceiros = snap.val()||{}; renderParceiros(); });
-  dbSite.ref("galeria").on("value", snap=>{ siteGaleria = snap.val()||{}; renderGaleria(); });
-  dbSite.ref("textos").on("value", snap=>{ siteTextos = snap.val()||{}; aplicarTextosSite(); });
-};
-
-function renderGaleria(){
-  const wrap = document.getElementById("galeriaPremiumWrap");
-  const adminList = document.getElementById("galeriaAdminLista");
-  const lista = Object.entries(siteGaleria);
-  if(wrap){
-    wrap.innerHTML = lista.length ? lista.map(([id,g])=>`
-      <div class="galeria-item" onclick="abrirLightbox('${(g.url||"").replace(/'/g,"\\'")}')">
-        <img src="${g.url}" alt="${g.legenda||'Foto MovOm'}" loading="lazy">
-        <div class="galeria-item-overlay">${g.legenda||""}</div>
-      </div>`).join("") : "<p style='color:var(--muted);padding:12px;font-size:.84rem'>Em breve, fotos do espaço.</p>";
-  }
-  if(adminList){
-    adminList.innerHTML = lista.length ? `<div class="table-card"><div style="overflow-x:auto"><table class="data-table"><thead><tr><th>Legenda</th><th></th></tr></thead><tbody>${
-      lista.map(([id,g])=>`<tr><td>${g.legenda||""}</td><td><button class="btn-icon-sm del" onclick="removerGaleriaFoto('${id}')">🗑️</button></td></tr>`).join("")
-    }</tbody></table></div></div>` : "";
-  }
-}
-window.salvarGaleriaFoto = function(){
-  const url = document.getElementById("gl_url")?.value.trim();
-  const legenda = document.getElementById("gl_legenda")?.value.trim();
-  if(!url){ alert("Informe a URL da foto."); return; }
-  dbSite.ref("galeria").push({url,legenda});
-  ["gl_url","gl_legenda"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
-};
-window.removerGaleriaFoto = function(id){
-  if(confirm("Remover esta foto da galeria?")) dbSite.ref("galeria/"+id).remove();
-};
-window.abrirLightbox = function(url){
-  if(!url) return;
-  const ov = document.createElement("div");
-  ov.className = "lightbox-overlay";
-  ov.onclick = ()=>ov.remove();
-  ov.innerHTML = `<button class="lightbox-close" onclick="this.parentElement.remove()">&times;</button><img src="${url}" alt="Foto MovOm">`;
-  document.body.appendChild(ov);
-};
-
-function renderEquipe(){
-  const wrap = document.getElementById("equipeCardsWrap");
-  const adminList = document.getElementById("equipeAdminLista");
-  const membros = Object.entries(siteEquipe).sort((a,b)=>a[1].nome.localeCompare(b[1].nome,"pt-BR"));
-  if(wrap){
-    wrap.innerHTML = membros.length ? membros.map(([id,m])=>`
-      <div class="site-card equipe-card" style="text-align:center">
-        <div class="equipe-foto-wrap">
-        ${m.foto ? `<img class="equipe-foto" src="${m.foto}" alt="${m.nome}">`
-                 : `<div class="equipe-foto" style="background:var(--lilas);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.4rem">${(m.nome||"?").split(" ").slice(0,2).map(s=>s[0]).join("")}</div>`}
-        </div>
-        <h3>${m.nome||""}</h3>
-        <p style="color:var(--muted);font-size:.84rem">${m.cargo||""}</p>
-        <p style="color:var(--muted);font-size:.76rem;margin-top:6px">${(m.credenciais||"").split(";").filter(Boolean).join("<br>")}</p>
-      </div>`).join("")
-      : "<p style='color:var(--muted);padding:12px;font-size:.84rem'>Equipe em cadastro.</p>";
-  }
-  if(adminList){
-    adminList.innerHTML = membros.length ? `<div class="table-card"><div style="overflow-x:auto"><table class="data-table"><thead><tr><th>Nome</th><th>Cargo</th><th></th></tr></thead><tbody>${
-      membros.map(([id,m])=>`<tr><td>${m.nome||""}</td><td>${m.cargo||""}</td><td><button class="btn-icon-sm del" onclick="removerEquipeMembro('${id}')">🗑️</button></td></tr>`).join("")
-    }</tbody></table></div></div>` : "";
-  }
-}
-
-window.salvarEquipeMembro = function(){
-  const nome = document.getElementById("eq_nome")?.value.trim();
-  const cargo = document.getElementById("eq_cargo")?.value.trim();
-  const credenciais = document.getElementById("eq_credenciais")?.value.trim();
-  const foto = document.getElementById("eq_foto")?.value.trim();
-  if(!nome){ alert("Informe o nome do colaborador."); return; }
-  dbSite.ref("equipe").push({nome,cargo,credenciais,foto});
-  ["eq_nome","eq_cargo","eq_credenciais","eq_foto"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
-};
-window.removerEquipeMembro = function(id){
-  if(confirm("Remover este colaborador da equipe do site?")) dbSite.ref("equipe/"+id).remove();
-};
-
-function renderDepoimentos(){
-  const track = document.getElementById("depoTrack");
-  const adminList = document.getElementById("depoAdminLista");
-  const lista = Object.entries(siteDepoimentos);
-  if(track){
-    if(!lista.length){ track.innerHTML = "<p style='color:var(--muted);padding:12px;font-size:.84rem'>Nenhum depoimento cadastrado.</p>"; }
-    else{
-      if(depoIndex>=lista.length) depoIndex=0;
-      const [,d] = lista[depoIndex];
-      track.innerHTML = `<p style="font-size:1.4rem;color:var(--lilas)">${"⭐".repeat(Number(d.nota)||5)}</p>
-        <p style="color:var(--text);font-style:italic;margin:8px 0">"${d.texto||""}"</p>
-        <p style="color:var(--muted);font-weight:700;font-size:.84rem">— ${d.nome||"Cliente MovOm"}</p>
-        <p style="color:var(--muted);font-size:.74rem;margin-top:4px">${depoIndex+1} / ${lista.length}</p>`;
-    }
-  }
-  // Resumo de reputação (nota média + contagem)
-  const notaEl = document.getElementById("repNotaMedia");
-  const estrelasEl = document.getElementById("repEstrelas");
-  const contagemEl = document.getElementById("repContagem");
-  if(notaEl){
-    if(lista.length){
-      const media = lista.reduce((s,[,d])=>s+(Number(d.nota)||0),0) / lista.length;
-      notaEl.textContent = media.toFixed(1).replace(".",",");
-      const cheias = Math.round(media);
-      estrelasEl.textContent = "★".repeat(cheias) + "☆".repeat(5-cheias);
-      contagemEl.textContent = `com base em ${lista.length} avaliações de pacientes`;
-    }else{
-      notaEl.textContent = "—"; estrelasEl.textContent=""; contagemEl.textContent="Ainda sem avaliações cadastradas";
-    }
-  }
-  if(adminList){
-    adminList.innerHTML = lista.length ? `<div class="table-card"><div style="overflow-x:auto"><table class="data-table"><thead><tr><th>Nome</th><th>Nota</th><th>Depoimento</th><th></th></tr></thead><tbody>${
-      lista.map(([id,d])=>`<tr><td>${d.nome||""}</td><td>${d.nota||""}</td><td>${d.texto||""}</td><td><button class="btn-icon-sm del" onclick="removerDepoimento('${id}')">🗑️</button></td></tr>`).join("")
-    }</tbody></table></div></div>` : "";
-  }
-}
-window.depoAnterior = function(){ const n=Object.keys(siteDepoimentos).length||1; depoIndex=(depoIndex-1+n)%n; renderDepoimentos(); };
-window.depoProximo  = function(){ const n=Object.keys(siteDepoimentos).length||1; depoIndex=(depoIndex+1)%n; renderDepoimentos(); };
-
-window.salvarDepoimento = function(){
-  const nome = document.getElementById("dp_nome")?.value.trim();
-  const nota = document.getElementById("dp_nota")?.value || 5;
-  const texto = document.getElementById("dp_texto")?.value.trim();
-  if(!texto){ alert("Escreva o texto do depoimento."); return; }
-  dbSite.ref("depoimentos").push({nome:nome||"Cliente MovOm",nota:Number(nota),texto});
-  ["dp_nome","dp_nota","dp_texto"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
-};
-window.removerDepoimento = function(id){
-  if(confirm("Remover este depoimento?")) dbSite.ref("depoimentos/"+id).remove();
-};
-
-function renderParceiros(){
-  const wrap = document.getElementById("parceirosCardsWrap");
-  const adminList = document.getElementById("parceirosAdminLista");
-  const lista = Object.entries(siteParceiros);
-  if(wrap){
-    wrap.innerHTML = lista.length ? lista.map(([id,p])=>`
-      <div class="parceiro-card">
-        ${p.logo
-          ? `<img src="${p.logo}" alt="Logo do parceiro ${p.nome||""}" loading="lazy" style="max-height:44px;max-width:100%;width:auto;height:auto;object-fit:contain;display:block">`
-          : `<div class="parceiro-placeholder" title="Logo oficial pendente de cadastro"><p>${p.nome||""}</p><span>logo pendente</span></div>`}
-      </div>`).join("") : "<p style='color:var(--muted);padding:12px;font-size:.84rem'>Nenhum parceiro cadastrado.</p>";
-  }
-  if(adminList){
-    adminList.innerHTML = lista.length ? `<div class="table-card"><div style="overflow-x:auto"><table class="data-table"><thead><tr><th>Nome</th><th>Logo</th><th></th></tr></thead><tbody>${
-      lista.map(([id,p])=>`<tr><td>${p.nome||""}</td><td>${p.logo?"✅ cadastrado":"⚠️ pendente"}</td><td><button class="btn-icon-sm" onclick="editarLogoParceiro('${id}','${(p.nome||"").replace(/'/g,"\\'")}')">✏️</button> <button class="btn-icon-sm del" onclick="removerParceiro('${id}')">🗑️</button></td></tr>`).join("")
-    }</tbody></table></div></div>` : "";
-  }
-}
-window.editarLogoParceiro = function(id, nome){
-  const url = prompt(`URL do logo oficial de "${nome}" (PNG/SVG, fundo transparente):`);
-  if(url===null) return;
-  dbSite.ref("parceiros/"+id).update({logo:url.trim()});
-};
-window.salvarParceiro = function(){
-  const nome = document.getElementById("pc_nome")?.value.trim();
-  const logo = document.getElementById("pc_logo")?.value.trim();
-  if(!nome){ alert("Informe o nome do parceiro."); return; }
-  dbSite.ref("parceiros").push({nome,logo});
-  ["pc_nome","pc_logo"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
-};
-window.removerParceiro = function(id){
-  if(confirm("Remover este parceiro?")) dbSite.ref("parceiros/"+id).remove();
-};
-
-function aplicarTextosSite(){
-  const t = siteTextos || {};
-  const map = {gs_hero_texto:"hero", gs_sobre_texto:"sobre", gs_whatsapp:"whatsapp", gs_instagram:"instagram", gs_email1:"email1", gs_email2:"email2", gs_endereco:"endereco"};
-  Object.entries(map).forEach(([elId,key])=>{
-    const el = document.getElementById(elId);
-    if(el && !el.value && t[key]) el.value = t[key];
-  });
-  if(t.hero){
-    document.querySelectorAll(".site-hero-content p").forEach(p=>{ if(p && !p.classList.contains("site-tag")) p.textContent = t.hero; });
-  }
-  if(t.sobre){
-    const el = document.querySelector("#s-sobre p");
-    if(el) el.textContent = t.sobre;
-  }
-  if(t.whatsapp){
-    document.querySelectorAll('a[href*="wa.me/5521999681425"]').forEach(a=>{ a.href = a.href.replace(/wa\.me\/\d+/, "wa.me/"+t.whatsapp); });
-  }
-  if(t.instagram){
-    document.querySelectorAll('a[href*="instagram.com"]').forEach(a=>{ a.href = t.instagram; });
-  }
-  if(t.email1){
-    document.querySelectorAll('a[href="mailto:movom.zenyoga@gmail.com"]').forEach(a=>{ a.href="mailto:"+t.email1; a.textContent=t.email1; });
-  }
-  if(t.email2){
-    document.querySelectorAll('a[href="mailto:movom.fisio@gmail.com"]').forEach(a=>{ a.href="mailto:"+t.email2; a.textContent=t.email2; });
-  }
-  if(t.endereco){
-    document.querySelectorAll('a.site-btn.loc').forEach(a=>{ a.href = t.endereco; });
-  }
-}
-
-window.salvarTextosSite = function(){
-  const campos = {
-    hero: document.getElementById("gs_hero_texto")?.value.trim(),
-    sobre: document.getElementById("gs_sobre_texto")?.value.trim(),
-    whatsapp: document.getElementById("gs_whatsapp")?.value.trim(),
-    instagram: document.getElementById("gs_instagram")?.value.trim(),
-    email1: document.getElementById("gs_email1")?.value.trim(),
-    email2: document.getElementById("gs_email2")?.value.trim(),
-    endereco: document.getElementById("gs_endereco")?.value.trim()
-  };
-  Object.keys(campos).forEach(k=>{ if(!campos[k]) delete campos[k]; });
-  dbSite.ref("textos").update(campos).then(()=>alert("Textos e contato atualizados!"));
-};
-
 </script>
 
 <!-- AVALIAÇÕES + RESTANTE DOS SCRIPTS (compat) -->
@@ -5710,52 +4326,68 @@ window.voltar=function(){
 };
 
 window.carregarAvaliacoes=function(){
+  // Garante que a referência do Firebase está disponível
   if(!dbAval){
+    console.error("Firebase não inicializado para Avaliações");
     document.getElementById("listaAvaliacoes").innerHTML="<p style='color:#b91c1c;padding:12px'>⚠️ Erro: Firebase não inicializado. Recarregue a página.</p>";
     return;
   }
+  
   const filtro=document.getElementById("filtroTipo")?.value||"";
-  const pesquisa=(document.getElementById("pesquisaAvaliacao")?.value||"").toLowerCase().trim();
-  const lista=document.getElementById("listaAvaliacoes")||document.getElementById("conteudoListaAvaliacoes");
-  if(!lista) return;
+  const lista=document.getElementById("listaAvaliacoes");
+  
+  if(!lista){
+    console.error("Elemento listaAvaliacoes não encontrado");
+    return;
+  }
+  
   lista.innerHTML="<p style='color:var(--muted);padding:8px;font-size:.82rem'>Carregando avaliações...</p>";
+  
   dbAval.ref("avaliacoes").once("value").then(snap=>{
     lista.innerHTML="";
-    if(!snap.exists()||!snap.val()){
+    
+    if(!snap.exists() || !snap.val()){
       lista.innerHTML="<p style='color:var(--muted);padding:12px'>Nenhuma avaliação registrada ainda.</p>";
       return;
     }
-    let avaliacoes=[];
+    
+    const avaliacoes = [];
     snap.forEach(child=>{
       const d=child.val();
-      if(d&&d.nome&&d.tipo&&d.data) avaliacoes.push({id:child.key,...d});
+      if(d && d.nome && d.tipo && d.data){
+        avaliacoes.push({id:child.key, nome:d.nome, tipo:d.tipo, data:d.data, ...d});
+      }
     });
-    if(filtro) avaliacoes=avaliacoes.filter(a=>a.tipo===filtro);
-    if(pesquisa) avaliacoes=avaliacoes.filter(a=>
-      (a.nome||"").toLowerCase().includes(pesquisa)||
-      (a.tipo||"").toLowerCase().includes(pesquisa)||
-      (a.diagClinico||"").toLowerCase().includes(pesquisa)||
-      (a.diagnosticoClinico||"").toLowerCase().includes(pesquisa)
-    );
-    if(!avaliacoes.length){
+    
+    if(avaliacoes.length === 0){
       lista.innerHTML="<p style='color:var(--muted);padding:12px'>Nenhuma avaliação encontrada.</p>";
       return;
     }
-    // Ordem alfabética por nome, depois por data
+    
+    // Ordena por data mais recente primeiro
     avaliacoes.sort((a,b)=>{
-      const n=(a.nome||"").localeCompare(b.nome||"","pt-BR");
-      if(n!==0) return n;
-      return (a.data||"").localeCompare(b.data||"");
+      const dataA = a.data ? new Date(a.data.split('/').reverse().join('-')) : new Date(0);
+      const dataB = b.data ? new Date(b.data.split('/').reverse().join('-')) : new Date(0);
+      return dataB - dataA;
     });
+    
     avaliacoes.forEach(d=>{
+      if(filtro && d.tipo!==filtro) return;
+      
       const div=document.createElement("div");
-      div.className="lista-aval-item"; div.style.cursor="pointer";
+      div.className="lista-aval-item";
+      div.style.cursor="pointer";
       div.innerHTML=`<div><div class="nome">${d.nome}</div><div class="tipo">${d.tipo} • ${fmtD(d.data)}</div></div>`;
-      div.onclick=()=>abrirDetalhe(d.id,d);
+      div.onclick=()=>abrirDetalhe(d.id, d);
       lista.appendChild(div);
     });
+    
+    if(lista.children.length === 0){
+      lista.innerHTML="<p style='color:var(--muted);padding:12px'>Nenhuma avaliação encontrada para este tipo.</p>";
+    }
   }).catch(err=>{
-    lista.innerHTML="<p style='color:var(--text);padding:12px'>⚠️ Erro ao carregar avaliações. Verifique sua conexão.</p>";
+    console.error("Erro ao carregar avaliações:", err);
+    lista.innerHTML="<p style='color:var(--text);padding:12px'>⚠️ Erro ao carregar avaliações. Verifique sua conexão com a internet.</p>";
   });
 };
 
@@ -5808,6 +4440,291 @@ window.carregarAllEvolucoes=function(){
     lista.innerHTML="<p style='color:var(--text);padding:12px'>⚠️ Erro ao carregar evoluções.</p>";
   });
 };
+
+
+// ===== FINANCEIRO UNIFICADO =====
+window.mudarAbaFinanceiro = function(aba) {
+  document.getElementById('abaEntradas').classList.toggle('hidden', aba !== 'entradas');
+  document.getElementById('abaDespesas').classList.toggle('hidden', aba !== 'despesas');
+  document.querySelectorAll('.btn-aba').forEach(btn => btn.classList.remove('btn-aba-ativo'));
+  event.target.classList.add('btn-aba-ativo');
+};
+
+window.salvarEntrada = function() {
+  const data = document.getElementById('dataEntrada')?.value;
+  const descricao = document.getElementById('descricaoEntrada')?.value;
+  const valor = parseFloat(document.getElementById('valorEntrada')?.value || 0);
+  
+  if(!data || !descricao || !valor) {
+    alert('Preencha todos os campos');
+    return;
+  }
+  
+  if(dbFin) {
+    dbFin.ref('entradas').push({data, descricao, valor, dataCriacao: new Date().toISOString()});
+    document.getElementById('dataEntrada').value = '';
+    document.getElementById('descricaoEntrada').value = '';
+    document.getElementById('valorEntrada').value = '';
+    alert('Entrada salva!');
+    carregarEntradas();
+  }
+};
+
+window.salvarDespesa = function() {
+  const data = document.getElementById('dataDespesa')?.value;
+  const descricao = document.getElementById('descricaoDespesa')?.value;
+  const categoria = document.getElementById('categoriaDespesa')?.value;
+  const valor = parseFloat(document.getElementById('valorDespesa')?.value || 0);
+  const nf = document.getElementById('nfDespesa')?.value || '';
+  
+  if(!data || !descricao || !categoria || !valor) {
+    alert('Preencha os campos obrigatórios');
+    return;
+  }
+  
+  if(dbFin) {
+    dbFin.ref('despesas').push({data, descricao, categoria, valor, nf, dataCriacao: new Date().toISOString()});
+    document.getElementById('dataDespesa').value = '';
+    document.getElementById('descricaoDespesa').value = '';
+    document.getElementById('categoriaDespesa').value = '';
+    document.getElementById('valorDespesa').value = '';
+    document.getElementById('nfDespesa').value = '';
+    alert('Despesa salva!');
+    carregarDespesas();
+  }
+};
+
+window.carregarEntradas = function() {
+  if(!dbFin) return;
+  dbFin.ref('entradas').once('value').then(snap => {
+    const dados = snap.val() || {};
+    const tbody = document.getElementById('tabelaEntradas');
+    if(!tbody) return;
+    
+    tbody.innerHTML = '';
+    const arr = Object.entries(dados).map(([id, d]) => ({id, ...d}))
+      .sort((a, b) => new Date(b.data) - new Date(a.data));
+    
+    arr.forEach(d => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5;">${d.data}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5;">${d.descricao}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5; text-align: right;">R$ ${parseFloat(d.valor || 0).toFixed(2)}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5; text-align: center;">
+          <button onclick="deletarEntrada('${d.id}')" style="padding: 6px 12px; background: #fee2e2; color: #b91c1c; border: none; border-radius: 6px; cursor: pointer;">Deletar</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  });
+};
+
+window.carregarDespesas = function() {
+  if(!dbFin) return;
+  dbFin.ref('despesas').once('value').then(snap => {
+    const dados = snap.val() || {};
+    const tbody = document.getElementById('tabelaDespesas');
+    if(!tbody) return;
+    
+    tbody.innerHTML = '';
+    const arr = Object.entries(dados).map(([id, d]) => ({id, ...d}))
+      .sort((a, b) => new Date(b.data) - new Date(a.data));
+    
+    arr.forEach(d => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5;">${d.data}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5;">${d.descricao}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5;">${d.categoria}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5; text-align: right;">R$ ${parseFloat(d.valor || 0).toFixed(2)}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5; text-align: center;">${d.nf || '-'}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5; text-align: center;">
+          <button onclick="deletarDespesa('${d.id}')" style="padding: 6px 12px; background: #fee2e2; color: #b91c1c; border: none; border-radius: 6px; cursor: pointer;">Deletar</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  });
+};
+
+window.deletarEntrada = function(id) {
+  if(confirm('Deletar entrada?') && dbFin) {
+    dbFin.ref(`entradas/${id}`).remove();
+    carregarEntradas();
+  }
+};
+
+window.deletarDespesa = function(id) {
+  if(confirm('Deletar despesa?') && dbFin) {
+    dbFin.ref(`despesas/${id}`).remove();
+    carregarDespesas();
+  }
+};
+
+// ===== GRADE DE HORÁRIOS =====
+window.mudarAbaGrade = function(aba) {
+  document.getElementById('abaYoga').classList.toggle('hidden', aba !== 'yoga');
+  document.getElementById('abaFisioterapia').classList.toggle('hidden', aba !== 'fisioterapia');
+  document.querySelectorAll('.btn-aba').forEach(btn => btn.classList.remove('btn-aba-ativo'));
+  event.target.classList.add('btn-aba-ativo');
+};
+
+window.salvarHorarioYoga = function() {
+  const instrutor = document.getElementById('instrutorYoga')?.value;
+  const modalidade = document.getElementById('modalidadeYoga')?.value;
+  const horario = document.getElementById('horarioYoga')?.value;
+  
+  if(!instrutor || !modalidade || !horario) {
+    alert('Preencha todos os campos');
+    return;
+  }
+  
+  if(dbGrade) {
+    dbGrade.ref('yoga').push({instrutor, modalidade, horario, dataCriacao: new Date().toISOString()});
+    document.getElementById('instrutorYoga').value = '';
+    document.getElementById('modalidadeYoga').value = '';
+    document.getElementById('horarioYoga').value = '';
+    alert('Horário salvo!');
+    carregarYoga();
+  }
+};
+
+window.salvarHorarioFisioterapia = function() {
+  const fisioterapeuta = document.getElementById('fisioterapeutaGrade')?.value;
+  const indicacao = document.getElementById('indicacaoClinicaGrade')?.value;
+  const horario = document.getElementById('horarioFisioterapiaGrade')?.value;
+  
+  if(!fisioterapeuta || !indicacao || !horario) {
+    alert('Preencha todos os campos');
+    return;
+  }
+  
+  if(dbGrade) {
+    dbGrade.ref('fisioterapia').push({fisioterapeuta, indicacao, horario, dataCriacao: new Date().toISOString()});
+    document.getElementById('fisioterapeutaGrade').value = '';
+    document.getElementById('indicacaoClinicaGrade').value = '';
+    document.getElementById('horarioFisioterapiaGrade').value = '';
+    alert('Horário salvo!');
+    carregarFisioterapiaGrade();
+  }
+};
+
+window.carregarYoga = function() {
+  if(!dbGrade) return;
+  dbGrade.ref('yoga').once('value').then(snap => {
+    const dados = snap.val() || {};
+    const tbody = document.getElementById('tabelaYoga');
+    if(!tbody) return;
+    tbody.innerHTML = '';
+    Object.entries(dados).forEach(([id, d]) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5;">${d.instrutor}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5;">${d.modalidade}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5;">${d.horario}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5; text-align: center;">
+          <button onclick="deletarYoga('${id}')" style="padding: 6px 12px; background: #fee2e2; color: #b91c1c; border: none; border-radius: 6px; cursor: pointer;">Deletar</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  });
+};
+
+window.carregarFisioterapiaGrade = function() {
+  if(!dbGrade) return;
+  dbGrade.ref('fisioterapia').once('value').then(snap => {
+    const dados = snap.val() || {};
+    const tbody = document.getElementById('tabelaFisioterapiaGrade');
+    if(!tbody) return;
+    tbody.innerHTML = '';
+    Object.entries(dados).forEach(([id, d]) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5;">${d.fisioterapeuta}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5;">${d.indicacao}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5;">${d.horario}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #e4e1f5; text-align: center;">
+          <button onclick="deletarFisioGrade('${id}')" style="padding: 6px 12px; background: #fee2e2; color: #b91c1c; border: none; border-radius: 6px; cursor: pointer;">Deletar</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  });
+};
+
+window.deletarYoga = function(id) {
+  if(confirm('Deletar?') && dbGrade) {
+    dbGrade.ref(`yoga/${id}`).remove();
+    carregarYoga();
+  }
+};
+
+window.deletarFisioGrade = function(id) {
+  if(confirm('Deletar?') && dbGrade) {
+    dbGrade.ref(`fisioterapia/${id}`).remove();
+    carregarFisioterapiaGrade();
+  }
+};
+
+
+// ===== NOSSA EQUIPE =====
+const PROFISSIONAIS = [{"nome": "Shefanny Ellen", "profissao": "Fisioterapeuta", "registro": "CREFITO 123456", "especializacoes": ["Pilates", "Fisioterapia Ortop\u00e9dica", "Reabilita\u00e7\u00e3o Funcional"], "biografia": "Fisioterapeuta especialista em reabilita\u00e7\u00e3o funcional com mais de 5 anos de experi\u00eancia. Dedica-se ao atendimento personalizado focando na qualidade de vida e bem-estar dos pacientes.", "foto": "profissional-1.jpg"}, {"nome": "Jefferson Silva", "profissao": "Educador F\u00edsico", "registro": "CREF 123456", "especializacoes": ["Treinamento Funcional", "Exerc\u00edcio Terap\u00eautico", "Condicionamento F\u00edsico"], "biografia": "Educador f\u00edsico apaixonado por movimento e funcionalidade. Trabalha com precis\u00e3o, respira\u00e7\u00e3o e consci\u00eancia corporal para maximizar resultados.", "foto": "profissional-2.jpg"}, {"nome": "Alexandra Peres", "profissao": "Fisioterapeuta", "registro": "CREFITO 654321", "especializacoes": ["Reabilita\u00e7\u00e3o Motora", "Terapia Manual", "Avalia\u00e7\u00e3o Funcional"], "biografia": "Fisioterapeuta dedicada \u00e0 recupera\u00e7\u00e3o e preven\u00e7\u00e3o de les\u00f5es. Com abordagem humanizada, busca sempre o melhor resultado para seus pacientes.", "foto": "profissional-3.jpg"}, {"nome": "Vanessa Costa", "profissao": "Educadora de Yoga", "registro": "CREF 654321", "especializacoes": ["Hatha Yoga", "Yoga Terap\u00eautico", "Medita\u00e7\u00e3o e Mindfulness"], "biografia": "Educadora de yoga com forma\u00e7\u00e3o em yoga terap\u00eautico. Acredita na transforma\u00e7\u00e3o atrav\u00e9s do movimento consciente e da respira\u00e7\u00e3o equilibrada.", "foto": "profissional-4.jpg"}, {"nome": "Andressa Lima", "profissao": "Fisioterapeuta", "registro": "CREFITO 789456", "especializacoes": ["Pilates Solo e Aparelhos", "Fisioterapia P\u00e9lvica", "Reabilita\u00e7\u00e3o P\u00f3s-Cir\u00fargica"], "biografia": "Fisioterapeuta especializada em pilates e reabilita\u00e7\u00e3o. Combina t\u00e9cnicas avan\u00e7adas com escuta atenta para proporionar tratamentos eficazes e personalizados.", "foto": "profissional-5.jpg"}];
+
+window.renderizarEquipe = function() {
+  const gridEquipe = document.getElementById('gridProfissionais');
+  if(!gridEquipe) return;
+
+  gridEquipe.innerHTML = PROFISSIONAIS.map(prof => `
+    <div class="card-profissional">
+      <div class="card-profissional-header">
+        <div class="card-profissional-foto ${!prof.foto || prof.foto === '' ? 'placeholder' : ''}">
+          ${prof.foto ? `<img src="${prof.foto}" alt="${prof.nome}">` : '👤'}
+        </div>
+        <h3 class="card-profissional-nome">${prof.nome}</h3>
+        <div class="card-profissional-profissao">
+          ${prof.profissao === 'Fisioterapeuta' ? '💪' : prof.profissao === 'Educador Físico' ? '🏋️' : '🧘'}
+          ${prof.profissao}
+        </div>
+        <div class="card-profissional-registro">${prof.registro}</div>
+      </div>
+
+      <div class="card-profissional-body">
+        <div class="card-profissional-especializacoes">
+          <span class="card-profissional-especializacoes-label">Especializações</span>
+          <div class="card-profissional-especializacoes-lista">
+            ${prof.especializacoes.map(esp => `<span class="card-profissional-badge">${esp}</span>`).join('')}
+          </div>
+        </div>
+
+        <p class="card-profissional-biografia">${prof.biografia}</p>
+
+        <div class="card-profissional-footer">
+          <button class="btn-agendar" onclick="abrirAgendamento('${prof.nome}')">📅 Agendar</button>
+          <button class="btn-contato" onclick="abrirContato('${prof.nome}')">💬 Contato</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+};
+
+window.abrirAgendamento = function(nomeProfissional) {
+  alert('Função de agendamento para ' + nomeProfissional);
+  // Aqui você pode abrir um modal de agendamento ou redirecionar para página de agendamento
+};
+
+window.abrirContato = function(nomeProfissional) {
+  alert('Entrar em contato com ' + nomeProfissional);
+  // Aqui você pode abrir um formulário de contato ou redirecionar
+};
+
+// Renderiza equipe quando página carregar
+if(document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', renderizarEquipe);
+} else {
+  renderizarEquipe();
+}
 
 </script>
 </body>
