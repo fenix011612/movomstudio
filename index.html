@@ -684,6 +684,24 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 /* ══════════════════════════════
    ADMIN – GESTÃO DE ACESSOS
 ══════════════════════════════ */
+/* ══════════════════════════════
+   GERENCIAR IMAGENS — NOVO MÓDULO (independente)
+   Estilos exclusivos deste módulo; não sobrescrevem nenhuma
+   classe existente em outras seções do sistema.
+══════════════════════════════ */
+.img-lib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px;}
+.img-lib-card{border:2px solid var(--border);border-radius:14px;overflow:hidden;background:var(--white);display:flex;flex-direction:column;transition:box-shadow .15s;}
+.img-lib-card:hover{box-shadow:var(--shadow-sm);}
+.img-lib-thumb{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:var(--bg);}
+.img-lib-body{padding:10px 12px;display:flex;flex-direction:column;gap:6px;flex:1;}
+.img-lib-name{font-size:.78rem;font-weight:700;color:var(--text);line-height:1.3;word-break:break-word;}
+.img-lib-actions{display:flex;gap:6px;margin-top:auto;}
+.img-lib-actions .btn-icon-sm{flex:1;text-align:center;}
+.img-lib-cat-tab{padding:6px 14px;border-radius:20px;border:2px solid var(--border);background:var(--white);color:var(--muted);font-size:.76rem;font-weight:700;cursor:pointer;transition:.15s;}
+.img-lib-cat-tab.active{background:var(--lilas);color:#fff;border-color:var(--lilas);}
+.img-lib-upload-preview{width:96px;height:96px;border-radius:12px;overflow:hidden;border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;background:#f6f5fb;}
+.img-lib-upload-preview img{width:100%;height:100%;object-fit:cover;display:block;}
+
 .user-manage-card{background:var(--white);border:2px solid var(--border);border-radius:16px;padding:24px;margin-bottom:16px;box-shadow:var(--shadow-sm);}
 .user-manage-card h3{font-family:'Nunito',sans-serif;font-weight:800;color:var(--text);margin-bottom:16px;}
 .user-row{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--border);}
@@ -1817,6 +1835,64 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                 <tr><td>adm</td><td><span class="badge-pill p-ciano">movom1973</span></td><td>Administrador</td><td></td></tr>
               </tbody>
             </table>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════
+           GERENCIAR IMAGENS — NOVO MÓDULO
+           Página independente e desacoplada do restante do sistema.
+           Não interfere em Equipe, Parceiros, Galeria, Depoimentos,
+           Serviços, Banner, Hero, Navbar, Footer ou qualquer outra
+           seção existente.
+      ══════════════════════════════ -->
+      <div class="page" id="page-imagens">
+        <div class="inner">
+
+          <div class="form-card">
+            <h3>🖼️ Adicionar Nova Imagem</h3>
+            <p style="color:var(--muted);font-size:.78rem;margin-bottom:14px">Envie uma imagem para a biblioteca central do painel. Ela fica organizada por categoria e disponível para consulta e reutilização, sem afetar as imagens já cadastradas em cada seção do site.</p>
+            <div class="form-grid">
+              <div class="field-group">
+                <label>Categoria</label>
+                <select id="img_categoria">
+                  <option value="equipe">Equipe</option>
+                  <option value="espaco">Espaço</option>
+                  <option value="parceiros">Parceiros</option>
+                  <option value="servicos">Serviços</option>
+                  <option value="banner">Banner</option>
+                  <option value="depoimentos">Depoimentos</option>
+                  <option value="outras">Outras</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label>Nome / Legenda</label>
+                <input type="text" id="img_nome" placeholder="Ex: Foto da fachada">
+              </div>
+              <div class="field-group form-full">
+                <label>Arquivo de imagem</label>
+                <div style="display:flex;gap:12px;align-items:flex-start">
+                  <div class="img-lib-upload-preview" id="img_upload_preview_wrap" style="display:none"><div id="img_upload_preview"></div></div>
+                  <input type="file" id="img_arquivo" accept="image/*" onchange="imgLibPreviewUpload(this)" style="flex:1">
+                </div>
+                <p style="color:var(--muted);font-size:.72rem;margin-top:6px">Tamanho máximo: 4MB por imagem.</p>
+              </div>
+              <div class="form-full">
+                <button class="btn-save" id="img_btn_salvar" onclick="imgLibSalvar()">💾 Adicionar à Biblioteca</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-card" style="padding:16px 20px">
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px">
+              <span class="table-title">📁 Imagens Cadastradas</span>
+              <span id="img_lib_contagem" style="font-size:.75rem;color:var(--muted);font-weight:600"></span>
+            </div>
+            <div id="img_lib_filtros" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px"></div>
+            <div id="img_lib_grid" class="img-lib-grid">
+              <p style="color:var(--muted);font-size:.84rem;padding:8px 0">Carregando imagens...</p>
+            </div>
           </div>
 
         </div>
@@ -3172,6 +3248,7 @@ const MENUS = {
     {id:"avaliacoes",    icon:"📋", label:"Avaliações"},
     {id:"agenda",        icon:"🗓", label:"Agenda"},
     {id:"site",          icon:"🌐", label:"Site MOVOM"},
+    {id:"imagens",       icon:"🖼️", label:"Gerenciar Imagens"},
     {id:"usuarios",      icon:"🔑", label:"Usuários"},
   ],
   colab: [
@@ -3189,6 +3266,7 @@ const TOP_META = {
   avaliacoes:   {title:"Avaliações",         badge:"Fichas",     cls:"badge-red"},
   agenda:       {title:"Agenda MOVOM",       badge:"Agendamento",cls:"badge-green"},
   site:         {title:"Site Institucional", badge:"MOVOM",      cls:"badge-lilas"},
+  imagens:      {title:"Gerenciar Imagens",  badge:"Biblioteca", cls:"badge-ciano"},
   usuarios:     {title:"Usuários",           badge:"Admin",      cls:"badge-orange"},
 };
 
@@ -3227,6 +3305,7 @@ function navigate(el){
     if(pg==="agenda") {if(!document.getElementById("agTabela").innerHTML) initAgenda();}
     if(pg==="avaliacoes") carregarAvaliacoes();
     if(pg==="usuarios") admCarregarColaboradores();
+    if(pg==="imagens") { if(typeof initBibliotecaImagens==="function") initBibliotecaImagens(); }
   }, 50);
 }
 
@@ -5054,6 +5133,155 @@ window.initSitePublicContent = function(){
   dbSite.ref("parceiros").on("value", snap=>{ siteParceiros = snap.val()||{}; renderParceiros(); });
   dbSite.ref("galeria").on("value", snap=>{ siteGaleria = snap.val()||{}; renderGaleria(); });
   dbSite.ref("textos").on("value", snap=>{ siteTextos = snap.val()||{}; aplicarTextosSite(); });
+};
+
+/* ══════════════════════════════
+   GERENCIAR IMAGENS — NOVO MÓDULO
+   Biblioteca central de imagens do painel administrativo.
+   Módulo independente e totalmente desacoplado: usa o mesmo
+   Firebase do site (dbSite), porém em um nó próprio
+   ("bibliotecaImagens") que nenhuma outra função do sistema lê
+   ou escreve. Não altera Equipe, Parceiros, Galeria, Depoimentos,
+   Serviços, Banner, Firebase existente ou qualquer outra seção.
+   Carregamento é preguiçoso (lazy): só inicia ao abrir a página
+   "Gerenciar Imagens" no menu administrativo.
+══════════════════════════════ */
+const IMG_LIB_CATEGORIAS = {
+  equipe:"Equipe", espaco:"Espaço", parceiros:"Parceiros",
+  servicos:"Serviços", banner:"Banner", depoimentos:"Depoimentos", outras:"Outras"
+};
+let bibliotecaImagens = {};
+let imgLibFiltroAtual = "todas";
+let imgLibArquivoAtual = null;
+let bibliotecaImagensInitialized = false;
+
+function imgLibFileToBase64(file){
+  return new Promise((resolve,reject)=>{
+    const reader = new FileReader();
+    reader.onload = ()=>resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+window.imgLibPreviewUpload = async function(input){
+  const wrap = document.getElementById("img_upload_preview_wrap");
+  const preview = document.getElementById("img_upload_preview");
+  const file = input.files && input.files[0];
+  if(!file){ imgLibArquivoAtual = null; if(wrap) wrap.style.display="none"; return; }
+  if(file.size > 4*1024*1024){
+    alert("Imagem muito grande. Escolha um arquivo de até 4MB.");
+    input.value = "";
+    imgLibArquivoAtual = null;
+    if(wrap) wrap.style.display="none";
+    return;
+  }
+  imgLibArquivoAtual = await imgLibFileToBase64(file);
+  if(preview) preview.innerHTML = `<img src="${imgLibArquivoAtual}" alt="Pré-visualização">`;
+  if(wrap) wrap.style.display = "flex";
+};
+
+window.imgLibSalvar = function(){
+  const categoria = document.getElementById("img_categoria")?.value || "outras";
+  const nome = document.getElementById("img_nome")?.value.trim();
+  if(!imgLibArquivoAtual){ alert("Selecione um arquivo de imagem."); return; }
+  if(!nome){ alert("Informe um nome ou legenda para a imagem."); return; }
+  dbSite.ref("bibliotecaImagens").push({
+    categoria, nome, dataUrl: imgLibArquivoAtual,
+    criadoEm: firebase.database.ServerValue.TIMESTAMP
+  }).then(()=>{
+    const nomeEl = document.getElementById("img_nome");
+    const arqEl = document.getElementById("img_arquivo");
+    const wrap = document.getElementById("img_upload_preview_wrap");
+    if(nomeEl) nomeEl.value = "";
+    if(arqEl) arqEl.value = "";
+    if(wrap) wrap.style.display = "none";
+    imgLibArquivoAtual = null;
+  }).catch(err=>{
+    console.error(err);
+    alert("Não foi possível salvar a imagem. Tente novamente.");
+  });
+};
+
+window.imgLibSubstituir = async function(id, input){
+  const file = input.files && input.files[0];
+  if(!file) return;
+  if(file.size > 4*1024*1024){
+    alert("Imagem muito grande. Escolha um arquivo de até 4MB.");
+    input.value = "";
+    return;
+  }
+  try{
+    const dataUrl = await imgLibFileToBase64(file);
+    await dbSite.ref("bibliotecaImagens/"+id).update({dataUrl, atualizadoEm: firebase.database.ServerValue.TIMESTAMP});
+  }catch(err){
+    console.error(err);
+    alert("Não foi possível substituir a imagem. Tente novamente.");
+  }
+  input.value = "";
+};
+
+window.imgLibExcluir = function(id){
+  const item = bibliotecaImagens[id];
+  if(!item) return;
+  if(confirm(`Excluir a imagem "${item.nome||"sem nome"}" da biblioteca? Esta ação não pode ser desfeita.`)){
+    dbSite.ref("bibliotecaImagens/"+id).remove();
+  }
+};
+
+window.imgLibFiltrar = function(categoria, btn){
+  imgLibFiltroAtual = categoria;
+  document.querySelectorAll(".img-lib-cat-tab").forEach(b=>b.classList.remove("active"));
+  if(btn) btn.classList.add("active");
+  renderBibliotecaImagens();
+};
+
+function montarFiltrosImgLib(){
+  const wrap = document.getElementById("img_lib_filtros");
+  if(!wrap) return;
+  const contagens = {};
+  Object.values(bibliotecaImagens).forEach(it=>{ contagens[it.categoria] = (contagens[it.categoria]||0)+1; });
+  const total = Object.keys(bibliotecaImagens).length;
+  let html = `<button type="button" class="img-lib-cat-tab${imgLibFiltroAtual==="todas"?" active":""}" onclick="imgLibFiltrar('todas',this)">Todas (${total})</button>`;
+  Object.entries(IMG_LIB_CATEGORIAS).forEach(([key,label])=>{
+    html += `<button type="button" class="img-lib-cat-tab${imgLibFiltroAtual===key?" active":""}" onclick="imgLibFiltrar('${key}',this)">${label} (${contagens[key]||0})</button>`;
+  });
+  wrap.innerHTML = html;
+}
+
+function renderBibliotecaImagens(){
+  montarFiltrosImgLib();
+  const grid = document.getElementById("img_lib_grid");
+  const contagemEl = document.getElementById("img_lib_contagem");
+  if(!grid) return;
+  let itens = Object.entries(bibliotecaImagens);
+  if(imgLibFiltroAtual !== "todas") itens = itens.filter(([id,it])=>it.categoria===imgLibFiltroAtual);
+  itens.sort((a,b)=>(b[1].criadoEm||0)-(a[1].criadoEm||0));
+  if(contagemEl) contagemEl.textContent = itens.length+" imagem(ns)";
+  grid.innerHTML = itens.length ? itens.map(([id,it])=>`
+    <div class="img-lib-card">
+      <img class="img-lib-thumb" src="${it.dataUrl}" alt="${it.nome||""}">
+      <div class="img-lib-body">
+        <span class="badge-pill badge-lilas" style="align-self:flex-start">${IMG_LIB_CATEGORIAS[it.categoria]||"Outras"}</span>
+        <span class="img-lib-name">${it.nome||"Sem nome"}</span>
+        <div class="img-lib-actions">
+          <label class="btn-icon-sm edit" style="cursor:pointer" title="Substituir imagem">
+            🔄<input type="file" accept="image/*" style="display:none" onchange="imgLibSubstituir('${id}',this)">
+          </label>
+          <button type="button" class="btn-icon-sm del" title="Excluir imagem" onclick="imgLibExcluir('${id}')">🗑️</button>
+        </div>
+      </div>
+    </div>`).join("")
+    : `<p style="color:var(--muted);font-size:.84rem;padding:8px 0;grid-column:1/-1">Nenhuma imagem cadastrada${imgLibFiltroAtual!=="todas"?" nesta categoria":""}.</p>`;
+}
+
+window.initBibliotecaImagens = function(){
+  if(bibliotecaImagensInitialized) return;
+  bibliotecaImagensInitialized = true;
+  dbSite.ref("bibliotecaImagens").on("value", snap=>{
+    bibliotecaImagens = snap.val() || {};
+    renderBibliotecaImagens();
+  });
 };
 
 function renderGaleria(){
