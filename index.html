@@ -1076,10 +1076,16 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                   <div class="field-group form-full"><label>Credenciais / registro profissional / especializações (separe por ; )</label><input type="text" id="eq_credenciais" placeholder="CREFITO-2: 386055-F; Pós-graduanda em Fisioterapia; ..."></div>
                   <div class="field-group form-full"><label>Descrição breve (opcional)</label><textarea id="eq_descricao" placeholder="2 a 4 linhas sobre a atuação do profissional"></textarea></div>
                   <div class="field-group form-full">
-                    <label>URL da foto ou imagem em Base64 (opcional)</label>
-                    <div style="display:flex;gap:12px;align-items:flex-start">
+                    <label>Foto do colaborador</label>
+                    <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
                       <div class="eq-foto-preview-wrap" id="eq_foto_preview_wrap"><span class="eq-foto-empty">sem foto</span></div>
-                      <input type="text" id="eq_foto" placeholder="https://... ou data:image/jpeg;base64,..." oninput="atualizarPreviewFotoEquipe()" style="flex:1">
+                      <div style="flex:1;min-width:220px;display:flex;flex-direction:column;gap:8px">
+                        <div style="display:flex;gap:8px;flex-wrap:wrap">
+                          <button type="button" class="btn-icon-sm edit" style="padding:6px 12px;width:auto" onclick="equipeEscolherDaBiblioteca()">📁 Escolher da Biblioteca</button>
+                          <label class="btn-icon-sm edit" style="padding:6px 12px;width:auto;cursor:pointer">📤 Enviar nova imagem<input type="file" accept="image/*" style="display:none" onchange="equipeEnviarNovaFoto(this)"></label>
+                        </div>
+                        <input type="text" id="eq_foto" placeholder="ou cole a URL de uma foto já hospedada" oninput="atualizarPreviewFotoEquipe(true)">
+                      </div>
                     </div>
                   </div>
                   <div class="form-full" style="display:flex;gap:10px;flex-wrap:wrap">
@@ -1108,7 +1114,19 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                 <p style="color:var(--muted);font-size:.78rem;margin-bottom:10px">Use preferencialmente logos oficiais em alta resolução, com fundo transparente (PNG ou SVG), sem distorcer a proporção. Parceiros sem logo cadastrado aparecem com um selo "logo pendente" no site até que a URL seja adicionada.</p>
                 <div class="form-grid">
                   <div class="field-group"><label>Nome do parceiro</label><input type="text" id="pc_nome" placeholder="Ex: TotalPass"></div>
-                  <div class="field-group"><label>URL do logo (opcional)</label><input type="text" id="pc_logo" placeholder="https://..."></div>
+                  <div class="field-group form-full">
+                    <label>Logo do parceiro</label>
+                    <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
+                      <div class="eq-foto-preview-wrap" id="pc_logo_preview_wrap"><span class="eq-foto-empty">sem logo</span></div>
+                      <div style="flex:1;min-width:220px;display:flex;flex-direction:column;gap:8px">
+                        <div style="display:flex;gap:8px;flex-wrap:wrap">
+                          <button type="button" class="btn-icon-sm edit" style="padding:6px 12px;width:auto" onclick="parceiroEscolherDaBiblioteca()">📁 Escolher da Biblioteca</button>
+                          <label class="btn-icon-sm edit" style="padding:6px 12px;width:auto;cursor:pointer">📤 Enviar novo logo<input type="file" accept="image/*" style="display:none" onchange="parceiroEnviarNovoLogo(this)"></label>
+                        </div>
+                        <input type="text" id="pc_logo" placeholder="ou cole a URL de um logo já hospedado" oninput="atualizarPreviewLogoParceiro(true)">
+                      </div>
+                    </div>
+                  </div>
                   <div class="form-full"><button class="btn-save" onclick="salvarParceiro()">💾 Adicionar Parceiro</button></div>
                 </div>
                 <div id="parceirosAdminLista" style="margin-top:12px"></div>
@@ -1118,11 +1136,23 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
               <div class="form-card">
                 <h3>🖼️ Galeria (Site Público)</h3>
                 <div class="form-grid">
-                  <div class="field-group form-full"><label>URL da foto</label><input type="text" id="gl_url" placeholder="https://..."></div>
+                  <div class="field-group form-full">
+                    <label>Foto do espaço</label>
+                    <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
+                      <div class="eq-foto-preview-wrap" id="gl_preview_wrap"><span class="eq-foto-empty">sem foto</span></div>
+                      <div style="flex:1;min-width:220px;display:flex;flex-direction:column;gap:8px">
+                        <div style="display:flex;gap:8px;flex-wrap:wrap">
+                          <button type="button" class="btn-icon-sm edit" style="padding:6px 12px;width:auto" onclick="galeriaEscolherDaBiblioteca()">📁 Escolher da Biblioteca</button>
+                          <label class="btn-icon-sm edit" style="padding:6px 12px;width:auto;cursor:pointer">📤 Enviar nova imagem<input type="file" accept="image/*" style="display:none" onchange="galeriaEnviarNovaImagem(this)"></label>
+                        </div>
+                        <input type="text" id="gl_url" placeholder="ou cole a URL de uma foto já hospedada" oninput="atualizarPreviewGaleria(true)">
+                      </div>
+                    </div>
+                  </div>
                   <div class="field-group form-full"><label>Legenda (opcional)</label><input type="text" id="gl_legenda" placeholder="Ex: Sala de Pilates"></div>
                   <div class="form-full"><button class="btn-save" onclick="salvarGaleriaFoto()">💾 Adicionar Foto</button></div>
                 </div>
-                <p style="color:var(--muted);font-size:.78rem;margin-top:8px">Cole a URL de uma imagem já hospedada (ex.: Firebase Storage, Google Drive público, etc.).</p>
+                <p style="color:var(--muted);font-size:.78rem;margin-top:8px">Prefira escolher ou enviar pela Biblioteca de Imagens — a URL direta continua funcionando para compatibilidade com fotos já cadastradas.</p>
                 <div id="galeriaAdminLista" style="margin-top:12px"></div>
               </div>
 
@@ -1841,18 +1871,18 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
       </div>
 
       <!-- ══════════════════════════════
-           GERENCIAR IMAGENS — NOVO MÓDULO
-           Página independente e desacoplada do restante do sistema.
-           Não interfere em Equipe, Parceiros, Galeria, Depoimentos,
-           Serviços, Banner, Hero, Navbar, Footer ou qualquer outra
-           seção existente.
+           GERENCIAR IMAGENS — BIBLIOTECA CENTRAL
+           Esta página administra o mesmo repositório central de imagens
+           (bibliotecaImagens) usado por Equipe, Parceiros e Galeria.
+           Imagens cadastradas aqui ficam disponíveis para vincular em
+           qualquer um desses módulos, sem duplicar arquivos.
       ══════════════════════════════ -->
       <div class="page" id="page-imagens">
         <div class="inner">
 
           <div class="form-card">
             <h3>🖼️ Adicionar Nova Imagem</h3>
-            <p style="color:var(--muted);font-size:.78rem;margin-bottom:14px">Envie uma imagem para a biblioteca central do painel. Ela fica organizada por categoria e disponível para consulta e reutilização, sem afetar as imagens já cadastradas em cada seção do site.</p>
+            <p style="color:var(--muted);font-size:.78rem;margin-bottom:14px">Envie uma imagem para a biblioteca central do painel. A partir daqui ela pode ser vinculada em Equipe, Parceiros, Galeria e demais áreas do site, sem precisar enviar o arquivo novamente em cada lugar.</p>
             <div class="form-grid">
               <div class="field-group">
                 <label>Categoria</label>
@@ -1871,12 +1901,16 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                 <input type="text" id="img_nome" placeholder="Ex: Foto da fachada">
               </div>
               <div class="field-group form-full">
+                <label>Descrição (opcional)</label>
+                <input type="text" id="img_descricao" placeholder="Ex: Foto usada na seção Quem Somos">
+              </div>
+              <div class="field-group form-full">
                 <label>Arquivo de imagem</label>
                 <div style="display:flex;gap:12px;align-items:flex-start">
                   <div class="img-lib-upload-preview" id="img_upload_preview_wrap" style="display:none"><div id="img_upload_preview"></div></div>
                   <input type="file" id="img_arquivo" accept="image/*" onchange="imgLibPreviewUpload(this)" style="flex:1">
                 </div>
-                <p style="color:var(--muted);font-size:.72rem;margin-top:6px">Tamanho máximo: 4MB por imagem.</p>
+                <p style="color:var(--muted);font-size:.72rem;margin-top:6px">Tamanho máximo: 4MB por imagem. Imagens idênticas já existentes na biblioteca são reaproveitadas automaticamente.</p>
               </div>
               <div class="form-full">
                 <button class="btn-save" id="img_btn_salvar" onclick="imgLibSalvar()">💾 Adicionar à Biblioteca</button>
@@ -5128,6 +5162,11 @@ window.initSitePublicContent = function(){
   seedIfEmpty("depoimentos", DEPOIMENTOS_SEED);
   seedIfEmpty("parceiros", PARCEIROS_SEED);
 
+  // A Biblioteca de Imagens é carregada primeiro (e mantida sempre ativa)
+  // porque Equipe, Parceiros e Galeria agora resolvem suas fotos por ID
+  // a partir dela. initBibliotecaImagens() é idempotente.
+  if(typeof initBibliotecaImagens === "function") initBibliotecaImagens();
+
   dbSite.ref("equipe").on("value", snap=>{ siteEquipe = snap.val()||{}; renderEquipe(); });
   dbSite.ref("depoimentos").on("value", snap=>{ siteDepoimentos = snap.val()||{}; renderDepoimentos(); });
   dbSite.ref("parceiros").on("value", snap=>{ siteParceiros = snap.val()||{}; renderParceiros(); });
@@ -5136,15 +5175,17 @@ window.initSitePublicContent = function(){
 };
 
 /* ══════════════════════════════
-   GERENCIAR IMAGENS — NOVO MÓDULO
-   Biblioteca central de imagens do painel administrativo.
-   Módulo independente e totalmente desacoplado: usa o mesmo
-   Firebase do site (dbSite), porém em um nó próprio
-   ("bibliotecaImagens") que nenhuma outra função do sistema lê
-   ou escreve. Não altera Equipe, Parceiros, Galeria, Depoimentos,
-   Serviços, Banner, Firebase existente ou qualquer outra seção.
-   Carregamento é preguiçoso (lazy): só inicia ao abrir a página
-   "Gerenciar Imagens" no menu administrativo.
+   GERENCIAR IMAGENS — BIBLIOTECA CENTRAL
+   Biblioteca única de imagens, usada por todo o sistema
+   (painel administrativo e site público). Todos os módulos que
+   exibem imagens (Equipe, Parceiros, Galeria, e futuramente
+   Serviços/Banner/Depoimentos) referenciam as imagens daqui por
+   ID em vez de duplicar o arquivo. Continua usando o mesmo
+   Firebase do site (dbSite), no nó "bibliotecaImagens".
+   O carregamento é feito automaticamente junto com o restante do
+   conteúdo público (initSitePublicContent), pois os demais
+   módulos precisam resolver os IDs referenciados. A página
+   "Gerenciar Imagens" apenas exibe/edita esse mesmo carregamento.
 ══════════════════════════════ */
 const IMG_LIB_CATEGORIAS = {
   equipe:"Equipe", espaco:"Espaço", parceiros:"Parceiros",
@@ -5153,7 +5194,17 @@ const IMG_LIB_CATEGORIAS = {
 let bibliotecaImagens = {};
 let imgLibFiltroAtual = "todas";
 let imgLibArquivoAtual = null;
+let imgLibArquivoAtualMeta = null; // {tamanho, nomeOriginal}
 let bibliotecaImagensInitialized = false;
+let bibliotecaImagensProntaResolvers = [];
+let bibliotecaImagensPronta = false;
+
+// Espera a biblioteca estar carregada ao menos uma vez (útil para módulos
+// que precisam resolver um ID assim que o Firebase responder).
+function aguardarBibliotecaImagens(){
+  if(bibliotecaImagensPronta) return Promise.resolve(bibliotecaImagens);
+  return new Promise(resolve=>{ bibliotecaImagensProntaResolvers.push(resolve); });
+}
 
 function imgLibFileToBase64(file){
   return new Promise((resolve,reject)=>{
@@ -5164,19 +5215,66 @@ function imgLibFileToBase64(file){
   });
 }
 
+// Hash simples (FNV-1a) do conteúdo base64, usado apenas para detectar
+// duplicidade de imagens já existentes na biblioteca — não é criptográfico.
+function imgLibHash(str){
+  let h = 0x811c9dc5;
+  for(let i=0;i<str.length;i++){
+    h ^= str.charCodeAt(i);
+    h = (h * 0x01000193) >>> 0;
+  }
+  return h.toString(16);
+}
+
+// Procura na biblioteca uma imagem já existente com o mesmo conteúdo
+// (mesmo hash). Retorna o ID existente ou null.
+function imgLibEncontrarDuplicata(hash){
+  if(!hash) return null;
+  const achado = Object.entries(bibliotecaImagens).find(([,it])=>it.hash===hash);
+  return achado ? achado[0] : null;
+}
+
+/**
+ * Salva (ou reaproveita) uma imagem na Biblioteca central.
+ * Usado tanto pela página "Gerenciar Imagens" quanto pelos formulários
+ * de Equipe, Parceiros e Galeria quando o usuário envia um arquivo novo
+ * diretamente por lá. Nunca duplica: se já existir uma imagem idêntica
+ * (mesmo conteúdo) na biblioteca, o ID existente é reaproveitado.
+ * Retorna uma Promise que resolve com o ID da imagem na biblioteca.
+ */
+function salvarImagemNaBiblioteca({categoria, nome, dataUrl, descricao, tamanho, nomeOriginal}){
+  const hash = imgLibHash(dataUrl);
+  const existenteId = imgLibEncontrarDuplicata(hash);
+  if(existenteId) return Promise.resolve(existenteId);
+  const registro = {
+    categoria: categoria || "outras",
+    nome: nome || (nomeOriginal || "Sem nome"),
+    dataUrl,
+    hash,
+    criadoEm: firebase.database.ServerValue.TIMESTAMP
+  };
+  if(descricao) registro.descricao = descricao;
+  if(tamanho) registro.tamanho = tamanho;
+  if(nomeOriginal) registro.nomeOriginal = nomeOriginal;
+  const novaRef = dbSite.ref("bibliotecaImagens").push();
+  return novaRef.set(registro).then(()=>novaRef.key);
+}
+
 window.imgLibPreviewUpload = async function(input){
   const wrap = document.getElementById("img_upload_preview_wrap");
   const preview = document.getElementById("img_upload_preview");
   const file = input.files && input.files[0];
-  if(!file){ imgLibArquivoAtual = null; if(wrap) wrap.style.display="none"; return; }
+  if(!file){ imgLibArquivoAtual = null; imgLibArquivoAtualMeta = null; if(wrap) wrap.style.display="none"; return; }
   if(file.size > 4*1024*1024){
     alert("Imagem muito grande. Escolha um arquivo de até 4MB.");
     input.value = "";
     imgLibArquivoAtual = null;
+    imgLibArquivoAtualMeta = null;
     if(wrap) wrap.style.display="none";
     return;
   }
   imgLibArquivoAtual = await imgLibFileToBase64(file);
+  imgLibArquivoAtualMeta = { tamanho: file.size, nomeOriginal: file.name };
   if(preview) preview.innerHTML = `<img src="${imgLibArquivoAtual}" alt="Pré-visualização">`;
   if(wrap) wrap.style.display = "flex";
 };
@@ -5184,19 +5282,23 @@ window.imgLibPreviewUpload = async function(input){
 window.imgLibSalvar = function(){
   const categoria = document.getElementById("img_categoria")?.value || "outras";
   const nome = document.getElementById("img_nome")?.value.trim();
+  const descricao = document.getElementById("img_descricao")?.value.trim();
   if(!imgLibArquivoAtual){ alert("Selecione um arquivo de imagem."); return; }
   if(!nome){ alert("Informe um nome ou legenda para a imagem."); return; }
-  dbSite.ref("bibliotecaImagens").push({
-    categoria, nome, dataUrl: imgLibArquivoAtual,
-    criadoEm: firebase.database.ServerValue.TIMESTAMP
+  salvarImagemNaBiblioteca({
+    categoria, nome, dataUrl: imgLibArquivoAtual, descricao,
+    tamanho: imgLibArquivoAtualMeta?.tamanho, nomeOriginal: imgLibArquivoAtualMeta?.nomeOriginal
   }).then(()=>{
     const nomeEl = document.getElementById("img_nome");
+    const descEl = document.getElementById("img_descricao");
     const arqEl = document.getElementById("img_arquivo");
     const wrap = document.getElementById("img_upload_preview_wrap");
     if(nomeEl) nomeEl.value = "";
+    if(descEl) descEl.value = "";
     if(arqEl) arqEl.value = "";
     if(wrap) wrap.style.display = "none";
     imgLibArquivoAtual = null;
+    imgLibArquivoAtualMeta = null;
   }).catch(err=>{
     console.error(err);
     alert("Não foi possível salvar a imagem. Tente novamente.");
@@ -5221,10 +5323,22 @@ window.imgLibSubstituir = async function(id, input){
   input.value = "";
 };
 
+function imgLibContarUsos(id){
+  let usos = 0;
+  Object.values(siteEquipe||{}).forEach(m=>{ if(m.fotoId===id) usos++; });
+  Object.values(siteParceiros||{}).forEach(p=>{ if(p.logoId===id) usos++; });
+  Object.values(siteGaleria||{}).forEach(g=>{ if(g.imagemId===id) usos++; });
+  return usos;
+}
+
 window.imgLibExcluir = function(id){
   const item = bibliotecaImagens[id];
   if(!item) return;
-  if(confirm(`Excluir a imagem "${item.nome||"sem nome"}" da biblioteca? Esta ação não pode ser desfeita.`)){
+  const usos = imgLibContarUsos(id);
+  const aviso = usos > 0
+    ? `Esta imagem está em uso em ${usos} cadastro(s) (Equipe/Parceiros/Galeria). Excluí-la fará essas telas ficarem sem foto. `
+    : "";
+  if(confirm(`${aviso}Excluir a imagem "${item.nome||"sem nome"}" da biblioteca? Esta ação não pode ser desfeita.`)){
     dbSite.ref("bibliotecaImagens/"+id).remove();
   }
 };
@@ -5281,7 +5395,84 @@ window.initBibliotecaImagens = function(){
   dbSite.ref("bibliotecaImagens").on("value", snap=>{
     bibliotecaImagens = snap.val() || {};
     renderBibliotecaImagens();
+    if(!bibliotecaImagensPronta){
+      bibliotecaImagensPronta = true;
+      bibliotecaImagensProntaResolvers.forEach(r=>r(bibliotecaImagens));
+      bibliotecaImagensProntaResolvers = [];
+    }
+    // Os módulos que referenciam imagens por ID (Equipe, Parceiros, Galeria)
+    // precisam re-renderizar quando a biblioteca é atualizada, para refletir
+    // trocas/exclusões de imagens já vinculadas em qualquer lugar do site.
+    if(typeof renderEquipe==="function") renderEquipe();
+    if(typeof renderParceiros==="function") renderParceiros();
+    if(typeof renderGaleria==="function") renderGaleria();
   });
+};
+
+/**
+ * Resolve a URL final de uma imagem para exibição, dando preferência à
+ * referência por ID na Biblioteca central. Mantém compatibilidade com
+ * registros antigos que ainda guardam a URL/base64 diretamente no próprio
+ * módulo (campo legado), até que sejam migrados.
+ */
+function imgLibResolverUrl(id, valorLegado){
+  if(id && bibliotecaImagens[id]) return bibliotecaImagens[id].dataUrl || "";
+  return valorLegado || "";
+}
+
+/**
+ * Abre um seletor simples (modal) com as imagens da Biblioteca, filtradas
+ * por categoria sugerida, permitindo escolher uma existente para reutilizar
+ * em Equipe, Parceiros ou Galeria — sem duplicar o arquivo.
+ */
+window.abrirSeletorBiblioteca = function(categoriaSugerida, onEscolher){
+  const existente = document.getElementById("imgLibSeletorOverlay");
+  if(existente) existente.remove();
+  const itensTodos = Object.entries(bibliotecaImagens);
+  const montarGrid = (cat)=> {
+    const itens = (cat==="todas" ? itensTodos : itensTodos.filter(([,it])=>it.categoria===cat))
+      .sort((a,b)=>(b[1].criadoEm||0)-(a[1].criadoEm||0));
+    return itens.length ? itens.map(([id,it])=>`
+      <div class="img-lib-card" style="cursor:pointer" onclick="window.__imgLibSeletorEscolher('${id}')">
+        <img class="img-lib-thumb" src="${it.dataUrl}" alt="${it.nome||""}">
+        <div class="img-lib-body"><span class="img-lib-name">${it.nome||"Sem nome"}</span></div>
+      </div>`).join("")
+      : `<p style="color:var(--muted);font-size:.84rem;padding:8px 0;grid-column:1/-1">Nenhuma imagem nesta categoria ainda. Envie uma nova abaixo.</p>`;
+  };
+  const ov = document.createElement("div");
+  ov.id = "imgLibSeletorOverlay";
+  ov.className = "lightbox-overlay";
+  ov.style.alignItems = "flex-start";
+  ov.style.overflowY = "auto";
+  ov.onclick = (e)=>{ if(e.target===ov) ov.remove(); };
+  ov.innerHTML = `
+    <div class="table-card" style="max-width:820px;width:100%;margin:40px auto;padding:20px;position:relative;max-height:80vh;overflow-y:auto" onclick="event.stopPropagation()">
+      <button class="lightbox-close" style="position:static;float:right;color:var(--muted)" onclick="document.getElementById('imgLibSeletorOverlay').remove()">&times;</button>
+      <h3 style="margin-bottom:14px">📁 Escolher imagem da Biblioteca</h3>
+      <div id="imgLibSeletorFiltros" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">
+        <button type="button" class="img-lib-cat-tab active" onclick="window.__imgLibSeletorFiltrar('todas',this)">Todas</button>
+        ${Object.entries(IMG_LIB_CATEGORIAS).map(([key,label])=>`<button type="button" class="img-lib-cat-tab" onclick="window.__imgLibSeletorFiltrar('${key}',this)">${label}</button>`).join("")}
+      </div>
+      <div id="imgLibSeletorGrid" class="img-lib-grid">${montarGrid(categoriaSugerida||"todas")}</div>
+    </div>`;
+  document.body.appendChild(ov);
+  if(categoriaSugerida){
+    const btn = Array.from(ov.querySelectorAll(".img-lib-cat-tab")).find(b=>b.textContent===IMG_LIB_CATEGORIAS[categoriaSugerida]);
+    if(btn){
+      ov.querySelectorAll(".img-lib-cat-tab").forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById("imgLibSeletorGrid").innerHTML = montarGrid(categoriaSugerida);
+    }
+  }
+  window.__imgLibSeletorFiltrar = function(cat, btn){
+    ov.querySelectorAll(".img-lib-cat-tab").forEach(b=>b.classList.remove("active"));
+    if(btn) btn.classList.add("active");
+    document.getElementById("imgLibSeletorGrid").innerHTML = montarGrid(cat);
+  };
+  window.__imgLibSeletorEscolher = function(id){
+    ov.remove();
+    if(typeof onEscolher==="function") onEscolher(id, bibliotecaImagens[id]);
+  };
 };
 
 function renderGaleria(){
@@ -5289,24 +5480,67 @@ function renderGaleria(){
   const adminList = document.getElementById("galeriaAdminLista");
   const lista = Object.entries(siteGaleria);
   if(wrap){
-    wrap.innerHTML = lista.length ? lista.map(([id,g])=>`
-      <div class="galeria-item" onclick="abrirLightbox('${(g.url||"").replace(/'/g,"\\'")}')">
-        <img src="${g.url}" alt="${g.legenda||'Foto MovOm'}" loading="lazy">
+    wrap.innerHTML = lista.length ? lista.map(([id,g])=>{
+      const url = imgLibResolverUrl(g.imagemId, g.url);
+      return `
+      <div class="galeria-item" onclick="abrirLightbox('${url.replace(/'/g,"\\'")}')">
+        <img src="${url}" alt="${g.legenda||'Foto MovOm'}" loading="lazy">
         <div class="galeria-item-overlay">${g.legenda||""}</div>
-      </div>`).join("") : "<p style='color:var(--muted);padding:12px;font-size:.84rem'>Em breve, fotos do espaço.</p>";
+      </div>`;
+    }).join("") : "<p style='color:var(--muted);padding:12px;font-size:.84rem'>Em breve, fotos do espaço.</p>";
   }
   if(adminList){
-    adminList.innerHTML = lista.length ? `<div class="table-card"><div style="overflow-x:auto"><table class="data-table"><thead><tr><th>Legenda</th><th></th></tr></thead><tbody>${
-      lista.map(([id,g])=>`<tr><td>${g.legenda||""}</td><td><button class="btn-icon-sm del" onclick="removerGaleriaFoto('${id}')">🗑️</button></td></tr>`).join("")
+    adminList.innerHTML = lista.length ? `<div class="table-card"><div style="overflow-x:auto"><table class="data-table"><thead><tr><th></th><th>Legenda</th><th></th></tr></thead><tbody>${
+      lista.map(([id,g])=>{
+        const url = imgLibResolverUrl(g.imagemId, g.url);
+        return `<tr>
+          <td>${url ? `<img src="${url}" alt="" style="width:44px;height:44px;border-radius:8px;object-fit:cover;display:block">` : `<span style="font-size:.7rem;color:var(--muted)">—</span>`}</td>
+          <td>${g.legenda||""}</td>
+          <td><button class="btn-icon-sm del" onclick="removerGaleriaFoto('${id}')">🗑️</button></td>
+        </tr>`;
+      }).join("")
     }</tbody></table></div></div>` : "";
   }
 }
+
+let galeriaImagemIdSelecionada = null;
+window.atualizarPreviewGaleria = function(fromTyping){
+  if(fromTyping) galeriaImagemIdSelecionada = null;
+  const wrap = document.getElementById("gl_preview_wrap");
+  if(!wrap) return;
+  const url = imgLibResolverUrl(galeriaImagemIdSelecionada, document.getElementById("gl_url")?.value.trim());
+  wrap.innerHTML = url ? `<img src="${url}" alt="Pré-visualização">` : `<span class="eq-foto-empty">sem foto</span>`;
+};
+window.galeriaEscolherDaBiblioteca = function(){
+  abrirSeletorBiblioteca("espaco", (id)=>{
+    galeriaImagemIdSelecionada = id;
+    const urlEl = document.getElementById("gl_url");
+    if(urlEl) urlEl.value = "";
+    atualizarPreviewGaleria();
+  });
+};
+window.galeriaEnviarNovaImagem = async function(input){
+  const file = input.files && input.files[0];
+  if(!file) return;
+  if(file.size > 4*1024*1024){ alert("Imagem muito grande. Escolha um arquivo de até 4MB."); input.value=""; return; }
+  const dataUrl = await imgLibFileToBase64(file);
+  const legenda = document.getElementById("gl_legenda")?.value.trim();
+  const id = await salvarImagemNaBiblioteca({categoria:"espaco", nome:legenda||file.name, dataUrl, tamanho:file.size, nomeOriginal:file.name});
+  galeriaImagemIdSelecionada = id;
+  atualizarPreviewGaleria();
+  input.value = "";
+};
 window.salvarGaleriaFoto = function(){
   const url = document.getElementById("gl_url")?.value.trim();
   const legenda = document.getElementById("gl_legenda")?.value.trim();
-  if(!url){ alert("Informe a URL da foto."); return; }
-  dbSite.ref("galeria").push({url,legenda});
+  if(!galeriaImagemIdSelecionada && !url){ alert("Escolha uma imagem da Biblioteca, envie um arquivo, ou informe a URL da foto."); return; }
+  const dados = {legenda};
+  if(galeriaImagemIdSelecionada) dados.imagemId = galeriaImagemIdSelecionada;
+  else dados.url = url; // compatibilidade: cadastro sem passar pela Biblioteca
+  dbSite.ref("galeria").push(dados);
   ["gl_url","gl_legenda"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
+  galeriaImagemIdSelecionada = null;
+  atualizarPreviewGaleria();
 };
 window.removerGaleriaFoto = function(id){
   if(confirm("Remover esta foto da galeria?")) dbSite.ref("galeria/"+id).remove();
@@ -5325,51 +5559,79 @@ function renderEquipe(){
   const adminList = document.getElementById("equipeAdminLista");
   const membros = Object.entries(siteEquipe).sort((a,b)=>a[1].nome.localeCompare(b[1].nome,"pt-BR"));
   if(wrap){
-    wrap.innerHTML = membros.length ? membros.map(([id,m])=>`
+    wrap.innerHTML = membros.length ? membros.map(([id,m])=>{
+      const foto = imgLibResolverUrl(m.fotoId, m.foto);
+      return `
       <div class="site-card equipe-card" style="text-align:center">
         <div class="equipe-foto-wrap">
-        ${m.foto ? `<img class="equipe-foto" src="${m.foto}" alt="${m.nome}">`
+        ${foto ? `<img class="equipe-foto" src="${foto}" alt="${m.nome}">`
                  : `<div class="equipe-foto" style="background:var(--lilas);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.4rem">${(m.nome||"?").split(" ").slice(0,2).map(s=>s[0]).join("")}</div>`}
         </div>
         <h3>${m.nome||""}</h3>
         <p style="color:var(--muted);font-size:.84rem">${m.cargo||""}</p>
         <p style="color:var(--muted);font-size:.76rem;margin-top:6px">${(m.credenciais||"").split(";").filter(Boolean).join("<br>")}</p>
         ${m.descricao ? `<p style="color:var(--muted);font-size:.78rem;margin-top:8px;line-height:1.5">${m.descricao}</p>` : ""}
-      </div>`).join("")
+      </div>`;
+    }).join("")
       : "<p style='color:var(--muted);padding:12px;font-size:.84rem'>Equipe em cadastro.</p>";
   }
   if(adminList){
     adminList.innerHTML = membros.length ? `<div class="table-card"><div style="overflow-x:auto"><table class="data-table"><thead><tr><th></th><th>Nome</th><th>Cargo</th><th></th></tr></thead><tbody>${
-      membros.map(([id,m])=>`<tr>
-        <td>${m.foto ? `<img src="${m.foto}" alt="${m.nome||''}" style="width:34px;height:34px;border-radius:50%;object-fit:cover;display:block">` : `<span style="font-size:.7rem;color:var(--muted)">—</span>`}</td>
+      membros.map(([id,m])=>{
+        const foto = imgLibResolverUrl(m.fotoId, m.foto);
+        return `<tr>
+        <td>${foto ? `<img src="${foto}" alt="${m.nome||''}" style="width:34px;height:34px;border-radius:50%;object-fit:cover;display:block">` : `<span style="font-size:.7rem;color:var(--muted)">—</span>`}</td>
         <td>${m.nome||""}</td>
         <td>${m.cargo||""}</td>
         <td style="white-space:nowrap">
           <button class="btn-icon-sm edit" onclick="editarEquipeMembro('${id}')">✏️</button>
           <button class="btn-icon-sm del" onclick="removerEquipeMembro('${id}')">🗑️</button>
         </td>
-      </tr>`).join("")
+      </tr>`;
+      }).join("")
     }</tbody></table></div></div>` : "";
   }
 }
 
-window.atualizarPreviewFotoEquipe = function(){
-  const val = document.getElementById("eq_foto")?.value.trim();
+let equipeFotoIdSelecionada = null;
+window.atualizarPreviewFotoEquipe = function(fromTyping){
+  if(fromTyping) equipeFotoIdSelecionada = null;
   const wrap = document.getElementById("eq_foto_preview_wrap");
   if(!wrap) return;
-  wrap.innerHTML = val ? `<img src="${val}" alt="Pré-visualização" onerror="this.parentElement.innerHTML='<span class=&quot;eq-foto-empty&quot;>URL inválida</span>'">` : `<span class="eq-foto-empty">sem foto</span>`;
+  const url = imgLibResolverUrl(equipeFotoIdSelecionada, document.getElementById("eq_foto")?.value.trim());
+  wrap.innerHTML = url ? `<img src="${url}" alt="Pré-visualização" onerror="this.parentElement.innerHTML='<span class=&quot;eq-foto-empty&quot;>URL inválida</span>'">` : `<span class="eq-foto-empty">sem foto</span>`;
+};
+window.equipeEscolherDaBiblioteca = function(){
+  abrirSeletorBiblioteca("equipe", (id)=>{
+    equipeFotoIdSelecionada = id;
+    const urlEl = document.getElementById("eq_foto");
+    if(urlEl) urlEl.value = "";
+    atualizarPreviewFotoEquipe();
+  });
+};
+window.equipeEnviarNovaFoto = async function(input){
+  const file = input.files && input.files[0];
+  if(!file) return;
+  if(file.size > 4*1024*1024){ alert("Imagem muito grande. Escolha um arquivo de até 4MB."); input.value=""; return; }
+  const dataUrl = await imgLibFileToBase64(file);
+  const nome = document.getElementById("eq_nome")?.value.trim();
+  const id = await salvarImagemNaBiblioteca({categoria:"equipe", nome:nome||file.name, dataUrl, tamanho:file.size, nomeOriginal:file.name});
+  equipeFotoIdSelecionada = id;
+  atualizarPreviewFotoEquipe();
+  input.value = "";
 };
 
 window.editarEquipeMembro = function(id){
   const m = siteEquipe[id];
   if(!m) return;
   equipeEditId = id;
+  equipeFotoIdSelecionada = m.fotoId || null;
   const setVal = (fid,v)=>{const el=document.getElementById(fid); if(el) el.value = v||"";};
   setVal("eq_nome", m.nome);
   setVal("eq_cargo", m.cargo);
   setVal("eq_credenciais", m.credenciais);
   setVal("eq_descricao", m.descricao);
-  setVal("eq_foto", m.foto);
+  setVal("eq_foto", equipeFotoIdSelecionada ? "" : m.foto);
   atualizarPreviewFotoEquipe();
   const btn = document.getElementById("eq_btn_salvar");
   if(btn) btn.textContent = "💾 Salvar Alterações";
@@ -5383,6 +5645,7 @@ window.editarEquipeMembro = function(id){
 
 window.cancelarEdicaoEquipe = function(){
   equipeEditId = null;
+  equipeFotoIdSelecionada = null;
   ["eq_nome","eq_cargo","eq_credenciais","eq_descricao","eq_foto"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
   atualizarPreviewFotoEquipe();
   const btn = document.getElementById("eq_btn_salvar");
@@ -5400,8 +5663,14 @@ window.salvarEquipeMembro = function(){
   const descricao = document.getElementById("eq_descricao")?.value.trim();
   const foto = document.getElementById("eq_foto")?.value.trim();
   if(!nome){ alert("Informe o nome do colaborador."); return; }
-  const dados = {nome,cargo,credenciais,foto};
+  const dados = {nome,cargo,credenciais};
   if(descricao) dados.descricao = descricao;
+  if(equipeFotoIdSelecionada){
+    dados.fotoId = equipeFotoIdSelecionada;
+  } else {
+    dados.foto = foto; // compatibilidade: cadastro sem passar pela Biblioteca
+    dados.fotoId = null;
+  }
   if(equipeEditId){
     dbSite.ref("equipe/"+equipeEditId).update(dados);
   } else {
@@ -5472,30 +5741,74 @@ function renderParceiros(){
   const adminList = document.getElementById("parceirosAdminLista");
   const lista = Object.entries(siteParceiros);
   if(wrap){
-    wrap.innerHTML = lista.length ? lista.map(([id,p])=>`
+    wrap.innerHTML = lista.length ? lista.map(([id,p])=>{
+      const logo = imgLibResolverUrl(p.logoId, p.logo);
+      return `
       <div class="parceiro-card">
-        ${p.logo
-          ? `<img src="${p.logo}" alt="Logo do parceiro ${p.nome||""}" loading="lazy" style="max-height:44px;max-width:100%;width:auto;height:auto;object-fit:contain;display:block">`
+        ${logo
+          ? `<img src="${logo}" alt="Logo do parceiro ${p.nome||""}" loading="lazy" style="max-height:44px;max-width:100%;width:auto;height:auto;object-fit:contain;display:block">`
           : `<div class="parceiro-placeholder" title="Logo oficial pendente de cadastro"><p>${p.nome||""}</p><span>logo pendente</span></div>`}
-      </div>`).join("") : "<p style='color:var(--muted);padding:12px;font-size:.84rem'>Nenhum parceiro cadastrado.</p>";
+      </div>`;
+    }).join("") : "<p style='color:var(--muted);padding:12px;font-size:.84rem'>Nenhum parceiro cadastrado.</p>";
   }
   if(adminList){
-    adminList.innerHTML = lista.length ? `<div class="table-card"><div style="overflow-x:auto"><table class="data-table"><thead><tr><th>Nome</th><th>Logo</th><th></th></tr></thead><tbody>${
-      lista.map(([id,p])=>`<tr><td>${p.nome||""}</td><td>${p.logo?"✅ cadastrado":"⚠️ pendente"}</td><td><button class="btn-icon-sm" onclick="editarLogoParceiro('${id}','${(p.nome||"").replace(/'/g,"\\'")}')">✏️</button> <button class="btn-icon-sm del" onclick="removerParceiro('${id}')">🗑️</button></td></tr>`).join("")
+    adminList.innerHTML = lista.length ? `<div class="table-card"><div style="overflow-x:auto"><table class="data-table"><thead><tr><th></th><th>Nome</th><th>Logo</th><th></th></tr></thead><tbody>${
+      lista.map(([id,p])=>{
+        const logo = imgLibResolverUrl(p.logoId, p.logo);
+        return `<tr>
+          <td>${logo ? `<img src="${logo}" alt="" style="width:34px;height:34px;border-radius:8px;object-fit:contain;display:block;background:#f6f5fb">` : `<span style="font-size:.7rem;color:var(--muted)">—</span>`}</td>
+          <td>${p.nome||""}</td>
+          <td>${logo?"✅ cadastrado":"⚠️ pendente"}</td>
+          <td><button class="btn-icon-sm" onclick="editarLogoParceiro('${id}','${(p.nome||"").replace(/'/g,"\\'")}')">✏️</button> <button class="btn-icon-sm del" onclick="removerParceiro('${id}')">🗑️</button></td>
+        </tr>`;
+      }).join("")
     }</tbody></table></div></div>` : "";
   }
 }
+
+let parceiroLogoIdSelecionado = null;
+window.atualizarPreviewLogoParceiro = function(fromTyping){
+  if(fromTyping) parceiroLogoIdSelecionado = null;
+  const wrap = document.getElementById("pc_logo_preview_wrap");
+  if(!wrap) return;
+  const url = imgLibResolverUrl(parceiroLogoIdSelecionado, document.getElementById("pc_logo")?.value.trim());
+  wrap.innerHTML = url ? `<img src="${url}" alt="Pré-visualização">` : `<span class="eq-foto-empty">sem logo</span>`;
+};
+window.parceiroEscolherDaBiblioteca = function(){
+  abrirSeletorBiblioteca("parceiros", (id)=>{
+    parceiroLogoIdSelecionado = id;
+    const urlEl = document.getElementById("pc_logo");
+    if(urlEl) urlEl.value = "";
+    atualizarPreviewLogoParceiro();
+  });
+};
+window.parceiroEnviarNovoLogo = async function(input){
+  const file = input.files && input.files[0];
+  if(!file) return;
+  if(file.size > 4*1024*1024){ alert("Imagem muito grande. Escolha um arquivo de até 4MB."); input.value=""; return; }
+  const dataUrl = await imgLibFileToBase64(file);
+  const nome = document.getElementById("pc_nome")?.value.trim();
+  const id = await salvarImagemNaBiblioteca({categoria:"parceiros", nome:nome||file.name, dataUrl, tamanho:file.size, nomeOriginal:file.name});
+  parceiroLogoIdSelecionado = id;
+  atualizarPreviewLogoParceiro();
+  input.value = "";
+};
 window.editarLogoParceiro = function(id, nome){
-  const url = prompt(`URL do logo oficial de "${nome}" (PNG/SVG, fundo transparente):`);
-  if(url===null) return;
-  dbSite.ref("parceiros/"+id).update({logo:url.trim()});
+  abrirSeletorBiblioteca("parceiros", (novoId)=>{
+    dbSite.ref("parceiros/"+id).update({logoId:novoId});
+  });
 };
 window.salvarParceiro = function(){
   const nome = document.getElementById("pc_nome")?.value.trim();
   const logo = document.getElementById("pc_logo")?.value.trim();
   if(!nome){ alert("Informe o nome do parceiro."); return; }
-  dbSite.ref("parceiros").push({nome,logo});
+  const dados = {nome};
+  if(parceiroLogoIdSelecionado) dados.logoId = parceiroLogoIdSelecionado;
+  else dados.logo = logo; // compatibilidade: cadastro sem passar pela Biblioteca
+  dbSite.ref("parceiros").push(dados);
   ["pc_nome","pc_logo"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
+  parceiroLogoIdSelecionado = null;
+  atualizarPreviewLogoParceiro();
 };
 window.removerParceiro = function(id){
   if(confirm("Remover este parceiro?")) dbSite.ref("parceiros/"+id).remove();
