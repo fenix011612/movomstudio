@@ -3432,13 +3432,7 @@ window.navigate = function(el){
   if(el.dataset && el.dataset.page === 'site'){
     document.getElementById('pageSitePublico').style.display = '';
     document.getElementById('app').classList.add('hidden');
-    // CORREÇÃO: antes ia sempre para 's-home' (a home pública). Isso levava o
-    // administrador para a vitrine do site, sem nenhum link visível de volta
-    // para a seção "#s-admin" — que é onde ficam os formulários de Equipe,
-    // Parceiros e Galeria (os únicos lugares que gravam fotoId/logoId/imagemId).
-    // Resultado prático: o vínculo com a Biblioteca de Imagens nunca chegava a
-    // ser criado, porque a tela para criá-lo era inacessível pelo menu.
-    siteNav('s-admin', document.querySelector('#siteNavLinks a'));
+    siteNav('s-home', document.querySelector('#siteNavLinks a'));
     if(typeof initSitePublicContent === "function") initSitePublicContent();
     return;
   }
