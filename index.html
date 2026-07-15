@@ -3432,7 +3432,16 @@ window.navigate = function(el){
   if(el.dataset && el.dataset.page === 'site'){
     document.getElementById('pageSitePublico').style.display = '';
     document.getElementById('app').classList.add('hidden');
-    siteNav('s-home', document.querySelector('#siteNavLinks a'));
+    // CORRIGIDO: antes ia para 's-home' (página pública comum), que não tem
+    // nenhum formulário. A seção 's-admin' — a única que contém os formulários
+    // de Equipe/Parceiros/Galeria (upload de foto, escolha da Biblioteca,
+    // fotoId/logoId/imagemId) — nunca era exibida, porque nenhum botão do
+    // sistema chamava siteNav('s-admin', ...). Resultado: era possível enviar
+    // imagens pela Biblioteca (página "Gerenciar Imagens"), mas nunca vincular
+    // essas imagens a um cadastro de Equipe/Parceiro/Galeria, então elas nunca
+    // apareciam no site. Não passamos um link de nav (não existe um para
+    // 's-admin' no menu público) para não destacar "Início" indevidamente.
+    siteNav('s-admin', null);
     if(typeof initSitePublicContent === "function") initSitePublicContent();
     return;
   }
@@ -5167,11 +5176,21 @@ window.initSitePublicContent = function(){
   // a partir dela. initBibliotecaImagens() é idempotente.
   if(typeof initBibliotecaImagens === "function") initBibliotecaImagens();
 
-  dbSite.ref("equipe").on("value", snap=>{ siteEquipe = snap.val()||{}; renderEquipe(); });
-  dbSite.ref("depoimentos").on("value", snap=>{ siteDepoimentos = snap.val()||{}; renderDepoimentos(); });
-  dbSite.ref("parceiros").on("value", snap=>{ siteParceiros = snap.val()||{}; renderParceiros(); });
-  dbSite.ref("galeria").on("value", snap=>{ siteGaleria = snap.val()||{}; renderGaleria(); });
-  dbSite.ref("textos").on("value", snap=>{ siteTextos = snap.val()||{}; aplicarTextosSite(); });
+  dbSite.ref("equipe").on("value",
+    snap=>{ siteEquipe = snap.val()||{}; renderEquipe(); },
+    err=>console.error("[MovOm] Falha ao ler 'equipe' do Firebase:", err));
+  dbSite.ref("depoimentos").on("value",
+    snap=>{ siteDepoimentos = snap.val()||{}; renderDepoimentos(); },
+    err=>console.error("[MovOm] Falha ao ler 'depoimentos' do Firebase:", err));
+  dbSite.ref("parceiros").on("value",
+    snap=>{ siteParceiros = snap.val()||{}; renderParceiros(); },
+    err=>console.error("[MovOm] Falha ao ler 'parceiros' do Firebase:", err));
+  dbSite.ref("galeria").on("value",
+    snap=>{ siteGaleria = snap.val()||{}; renderGaleria(); },
+    err=>console.error("[MovOm] Falha ao ler 'galeria' do Firebase:", err));
+  dbSite.ref("textos").on("value",
+    snap=>{ siteTextos = snap.val()||{}; aplicarTextosSite(); },
+    err=>console.error("[MovOm] Falha ao ler 'textos' do Firebase:", err));
 };
 
 /* ══════════════════════════════
@@ -5406,7 +5425,7 @@ window.initBibliotecaImagens = function(){
     if(typeof renderEquipe==="function") renderEquipe();
     if(typeof renderParceiros==="function") renderParceiros();
     if(typeof renderGaleria==="function") renderGaleria();
-  });
+  }, err=>console.error("[MovOm] Falha ao ler 'bibliotecaImagens' do Firebase:", err));
 };
 
 /**
