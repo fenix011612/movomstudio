@@ -1083,6 +1083,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                         <div style="display:flex;gap:8px;flex-wrap:wrap">
                           <input type="text" id="eq_foto" placeholder="https://..." oninput="atualizarPreviewFotoEquipe(true)" style="flex:1;min-width:200px">
                           <button type="button" class="btn-icon-sm edit" style="padding:6px 12px;width:auto" onclick="atualizarPreviewFotoEquipe(true)">👁️ Visualizar</button>
+                          <button type="button" class="btn-icon-sm edit" style="padding:6px 12px;width:auto" onclick="abrirSeletorBibliotecaEquipe()">📁 Da Biblioteca</button>
                         </div>
                       </div>
                     </div>
@@ -1121,6 +1122,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                         <div style="display:flex;gap:8px;flex-wrap:wrap">
                           <input type="text" id="pc_logo" placeholder="https://..." oninput="atualizarPreviewLogoParceiro(true)" style="flex:1;min-width:200px">
                           <button type="button" class="btn-icon-sm edit" style="padding:6px 12px;width:auto" onclick="atualizarPreviewLogoParceiro(true)">👁️ Visualizar</button>
+                          <button type="button" class="btn-icon-sm edit" style="padding:6px 12px;width:auto" onclick="abrirSeletorBibliotecaParceiro()">📁 Da Biblioteca</button>
                         </div>
                       </div>
                     </div>
@@ -1142,6 +1144,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                         <div style="display:flex;gap:8px;flex-wrap:wrap">
                           <input type="text" id="gl_url" placeholder="https://..." oninput="atualizarPreviewGaleria(true)" style="flex:1;min-width:200px">
                           <button type="button" class="btn-icon-sm edit" style="padding:6px 12px;width:auto" onclick="atualizarPreviewGaleria(true)">👁️ Visualizar</button>
+                          <button type="button" class="btn-icon-sm edit" style="padding:6px 12px;width:auto" onclick="abrirSeletorBibliotecaGaleria()">📁 Da Biblioteca</button>
                         </div>
                       </div>
                     </div>
@@ -5531,6 +5534,19 @@ window.atualizarPreviewGaleria = function(fromTyping){
   const url = imgLibResolverUrl(galeriaImagemIdSelecionada, document.getElementById("gl_url")?.value.trim());
   wrap.innerHTML = url ? `<img src="${url}" alt="Pré-visualização">` : `<span class="eq-foto-empty">sem foto</span>`;
 };
+
+// CORRIGIDO (mesmo bug de imagens do formulário de Equipe): conecta o botão
+// "📁 Da Biblioteca" do formulário de Galeria ao seletor já existente.
+// Categoria sugerida "espaco", que é a categoria usada para fotos do espaço
+// físico na Biblioteca (não existe categoria "galeria" separada).
+window.abrirSeletorBibliotecaGaleria = function(){
+  abrirSeletorBiblioteca("espaco", function(id){
+    galeriaImagemIdSelecionada = id;
+    const el = document.getElementById("gl_url");
+    if(el) el.value = "";
+    atualizarPreviewGaleria();
+  });
+};
 window.salvarGaleriaFoto = function(){
   const url = document.getElementById("gl_url")?.value.trim();
   const legenda = document.getElementById("gl_legenda")?.value.trim();
@@ -5601,6 +5617,20 @@ window.atualizarPreviewFotoEquipe = function(fromTyping){
   if(!wrap) return;
   const url = imgLibResolverUrl(equipeFotoIdSelecionada, document.getElementById("eq_foto")?.value.trim());
   wrap.innerHTML = url ? `<img src="${url}" alt="Pré-visualização" onerror="this.parentElement.innerHTML='<span class=&quot;eq-foto-empty&quot;>URL inválida</span>'">` : `<span class="eq-foto-empty">sem foto</span>`;
+};
+
+// CORRIGIDO (bug das imagens da Equipe): abrirSeletorBiblioteca() já existia
+// no código, mas nenhum botão a chamava — por isso uma imagem enviada pela
+// Biblioteca nunca podia ser vinculada a um colaborador (só era possível
+// colar uma URL http manualmente). Esta função conecta o botão "📁 Da
+// Biblioteca" do formulário de Equipe ao seletor já pronto.
+window.abrirSeletorBibliotecaEquipe = function(){
+  abrirSeletorBiblioteca("equipe", function(id){
+    equipeFotoIdSelecionada = id;
+    const el = document.getElementById("eq_foto");
+    if(el) el.value = "";
+    atualizarPreviewFotoEquipe();
+  });
 };
 
 window.editarEquipeMembro = function(id){
@@ -5755,6 +5785,17 @@ window.atualizarPreviewLogoParceiro = function(fromTyping){
   if(!wrap) return;
   const url = imgLibResolverUrl(parceiroLogoIdSelecionado, document.getElementById("pc_logo")?.value.trim());
   wrap.innerHTML = url ? `<img src="${url}" alt="Pré-visualização">` : `<span class="eq-foto-empty">sem logo</span>`;
+};
+
+// CORRIGIDO (mesmo bug de imagens do formulário de Equipe): conecta o botão
+// "📁 Da Biblioteca" do formulário de Parceiros ao seletor já existente.
+window.abrirSeletorBibliotecaParceiro = function(){
+  abrirSeletorBiblioteca("parceiros", function(id){
+    parceiroLogoIdSelecionado = id;
+    const el = document.getElementById("pc_logo");
+    if(el) el.value = "";
+    atualizarPreviewLogoParceiro();
+  });
 };
 window.editarLogoParceiro = function(id, nome){
   const novaUrl = prompt(`URL da imagem do logo de "${nome}":`, "");
