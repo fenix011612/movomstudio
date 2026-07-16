@@ -1076,15 +1076,14 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                   <div class="field-group form-full"><label>Credenciais / registro profissional / especializações (separe por ; )</label><input type="text" id="eq_credenciais" placeholder="CREFITO-2: 386055-F; Pós-graduanda em Fisioterapia; ..."></div>
                   <div class="field-group form-full"><label>Descrição breve (opcional)</label><textarea id="eq_descricao" placeholder="2 a 4 linhas sobre a atuação do profissional"></textarea></div>
                   <div class="field-group form-full">
-                    <label>Foto do colaborador</label>
+                    <label>URL da imagem</label>
                     <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
                       <div class="eq-foto-preview-wrap" id="eq_foto_preview_wrap"><span class="eq-foto-empty">sem foto</span></div>
                       <div style="flex:1;min-width:220px;display:flex;flex-direction:column;gap:8px">
                         <div style="display:flex;gap:8px;flex-wrap:wrap">
-                          <button type="button" class="btn-icon-sm edit" style="padding:6px 12px;width:auto" onclick="equipeEscolherDaBiblioteca()">📁 Escolher da Biblioteca</button>
-                          <label class="btn-icon-sm edit" style="padding:6px 12px;width:auto;cursor:pointer">📤 Enviar nova imagem<input type="file" accept="image/*" style="display:none" onchange="equipeEnviarNovaFoto(this)"></label>
+                          <input type="text" id="eq_foto" placeholder="https://..." oninput="atualizarPreviewFotoEquipe(true)" style="flex:1;min-width:200px">
+                          <button type="button" class="btn-icon-sm edit" style="padding:6px 12px;width:auto" onclick="atualizarPreviewFotoEquipe(true)">👁️ Visualizar</button>
                         </div>
-                        <input type="text" id="eq_foto" placeholder="ou cole a URL de uma foto já hospedada" oninput="atualizarPreviewFotoEquipe(true)">
                       </div>
                     </div>
                   </div>
@@ -1115,15 +1114,14 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                 <div class="form-grid">
                   <div class="field-group"><label>Nome do parceiro</label><input type="text" id="pc_nome" placeholder="Ex: TotalPass"></div>
                   <div class="field-group form-full">
-                    <label>Logo do parceiro</label>
+                    <label>URL da imagem</label>
                     <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
                       <div class="eq-foto-preview-wrap" id="pc_logo_preview_wrap"><span class="eq-foto-empty">sem logo</span></div>
                       <div style="flex:1;min-width:220px;display:flex;flex-direction:column;gap:8px">
                         <div style="display:flex;gap:8px;flex-wrap:wrap">
-                          <button type="button" class="btn-icon-sm edit" style="padding:6px 12px;width:auto" onclick="parceiroEscolherDaBiblioteca()">📁 Escolher da Biblioteca</button>
-                          <label class="btn-icon-sm edit" style="padding:6px 12px;width:auto;cursor:pointer">📤 Enviar novo logo<input type="file" accept="image/*" style="display:none" onchange="parceiroEnviarNovoLogo(this)"></label>
+                          <input type="text" id="pc_logo" placeholder="https://..." oninput="atualizarPreviewLogoParceiro(true)" style="flex:1;min-width:200px">
+                          <button type="button" class="btn-icon-sm edit" style="padding:6px 12px;width:auto" onclick="atualizarPreviewLogoParceiro(true)">👁️ Visualizar</button>
                         </div>
-                        <input type="text" id="pc_logo" placeholder="ou cole a URL de um logo já hospedado" oninput="atualizarPreviewLogoParceiro(true)">
                       </div>
                     </div>
                   </div>
@@ -1137,22 +1135,21 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                 <h3>🖼️ Galeria (Site Público)</h3>
                 <div class="form-grid">
                   <div class="field-group form-full">
-                    <label>Foto do espaço</label>
+                    <label>URL da imagem</label>
                     <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
                       <div class="eq-foto-preview-wrap" id="gl_preview_wrap"><span class="eq-foto-empty">sem foto</span></div>
                       <div style="flex:1;min-width:220px;display:flex;flex-direction:column;gap:8px">
                         <div style="display:flex;gap:8px;flex-wrap:wrap">
-                          <button type="button" class="btn-icon-sm edit" style="padding:6px 12px;width:auto" onclick="galeriaEscolherDaBiblioteca()">📁 Escolher da Biblioteca</button>
-                          <label class="btn-icon-sm edit" style="padding:6px 12px;width:auto;cursor:pointer">📤 Enviar nova imagem<input type="file" accept="image/*" style="display:none" onchange="galeriaEnviarNovaImagem(this)"></label>
+                          <input type="text" id="gl_url" placeholder="https://..." oninput="atualizarPreviewGaleria(true)" style="flex:1;min-width:200px">
+                          <button type="button" class="btn-icon-sm edit" style="padding:6px 12px;width:auto" onclick="atualizarPreviewGaleria(true)">👁️ Visualizar</button>
                         </div>
-                        <input type="text" id="gl_url" placeholder="ou cole a URL de uma foto já hospedada" oninput="atualizarPreviewGaleria(true)">
                       </div>
                     </div>
                   </div>
                   <div class="field-group form-full"><label>Legenda (opcional)</label><input type="text" id="gl_legenda" placeholder="Ex: Sala de Pilates"></div>
                   <div class="form-full"><button class="btn-save" onclick="salvarGaleriaFoto()">💾 Adicionar Foto</button></div>
                 </div>
-                <p style="color:var(--muted);font-size:.78rem;margin-top:8px">Prefira escolher ou enviar pela Biblioteca de Imagens — a URL direta continua funcionando para compatibilidade com fotos já cadastradas.</p>
+                <p style="color:var(--muted);font-size:.78rem;margin-top:8px">Cole a URL pública da imagem (ex: link do Cloudinary, do seu site ou de outro serviço de hospedagem de imagens).</p>
                 <div id="galeriaAdminLista" style="margin-top:12px"></div>
               </div>
 
@@ -5439,6 +5436,10 @@ function imgLibResolverUrl(id, valorLegado){
   return valorLegado || "";
 }
 
+// Placeholder exibido quando a URL da imagem está vazia (nenhum arquivo é
+// enviado nem gravado — é apenas um SVG embutido usado como <img src>).
+const IMG_URL_PLACEHOLDER = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><rect width='100%' height='100%' fill='%23ece7fb'/><text x='50%' y='50%' font-family='sans-serif' font-size='16' fill='%237b5cff' text-anchor='middle' dy='.3em'>Sem imagem</text></svg>";
+
 /**
  * Abre um seletor simples (modal) com as imagens da Biblioteca, filtradas
  * por categoria sugerida, permitindo escolher uma existente para reutilizar
@@ -5500,7 +5501,7 @@ function renderGaleria(){
   const lista = Object.entries(siteGaleria);
   if(wrap){
     wrap.innerHTML = lista.length ? lista.map(([id,g])=>{
-      const url = imgLibResolverUrl(g.imagemId, g.url);
+      const url = imgLibResolverUrl(g.imagemId, g.url) || IMG_URL_PLACEHOLDER;
       return `
       <div class="galeria-item" onclick="abrirLightbox('${url.replace(/'/g,"\\'")}')">
         <img src="${url}" alt="${g.legenda||'Foto MovOm'}" loading="lazy">
@@ -5529,25 +5530,6 @@ window.atualizarPreviewGaleria = function(fromTyping){
   if(!wrap) return;
   const url = imgLibResolverUrl(galeriaImagemIdSelecionada, document.getElementById("gl_url")?.value.trim());
   wrap.innerHTML = url ? `<img src="${url}" alt="Pré-visualização">` : `<span class="eq-foto-empty">sem foto</span>`;
-};
-window.galeriaEscolherDaBiblioteca = function(){
-  abrirSeletorBiblioteca("espaco", (id)=>{
-    galeriaImagemIdSelecionada = id;
-    const urlEl = document.getElementById("gl_url");
-    if(urlEl) urlEl.value = "";
-    atualizarPreviewGaleria();
-  });
-};
-window.galeriaEnviarNovaImagem = async function(input){
-  const file = input.files && input.files[0];
-  if(!file) return;
-  if(file.size > 4*1024*1024){ alert("Imagem muito grande. Escolha um arquivo de até 4MB."); input.value=""; return; }
-  const dataUrl = await imgLibFileToBase64(file);
-  const legenda = document.getElementById("gl_legenda")?.value.trim();
-  const id = await salvarImagemNaBiblioteca({categoria:"espaco", nome:legenda||file.name, dataUrl, tamanho:file.size, nomeOriginal:file.name});
-  galeriaImagemIdSelecionada = id;
-  atualizarPreviewGaleria();
-  input.value = "";
 };
 window.salvarGaleriaFoto = function(){
   const url = document.getElementById("gl_url")?.value.trim();
@@ -5619,25 +5601,6 @@ window.atualizarPreviewFotoEquipe = function(fromTyping){
   if(!wrap) return;
   const url = imgLibResolverUrl(equipeFotoIdSelecionada, document.getElementById("eq_foto")?.value.trim());
   wrap.innerHTML = url ? `<img src="${url}" alt="Pré-visualização" onerror="this.parentElement.innerHTML='<span class=&quot;eq-foto-empty&quot;>URL inválida</span>'">` : `<span class="eq-foto-empty">sem foto</span>`;
-};
-window.equipeEscolherDaBiblioteca = function(){
-  abrirSeletorBiblioteca("equipe", (id)=>{
-    equipeFotoIdSelecionada = id;
-    const urlEl = document.getElementById("eq_foto");
-    if(urlEl) urlEl.value = "";
-    atualizarPreviewFotoEquipe();
-  });
-};
-window.equipeEnviarNovaFoto = async function(input){
-  const file = input.files && input.files[0];
-  if(!file) return;
-  if(file.size > 4*1024*1024){ alert("Imagem muito grande. Escolha um arquivo de até 4MB."); input.value=""; return; }
-  const dataUrl = await imgLibFileToBase64(file);
-  const nome = document.getElementById("eq_nome")?.value.trim();
-  const id = await salvarImagemNaBiblioteca({categoria:"equipe", nome:nome||file.name, dataUrl, tamanho:file.size, nomeOriginal:file.name});
-  equipeFotoIdSelecionada = id;
-  atualizarPreviewFotoEquipe();
-  input.value = "";
 };
 
 window.editarEquipeMembro = function(id){
@@ -5793,29 +5756,10 @@ window.atualizarPreviewLogoParceiro = function(fromTyping){
   const url = imgLibResolverUrl(parceiroLogoIdSelecionado, document.getElementById("pc_logo")?.value.trim());
   wrap.innerHTML = url ? `<img src="${url}" alt="Pré-visualização">` : `<span class="eq-foto-empty">sem logo</span>`;
 };
-window.parceiroEscolherDaBiblioteca = function(){
-  abrirSeletorBiblioteca("parceiros", (id)=>{
-    parceiroLogoIdSelecionado = id;
-    const urlEl = document.getElementById("pc_logo");
-    if(urlEl) urlEl.value = "";
-    atualizarPreviewLogoParceiro();
-  });
-};
-window.parceiroEnviarNovoLogo = async function(input){
-  const file = input.files && input.files[0];
-  if(!file) return;
-  if(file.size > 4*1024*1024){ alert("Imagem muito grande. Escolha um arquivo de até 4MB."); input.value=""; return; }
-  const dataUrl = await imgLibFileToBase64(file);
-  const nome = document.getElementById("pc_nome")?.value.trim();
-  const id = await salvarImagemNaBiblioteca({categoria:"parceiros", nome:nome||file.name, dataUrl, tamanho:file.size, nomeOriginal:file.name});
-  parceiroLogoIdSelecionado = id;
-  atualizarPreviewLogoParceiro();
-  input.value = "";
-};
 window.editarLogoParceiro = function(id, nome){
-  abrirSeletorBiblioteca("parceiros", (novoId)=>{
-    dbSite.ref("parceiros/"+id).update({logoId:novoId});
-  });
+  const novaUrl = prompt(`URL da imagem do logo de "${nome}":`, "");
+  if(novaUrl === null) return; // cancelado
+  dbSite.ref("parceiros/"+id).update({logo: novaUrl.trim(), logoId: null});
 };
 window.salvarParceiro = function(){
   const nome = document.getElementById("pc_nome")?.value.trim();
