@@ -710,6 +710,47 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 .user-info{flex:1;}
 .user-info .uname{font-weight:700;font-size:.88rem;}
 .user-info .urole{font-size:.72rem;color:var(--muted);}
+/* ══════════════════════════════
+   RESPONSIVIDADE — PAINEL ADMINISTRATIVO
+   O painel interno (sidebar fixa + conteúdo) não tinha nenhum tratamento
+   para telas pequenas: a sidebar ficava sempre visível ocupando espaço fixo,
+   formulários mantinham 2 colunas e tabelas não tinham rolagem própria.
+   As regras abaixo tornam o painel usável em celular sem alterar o layout
+   em telas maiores (nada aqui se aplica acima de 900px).
+══════════════════════════════ */
+.sb-menu-toggle{display:none;background:none;border:none;font-size:1.3rem;color:var(--text);cursor:pointer;padding:4px 6px;line-height:1;}
+.sb-backdrop{display:none;position:fixed;inset:0;background:rgba(10,8,30,.5);z-index:99;}
+.sb-backdrop.show{display:block;}
+
+@media(max-width:900px){
+  .sidebar{
+    transform:translateX(-100%);
+    transition:transform .25s ease;
+    z-index:200;
+  }
+  .sidebar.sb-open{transform:translateX(0);}
+  .main{margin-left:0;}
+  .sb-menu-toggle{display:inline-block;}
+  .topbar{padding:0 16px;gap:10px;}
+  .page-title{font-size:1.05rem;}
+  .topbar-actions{margin-left:auto;}
+  .inner{padding:18px 16px;}
+  .form-grid,.form-grid.g3,.fin-form,.g2-equal{grid-template-columns:1fr;}
+  .stats-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));}
+  .table-card{overflow-x:auto;}
+  table.data-table{min-width:560px;}
+  .search-bar{width:140px;}
+}
+@media(max-width:600px){
+  .topbar{flex-wrap:wrap;height:auto;min-height:60px;padding:10px 14px;}
+  .top-badge{order:3;}
+  .topbar-actions{order:4;width:100%;justify-content:flex-end;margin-left:0;}
+  .inner{padding:14px 10px;}
+  .form-card{padding:16px;}
+  .stat-value{font-size:1.8rem;}
+  .search-bar{width:100%;margin-left:0;}
+  .table-header{flex-wrap:wrap;}
+}
 </style>
 </head>
 <body>
@@ -1083,7 +1124,10 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                         <div style="display:flex;gap:8px;flex-wrap:wrap">
                           <input type="text" id="eq_foto" placeholder="https://..." oninput="atualizarPreviewFotoEquipe(true)" style="flex:1;min-width:200px">
                           <button type="button" class="btn-icon-sm edit" style="padding:6px 12px;width:auto" onclick="atualizarPreviewFotoEquipe(true)">👁️ Visualizar</button>
-                          <button type="button" class="btn-icon-sm edit" style="padding:6px 12px;width:auto" onclick="abrirSeletorBibliotecaEquipe()">📁 Da Biblioteca</button>
+                        </div>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap">
+                          <button type="button" class="btn-icon-sm edit" style="padding:6px 12px;width:auto" onclick="escolherFotoEquipeDaBiblioteca()">📁 Escolher da Biblioteca</button>
+                          <label class="btn-icon-sm edit" style="padding:6px 12px;width:auto;cursor:pointer;display:inline-flex;align-items:center">📤 Enviar novo arquivo<input type="file" accept="image/*" style="display:none" onchange="enviarNovaFotoEquipe(this)"></label>
                         </div>
                       </div>
                     </div>
@@ -1122,7 +1166,10 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                         <div style="display:flex;gap:8px;flex-wrap:wrap">
                           <input type="text" id="pc_logo" placeholder="https://..." oninput="atualizarPreviewLogoParceiro(true)" style="flex:1;min-width:200px">
                           <button type="button" class="btn-icon-sm edit" style="padding:6px 12px;width:auto" onclick="atualizarPreviewLogoParceiro(true)">👁️ Visualizar</button>
-                          <button type="button" class="btn-icon-sm edit" style="padding:6px 12px;width:auto" onclick="abrirSeletorBibliotecaParceiro()">📁 Da Biblioteca</button>
+                        </div>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap">
+                          <button type="button" class="btn-icon-sm edit" style="padding:6px 12px;width:auto" onclick="escolherLogoParceiroDaBiblioteca()">📁 Escolher da Biblioteca</button>
+                          <label class="btn-icon-sm edit" style="padding:6px 12px;width:auto;cursor:pointer;display:inline-flex;align-items:center">📤 Enviar novo arquivo<input type="file" accept="image/*" style="display:none" onchange="enviarNovoLogoParceiro(this)"></label>
                         </div>
                       </div>
                     </div>
@@ -1144,7 +1191,10 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                         <div style="display:flex;gap:8px;flex-wrap:wrap">
                           <input type="text" id="gl_url" placeholder="https://..." oninput="atualizarPreviewGaleria(true)" style="flex:1;min-width:200px">
                           <button type="button" class="btn-icon-sm edit" style="padding:6px 12px;width:auto" onclick="atualizarPreviewGaleria(true)">👁️ Visualizar</button>
-                          <button type="button" class="btn-icon-sm edit" style="padding:6px 12px;width:auto" onclick="abrirSeletorBibliotecaGaleria()">📁 Da Biblioteca</button>
+                        </div>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap">
+                          <button type="button" class="btn-icon-sm edit" style="padding:6px 12px;width:auto" onclick="escolherFotoGaleriaDaBiblioteca()">📁 Escolher da Biblioteca</button>
+                          <label class="btn-icon-sm edit" style="padding:6px 12px;width:auto;cursor:pointer;display:inline-flex;align-items:center">📤 Enviar novo arquivo<input type="file" accept="image/*" style="display:none" onchange="enviarNovaFotoGaleria(this)"></label>
                         </div>
                       </div>
                     </div>
@@ -1274,7 +1324,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 <div id="app" class="hidden">
 
   <!-- SIDEBAR -->
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebarEl">
     <div class="sb-logo">
       <div class="mark">⬡ MOVOM</div>
       <div class="sub">Sistema Interno</div>
@@ -1293,10 +1343,12 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
       <button class="btn-logout" onclick="logout()">⬅ Sair</button>
     </div>
   </aside>
+  <div class="sb-backdrop" id="sbBackdrop" onclick="fecharSidebarMobile()"></div>
 
   <!-- MAIN -->
   <div class="main">
     <div class="topbar">
+      <button class="sb-menu-toggle" id="sbMenuToggle" onclick="toggleSidebarMobile()" aria-label="Abrir menu">☰</button>
       <div class="page-title" id="topTitle">–</div>
       <div class="top-badge badge-lilas" id="topBadge">–</div>
       <div class="topbar-actions">
@@ -3330,7 +3382,8 @@ function navigate(el){
   const b = document.getElementById("topBadge");
   b.textContent = m.badge; b.className = "top-badge "+m.cls;
   document.getElementById("topBtn").style.display = ["agenda","site","usuarios"].includes(pg)?"none":"";
-  
+  fecharSidebarMobile(); // fecha o menu ao navegar em telas pequenas
+
   // Carrega dados apenas quando a página é aberta (lazy loading)
   setTimeout(()=>{
     if(pg==="colaboradores") {if(!document.getElementById("colaboradorSelect").value) initColab();}
@@ -3342,6 +3395,17 @@ function navigate(el){
     if(pg==="imagens") { if(typeof initBibliotecaImagens==="function") initBibliotecaImagens(); }
   }, 50);
 }
+
+// Menu lateral em telas pequenas: fica fora da tela por padrão (ver CSS) e é
+// aberto/fechado por estes dois controles, em vez de empurrar o conteúdo.
+window.toggleSidebarMobile = function(){
+  document.getElementById("sidebarEl")?.classList.toggle("sb-open");
+  document.getElementById("sbBackdrop")?.classList.toggle("show");
+};
+window.fecharSidebarMobile = function(){
+  document.getElementById("sidebarEl")?.classList.remove("sb-open");
+  document.getElementById("sbBackdrop")?.classList.remove("show");
+};
 
 function topAction(){
   const active = document.querySelector(".nav-item.active")?.dataset.page;
@@ -5534,18 +5598,36 @@ window.atualizarPreviewGaleria = function(fromTyping){
   const url = imgLibResolverUrl(galeriaImagemIdSelecionada, document.getElementById("gl_url")?.value.trim());
   wrap.innerHTML = url ? `<img src="${url}" alt="Pré-visualização">` : `<span class="eq-foto-empty">sem foto</span>`;
 };
-
-// CORRIGIDO (mesmo bug de imagens do formulário de Equipe): conecta o botão
-// "📁 Da Biblioteca" do formulário de Galeria ao seletor já existente.
-// Categoria sugerida "espaco", que é a categoria usada para fotos do espaço
-// físico na Biblioteca (não existe categoria "galeria" separada).
-window.abrirSeletorBibliotecaGaleria = function(){
-  abrirSeletorBiblioteca("espaco", function(id){
+// CORRIGIDO: mesmo problema do módulo Equipe — sem botão para escolher da
+// Biblioteca nem para enviar arquivo direto, só era possível colar uma URL.
+window.escolherFotoGaleriaDaBiblioteca = function(){
+  abrirSeletorBiblioteca("todas", function(id){
     galeriaImagemIdSelecionada = id;
     const el = document.getElementById("gl_url");
     if(el) el.value = "";
     atualizarPreviewGaleria();
   });
+};
+window.enviarNovaFotoGaleria = async function(input){
+  const file = input.files && input.files[0];
+  if(!file) return;
+  if(file.size > 4*1024*1024){
+    alert("Imagem muito grande. Escolha um arquivo de até 4MB.");
+    input.value = "";
+    return;
+  }
+  try{
+    const dataUrl = await imgLibFileToBase64(file);
+    const id = await salvarImagemNaBiblioteca({categoria:"espaco", nome:file.name, dataUrl, nomeOriginal:file.name, tamanho:file.size});
+    galeriaImagemIdSelecionada = id;
+    const el = document.getElementById("gl_url");
+    if(el) el.value = "";
+    atualizarPreviewGaleria();
+  }catch(err){
+    console.error(err);
+    alert("Não foi possível enviar a imagem. Tente novamente.");
+  }
+  input.value = "";
 };
 window.salvarGaleriaFoto = function(){
   const url = document.getElementById("gl_url")?.value.trim();
@@ -5619,18 +5701,40 @@ window.atualizarPreviewFotoEquipe = function(fromTyping){
   wrap.innerHTML = url ? `<img src="${url}" alt="Pré-visualização" onerror="this.parentElement.innerHTML='<span class=&quot;eq-foto-empty&quot;>URL inválida</span>'">` : `<span class="eq-foto-empty">sem foto</span>`;
 };
 
-// CORRIGIDO (bug das imagens da Equipe): abrirSeletorBiblioteca() já existia
-// no código, mas nenhum botão a chamava — por isso uma imagem enviada pela
-// Biblioteca nunca podia ser vinculada a um colaborador (só era possível
-// colar uma URL http manualmente). Esta função conecta o botão "📁 Da
-// Biblioteca" do formulário de Equipe ao seletor já pronto.
-window.abrirSeletorBibliotecaEquipe = function(){
+// CORRIGIDO: o formulário de Equipe só tinha um campo de texto para URL e
+// nenhuma forma de vincular uma imagem já cadastrada na Biblioteca central
+// (bibliotecaImagens) nem de enviar um novo arquivo direto por aqui — por
+// isso as fotos nunca apareciam (o campo ficava vazio, pois ninguém tem uma
+// URL pública para colar). abrirSeletorBiblioteca() já existia mas não era
+// chamada de lugar nenhum. As duas funções abaixo conectam os novos botões.
+window.escolherFotoEquipeDaBiblioteca = function(){
   abrirSeletorBiblioteca("equipe", function(id){
     equipeFotoIdSelecionada = id;
     const el = document.getElementById("eq_foto");
     if(el) el.value = "";
     atualizarPreviewFotoEquipe();
   });
+};
+window.enviarNovaFotoEquipe = async function(input){
+  const file = input.files && input.files[0];
+  if(!file) return;
+  if(file.size > 4*1024*1024){
+    alert("Imagem muito grande. Escolha um arquivo de até 4MB.");
+    input.value = "";
+    return;
+  }
+  try{
+    const dataUrl = await imgLibFileToBase64(file);
+    const id = await salvarImagemNaBiblioteca({categoria:"equipe", nome:file.name, dataUrl, nomeOriginal:file.name, tamanho:file.size});
+    equipeFotoIdSelecionada = id;
+    const el = document.getElementById("eq_foto");
+    if(el) el.value = "";
+    atualizarPreviewFotoEquipe();
+  }catch(err){
+    console.error(err);
+    alert("Não foi possível enviar a imagem. Tente novamente.");
+  }
+  input.value = "";
 };
 
 window.editarEquipeMembro = function(id){
@@ -5786,16 +5890,36 @@ window.atualizarPreviewLogoParceiro = function(fromTyping){
   const url = imgLibResolverUrl(parceiroLogoIdSelecionado, document.getElementById("pc_logo")?.value.trim());
   wrap.innerHTML = url ? `<img src="${url}" alt="Pré-visualização">` : `<span class="eq-foto-empty">sem logo</span>`;
 };
-
-// CORRIGIDO (mesmo bug de imagens do formulário de Equipe): conecta o botão
-// "📁 Da Biblioteca" do formulário de Parceiros ao seletor já existente.
-window.abrirSeletorBibliotecaParceiro = function(){
+// CORRIGIDO: mesmo problema do módulo Equipe — sem botão para escolher da
+// Biblioteca nem para enviar arquivo direto, só era possível colar uma URL.
+window.escolherLogoParceiroDaBiblioteca = function(){
   abrirSeletorBiblioteca("parceiros", function(id){
     parceiroLogoIdSelecionado = id;
     const el = document.getElementById("pc_logo");
     if(el) el.value = "";
     atualizarPreviewLogoParceiro();
   });
+};
+window.enviarNovoLogoParceiro = async function(input){
+  const file = input.files && input.files[0];
+  if(!file) return;
+  if(file.size > 4*1024*1024){
+    alert("Imagem muito grande. Escolha um arquivo de até 4MB.");
+    input.value = "";
+    return;
+  }
+  try{
+    const dataUrl = await imgLibFileToBase64(file);
+    const id = await salvarImagemNaBiblioteca({categoria:"parceiros", nome:file.name, dataUrl, nomeOriginal:file.name, tamanho:file.size});
+    parceiroLogoIdSelecionado = id;
+    const el = document.getElementById("pc_logo");
+    if(el) el.value = "";
+    atualizarPreviewLogoParceiro();
+  }catch(err){
+    console.error(err);
+    alert("Não foi possível enviar a imagem. Tente novamente.");
+  }
+  input.value = "";
 };
 window.editarLogoParceiro = function(id, nome){
   const novaUrl = prompt(`URL da imagem do logo de "${nome}":`, "");
