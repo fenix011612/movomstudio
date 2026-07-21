@@ -9,6 +9,10 @@
 <meta property="og:description" content="Cuidado integral com fisioterapia, pilates e yoga. Atendimento humanizado e equipe especializada desde 2019."/>
 <meta property="og:type" content="business.business"/>
 <meta property="og:locale" content="pt_BR"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin/>
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
@@ -586,6 +590,16 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 .parceiro-card p{font-weight:700;font-size:.85rem;color:var(--text);text-align:center;margin:0;}
 .parceiro-placeholder{display:flex;flex-direction:column;align-items:center;gap:4px;}
 .parceiro-placeholder span{font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;background:var(--lilas-light);padding:2px 8px;border-radius:20px;}
+
+/* ---- Efeito suave de carregamento de imagens (skeleton + fade-in) ----
+   Aplicado via classe .fade-img nas imagens públicas (equipe, galeria,
+   parceiros). Usa apenas transform/opacity + background-position, então
+   roda na GPU e não causa reflow. A classe "is-loaded" é adicionada pelo
+   próprio evento onload da imagem. */
+.fade-img{opacity:0;transition:opacity .45s ease;background:linear-gradient(100deg,var(--surface) 30%,var(--border) 50%,var(--surface) 70%);background-size:200% 100%;animation:fadeImgShimmer 1.3s ease-in-out infinite;}
+.fade-img.is-loaded{opacity:1;animation:none;background:none;}
+@keyframes fadeImgShimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+@media (prefers-reduced-motion:reduce){.fade-img{animation:none;transition:none;opacity:1;}}
 
 /* ---- Galeria premium com lightbox ---- */
 .galeria-premium{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-top:18px;}
@@ -5228,6 +5242,52 @@ function seedIfEmpty(path, seedData){
 }
 
 let sitePublicContentInitialized = false;
+/* ══════════════════════════════
+   CACHE LOCAL (IndexedDB) — pintura instantânea em visitas seguintes
+   Guarda a última versão conhecida de equipe/parceiros/galeria/biblioteca
+   de imagens. Ao carregar a página, se houver cache, o conteúdo aparece
+   imediatamente na tela enquanto o Firebase confirma os dados atuais em
+   segundo plano (o listener .on("value") sempre sobrescreve com o dado
+   real assim que chega). Não altera nenhuma lógica de dados existente,
+   é puramente uma otimização de performance percebida.
+══════════════════════════════ */
+const MOVOM_CACHE_DB = "movomSiteCache";
+const MOVOM_CACHE_STORE = "conteudo";
+let _movomCacheDbPromise = null;
+function movomCacheDb(){
+  if(!("indexedDB" in window)) return Promise.resolve(null);
+  if(_movomCacheDbPromise) return _movomCacheDbPromise;
+  _movomCacheDbPromise = new Promise(resolve=>{
+    try{
+      const req = indexedDB.open(MOVOM_CACHE_DB, 1);
+      req.onupgradeneeded = ()=>{ req.result.createObjectStore(MOVOM_CACHE_STORE); };
+      req.onsuccess = ()=>resolve(req.result);
+      req.onerror = ()=>resolve(null);
+    }catch(e){ resolve(null); }
+  });
+  return _movomCacheDbPromise;
+}
+async function movomCacheGet(chave){
+  try{
+    const db = await movomCacheDb();
+    if(!db) return null;
+    return await new Promise(resolve=>{
+      const tx = db.transaction(MOVOM_CACHE_STORE, "readonly");
+      const req = tx.objectStore(MOVOM_CACHE_STORE).get(chave);
+      req.onsuccess = ()=>resolve(req.result ?? null);
+      req.onerror = ()=>resolve(null);
+    });
+  }catch(e){ return null; }
+}
+async function movomCacheSet(chave, valor){
+  try{
+    const db = await movomCacheDb();
+    if(!db) return;
+    const tx = db.transaction(MOVOM_CACHE_STORE, "readwrite");
+    tx.objectStore(MOVOM_CACHE_STORE).put(valor, chave);
+  }catch(e){ /* cache é otimização — uma falha aqui nunca deve travar o site */ }
+}
+
 window.initSitePublicContent = function(){
   if(sitePublicContentInitialized) return;
   sitePublicContentInitialized = true;
@@ -5240,17 +5300,25 @@ window.initSitePublicContent = function(){
   // a partir dela. initBibliotecaImagens() é idempotente.
   if(typeof initBibliotecaImagens === "function") initBibliotecaImagens();
 
+  // Pintura instantânea com a última versão em cache, antes mesmo do
+  // Firebase responder (melhora bastante a percepção de velocidade em
+  // conexões móveis). Só usa o cache se os dados "ao vivo" ainda não
+  // chegaram, para nunca sobrescrever algo mais recente.
+  movomCacheGet("equipe").then(v=>{ if(v && !Object.keys(siteEquipe).length){ siteEquipe=v; renderEquipe(); } });
+  movomCacheGet("parceiros").then(v=>{ if(v && !Object.keys(siteParceiros).length){ siteParceiros=v; renderParceiros(); } });
+  movomCacheGet("galeria").then(v=>{ if(v && !Object.keys(siteGaleria).length){ siteGaleria=v; renderGaleria(); } });
+
   dbSite.ref("equipe").on("value",
-    snap=>{ siteEquipe = snap.val()||{}; renderEquipe(); },
+    snap=>{ siteEquipe = snap.val()||{}; renderEquipe(); movomCacheSet("equipe", siteEquipe); },
     err=>console.error("[MovOm] Falha ao ler 'equipe' do Firebase:", err));
   dbSite.ref("depoimentos").on("value",
     snap=>{ siteDepoimentos = snap.val()||{}; renderDepoimentos(); },
     err=>console.error("[MovOm] Falha ao ler 'depoimentos' do Firebase:", err));
   dbSite.ref("parceiros").on("value",
-    snap=>{ siteParceiros = snap.val()||{}; renderParceiros(); },
+    snap=>{ siteParceiros = snap.val()||{}; renderParceiros(); movomCacheSet("parceiros", siteParceiros); },
     err=>console.error("[MovOm] Falha ao ler 'parceiros' do Firebase:", err));
   dbSite.ref("galeria").on("value",
-    snap=>{ siteGaleria = snap.val()||{}; renderGaleria(); },
+    snap=>{ siteGaleria = snap.val()||{}; renderGaleria(); movomCacheSet("galeria", siteGaleria); },
     err=>console.error("[MovOm] Falha ao ler 'galeria' do Firebase:", err));
   dbSite.ref("textos").on("value",
     snap=>{ siteTextos = snap.val()||{}; aplicarTextosSite(); },
@@ -5289,11 +5357,61 @@ function aguardarBibliotecaImagens(){
   return new Promise(resolve=>{ bibliotecaImagensProntaResolvers.push(resolve); });
 }
 
+// Maior dimensão (em px) permitida para qualquer imagem salva no banco, e
+// qualidade usada ao recomprimir como JPEG. Reduz drasticamente o peso do
+// base64 salvo no Firebase Realtime Database (e, consequentemente, o tempo
+// de download/exibição em qualquer tela que use essa mesma imagem).
+const IMG_LIB_MAX_DIM = 900;
+const IMG_LIB_JPEG_QUALITY = 0.82;
+
 function imgLibFileToBase64(file){
   return new Promise((resolve,reject)=>{
     const reader = new FileReader();
-    reader.onload = ()=>resolve(reader.result);
     reader.onerror = reject;
+    reader.onload = ()=>{
+      const dataUrlOriginal = reader.result;
+      // SVG é vetorial: redimensionar via canvas não ajuda (e rasterizaria
+      // a imagem), então mantemos o arquivo original nesse caso.
+      if(file.type === "image/svg+xml"){ resolve(dataUrlOriginal); return; }
+      const img = new Image();
+      img.onload = ()=>{
+        try{
+          let { width, height } = img;
+          const maiorLado = Math.max(width, height);
+          if(maiorLado > IMG_LIB_MAX_DIM){
+            const escala = IMG_LIB_MAX_DIM / maiorLado;
+            width = Math.round(width * escala);
+            height = Math.round(height * escala);
+          }
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          if(!ctx){ resolve(dataUrlOriginal); return; }
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = "high";
+          ctx.drawImage(img, 0, 0, width, height);
+          // PNG/GIF podem ter transparência (ex: logos de parceiros com
+          // fundo transparente) — preservamos o formato para não quebrar
+          // isso. As demais imagens (fotos) viram JPEG comprimido, que é
+          // muito mais leve para fotografias.
+          const manterTransparencia = file.type === "image/png" || file.type === "image/gif";
+          const saida = manterTransparencia
+            ? canvas.toDataURL("image/png")
+            : canvas.toDataURL("image/jpeg", IMG_LIB_JPEG_QUALITY);
+          // Segurança extra: se por algum motivo a versão "otimizada" saiu
+          // maior que a original (raro, mas possível em imagens já bem
+          // comprimidas), fica com a menor das duas.
+          resolve(saida.length < dataUrlOriginal.length ? saida : dataUrlOriginal);
+        }catch(e){
+          // Qualquer falha no canvas (ex: imagem corrompida) não deve
+          // impedir o upload — cai para o comportamento original.
+          resolve(dataUrlOriginal);
+        }
+      };
+      img.onerror = ()=>resolve(dataUrlOriginal);
+      img.src = dataUrlOriginal;
+    };
     reader.readAsDataURL(file);
   });
 }
@@ -5475,9 +5593,22 @@ function renderBibliotecaImagens(){
 window.initBibliotecaImagens = function(){
   if(bibliotecaImagensInitialized) return;
   bibliotecaImagensInitialized = true;
+  // Pintura instantânea: se já tivermos uma cópia em cache da biblioteca,
+  // usa ela para resolver imagens (Equipe/Parceiros/Galeria) enquanto o
+  // Firebase confirma os dados atuais.
+  movomCacheGet("bibliotecaImagens").then(v=>{
+    if(v && !Object.keys(bibliotecaImagens).length){
+      bibliotecaImagens = v;
+      renderBibliotecaImagens();
+      if(typeof renderEquipe==="function") renderEquipe();
+      if(typeof renderParceiros==="function") renderParceiros();
+      if(typeof renderGaleria==="function") renderGaleria();
+    }
+  });
   dbSite.ref("bibliotecaImagens").on("value", snap=>{
     bibliotecaImagens = snap.val() || {};
     renderBibliotecaImagens();
+    movomCacheSet("bibliotecaImagens", bibliotecaImagens);
     if(!bibliotecaImagensPronta){
       bibliotecaImagensPronta = true;
       bibliotecaImagensProntaResolvers.forEach(r=>r(bibliotecaImagens));
@@ -5571,7 +5702,7 @@ function renderGaleria(){
       const url = imgLibResolverUrl(g.imagemId, g.url) || IMG_URL_PLACEHOLDER;
       return `
       <div class="galeria-item" onclick="abrirLightbox('${url.replace(/'/g,"\\'")}')">
-        <img src="${url}" alt="${g.legenda||'Foto MovOm'}" loading="lazy">
+        <img class="fade-img" src="${url}" alt="${g.legenda||'Foto MovOm'}" loading="lazy" decoding="async" onload="this.classList.add('is-loaded')">
         <div class="galeria-item-overlay">${g.legenda||""}</div>
       </div>`;
     }).join("") : "<p style='color:var(--muted);padding:12px;font-size:.84rem'>Em breve, fotos do espaço.</p>";
@@ -5663,7 +5794,7 @@ function renderEquipe(){
       return `
       <div class="site-card equipe-card" style="text-align:center">
         <div class="equipe-foto-wrap">
-        ${foto ? `<img class="equipe-foto" src="${foto}" alt="${m.nome}">`
+        ${foto ? `<img class="equipe-foto fade-img" src="${foto}" alt="${m.nome}" loading="lazy" decoding="async" onload="this.classList.add('is-loaded')">`
                  : `<div class="equipe-foto" style="background:var(--lilas);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.4rem">${(m.nome||"?").split(" ").slice(0,2).map(s=>s[0]).join("")}</div>`}
         </div>
         <h3>${m.nome||""}</h3>
@@ -5862,7 +5993,7 @@ function renderParceiros(){
       return `
       <div class="parceiro-card">
         ${logo
-          ? `<img src="${logo}" alt="Logo do parceiro ${p.nome||""}" loading="lazy" style="max-height:44px;max-width:100%;width:auto;height:auto;object-fit:contain;display:block">`
+          ? `<img class="fade-img" src="${logo}" alt="Logo do parceiro ${p.nome||""}" loading="lazy" decoding="async" onload="this.classList.add('is-loaded')" style="max-height:44px;max-width:100%;width:auto;height:auto;object-fit:contain;display:block">`
           : `<div class="parceiro-placeholder" title="Logo oficial pendente de cadastro"><p>${p.nome||""}</p><span>logo pendente</span></div>`}
       </div>`;
     }).join("") : "<p style='color:var(--muted);padding:12px;font-size:.84rem'>Nenhum parceiro cadastrado.</p>";
