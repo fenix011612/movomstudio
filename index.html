@@ -414,6 +414,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 .btn-pendente{background:var(--lilas-light);color:var(--lilas);border:none;padding:5px 12px;border-radius:8px;cursor:pointer;font-size:.78rem;font-weight:700;}
 .btn-feito{background:#dcfce7;color:#166534;border:none;padding:5px 12px;border-radius:8px;cursor:pointer;font-size:.78rem;font-weight:700;}
 .btn-excluir-sm{background:#fee2e2;color:#b91c1c;border:none;padding:5px 10px;border-radius:8px;cursor:pointer;}
+.btn-editar-sm{background:var(--ciano-light);color:var(--ciano);border:none;padding:5px 10px;border-radius:8px;cursor:pointer;margin-right:6px;}
 
 /* ══════════════════════════════
    INSUMOS
@@ -428,6 +429,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
 .resumo-card.entrada{background:#dcfce7;color:#166534;border-color:#bbf7d0;}
 .resumo-card.saida{background:#fee2e2;color:#b91c1c;border-color:#fecaca;}
 .resumo-card.saldo{background:var(--lilas-light);color:var(--lilas);border-color:var(--lilas-mid);}
+.resumo-card.qtd{background:var(--ciano-light);color:var(--ciano);border-color:#a7e8e5;}
 .resumo-card small{display:block;font-size:.72rem;font-weight:600;margin-bottom:4px;}
 
 /* ══════════════════════════════
@@ -1411,6 +1413,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
             <!-- Aba Financeiro Yoga oculta na UI – dados preservados no Firebase -->
             <button class="fin-tab fin-tab-admin" onclick="finTab('yoga',this)" style="display:none">🧘 Financeiro Yoga</button>
             <button class="fin-tab fin-tab-admin" onclick="finTab('despesas',this)">📉 Despesas</button>
+            <button class="fin-tab fin-tab-admin" onclick="finTab('croche',this)">🧶 Oficinas de Crochê</button>
             <!-- Aba Insumos oculta na UI – dados preservados no Firebase -->
             <button class="fin-tab fin-tab-admin" onclick="finTab('insumos',this)" style="display:none">📦 Insumos</button>
           </div>
@@ -1647,6 +1650,63 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                 <table class="data-table">
                   <thead><tr><th>Data</th><th>Nome</th><th>Categoria</th><th>Descrição</th><th>Observação</th><th>NF</th><th>Valor</th><th></th></tr></thead>
                   <tbody id="desp_tabela"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- ──── SUB-ABA: OFICINAS DE CROCHÊ ──── -->
+          <div class="fin-subpage" id="fin-croche">
+            <div class="form-card">
+              <h3 id="cro_formTitulo">🧶 Novo Lançamento – Oficinas de Crochê</h3>
+              <div class="form-grid">
+                <div class="field-group">
+                  <label>Tipo</label>
+                  <select id="cro_tipo">
+                    <option value="Entrada">Entrada</option>
+                    <option value="Saída">Saída</option>
+                  </select>
+                </div>
+                <div class="field-group"><label>Mês</label><select id="cro_mes"></select></div>
+                <div class="field-group"><label>Nome</label><input id="cro_nome" placeholder="Nome"></div>
+                <div class="field-group"><label>Data</label><input type="date" id="cro_data"></div>
+                <div class="field-group"><label>Forma de Pagamento</label>
+                  <select id="cro_pagamento">
+                    <option>Pix</option><option>Dinheiro</option><option>Débito</option><option>Crédito</option>
+                  </select>
+                </div>
+                <div class="field-group"><label>Valor R$</label><input id="cro_valor" type="number" placeholder="0,00" step="0.01"></div>
+                <div class="field-group form-full"><label>Descrição</label><input id="cro_descricao" placeholder="Descrição"></div>
+                <div class="form-full" style="display:flex;gap:10px;flex-wrap:wrap">
+                  <button class="btn-save" id="cro_btnSalvar" onclick="croSalvar()">Adicionar Lançamento</button>
+                  <button class="btn-excluir-sm" id="cro_btnCancelar" onclick="croCancelarEdicao()" style="display:none">Cancelar Edição</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- DASHBOARD -->
+            <div class="resumo-cards">
+              <div class="resumo-card entrada"><small>💰 Total de Entradas</small>R$ <span id="cro_totEntradas">0,00</span></div>
+              <div class="resumo-card saida"><small>📉 Total de Saídas</small>R$ <span id="cro_totSaidas">0,00</span></div>
+              <div class="resumo-card saldo"><small>📊 Saldo do Mês</small>R$ <span id="cro_saldo">0,00</span></div>
+              <div class="resumo-card qtd"><small>🧾 Lançamentos</small><span id="cro_qtd">0</span></div>
+            </div>
+
+            <div class="table-card">
+              <div class="table-header">
+                <span class="table-title">🧶 Lançamentos – Oficinas de Crochê</span>
+              </div>
+              <div style="padding:14px 20px 0;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+                <input type="text" id="cro_busca" oninput="croRenderTabela()" placeholder="🔍 Pesquisar por nome..." style="flex:1;min-width:200px;padding:10px 14px;border:2px solid #e4e1f5;border-radius:10px;font-family:'Poppins',sans-serif;font-size:.9rem;">
+                <select id="cro_ordenar" onchange="croRenderTabela()" style="padding:10px 14px;border:2px solid #e4e1f5;border-radius:10px;font-family:'Poppins',sans-serif;background:#fff;font-size:.9rem;cursor:pointer;">
+                  <option value="recente">Data: Mais Recente</option>
+                  <option value="antigo">Data: Mais Antiga</option>
+                </select>
+              </div>
+              <div style="overflow-x:auto">
+                <table class="data-table">
+                  <thead><tr><th>Tipo</th><th>Nome</th><th>Data</th><th>Mês</th><th>Pagamento</th><th>Valor</th><th>Descrição</th><th></th></tr></thead>
+                  <tbody id="cro_tabela"></tbody>
                 </table>
               </div>
             </div>
@@ -3827,7 +3887,7 @@ document.addEventListener("DOMContentLoaded", function(){
 /* ══════════════════════════════
    FINANCEIRO – CONTROLE DE ABAS
 ══════════════════════════════ */
-let _finInit = {entradas:false, yoga:false, despesas:false, insumos:false};
+let _finInit = {entradas:false, yoga:false, despesas:false, insumos:false, croche:false};
 
 function finTab(id, btn){
   // Colaboradores só podem ver Entradas
@@ -3844,6 +3904,7 @@ function finTab(id, btn){
   if(id==="yoga"      && !_finInit.yoga)    { initYoga();   _finInit.yoga=true;    }
   if(id==="despesas"  && !_finInit.despesas){ initDespesas(); _finInit.despesas=true; }
   if(id==="insumos"   && !_finInit.insumos) { initInsumos(); _finInit.insumos=true; }
+  if(id==="croche"    && !_finInit.croche)  { initCroche();  _finInit.croche=true;  }
   // Atualiza lucro sempre que mudar aba despesas
   if(id==="despesas") recalcularLucro();
 }
@@ -4439,6 +4500,129 @@ function carregarDespesas(){
 }
 
 window.delDespesa=(mes,id)=>dbFin.ref(`despesas/${mes}/${id}`).remove();
+
+/* ══════════════════════
+   OFICINAS DE CROCHÊ
+══════════════════════ */
+let croCurrentRef=null, croRawItems=[], croEditKey=null, croEditMes=null;
+let _croMeses=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+
+function initCroche(){
+  const sel=document.getElementById("cro_mes");
+  if(!sel.options.length){
+    _croMeses.forEach(m=>{const o=document.createElement("option");o.value=o.textContent=m;sel.appendChild(o);});
+    sel.value=_croMeses[new Date().getMonth()];
+    sel.addEventListener("change",()=>{ if(croEditKey) croCancelarEdicao(); carregarCroche(); });
+  }
+  const di=document.getElementById("cro_data");
+  if(!di.value) di.value=new Date().toISOString().split("T")[0];
+  carregarCroche();
+}
+
+window.croSalvar=function(){
+  const mes=document.getElementById("cro_mes").value;
+  const dados={
+    tipo:document.getElementById("cro_tipo").value,
+    nome:document.getElementById("cro_nome").value,
+    data:document.getElementById("cro_data").value,
+    pagamento:document.getElementById("cro_pagamento").value,
+    valor:Number(document.getElementById("cro_valor").value||0),
+    descricao:document.getElementById("cro_descricao").value,
+    criadoEm:new Date().toLocaleString("pt-BR")
+  };
+  if(!dados.nome||!dados.valor){alert("Preencha nome e valor.");return;}
+
+  if(croEditKey){
+    if(croEditMes && croEditMes!==mes){
+      dbFin.ref(`croche/${croEditMes}/${croEditKey}`).remove();
+      dbFin.ref("croche/"+mes).push(dados);
+    } else {
+      dbFin.ref(`croche/${mes}/${croEditKey}`).update(dados);
+    }
+    croCancelarEdicao();
+  } else {
+    dbFin.ref("croche/"+mes).push(dados);
+  }
+
+  ["cro_nome","cro_valor","cro_descricao"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("cro_data").value=new Date().toISOString().split("T")[0];
+};
+
+function carregarCroche(){
+  const mes=document.getElementById("cro_mes").value;
+  if(croCurrentRef) croCurrentRef.off();
+  croCurrentRef=dbFin.ref("croche/"+mes);
+  croCurrentRef.on("value",snap=>{
+    croRawItems=[];
+    snap.forEach(item=>{ croRawItems.push({key:item.key, mes, ...item.val()}); });
+    croRenderTabela();
+  });
+}
+
+function croRenderTabela(){
+  const tabela=document.getElementById("cro_tabela");
+  const busca=(document.getElementById("cro_busca").value||"").toLowerCase().trim();
+  const ordem=document.getElementById("cro_ordenar").value;
+
+  // Dashboard sempre calculado sobre todos os lançamentos do mês (sem filtro de busca)
+  let totEnt=0, totSai=0;
+  croRawItems.forEach(e=>{
+    if(e.tipo==="Entrada") totEnt+=Number(e.valor||0); else totSai+=Number(e.valor||0);
+  });
+  document.getElementById("cro_totEntradas").innerText=Number(totEnt).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+  document.getElementById("cro_totSaidas").innerText=Number(totSai).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+  document.getElementById("cro_saldo").innerText=Number(totEnt-totSai).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+  document.getElementById("cro_qtd").innerText=croRawItems.length;
+
+  // Filtro por nome + ordenação por data
+  let itens=croRawItems.filter(e=>!busca || (e.nome||"").toLowerCase().includes(busca));
+  itens=itens.slice().sort((a,b)=>{
+    const da=a.data?new Date(a.data):new Date(0);
+    const db=b.data?new Date(b.data):new Date(0);
+    return ordem==="antigo" ? da-db : db-da;
+  });
+
+  tabela.innerHTML="";
+  itens.forEach(e=>{
+    const dataFmt=e.data?e.data.split('-').reverse().join('/'):"—";
+    const badgeCls=e.tipo==="Entrada"?"p-green":"p-red";
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td><span class="badge-pill ${badgeCls}">${e.tipo}</span></td><td>${e.nome||""}</td><td>${dataFmt}</td><td>${e.mes}</td><td>${e.pagamento||""}</td><td>${fmtBRL(e.valor)}</td><td>${e.descricao||""}</td>
+      <td><button class="btn-editar-sm" onclick="croEditar('${e.key}')">✏️</button><button class="btn-excluir-sm" onclick="croExcluir('${e.mes}','${e.key}')">🗑</button></td>`;
+    tabela.appendChild(tr);
+  });
+}
+
+window.croEditar=function(key){
+  const item=croRawItems.find(i=>i.key===key);
+  if(!item) return;
+  document.getElementById("cro_tipo").value=item.tipo||"Entrada";
+  document.getElementById("cro_mes").value=item.mes;
+  document.getElementById("cro_nome").value=item.nome||"";
+  document.getElementById("cro_data").value=item.data||"";
+  document.getElementById("cro_pagamento").value=item.pagamento||"Pix";
+  document.getElementById("cro_valor").value=item.valor||"";
+  document.getElementById("cro_descricao").value=item.descricao||"";
+  croEditKey=key; croEditMes=item.mes;
+  document.getElementById("cro_formTitulo").textContent="✏️ Editando Lançamento – Oficinas de Crochê";
+  document.getElementById("cro_btnSalvar").textContent="Salvar Edição";
+  document.getElementById("cro_btnCancelar").style.display="inline-block";
+  document.getElementById("cro_formTitulo").scrollIntoView({behavior:"smooth",block:"center"});
+};
+
+window.croCancelarEdicao=function(){
+  croEditKey=null; croEditMes=null;
+  document.getElementById("cro_formTitulo").textContent="🧶 Novo Lançamento – Oficinas de Crochê";
+  document.getElementById("cro_btnSalvar").textContent="Adicionar Lançamento";
+  document.getElementById("cro_btnCancelar").style.display="none";
+  ["cro_nome","cro_valor","cro_descricao"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("cro_data").value=new Date().toISOString().split("T")[0];
+};
+
+window.croExcluir=function(mes,key){
+  if(!confirm("Excluir este lançamento?")) return;
+  dbFin.ref(`croche/${mes}/${key}`).remove();
+};
 
 /* ══════════════════════
    LUCRO = ENTRADAS - (DESPESAS + YOGA_SAÍDAS + INSUMOS)
