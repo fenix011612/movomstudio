@@ -1669,6 +1669,9 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                 </div>
                 <div class="field-group"><label>Mês</label><select id="cro_mes"></select></div>
                 <div class="field-group"><label>Nome</label><input id="cro_nome" placeholder="Nome"></div>
+                <div class="field-group"><label>Gmail</label><input id="cro_gmail" type="email" placeholder="exemplo@gmail.com"></div>
+                <div class="field-group"><label>CPF / CNPJ</label><input id="cro_cpf" placeholder="000.000.000-00" maxlength="18" oninput="croMaskCpfCnpj(this)"></div>
+                <div class="field-group"><label>Nº NF (opcional)</label><input id="cro_nf" placeholder="Número da Nota Fiscal"></div>
                 <div class="field-group"><label>Data</label><input type="date" id="cro_data"></div>
                 <div class="field-group"><label>Forma de Pagamento</label>
                   <select id="cro_pagamento">
@@ -1697,7 +1700,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                 <span class="table-title">🧶 Lançamentos – Oficinas de Crochê</span>
               </div>
               <div style="padding:14px 20px 0;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-                <input type="text" id="cro_busca" oninput="croRenderTabela()" placeholder="🔍 Pesquisar por nome..." style="flex:1;min-width:200px;padding:10px 14px;border:2px solid #e4e1f5;border-radius:10px;font-family:'Poppins',sans-serif;font-size:.9rem;">
+                <input type="text" id="cro_busca" oninput="croRenderTabela()" placeholder="🔍 Pesquisar por nome, gmail, CPF/CNPJ ou NF..." style="flex:1;min-width:200px;padding:10px 14px;border:2px solid #e4e1f5;border-radius:10px;font-family:'Poppins',sans-serif;font-size:.9rem;">
                 <select id="cro_ordenar" onchange="croRenderTabela()" style="padding:10px 14px;border:2px solid #e4e1f5;border-radius:10px;font-family:'Poppins',sans-serif;background:#fff;font-size:.9rem;cursor:pointer;">
                   <option value="recente">Data: Mais Recente</option>
                   <option value="antigo">Data: Mais Antiga</option>
@@ -1705,7 +1708,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
               </div>
               <div style="overflow-x:auto">
                 <table class="data-table">
-                  <thead><tr><th>Tipo</th><th>Nome</th><th>Data</th><th>Mês</th><th>Pagamento</th><th>Valor</th><th>Descrição</th><th></th></tr></thead>
+                  <thead><tr><th>Tipo</th><th>Nome</th><th>Gmail</th><th>CPF/CNPJ</th><th>Nº NF</th><th>Data</th><th>Mês</th><th>Pagamento</th><th>Valor</th><th>Descrição</th><th></th></tr></thead>
                   <tbody id="cro_tabela"></tbody>
                 </table>
               </div>
@@ -4519,18 +4522,53 @@ function initCroche(){
   carregarCroche();
 }
 
+/* Máscara CPF/CNPJ – aplica formatação conforme a quantidade de dígitos digitados */
+window.croMaskCpfCnpj=function(el){
+  let v=el.value.replace(/\D/g,"").slice(0,14);
+  if(v.length<=11){
+    v=v.replace(/(\d{3})(\d)/,"$1.$2")
+       .replace(/(\d{3})(\d)/,"$1.$2")
+       .replace(/(\d{3})(\d{1,2})$/,"$1-$2");
+  } else {
+    v=v.replace(/(\d{2})(\d)/,"$1.$2")
+       .replace(/(\d{3})(\d)/,"$1.$2")
+       .replace(/(\d{3})(\d)/,"$1/$2")
+       .replace(/(\d{4})(\d{1,2})$/,"$1-$2");
+  }
+  el.value=v;
+};
+
+/* Validação básica: CPF (11 dígitos) ou CNPJ (14 dígitos) */
+function croValidarCpfCnpj(v){
+  const digitos=(v||"").replace(/\D/g,"");
+  return digitos.length===11||digitos.length===14;
+}
+
+function croValidarEmail(v){
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((v||"").trim());
+}
+
 window.croSalvar=function(){
   const mes=document.getElementById("cro_mes").value;
   const dados={
     tipo:document.getElementById("cro_tipo").value,
-    nome:document.getElementById("cro_nome").value,
+    nome:document.getElementById("cro_nome").value.trim(),
+    gmail:document.getElementById("cro_gmail").value.trim(),
+    cpf:document.getElementById("cro_cpf").value.trim(),
+    nf:document.getElementById("cro_nf").value.trim(),
     data:document.getElementById("cro_data").value,
     pagamento:document.getElementById("cro_pagamento").value,
     valor:Number(document.getElementById("cro_valor").value||0),
     descricao:document.getElementById("cro_descricao").value,
     criadoEm:new Date().toLocaleString("pt-BR")
   };
-  if(!dados.nome||!dados.valor){alert("Preencha nome e valor.");return;}
+
+  if(!dados.nome){alert("Preencha o nome.");return;}
+  if(!dados.gmail||!croValidarEmail(dados.gmail)){alert("Informe um e-mail (Gmail) válido.");return;}
+  if(!dados.cpf||!croValidarCpfCnpj(dados.cpf)){alert("Informe um CPF ou CNPJ válido.");return;}
+  if(!dados.data){alert("Preencha a data.");return;}
+  if(!dados.pagamento){alert("Selecione a forma de pagamento.");return;}
+  if(!dados.valor||dados.valor<=0){alert("Informe um valor monetário válido.");return;}
 
   if(croEditKey){
     if(croEditMes && croEditMes!==mes){
@@ -4544,7 +4582,7 @@ window.croSalvar=function(){
     dbFin.ref("croche/"+mes).push(dados);
   }
 
-  ["cro_nome","cro_valor","cro_descricao"].forEach(id=>document.getElementById(id).value="");
+  ["cro_nome","cro_gmail","cro_cpf","cro_nf","cro_valor","cro_descricao"].forEach(id=>document.getElementById(id).value="");
   document.getElementById("cro_data").value=new Date().toISOString().split("T")[0];
 };
 
@@ -4575,7 +4613,12 @@ function croRenderTabela(){
   document.getElementById("cro_qtd").innerText=croRawItems.length;
 
   // Filtro por nome + ordenação por data
-  let itens=croRawItems.filter(e=>!busca || (e.nome||"").toLowerCase().includes(busca));
+  let itens=croRawItems.filter(e=>!busca ||
+    (e.nome||"").toLowerCase().includes(busca) ||
+    (e.gmail||"").toLowerCase().includes(busca) ||
+    (e.cpf||"").toLowerCase().includes(busca) ||
+    (e.nf||"").toLowerCase().includes(busca)
+  );
   itens=itens.slice().sort((a,b)=>{
     const da=a.data?new Date(a.data):new Date(0);
     const db=b.data?new Date(b.data):new Date(0);
@@ -4587,7 +4630,7 @@ function croRenderTabela(){
     const dataFmt=e.data?e.data.split('-').reverse().join('/'):"—";
     const badgeCls=e.tipo==="Entrada"?"p-green":"p-red";
     const tr=document.createElement("tr");
-    tr.innerHTML=`<td><span class="badge-pill ${badgeCls}">${e.tipo}</span></td><td>${e.nome||""}</td><td>${dataFmt}</td><td>${e.mes}</td><td>${e.pagamento||""}</td><td>${fmtBRL(e.valor)}</td><td>${e.descricao||""}</td>
+    tr.innerHTML=`<td><span class="badge-pill ${badgeCls}">${e.tipo}</span></td><td>${e.nome||""}</td><td>${e.gmail||""}</td><td>${e.cpf||""}</td><td>${e.nf||"—"}</td><td>${dataFmt}</td><td>${e.mes}</td><td>${e.pagamento||""}</td><td>${fmtBRL(e.valor)}</td><td>${e.descricao||""}</td>
       <td><button class="btn-editar-sm" onclick="croEditar('${e.key}')">✏️</button><button class="btn-excluir-sm" onclick="croExcluir('${e.mes}','${e.key}')">🗑</button></td>`;
     tabela.appendChild(tr);
   });
@@ -4599,6 +4642,9 @@ window.croEditar=function(key){
   document.getElementById("cro_tipo").value=item.tipo||"Entrada";
   document.getElementById("cro_mes").value=item.mes;
   document.getElementById("cro_nome").value=item.nome||"";
+  document.getElementById("cro_gmail").value=item.gmail||"";
+  document.getElementById("cro_cpf").value=item.cpf||"";
+  document.getElementById("cro_nf").value=item.nf||"";
   document.getElementById("cro_data").value=item.data||"";
   document.getElementById("cro_pagamento").value=item.pagamento||"Pix";
   document.getElementById("cro_valor").value=item.valor||"";
@@ -4615,7 +4661,7 @@ window.croCancelarEdicao=function(){
   document.getElementById("cro_formTitulo").textContent="🧶 Novo Lançamento – Oficinas de Crochê";
   document.getElementById("cro_btnSalvar").textContent="Adicionar Lançamento";
   document.getElementById("cro_btnCancelar").style.display="none";
-  ["cro_nome","cro_valor","cro_descricao"].forEach(id=>document.getElementById(id).value="");
+  ["cro_nome","cro_gmail","cro_cpf","cro_nf","cro_valor","cro_descricao"].forEach(id=>document.getElementById(id).value="");
   document.getElementById("cro_data").value=new Date().toISOString().split("T")[0];
 };
 
