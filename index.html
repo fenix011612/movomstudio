@@ -3627,16 +3627,6 @@ const dbIns    = fbIns.database();
 const fsYoga   = fbYoga.firestore();
 const dbSite   = fbSite.database();
 
-window.inicializarFirebases = function(){ 
-  // Carrega apenas o que está visível no momento
-  const activePageId = document.querySelector(".page.active")?.id;
-  
-  if(activePageId==="page-colaboradores") initColab();
-  if(activePageId==="page-financeiro") initFinanceiro();
-  if(activePageId==="page-grade") initGrade();
-  if(activePageId==="page-agenda") initAgenda();
-};
-
 /* ══════════════════════
    COLABORADORES
 ══════════════════════ */
@@ -4564,7 +4554,7 @@ window.croSalvar=function(){
   };
 
   if(!dados.nome){alert("Preencha o nome.");return;}
-  if(!dados.gmail||!croValidarEmail(dados.gmail)){alert("Informe um e-mail (Gmail) válido.");return;}
+  if(dados.gmail && !croValidarEmail(dados.gmail)){alert("O e-mail informado não é válido.");return;}
   if(!dados.cpf||!croValidarCpfCnpj(dados.cpf)){alert("Informe um CPF ou CNPJ válido.");return;}
   if(!dados.data){alert("Preencha a data.");return;}
   if(!dados.pagamento){alert("Selecione a forma de pagamento.");return;}
