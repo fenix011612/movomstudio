@@ -3740,10 +3740,12 @@ function carregarDadosColab(){
             valorExtra:"",
             dias:[]
           }));
-          // Salva no mês atual e renderiza
-          rRef.set(alunosCopias).then(()=>{
-            alunosCopias.forEach(a=>adicionarAluno(a,true));
-            calcularTotal();
+          // Salva no mês atual — NÃO renderiza aqui manualmente.
+          // O próprio listener "value" (acima) vai disparar de novo assim que
+          // o Firebase confirmar a escrita, e ele é quem preenche a tela.
+          // Renderizar aqui também causaria duplicação dos alunos.
+          rRef.set(alunosCopias).catch(err=>{
+            console.error("Erro ao copiar alunos do mês anterior:", err);
           });
         } else {
           // Sem mês anterior também → tabela vazia
