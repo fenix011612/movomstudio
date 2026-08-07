@@ -1675,6 +1675,7 @@ table.data-table td{padding:13px 20px;font-size:.84rem;}
                 <div class="field-group"><label>Data</label><input type="date" id="cro_data"></div>
                 <div class="field-group"><label>Forma de Pagamento</label>
                   <select id="cro_pagamento">
+                    <option value="">Selecione...</option>
                     <option>Pix</option><option>Dinheiro</option><option>Débito</option><option>Crédito</option>
                   </select>
                 </div>
@@ -4555,12 +4556,8 @@ window.croSalvar=function(){
     criadoEm:new Date().toLocaleString("pt-BR")
   };
 
-  if(!dados.nome){alert("Preencha o nome.");return;}
-  if(dados.gmail && !croValidarEmail(dados.gmail)){alert("O e-mail informado não é válido.");return;}
-  if(!dados.cpf||!croValidarCpfCnpj(dados.cpf)){alert("Informe um CPF ou CNPJ válido.");return;}
-  if(!dados.data){alert("Preencha a data.");return;}
-  if(!dados.pagamento){alert("Selecione a forma de pagamento.");return;}
-  if(!dados.valor||dados.valor<=0){alert("Informe um valor monetário válido.");return;}
+  if(!dados.nome){alert("Por favor, informe o nome antes de salvar.");return;}
+  if(!dados.pagamento){alert("Por favor, selecione a forma de pagamento antes de salvar.");return;}
 
   if(croEditKey){
     if(croEditMes && croEditMes!==mes){
